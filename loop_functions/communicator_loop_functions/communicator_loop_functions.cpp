@@ -27,8 +27,9 @@ void CommunicatorLoopFunctions::Init(TConfigurationNode& t_tree){
 }
 
 void CommunicatorLoopFunctions::PreStep(){
-   //CommunicatorLoopFunctions::CompassDirection nextDirection = CompassDirection::north;
-   //argos::LOG << direction_vectors[nextDirection] << std::endl;
+   /* TEMP EXAMPLE OF HOW TO USE COMPASS DIRECTIONS */
+   //Alibot::CompassDirection nextDirection = Alibot::CompassDirection::north;
+   //argos::LOG << CommunicatorLoopFunctions::direction_vectors[nextDirection] << std::endl;
 }
 
 /* Delegates destinations to controllers that is available. /

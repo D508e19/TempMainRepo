@@ -72,6 +72,10 @@ void Alibot::Init(TConfigurationNode &t_node)
 
 void Alibot::ControlStep()
 {
+   /* TEMP EXAMPLE OF HOW TO USE COMPASS DIRECTIONS */
+   //Alibot::CompassDirection nextDirection = Alibot::CompassDirection::north;
+   //argos::LOG << Alibot::direction_vectors[nextDirection] << std::endl;
+
    GetAndPrintGroundReadings();
 
    m_pcWheels->SetLinearVelocity(m_fWheelVelocity, m_fWheelVelocity);
@@ -105,7 +109,7 @@ bool Alibot::getStatus(){
    return isBusy;
 }
 
-void Alibot::pointTowards(){
+void Alibot::pointTowards(Alibot::CompassDirection desiredDirection){
    isBusy = true;
 
    //TODO Turning and checking
