@@ -65,6 +65,10 @@ void Alibot::Init(TConfigurationNode &t_node)
    m_cGoStraightAngleRange.Set(-ToRadians(m_cAlpha), ToRadians(m_cAlpha));
    GetNodeAttributeOrDefault(t_node, "delta", m_fDelta, m_fDelta);
    GetNodeAttributeOrDefault(t_node, "velocity", m_fWheelVelocity, m_fWheelVelocity);
+
+   //TODO TMEP
+   Alibot::CompassDirection nextDirection = Alibot::CompassDirection::west;
+   pointTowards(Alibot::CompassDirection::south);
 }
 
 /****************************************/
@@ -76,9 +80,15 @@ void Alibot::ControlStep()
    //Alibot::CompassDirection nextDirection = Alibot::CompassDirection::north;
    //argos::LOG << Alibot::direction_vectors[nextDirection] << std::endl;
 
-   GetAndPrintGroundReadings();
+   GetAndPrintGroundReadings();  
 
-   m_pcWheels->SetLinearVelocity(m_fWheelVelocity, m_fWheelVelocity);
+   if(isBusy){
+      if(isTurning){
+         checkAndTurn();
+      }else if(isMoving){
+         checkAndMove();
+      }
+   }
 }
 
 /* Reads and prints the bots current position if it is over a dot. */
@@ -109,10 +119,78 @@ bool Alibot::getStatus(){
    return isBusy;
 }
 
-void Alibot::pointTowards(Alibot::CompassDirection desiredDirection){
+void Alibot::pointTowards(Alibot::CompassDirection desiredCompassDirection){
    isBusy = true;
+   isTurning = true;
+   desiredDirection = Alibot::direction_vectors[desiredCompassDirection];
+}
 
-   //TODO Turning and checking
+void Alibot::checkAndTurn(){
+
+   argos::LOG << "Checking and turning!" << std::endl;
+
+   //m_pcPosSens->GetReading().Position;
+
+   /* If the angle of the vector is small enough and the closest obstacle
+     * is far enough, continue going straight, else pick a random direction */
+   CRadians cZAngle, cYAngle, cXAngle;
+
+   //m_pcWheels->SetLinearVelocity(m_fWheelVelocity, -m_fWheelVelocity);
+   m_pcPosSens->GetReading().Orientation.ToEulerAngles(cZAngle, cYAngle, cXAngle);
+
+   int frontAngle = ToDegrees(cZAngle).GetValue();
+   int targetAngle = desiredDirection.Angle().GetValue() * 57.2958;
+
+   argos::LOG << "Front = " << frontAngle << std::endl;
+   argos::LOG << "Target = " << targetAngle << std::endl;
+
+   if(targetAngle == frontAngle){
+      isBusy = false;
+      isTurning = false;
+      m_pcWheels->SetLinearVelocity(0, 0); //Stop the wheels from turning
+   }else{
+      m_pcWheels->SetLinearVelocity(m_fWheelVelocity /4, -m_fWheelVelocity /4);
+   }
+
+
+   //CVector2 frontVector = CVector2(m_pcPosSens->GetReading().Orientation.GetX(), m_pcPosSens->GetReading().Orientation.GetY());
+
+   //argos::LOG << "\nFrontvector = " << frontVector << "\n" << std::endl;
+
+   //if (((targetAngle - frontAngle) > -2) && ((targetAngle - frontAngle) < 2))
+   //{
+   //   m_pcWheels->SetLinearVelocity(m_fWheelVelocity, m_fWheelVelocity);
+   //}
+
+   float xDif = desiredDirection.GetX() - m_pcPosSens->GetReading().Position.GetX();
+   float yDif = desiredDirection.GetY() - m_pcPosSens->GetReading().Position.GetY();
+
+   argos::LOG << "xDif: " << xDif << " yDiff: " << yDif << std::endl;
+   argos::LOG << "Calculation: " << abs(sqrt(pow(xDif, 2) + pow(yDif,2))) << std::endl;
+
+   //if ( abs(sqrt(pow(xDif, 2) + pow(yDif,2))) < 0.02 )
+   //{
+      //m_pcWheels->SetLinearVelocity(m_fWheelVelocity /4, -m_fWheelVelocity /4);
+   //}
+
+
+
+   //TODO Are we pointing in the right direction?
+
+   //Else turn 
+
+
+   //m_pcWheels->SetLinearVelocity(m_fWheelVelocity, m_fWheelVelocity);
+}
+
+
+
+
+
+void Alibot::checkAndMove(){
+   //TODO
+
+   //m_pcWheels->SetLinearVelocity(m_fWheelVelocity, m_fWheelVelocity);
 }
 
 /****************************************/

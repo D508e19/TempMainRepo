@@ -1,0 +1,117 @@
+[profiled portion overall]
+
+Wall clock time: 45.1736
+CPU usage: 14.8421%
+User time: 6.02572
+System time: 0.679007
+Maximum resident set size: 140500
+Integral shared memory size: 0
+Integral unshared data size: 0
+Integral unshared stack size: 0
+Page reclaims: 52512
+Page faults: 1
+Swaps: 0
+Block input operations: 0
+Block output operations: 264
+Messages sent: 0
+Messages received: 0
+Signals received: 0
+Voluntary context switches: 18154
+Involuntary context switches: 51
+
+[profiled portion start]
+
+User time: 0.052291
+System time: 0.006972
+Maximum resident set size: 43804
+Integral shared memory size: 0
+Integral unshared data size: 0
+Integral unshared stack size: 0
+Page reclaims: 4149
+Page faults: 0
+Swaps: 0
+Block input operations: 0
+Block output operations: 0
+Messages sent: 0
+Messages received: 0
+Signals received: 0
+Voluntary context switches: 387
+Involuntary context switches: 1
+
+[profiled portion end]
+
+User time: 6.07801
+System time: 0.685979
+Maximum resident set size: 184304
+Integral shared memory size: 0
+Integral unshared data size: 0
+Integral unshared stack size: 0
+Page reclaims: 56661
+Page faults: 1
+Swaps: 0
+Block input operations: 0
+Block output operations: 264
+Messages sent: 0
+Messages received: 0
+Signals received: 0
+Voluntary context switches: 18541
+Involuntary context switches: 52
+
+[process overall]
+
+User time: 6.07819
+System time: 0.686
+Maximum resident set size: 184304
+Integral shared memory size: 0
+Integral unshared data size: 0
+Integral unshared stack size: 0
+Page reclaims: 56661
+Page faults: 1
+Swaps: 0
+Block input operations: 0
+Block output operations: 272
+Messages sent: 0
+Messages received: 0
+Signals received: 0
+Voluntary context switches: 18541
+Involuntary context switches: 52
+
+[thread #0 overall]
+
+CPU usage: 0.405153%
+User time: 0.144306
+System time: 0.038716
+Maximum resident set size: 184304
+Integral shared memory size: 0
+Integral unshared data size: 0
+Integral unshared stack size: 0
+Page reclaims: 53
+Page faults: 0
+Swaps: 0
+Block input operations: 0
+Block output operations: 0
+Messages sent: 0
+Messages received: 0
+Signals received: 0
+Voluntary context switches: 4204
+Involuntary context switches: 5
+
+[thread #1 overall]
+
+CPU usage: 0.219938%
+User time: 0.035066
+System time: 0.064288
+Maximum resident set size: 184304
+Integral shared memory size: 0
+Integral unshared data size: 0
+Integral unshared stack size: 0
+Page reclaims: 4
+Page faults: 0
+Swaps: 0
+Block input operations: 0
+Block output operations: 0
+Messages sent: 0
+Messages received: 0
+Signals received: 0
+Voluntary context switches: 3955
+Involuntary context switches: 0

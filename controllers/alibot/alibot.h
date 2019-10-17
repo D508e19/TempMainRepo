@@ -85,7 +85,7 @@ public:
 
    bool getStatus();
 
-   void pointTowards(Alibot::CompassDirection desiredDirection);
+   void pointTowards(Alibot::CompassDirection desiredCompassDirection);
 
 private:
 
@@ -131,7 +131,13 @@ private:
    /* Is the bot ready busy and not ready for a new action? */
    bool isBusy = false;
 
+   bool isTurning = false;
+   bool isMoving = false;
+
    CVector2 desiredDirection;
+
+   void checkAndTurn();
+   void checkAndMove();
 };
 
 #endif
