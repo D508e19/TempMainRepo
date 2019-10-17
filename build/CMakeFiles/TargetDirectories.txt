@@ -1,8 +1,0 @@
-/home/lekkkim/Desktop/repos/MainRepo/ARGoS/build/CMakeFiles/rebuild_cache.dir
-/home/lekkkim/Desktop/repos/MainRepo/ARGoS/build/CMakeFiles/edit_cache.dir
-/home/lekkkim/Desktop/repos/MainRepo/ARGoS/build/controllers/CMakeFiles/rebuild_cache.dir
-/home/lekkkim/Desktop/repos/MainRepo/ARGoS/build/controllers/CMakeFiles/edit_cache.dir
-/home/lekkkim/Desktop/repos/MainRepo/ARGoS/build/controllers/alibot/CMakeFiles/rebuild_cache.dir
-/home/lekkkim/Desktop/repos/MainRepo/ARGoS/build/controllers/alibot/CMakeFiles/alibot.dir
-/home/lekkkim/Desktop/repos/MainRepo/ARGoS/build/controllers/alibot/CMakeFiles/edit_cache.dir
-/home/lekkkim/Desktop/repos/MainRepo/ARGoS/build/controllers/alibot/CMakeFiles/alibot_autogen.dir

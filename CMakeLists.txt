@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.12)
-project(D508e19)
+project(KBot)
 
 if(APPLE)
   option(ASAN "Use Clang Address Sanitizer in Debug builds")
@@ -30,10 +30,10 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${ARGOS_PREFIX}/share/argos3/cmake)
 include(ARGoSCheckQTOpenGL)
 
 # Look for the (optional) galib library
-#find_package(GALIB)
-#if(GALIB_FOUND)
-#  include_directories(${GALIB_INCLUDE_DIRS})
-#endif(GALIB_FOUND)
+find_package(GALIB)
+if(GALIB_FOUND)
+  include_directories(${GALIB_INCLUDE_DIRS})
+endif(GALIB_FOUND)
 
 # Find Lua
 find_package(Lua52 REQUIRED)
