@@ -15,6 +15,22 @@ class CommunicatorLoopFunctions : public CLoopFunctions {
 
 public:
 
+   /* An enum for compass directions */
+   enum class CompassDirection {
+      north, 
+      east, 
+      south, 
+      west
+   };
+   
+   /* A map used to convert a compass direction to a vector*/
+   std::map<CommunicatorLoopFunctions::CompassDirection, CVector2> direction_vectors = {
+      { CompassDirection::north, CVector2(0, 1) },
+      { CompassDirection::east, CVector2(1, 0) },
+      { CompassDirection::south, CVector2(0, -1) },
+      { CompassDirection::west, CVector2(-1, 0) }
+   };
+
    CommunicatorLoopFunctions();
    virtual ~CommunicatorLoopFunctions();
 

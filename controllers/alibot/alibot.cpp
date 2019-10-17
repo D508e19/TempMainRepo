@@ -101,6 +101,16 @@ CVector2 Alibot::GetPosition2D(){
     return CVector2(tPosReads.Position.GetX(), tPosReads.Position.GetY());
 }
 
+bool Alibot::getStatus(){
+   return isBusy;
+}
+
+void Alibot::pointTowards(){
+   isBusy = true;
+
+   //TODO Turning and checking
+}
+
 /****************************************/
 /****************************************/
 

@@ -67,6 +67,10 @@ public:
     */
    virtual void Destroy() {}
 
+   bool getStatus();
+
+   void pointTowards();
+
 private:
 
    /* Pointer to the differential steering actuator */
@@ -107,6 +111,11 @@ private:
 
    /* Returns the bots current postion as a 2D vector. */
    CVector2 GetPosition2D();
+
+   /* Is the bot ready busy and not ready for a new action? */
+   bool isBusy = false;
+
+   CVector2 desiredDirection;
 };
 
 #endif
