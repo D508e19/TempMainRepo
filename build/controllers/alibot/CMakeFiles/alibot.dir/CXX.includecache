@@ -1,0 +1,38 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/lekkkim/Desktop/repos/MainRepo/ARGoS/build/controllers/alibot/alibot_autogen/mocs_compilation.cpp
+
+/home/lekkkim/Desktop/repos/MainRepo/ARGoS/controllers/alibot/alibot.cpp
+alibot.h
+/home/lekkkim/Desktop/repos/MainRepo/ARGoS/controllers/alibot/alibot.h
+argos3/core/utility/configuration/argos_configuration.h
+-
+argos3/core/utility/math/vector2.h
+-
+argos3/core/utility/math/vector3.h
+-
+math.h
+-
+argos3/core/utility/logging/argos_log.h
+-
+
+/home/lekkkim/Desktop/repos/MainRepo/ARGoS/controllers/alibot/alibot.h
+argos3/core/control_interface/ci_controller.h
+-
+argos3/plugins/robots/generic/control_interface/ci_differential_steering_actuator.h
+-
+argos3/plugins/robots/foot-bot/control_interface/ci_footbot_proximity_sensor.h
+-
+argos3/plugins/robots/generic/control_interface/ci_positioning_sensor.h
+-
+argos3/core/utility/math/vector2.h
+-
+argos3/plugins/robots/foot-bot/control_interface/ci_footbot_motor_ground_sensor.h
+-
+
