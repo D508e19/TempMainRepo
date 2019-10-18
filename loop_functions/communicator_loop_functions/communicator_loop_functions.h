@@ -35,9 +35,15 @@ private:
    /* A list for all controllers */
    std::list<Alibot*> botControllers;
 
+   /* Returns the desired controller if it exits. */
+   Alibot* getController(int controllerNumber);
+
    /* Find and collects all foot-bot controllers.
     * (Only works with alibots) */
    void CollectBotControllers();
+
+   /* temp variable to keep track of orders. */
+   int commandCompletionCounter = 0;
 };
 
 #endif

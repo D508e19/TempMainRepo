@@ -130,8 +130,8 @@ void Alibot::checkAndTurn(){
    int frontAngle = ToDegrees(cZAngle).GetValue();
    int targetAngle = desiredDirection.Angle().GetValue() * 57.2958;
 
-   argos::LOG << "Front = " << frontAngle << std::endl;
-   argos::LOG << "Target = " << targetAngle << std::endl;
+   //argos::LOG << "Front = " << frontAngle << std::endl;
+   //argos::LOG << "Target = " << targetAngle << std::endl;
 
    if(targetAngle == frontAngle){
       isBusy = false;

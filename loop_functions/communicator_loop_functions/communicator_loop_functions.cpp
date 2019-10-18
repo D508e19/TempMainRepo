@@ -27,34 +27,38 @@ void CommunicatorLoopFunctions::Init(TConfigurationNode& t_tree){
 }
 
 void CommunicatorLoopFunctions::PreStep(){
-   /* TEMP EXAMPLE OF HOW TO USE COMPASS DIRECTIONS */
-   //Alibot::CompassDirection nextDirection = Alibot::CompassDirection::north;
-   //argos::LOG << CommunicatorLoopFunctions::direction_vectors[nextDirection] << std::endl;
-}
 
-/* Delegates destinations to controllers that is available. /
-void CommunicatorLoopFunctions::DelegateDestinations(){
+   if(botControllers.size() > 0){ // Have we collected any controllers?
+      Alibot* firstControllerPtr = getController(0);
 
-   /* Iterate through all controllers and check if bot is ready for directions /
-   std::list<Alibot*>::iterator it = this->botControllers.begin(); 
-   std::list<Alibot*>::iterator end = this->botControllers.end();
-    
-   for(it; it != end; it++){
+      if(!firstControllerPtr->getIsBusy()){ //Is controller ready for a command?
 
-      /* Is this bot ready for directions? /
-      if((*it)->IsReadyForDestination()){
-
-         /* Is there any directions left to give? /
-         if(destinations.size() != 0){
-            std::list<CVector2>::iterator itDest = destinations.begin();
-
-            CVector2 dest = *itDest;
-            destinations.pop_front();
-            (*it)->SetDestination(dest);
+         switch (commandCompletionCounter)
+         {
+         case 0:  firstControllerPtr->pointTowards(Alibot::CompassDirection::east); break;
+         case 1:  firstControllerPtr->moveOneCellForward(); break;
+         case 2:  firstControllerPtr->moveOneCellForward(); break;
+         case 3:  firstControllerPtr->pointTowards(Alibot::CompassDirection::south); break;
+         case 4:  firstControllerPtr->moveOneCellForward(); break;
+         case 5:  firstControllerPtr->moveOneCellForward(); break;
+         
+         default: argos::LOG << "All commands has been executed!" << std::endl;
+            break;
          }
+
+         commandCompletionCounter++;
       }
    }
-}/*
+}
+
+/* Returns the desired controller if it exits. */
+Alibot* CommunicatorLoopFunctions::getController(int controllerNumber){
+
+   std::list<Alibot*>::iterator it = botControllers.begin();
+   std::advance(it, controllerNumber);
+
+   return *it;
+}
 
 /* Find and collects all foot-bot controllers.
  * (Only works with alibots) */
