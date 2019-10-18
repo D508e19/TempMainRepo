@@ -127,13 +127,14 @@ void Alibot::checkAndTurn(){
 
    m_pcPosSens->GetReading().Orientation.ToEulerAngles(cZAngle, cYAngle, cXAngle);
 
-   int frontAngle = ToDegrees(cZAngle).GetValue();
-   int targetAngle = desiredDirection.Angle().GetValue() * 57.2958;
+   double frontAngle = ToDegrees(cZAngle).GetValue();
+   double targetAngle = desiredDirection.Angle().GetValue() * 57.2958;
 
    //argos::LOG << "Front = " << frontAngle << std::endl;
    //argos::LOG << "Target = " << targetAngle << std::endl;
+   //argos::LOG << "Abs value = " << abs(targetAngle - frontAngle) << std::endl;
 
-   if(targetAngle == frontAngle){
+   if(abs(targetAngle - frontAngle) < 0.1){
       isBusy = false;
       isTurning = false;
       m_pcWheels->SetLinearVelocity(0, 0); //Stop the wheels from turning
