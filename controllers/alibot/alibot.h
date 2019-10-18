@@ -148,16 +148,22 @@ private:
 
    bool isTurning = false;
    bool isMoving = false;
-   bool hasLeftStartQR = false;
 
+   /* These booleans is used when the bot is moving from one QR to the next. */
+   bool hasLeftStartQR = false;
    bool hasSensor1LeftQR = false;
    bool hasSensor2LeftQR = false;
    bool hasSensor3LeftQR = false;
    bool hasSensor4LeftQR = false;
 
+   /* The direction the bot should be facing. */
    CVector2 desiredDirection;
 
+   /* Turns the bot to point in the direction of the field: desiredDirection. */
    void checkAndTurn();
+
+   /* Moves the bot forward until all sensors has left the start QR 
+   and all sensors has reached the next QR. */
    void checkAndMove();
 };
 

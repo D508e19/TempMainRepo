@@ -65,10 +65,6 @@ void Alibot::Init(TConfigurationNode &t_node)
    m_cGoStraightAngleRange.Set(-ToRadians(m_cAlpha), ToRadians(m_cAlpha));
    GetNodeAttributeOrDefault(t_node, "delta", m_fDelta, m_fDelta);
    GetNodeAttributeOrDefault(t_node, "velocity", m_fWheelVelocity, m_fWheelVelocity);
-
-   //TODO TMEP
-   //pointTowards(Alibot::CompassDirection::south);
-   moveOneCellForward();
 }
 
 /****************************************/
@@ -76,12 +72,6 @@ void Alibot::Init(TConfigurationNode &t_node)
 
 void Alibot::ControlStep()
 {
-   /* TEMP EXAMPLE OF HOW TO USE COMPASS DIRECTIONS */
-   //Alibot::CompassDirection nextDirection = Alibot::CompassDirection::north;
-   //argos::LOG << Alibot::direction_vectors[nextDirection] << std::endl;
-
-   //GetAndPrintGroundReadings();  
-
    if(isBusy){
       if(isTurning){
          checkAndTurn();
@@ -91,64 +81,19 @@ void Alibot::ControlStep()
    }
 }
 
-/* Reads and prints the bots current position if it is over a dot. */
-void Alibot::GetAndPrintGroundReadings(){
-   
-   Real reading = getGroundSensorReading();
-
-   /* The floor will give the value 1 (white) and a dot will have a lower value then that */
-   if(reading < 0.9){
-      argos::LOG << "DOT!!" << std::endl;
-      argos::LOG << "Current POS: " << GetPosition2D() << std::endl;
-   }
-}
-
-/* Returns the value from ground sensor number 2. */
-Real Alibot::getGroundSensorReading(){
-   /* Get the reading from the ground sensor */
-   const CCI_FootBotMotorGroundSensor::TReadings& tGroundReads = m_pcGroundSensor->GetReadings();
-   
-   //TODO TEMP
-   if(tGroundReads[0].Value < 0.9)
-      argos::LOG << "R1 true" << std::endl;
-
-   if(tGroundReads[1].Value < 0.9)
-      argos::LOG << "R2 true" << std::endl;
-
-   if(tGroundReads[2].Value < 0.9)
-      argos::LOG << "R3 true" << std::endl;
-
-   if(tGroundReads[3].Value < 0.9)
-      argos::LOG << "R4 true" << std::endl;
-
-   /* Save the reading from sensor number 2 */
-   Real reading = tGroundReads[2].Value;
-
-   return reading;
-}
-
+/* Returns the value of the sensor matching the given number. (param: 1-4) */
 Real Alibot::getSensorReading(int sensorNumber){
    const CCI_FootBotMotorGroundSensor::TReadings& tGroundReads = m_pcGroundSensor->GetReadings();
 
    switch (sensorNumber)
    {
-   case 1: return tGroundReads[0].Value;
-   case 2: return tGroundReads[1].Value;
-   case 3: return tGroundReads[2].Value;
-   case 4: return tGroundReads[3].Value;
+      case 1: return tGroundReads[0].Value;
+      case 2: return tGroundReads[1].Value;
+      case 3: return tGroundReads[2].Value;
+      case 4: return tGroundReads[3].Value;
    
-   default: throw "Alibot::getSonsorReading: Input number was not between 1 and 4!";
+      default: throw "Alibot::getSonsorReading: Input number was not between 1 and 4!";
    }
-}
-
-/* Returns true if the bot is currently placed on a QR-code. */
-bool Alibot::isBotOnQRCode(){
-   
-   /* Get the ground sensor reading. */
-   Real reading = getGroundSensorReading();
-
-   /* The floor will give the value 1 (white) and a dot will have a lower value then that */
-   return (reading < 0.9);
 }
 
 /* Returns the bots current postion as a 2D vector. */
@@ -169,18 +114,15 @@ void Alibot::pointTowards(Alibot::CompassDirection desiredCompassDirection){
 }
 
 /* Call this and the bot will move to the next cell infront of it. 
-   (until QR-code is scanned. */
+   (until QR-code is scanned) */
 void Alibot::moveOneCellForward(){
    isBusy = true;
    isMoving = true;
 }
 
+/* Turns the bot to point in the direction of the field: desiredDirection. */
 void Alibot::checkAndTurn(){
 
-   argos::LOG << "Checking and turning!" << std::endl;
-
-   /* If the angle of the vector is small enough and the closest obstacle
-     * is far enough, continue going straight, else pick a random direction */
    CRadians cZAngle, cYAngle, cXAngle;
 
    m_pcPosSens->GetReading().Orientation.ToEulerAngles(cZAngle, cYAngle, cXAngle);
@@ -200,8 +142,10 @@ void Alibot::checkAndTurn(){
    }
 }
 
+/* Moves the bot forward until all sensors has left the start QR 
+   and all sensors has reached the next QR. */
 void Alibot::checkAndMove(){
-   
+
    if(hasLeftStartQR){
 
       //Check sensor one: reached next QR?
