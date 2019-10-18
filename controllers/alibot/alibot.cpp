@@ -67,8 +67,8 @@ void Alibot::Init(TConfigurationNode &t_node)
    GetNodeAttributeOrDefault(t_node, "velocity", m_fWheelVelocity, m_fWheelVelocity);
 
    //TODO TMEP
-   Alibot::CompassDirection nextDirection = Alibot::CompassDirection::west;
-   pointTowards(Alibot::CompassDirection::south);
+   //pointTowards(Alibot::CompassDirection::south);
+   moveOneCellForward();
 }
 
 /****************************************/
@@ -80,7 +80,7 @@ void Alibot::ControlStep()
    //Alibot::CompassDirection nextDirection = Alibot::CompassDirection::north;
    //argos::LOG << Alibot::direction_vectors[nextDirection] << std::endl;
 
-   GetAndPrintGroundReadings();  
+   //GetAndPrintGroundReadings();  
 
    if(isBusy){
       if(isTurning){
@@ -93,20 +93,62 @@ void Alibot::ControlStep()
 
 /* Reads and prints the bots current position if it is over a dot. */
 void Alibot::GetAndPrintGroundReadings(){
-
-   /* Get the reading from the ground sensor */
-   const CCI_FootBotMotorGroundSensor::TReadings& tGroundReads = m_pcGroundSensor->GetReadings();
    
-   /* Save the reading from sensor number 2 */
-   Real reading = tGroundReads[2].Value;
+   Real reading = getGroundSensorReading();
 
    /* The floor will give the value 1 (white) and a dot will have a lower value then that */
    if(reading < 0.9){
       argos::LOG << "DOT!!" << std::endl;
       argos::LOG << "Current POS: " << GetPosition2D() << std::endl;
    }
-   //else
-      //argos::LOG << "nothing to report!" << std::endl;
+}
+
+/* Returns the value from ground sensor number 2. */
+Real Alibot::getGroundSensorReading(){
+   /* Get the reading from the ground sensor */
+   const CCI_FootBotMotorGroundSensor::TReadings& tGroundReads = m_pcGroundSensor->GetReadings();
+   
+   //TODO TEMP
+   if(tGroundReads[0].Value < 0.9)
+      argos::LOG << "R1 true" << std::endl;
+
+   if(tGroundReads[1].Value < 0.9)
+      argos::LOG << "R2 true" << std::endl;
+
+   if(tGroundReads[2].Value < 0.9)
+      argos::LOG << "R3 true" << std::endl;
+
+   if(tGroundReads[3].Value < 0.9)
+      argos::LOG << "R4 true" << std::endl;
+
+   /* Save the reading from sensor number 2 */
+   Real reading = tGroundReads[2].Value;
+
+   return reading;
+}
+
+Real Alibot::getSensorReading(int sensorNumber){
+   const CCI_FootBotMotorGroundSensor::TReadings& tGroundReads = m_pcGroundSensor->GetReadings();
+
+   switch (sensorNumber)
+   {
+   case 1: return tGroundReads[0].Value;
+   case 2: return tGroundReads[1].Value;
+   case 3: return tGroundReads[2].Value;
+   case 4: return tGroundReads[3].Value;
+   
+   default: throw "Alibot::getSonsorReading: Input number was not between 1 and 4!";
+   }
+}
+
+/* Returns true if the bot is currently placed on a QR-code. */
+bool Alibot::isBotOnQRCode(){
+   
+   /* Get the ground sensor reading. */
+   Real reading = getGroundSensorReading();
+
+   /* The floor will give the value 1 (white) and a dot will have a lower value then that */
+   return (reading < 0.9);
 }
 
 /* Returns the bots current postion as a 2D vector. */
@@ -115,27 +157,32 @@ CVector2 Alibot::GetPosition2D(){
     return CVector2(tPosReads.Position.GetX(), tPosReads.Position.GetY());
 }
 
-bool Alibot::getStatus(){
+bool Alibot::getIsBusy(){
    return isBusy;
 }
 
+/* Points the bot towards the given direction. */
 void Alibot::pointTowards(Alibot::CompassDirection desiredCompassDirection){
    isBusy = true;
    isTurning = true;
    desiredDirection = Alibot::direction_vectors[desiredCompassDirection];
 }
 
+/* Call this and the bot will move to the next cell infront of it. 
+   (until QR-code is scanned. */
+void Alibot::moveOneCellForward(){
+   isBusy = true;
+   isMoving = true;
+}
+
 void Alibot::checkAndTurn(){
 
    argos::LOG << "Checking and turning!" << std::endl;
-
-   //m_pcPosSens->GetReading().Position;
 
    /* If the angle of the vector is small enough and the closest obstacle
      * is far enough, continue going straight, else pick a random direction */
    CRadians cZAngle, cYAngle, cXAngle;
 
-   //m_pcWheels->SetLinearVelocity(m_fWheelVelocity, -m_fWheelVelocity);
    m_pcPosSens->GetReading().Orientation.ToEulerAngles(cZAngle, cYAngle, cXAngle);
 
    int frontAngle = ToDegrees(cZAngle).GetValue();
@@ -151,46 +198,79 @@ void Alibot::checkAndTurn(){
    }else{
       m_pcWheels->SetLinearVelocity(m_fWheelVelocity /4, -m_fWheelVelocity /4);
    }
-
-
-   //CVector2 frontVector = CVector2(m_pcPosSens->GetReading().Orientation.GetX(), m_pcPosSens->GetReading().Orientation.GetY());
-
-   //argos::LOG << "\nFrontvector = " << frontVector << "\n" << std::endl;
-
-   //if (((targetAngle - frontAngle) > -2) && ((targetAngle - frontAngle) < 2))
-   //{
-   //   m_pcWheels->SetLinearVelocity(m_fWheelVelocity, m_fWheelVelocity);
-   //}
-
-   float xDif = desiredDirection.GetX() - m_pcPosSens->GetReading().Position.GetX();
-   float yDif = desiredDirection.GetY() - m_pcPosSens->GetReading().Position.GetY();
-
-   argos::LOG << "xDif: " << xDif << " yDiff: " << yDif << std::endl;
-   argos::LOG << "Calculation: " << abs(sqrt(pow(xDif, 2) + pow(yDif,2))) << std::endl;
-
-   //if ( abs(sqrt(pow(xDif, 2) + pow(yDif,2))) < 0.02 )
-   //{
-      //m_pcWheels->SetLinearVelocity(m_fWheelVelocity /4, -m_fWheelVelocity /4);
-   //}
-
-
-
-   //TODO Are we pointing in the right direction?
-
-   //Else turn 
-
-
-   //m_pcWheels->SetLinearVelocity(m_fWheelVelocity, m_fWheelVelocity);
 }
 
-
-
-
-
 void Alibot::checkAndMove(){
-   //TODO
+   
+   if(hasLeftStartQR){
 
-   //m_pcWheels->SetLinearVelocity(m_fWheelVelocity, m_fWheelVelocity);
+      //Check sensor one: reached next QR?
+      if(hasSensor1LeftQR){
+         if((getSensorReading(1) < 0.9))
+            hasSensor1LeftQR = false;
+      }
+
+      //Check sensor two: reached next QR?
+      if(hasSensor2LeftQR){
+         if((getSensorReading(2) < 0.9))
+            hasSensor2LeftQR = false;
+      }
+
+      //Check sensor three: reached next QR?
+      if(hasSensor3LeftQR){
+         if((getSensorReading(3) < 0.9))
+            hasSensor3LeftQR = false;
+      }
+
+      //Check sensor four: reached next QR?
+      if(hasSensor4LeftQR){
+         if((getSensorReading(4) < 0.9))
+            hasSensor4LeftQR = false;
+      }
+      
+      //Has all sensors reached the next QR?
+      if(!hasSensor1LeftQR && !hasSensor2LeftQR && !hasSensor3LeftQR && !hasSensor4LeftQR){
+         m_pcWheels->SetLinearVelocity(0, 0);
+         isMoving = false;
+         isBusy = false;
+
+         hasLeftStartQR = false;
+
+         return;
+      }
+
+   }else{
+      m_pcWheels->SetLinearVelocity(m_fWheelVelocity, m_fWheelVelocity);
+
+      //Check sensor one: has left start QR?
+      if(!hasSensor1LeftQR){
+         if(!(getSensorReading(1) < 0.9))
+            hasSensor1LeftQR = true;
+      }
+
+      //Check sensor two: has left start QR?
+      if(!hasSensor2LeftQR){
+         if(!(getSensorReading(2) < 0.9))
+            hasSensor2LeftQR = true;
+      }
+
+      //Check sensor three: has left start QR?
+      if(!hasSensor3LeftQR){
+         if(!(getSensorReading(3) < 0.9))
+            hasSensor3LeftQR = true;
+      }
+
+      //Check sensor four: has left start QR?
+      if(!hasSensor4LeftQR){
+         if(!(getSensorReading(4) < 0.9))
+            hasSensor4LeftQR = true;
+      }
+      
+      //Has all sensors left the start QR?
+      if(hasSensor1LeftQR && hasSensor2LeftQR && hasSensor3LeftQR && hasSensor4LeftQR){
+         hasLeftStartQR = true;
+      }
+   }
 }
 
 /****************************************/

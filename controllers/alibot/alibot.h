@@ -83,9 +83,15 @@ public:
     */
    virtual void Destroy() {}
 
-   bool getStatus();
+   /* Returns the state of the bot. */
+   bool getIsBusy();
 
+   /* Points the bot towards the given direction. */
    void pointTowards(Alibot::CompassDirection desiredCompassDirection);
+
+   /* Call this and the bot will move to the next cell infront of it. 
+   (until QR-code is scanned. */
+   void moveOneCellForward();
 
 private:
 
@@ -125,6 +131,15 @@ private:
    /* Reads and prints the bots current position if it is over a dot. */
    void GetAndPrintGroundReadings();
 
+   /* Returns true if the bot is currently placed on a QR-code. */
+   bool isBotOnQRCode();
+
+   /* Returns the value from ground sensor number 2. */
+   Real getGroundSensorReading();
+
+   /* Returns the value of the sensor matching the given number. (param: 1-4) */
+   Real getSensorReading(int sensorNumber);
+
    /* Returns the bots current postion as a 2D vector. */
    CVector2 GetPosition2D();
 
@@ -133,6 +148,12 @@ private:
 
    bool isTurning = false;
    bool isMoving = false;
+   bool hasLeftStartQR = false;
+
+   bool hasSensor1LeftQR = false;
+   bool hasSensor2LeftQR = false;
+   bool hasSensor3LeftQR = false;
+   bool hasSensor4LeftQR = false;
 
    CVector2 desiredDirection;
 
