@@ -134,12 +134,22 @@ void Alibot::checkAndTurn(){
    //argos::LOG << "Target = " << targetAngle << std::endl;
    //argos::LOG << "Abs value = " << abs(targetAngle - frontAngle) << std::endl;
 
-   if(abs(targetAngle - frontAngle) < 0.1){
+   if(abs(targetAngle - frontAngle) < 0.11){
       isBusy = false;
       isTurning = false;
       m_pcWheels->SetLinearVelocity(0, 0); //Stop the wheels from turning
    }else{
-      m_pcWheels->SetLinearVelocity(m_fWheelVelocity /4, -m_fWheelVelocity /4);
+
+      /* Is the shortest turning to the right or left? */
+      bool shouldTurnRight;
+      int frontAngleShifted = frontAngle + 179;
+      int targetAngleShifted = targetAngle + 179;
+      shouldTurnRight = (targetAngleShifted - frontAngleShifted) < 0;
+
+      if(shouldTurnRight)
+         m_pcWheels->SetLinearVelocity(m_fWheelVelocity /4, -m_fWheelVelocity /4);
+      else
+         m_pcWheels->SetLinearVelocity(-m_fWheelVelocity /4, m_fWheelVelocity /4);
    }
 }
 

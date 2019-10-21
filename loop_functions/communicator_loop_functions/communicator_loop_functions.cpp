@@ -37,10 +37,12 @@ void CommunicatorLoopFunctions::PreStep(){
          {
          case 0:  firstControllerPtr->pointTowards(Alibot::CompassDirection::east); break;
          case 1:  firstControllerPtr->moveOneCellForward(); break;
-         case 2:  firstControllerPtr->moveOneCellForward(); break;
-         case 3:  firstControllerPtr->pointTowards(Alibot::CompassDirection::south); break;
-         case 4:  firstControllerPtr->moveOneCellForward(); break;
+         case 2:  firstControllerPtr->pointTowards(Alibot::CompassDirection::north); break;
+         case 3:  firstControllerPtr->moveOneCellForward(); break;
+         case 4:  firstControllerPtr->pointTowards(Alibot::CompassDirection::east); break;
          case 5:  firstControllerPtr->moveOneCellForward(); break;
+         case 6:  firstControllerPtr->pointTowards(Alibot::CompassDirection::west); break;
+         case 7:  firstControllerPtr->moveOneCellForward(); break;
          
          default: argos::LOG << "All commands has been executed!" << std::endl;
             break;
