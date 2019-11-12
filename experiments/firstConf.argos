@@ -10,8 +10,8 @@
 				truncate_file="true" />
 	</framework>
 	<controllers>
-		<Alibot_controller 	id="abc"
-							library="build/controllers/alibot/libalibot">
+		<Basicbot_controller 	id="bc"
+							library="build/controllers/basicbot/libbasicbot">
 			<actuators>
 				<differential_steering implementation="default" />
 			</actuators>
@@ -21,7 +21,7 @@
 				<footbot_motor_ground implementation="rot_z_only" />
 			</sensors>
 			<params alpha="7.5" delta="0.1" velocity="5" />
-		</Alibot_controller>
+		</Basicbot_controller>
 	</controllers>
 	<loop_functions library="build/loop_functions/communicator_loop_functions/libcommunicator_loop_functions"
 					label="communicator_loop_functions">
@@ -44,7 +44,7 @@
 	 <!-- Place the bot and bind it to the controller -->
 	  <foot-bot id="fb_0">
 		<body position="0,0,0" orientation="0,0,0" />
-		<controller config="abc" />
+		<controller config="bc" />
 	  </foot-bot>
 	<!-- 
 	 <distribute>
