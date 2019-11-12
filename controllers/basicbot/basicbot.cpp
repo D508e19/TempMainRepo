@@ -72,13 +72,7 @@ void Basicbot::Init(TConfigurationNode &t_node)
 
 void Basicbot::ControlStep()
 {
-   if(isBusy){
-      if(isTurning){
-         checkAndTurn();
-      }else if(isMoving){
-         checkAndMove();
-      }
-   }
+   
 }
 
 /* Returns the value of the sensor matching the given number. (param: 1-4) */
@@ -100,114 +94,6 @@ Real Basicbot::getSensorReading(int sensorNumber){
 CVector2 Basicbot::GetPosition2D(){
     const CCI_PositioningSensor::SReading &tPosReads = m_pcPosSens->GetReading();
     return CVector2(tPosReads.Position.GetX(), tPosReads.Position.GetY());
-}
-
-/* Turns the bot to point in the direction of the field: desiredDirection. */
-void Basicbot::checkAndTurn(){
-
-   CRadians cZAngle, cYAngle, cXAngle;
-
-   m_pcPosSens->GetReading().Orientation.ToEulerAngles(cZAngle, cYAngle, cXAngle);
-
-   double frontAngle = ToDegrees(cZAngle).GetValue();
-   double targetAngle = desiredDirection.Angle().GetValue() * 57.2958;
-
-   //argos::LOG << "Front = " << frontAngle << std::endl;
-   //argos::LOG << "Target = " << targetAngle << std::endl;
-   //argos::LOG << "Abs value = " << abs(targetAngle - frontAngle) << std::endl;
-
-   if(abs(targetAngle - frontAngle) < 0.11){
-      isBusy = false;
-      isTurning = false;
-      m_pcWheels->SetLinearVelocity(0, 0); //Stop the wheels from turning
-   }else{
-
-      /* Is the shortest turning to the right or left? */
-      bool shouldTurnRight;
-      int frontAngleShifted = frontAngle + 179;
-      int targetAngleShifted = targetAngle + 179;
-      shouldTurnRight = (targetAngleShifted - frontAngleShifted) < 0;
-
-      if(shouldTurnRight)
-         m_pcWheels->SetLinearVelocity(m_fWheelVelocity /4, -m_fWheelVelocity /4);
-      else
-         m_pcWheels->SetLinearVelocity(-m_fWheelVelocity /4, m_fWheelVelocity /4);
-   }
-}
-
-/* Moves the bot forward until all sensors has left the start QR 
-   and all sensors has reached the next QR. */
-void Basicbot::checkAndMove(){
-
-   if(hasLeftStartQR){
-
-      //Check sensor one: reached next QR?
-      if(hasSensor1LeftQR){
-         if((getSensorReading(1) < 0.9))
-            hasSensor1LeftQR = false;
-      }
-
-      //Check sensor two: reached next QR?
-      if(hasSensor2LeftQR){
-         if((getSensorReading(2) < 0.9))
-            hasSensor2LeftQR = false;
-      }
-
-      //Check sensor three: reached next QR?
-      if(hasSensor3LeftQR){
-         if((getSensorReading(3) < 0.9))
-            hasSensor3LeftQR = false;
-      }
-
-      //Check sensor four: reached next QR?
-      if(hasSensor4LeftQR){
-         if((getSensorReading(4) < 0.9))
-            hasSensor4LeftQR = false;
-      }
-      
-      //Has all sensors reached the next QR?
-      if(!hasSensor1LeftQR && !hasSensor2LeftQR && !hasSensor3LeftQR && !hasSensor4LeftQR){
-         m_pcWheels->SetLinearVelocity(0, 0);
-         isMoving = false;
-         isBusy = false;
-
-         hasLeftStartQR = false;
-
-         return;
-      }
-
-   }else{
-      m_pcWheels->SetLinearVelocity(m_fWheelVelocity, m_fWheelVelocity);
-
-      //Check sensor one: has left start QR?
-      if(!hasSensor1LeftQR){
-         if(!(getSensorReading(1) < 0.9))
-            hasSensor1LeftQR = true;
-      }
-
-      //Check sensor two: has left start QR?
-      if(!hasSensor2LeftQR){
-         if(!(getSensorReading(2) < 0.9))
-            hasSensor2LeftQR = true;
-      }
-
-      //Check sensor three: has left start QR?
-      if(!hasSensor3LeftQR){
-         if(!(getSensorReading(3) < 0.9))
-            hasSensor3LeftQR = true;
-      }
-
-      //Check sensor four: has left start QR?
-      if(!hasSensor4LeftQR){
-         if(!(getSensorReading(4) < 0.9))
-            hasSensor4LeftQR = true;
-      }
-      
-      //Has all sensors left the start QR?
-      if(hasSensor1LeftQR && hasSensor2LeftQR && hasSensor3LeftQR && hasSensor4LeftQR){
-         hasLeftStartQR = true;
-      }
-   }
 }
 
 /****************************************/

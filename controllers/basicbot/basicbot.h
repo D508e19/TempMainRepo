@@ -129,17 +129,17 @@ private:
     * It is set to [-alpha,alpha]. */
    CRange<CRadians> m_cGoStraightAngleRange;
 
-   /* Reads and prints the bots current position if it is over a dot. */
-   void GetAndPrintGroundReadings();
+   /* Reads the QR code in the current cell and returns its coordinate. */
+    CVector2 ReadCellQR();
 
-   /* Returns true if the bot is currently placed on a QR-code. */
-   bool isBotOnQRCode();
+    /* Returns true if the bot is currently placed on a QR-code. */
+    bool isBotOnQRCode();
 
-   /* Returns the value from ground sensor number 2. */
-   Real getGroundSensorReading();
+    /* Returns the value from ground sensor number 2. */
+    Real getGroundSensorReading();
 
-   /* Returns the value of the sensor matching the given number. (param: 1-4) */
-   Real getSensorReading(int sensorNumber);
+    /* Returns the value of the sensor matching the given number. (param: 1-4) */
+    Real getSensorReading(int sensorNumber);
 
    /* Is the bot ready busy and not ready for a new action? */
    bool isBusy = false;
