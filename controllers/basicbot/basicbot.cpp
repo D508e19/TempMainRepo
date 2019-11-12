@@ -102,13 +102,6 @@ CVector2 Basicbot::GetPosition2D(){
     return CVector2(tPosReads.Position.GetX(), tPosReads.Position.GetY());
 }
 
-/* Call this and the bot will move to the next cell infront of it. 
-   (until QR-code is scanned) */
-void Basicbot::moveOneCellForward(){
-   isBusy = true;
-   isMoving = true;
-}
-
 /* Turns the bot to point in the direction of the field: desiredDirection. */
 void Basicbot::checkAndTurn(){
 

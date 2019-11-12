@@ -67,9 +67,32 @@ public:
     */
    virtual void Destroy() {}
 
-   /* Call this and the bot will move to the next cell infront of it. 
-   (until QR-code is scanned. */
-   void moveOneCellForward();
+   /* The unique robot id. */
+    int robotID;
+
+    /* The robots current position. Will be updated 
+     * each time a robot scans a ground QR code. */
+    CVector2 position;
+
+    /* Makes the bot move the given number of cells forward. */
+    bool MoveForward(int numberOfCells);
+
+    /* Makes the bot turn the given number of degrees. */
+    /* TODO the decription should reflect more details about the argument. */
+    bool TurnDegrees(float degreesToTurn);
+
+   /* Makes the bot pick up the pod on the current position. */
+    bool PickupPod();
+
+    /* Makes the bot put down the pod on the current position. */
+    bool PutDownPod();
+
+    /* Returns the bots current postion as a 2D vector. */
+    CVector2 GetPosition2D();
+
+    /* Reads the pods QR code in the current cell. */
+    /* TODO the return parameter should be changed. */
+    bool ReadPodQR();
 
 private:
 
@@ -117,9 +140,6 @@ private:
 
    /* Returns the value of the sensor matching the given number. (param: 1-4) */
    Real getSensorReading(int sensorNumber);
-
-   /* Returns the bots current postion as a 2D vector. */
-   CVector2 GetPosition2D();
 
    /* Is the bot ready busy and not ready for a new action? */
    bool isBusy = false;
