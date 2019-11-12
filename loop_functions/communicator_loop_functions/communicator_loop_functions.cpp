@@ -28,29 +28,7 @@ void CommunicatorLoopFunctions::Init(TConfigurationNode& t_tree){
 
 void CommunicatorLoopFunctions::PreStep(){
 
-   if(botControllers.size() > 0){ // Have we collected any controllers?
-      Basicbot* firstControllerPtr = getController(0);
-
-      if(!firstControllerPtr->getIsBusy()){ //Is controller ready for a command?
-
-         switch (commandCompletionCounter)
-         {
-         case 0:  firstControllerPtr->pointTowards(Basicbot::CompassDirection::east); break;
-         case 1:  firstControllerPtr->moveOneCellForward(); break;
-         case 2:  firstControllerPtr->pointTowards(Basicbot::CompassDirection::north); break;
-         case 3:  firstControllerPtr->moveOneCellForward(); break;
-         case 4:  firstControllerPtr->pointTowards(Basicbot::CompassDirection::east); break;
-         case 5:  firstControllerPtr->moveOneCellForward(); break;
-         case 6:  firstControllerPtr->pointTowards(Basicbot::CompassDirection::west); break;
-         case 7:  firstControllerPtr->moveOneCellForward(); break;
-         
-         default: argos::LOG << "All commands has been executed!" << std::endl;
-            break;
-         }
-
-         commandCompletionCounter++;
-      }
-   }
+   
 }
 
 /* Returns the desired controller if it exits. */

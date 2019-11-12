@@ -102,17 +102,6 @@ CVector2 Basicbot::GetPosition2D(){
     return CVector2(tPosReads.Position.GetX(), tPosReads.Position.GetY());
 }
 
-bool Basicbot::getIsBusy(){
-   return isBusy;
-}
-
-/* Points the bot towards the given direction. */
-void Basicbot::pointTowards(Basicbot::CompassDirection desiredCompassDirection){
-   isBusy = true;
-   isTurning = true;
-   desiredDirection = Basicbot::direction_vectors[desiredCompassDirection];
-}
-
 /* Call this and the bot will move to the next cell infront of it. 
    (until QR-code is scanned) */
 void Basicbot::moveOneCellForward(){

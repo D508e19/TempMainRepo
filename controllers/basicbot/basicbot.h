@@ -30,22 +30,6 @@ class Basicbot : public CCI_Controller {
 
 public:
 
-   /* An enum for compass directions */
-   enum class CompassDirection {
-      north, 
-      east, 
-      south, 
-      west
-   };
-   
-   /* A map used to convert a compass direction to a vector*/
-   std::map<Basicbot::CompassDirection, CVector2> direction_vectors = {
-      { CompassDirection::north, CVector2(0, 1) },
-      { CompassDirection::east, CVector2(1, 0) },
-      { CompassDirection::south, CVector2(0, -1) },
-      { CompassDirection::west, CVector2(-1, 0) }
-   };
-
    /* Class constructor. */
    Basicbot();
 
@@ -82,12 +66,6 @@ public:
     * completeness.
     */
    virtual void Destroy() {}
-
-   /* Returns the state of the bot. */
-   bool getIsBusy();
-
-   /* Points the bot towards the given direction. */
-   void pointTowards(Basicbot::CompassDirection desiredCompassDirection);
 
    /* Call this and the bot will move to the next cell infront of it. 
    (until QR-code is scanned. */

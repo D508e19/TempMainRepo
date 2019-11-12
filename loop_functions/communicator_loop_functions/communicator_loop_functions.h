@@ -15,14 +15,6 @@ class CommunicatorLoopFunctions : public CLoopFunctions {
 
 public:
 
-   /* A map used to convert a compass direction to a vector*/
-   std::map<Basicbot::CompassDirection, CVector2> direction_vectors = {
-      { Basicbot::CompassDirection::north, CVector2(0, 1) },
-      { Basicbot::CompassDirection::east, CVector2(1, 0) },
-      { Basicbot::CompassDirection::south, CVector2(0, -1) },
-      { Basicbot::CompassDirection::west, CVector2(-1, 0) }
-   };
-
    CommunicatorLoopFunctions();
    virtual ~CommunicatorLoopFunctions();
 
