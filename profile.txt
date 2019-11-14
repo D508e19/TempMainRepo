@@ -1,14 +1,14 @@
 [profiled portion overall]
 
-Wall clock time: 0.393053
-CPU usage: 27.827%
-User time: 0.0625
+Wall clock time: 0.354165
+CPU usage: 22.0589%
+User time: 0.03125
 System time: 0.046875
-Maximum resident set size: 428
+Maximum resident set size: 424
 Integral shared memory size: 0
 Integral unshared data size: 0
 Integral unshared stack size: 0
-Page reclaims: 110
+Page reclaims: 109
 Page faults: 0
 Swaps: 0
 Block input operations: 0
@@ -21,8 +21,8 @@ Involuntary context switches: 0
 
 [profiled portion start]
 
-User time: 0.03125
-System time: 0.046875
+User time: 0.0625
+System time: 0.09375
 Maximum resident set size: 21852
 Integral shared memory size: 0
 Integral unshared data size: 0
@@ -41,12 +41,12 @@ Involuntary context switches: 0
 [profiled portion end]
 
 User time: 0.09375
-System time: 0.09375
-Maximum resident set size: 22280
+System time: 0.140625
+Maximum resident set size: 22276
 Integral shared memory size: 0
 Integral unshared data size: 0
 Integral unshared stack size: 0
-Page reclaims: 6054
+Page reclaims: 6053
 Page faults: 0
 Swaps: 0
 Block input operations: 0
@@ -60,12 +60,12 @@ Involuntary context switches: 0
 [process overall]
 
 User time: 0.09375
-System time: 0.09375
-Maximum resident set size: 22280
+System time: 0.140625
+Maximum resident set size: 22276
 Integral shared memory size: 0
 Integral unshared data size: 0
 Integral unshared stack size: 0
-Page reclaims: 6057
+Page reclaims: 6056
 Page faults: 0
 Swaps: 0
 Block input operations: 0
@@ -78,8 +78,8 @@ Involuntary context switches: 0
 
 [thread #0 overall]
 
-CPU usage: 7.95058%
-User time: 0.015625
+CPU usage: 4.41179%
+User time: 0
 System time: 0.015625
 Maximum resident set size: 22180
 Integral shared memory size: 0
@@ -98,7 +98,7 @@ Involuntary context switches: 0
 
 [thread #1 overall]
 
-CPU usage: 3.97529%
+CPU usage: 4.41179%
 User time: 0.015625
 System time: 0
 Maximum resident set size: 22184

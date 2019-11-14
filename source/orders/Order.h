@@ -9,7 +9,7 @@ private:
 	int m_timestamp_completed;
 	int m_PodID;
 public:
-	Order(int, int, int);
+	Order(int orderID, int timestampBorn, int PodID);
 	~Order();
 
     int getPodID(){ return Order::m_PodID; }
@@ -22,9 +22,7 @@ Order::Order(int orderID, int timestampBorn, int PodID):
     m_PodID(PodID) 
     {};
 
-Order::~Order()
-{
-}
+Order::~Order(){}
 
 
 #endif
