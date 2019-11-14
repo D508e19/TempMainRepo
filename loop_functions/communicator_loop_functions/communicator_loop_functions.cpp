@@ -24,20 +24,27 @@ CommunicatorLoopFunctions::~CommunicatorLoopFunctions(){
 void CommunicatorLoopFunctions::Init(TConfigurationNode& t_tree){
    
    CollectBotControllers();
+   
+
 }
 
 void CommunicatorLoopFunctions::PreStep(){
-
+   printControllers();
    
 }
 
+void CommunicatorLoopFunctions::printControllers(){
+   
+   std::map<int, Basicbot*>::iterator it;
+   for(it = botControllers.begin(); it != botControllers.end(); it++){
+      int robotID = it->first;
+      std::cout << "Robot ID: " << robotID << std::endl;
+   }
+}
+
 /* Returns the desired controller if it exits. */
-Basicbot* CommunicatorLoopFunctions::getController(int controllerNumber){
-
-   std::list<Basicbot*>::iterator it = botControllers.begin();
-   std::advance(it, controllerNumber);
-
-   return *it;
+Basicbot* CommunicatorLoopFunctions::getController(int robotID){
+   return botControllers[robotID];
 }
 
 /* Find and collects all foot-bot controllers.
@@ -47,12 +54,16 @@ void CommunicatorLoopFunctions::CollectBotControllers(){
    /* Get a map containing all active foot-bots */
    CSpace::TMapPerType& botMap = GetSpace().GetEntitiesByType("foot-bot");
 
+   int robotIDCounter = 0;
+
    /* Iterate through all bots and collect their controller */
    for(CSpace::TMapPerType::iterator it = botMap.begin(); it != botMap.end(); it++){
       CFootBotEntity& cFootbot = *any_cast<CFootBotEntity*>(it->second); //Get the footbot
       Basicbot& controller = dynamic_cast<Basicbot&>(cFootbot.GetControllableEntity().GetController()); //Get the controller of the footbot
       Basicbot *pr = &controller;
-      botControllers.push_back(pr); //Put it a the end of the list
+      //int robotID = pr->robotID; //TODO This will be correct when a manager is made
+      pr->robotID = robotIDCounter++;
+      botControllers[pr->robotID] = pr;
    }
 }
 

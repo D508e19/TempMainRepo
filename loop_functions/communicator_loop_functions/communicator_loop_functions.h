@@ -25,7 +25,10 @@ public:
 private:
 
    /* A list for all controllers */
-   std::list<Basicbot*> botControllers;
+   //std::list<Basicbot*> botControllers;
+
+   /* A map for all controllers. */
+   std::map<int, Basicbot*> botControllers;
 
    /* Returns the desired controller if it exits. */
    Basicbot* getController(int controllerNumber);
@@ -34,8 +37,8 @@ private:
     * (Only works with Basicbot) */
    void CollectBotControllers();
 
-   /* temp variable to keep track of orders. */
-   int commandCompletionCounter = 0;
+   /* Print robot ids for all collected controllers. */
+   void printControllers();
 };
 
 #endif

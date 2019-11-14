@@ -42,10 +42,18 @@
 
 	<floor id="f" source="image" path="35x35bigDots.png" /> 
 	 <!-- Place the bot and bind it to the controller -->
-	  <foot-bot id="fb_0">
+	<foot-bot id="fb_0">
 		<body position="0,0,0" orientation="0,0,0" />
 		<controller config="bc" />
-	  </foot-bot>
+	</foot-bot>
+	<foot-bot id="fb_1">
+		<body position="1,0,0" orientation="0,0,0" />
+		<controller config="bc" />
+	</foot-bot>
+	<foot-bot id="fb_2">
+		<body position="0,1,0" orientation="0,0,0" />
+		<controller config="bc" />
+	</foot-bot>
 	<!-- 
 	 <distribute>
 			<position method="grid" center="0,0,0" distances="0.5, 0.5, 0" layout="11,11,1" />
