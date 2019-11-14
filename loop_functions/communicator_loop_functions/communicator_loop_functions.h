@@ -9,11 +9,16 @@
 
 #include <list>
 
+#include <source/pods/PodManager.h>
+#include <source/orders/OrderManager.h>
+
 using namespace argos;
 
 class CommunicatorLoopFunctions : public CLoopFunctions {
 
 public:
+   OrderManager om;
+   PodManager pm;
 
    /* A map used to convert a compass direction to a vector*/
    std::map<Alibot::CompassDirection, CVector2> direction_vectors = {

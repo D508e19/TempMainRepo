@@ -3,30 +3,40 @@
 #include <argos3/plugins/robots/foot-bot/simulator/footbot_entity.h>
 #include <argos3/core/utility/logging/argos_log.h>
 #include <argos3/plugins/robots/foot-bot/simulator/footbot_entity.h>
-#include <controllers/alibot/alibot.h>
 #include <argos3/core/utility/math/vector2.h>
 
 #include <list>
 #include <iterator>
 
+#include <controllers/alibot/alibot.h>
+
+#include <source/pods/PodManager.h>
+
 /****************************************/
 
-CommunicatorLoopFunctions::CommunicatorLoopFunctions() {
+CommunicatorLoopFunctions::CommunicatorLoopFunctions(){
 }
 
 CommunicatorLoopFunctions::~CommunicatorLoopFunctions(){
-
 }
 
 /****************************************/
 /****************************************/
 
 void CommunicatorLoopFunctions::Init(TConfigurationNode& t_tree){
-   
+   om = OrderManager(100);
+   pm = PodManager(50);
+   argos::LOG << "Pod count: " << pm.GetCount() << std::endl;
    CollectBotControllers();
+
 }
 
 void CommunicatorLoopFunctions::PreStep(){
+   Order temp = om.getNewOrder();
+   // Pod Ptemp = pm.GetPod(pm.GetCount());
+   
+   argos::LOG << "OrderID: " << temp.getOrderID() << " PodID: "<< temp.getPodID() << std::endl;
+   argos::LOG << "Pod count: " << pm.GetCount() << std::endl;
 
    if(botControllers.size() > 0){ // Have we collected any controllers?
       Alibot* firstControllerPtr = getController(0);

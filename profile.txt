@@ -1,33 +1,14 @@
 [profiled portion overall]
 
-Wall clock time: 2.1025
-CPU usage: 15.7498%
-User time: 0.267149
-System time: 0.063992
-Maximum resident set size: 94500
+Wall clock time: 0.393053
+CPU usage: 27.827%
+User time: 0.0625
+System time: 0.046875
+Maximum resident set size: 428
 Integral shared memory size: 0
 Integral unshared data size: 0
 Integral unshared stack size: 0
-Page reclaims: 27434
-Page faults: 1
-Swaps: 0
-Block input operations: 0
-Block output operations: 584
-Messages sent: 0
-Messages received: 0
-Signals received: 0
-Voluntary context switches: 275
-Involuntary context switches: 1
-
-[profiled portion start]
-
-User time: 0.050233
-System time: 0.01932
-Maximum resident set size: 45032
-Integral shared memory size: 0
-Integral unshared data size: 0
-Integral unshared stack size: 0
-Page reclaims: 4396
+Page reclaims: 110
 Page faults: 0
 Swaps: 0
 Block input operations: 0
@@ -35,57 +16,37 @@ Block output operations: 0
 Messages sent: 0
 Messages received: 0
 Signals received: 0
-Voluntary context switches: 437
+Voluntary context switches: 0
+Involuntary context switches: 0
+
+[profiled portion start]
+
+User time: 0.03125
+System time: 0.046875
+Maximum resident set size: 21852
+Integral shared memory size: 0
+Integral unshared data size: 0
+Integral unshared stack size: 0
+Page reclaims: 5944
+Page faults: 0
+Swaps: 0
+Block input operations: 0
+Block output operations: 0
+Messages sent: 0
+Messages received: 0
+Signals received: 0
+Voluntary context switches: 0
 Involuntary context switches: 0
 
 [profiled portion end]
 
-User time: 0.317382
-System time: 0.083312
-Maximum resident set size: 139532
+User time: 0.09375
+System time: 0.09375
+Maximum resident set size: 22280
 Integral shared memory size: 0
 Integral unshared data size: 0
 Integral unshared stack size: 0
-Page reclaims: 31830
-Page faults: 1
-Swaps: 0
-Block input operations: 0
-Block output operations: 584
-Messages sent: 0
-Messages received: 0
-Signals received: 0
-Voluntary context switches: 712
-Involuntary context switches: 1
-
-[process overall]
-
-User time: 0.317581
-System time: 0.083365
-Maximum resident set size: 139532
-Integral shared memory size: 0
-Integral unshared data size: 0
-Integral unshared stack size: 0
-Page reclaims: 31830
-Page faults: 1
-Swaps: 0
-Block input operations: 0
-Block output operations: 592
-Messages sent: 0
-Messages received: 0
-Signals received: 0
-Voluntary context switches: 712
-Involuntary context switches: 1
-
-[thread #0 overall]
-
-CPU usage: 0.00299643%
-User time: 6.3e-05
-System time: 0
-Maximum resident set size: 139532
-Integral shared memory size: 0
-Integral unshared data size: 0
-Integral unshared stack size: 0
-Page reclaims: 7
+Page reclaims: 6054
 Page faults: 0
 Swaps: 0
 Block input operations: 0
@@ -93,19 +54,58 @@ Block output operations: 0
 Messages sent: 0
 Messages received: 0
 Signals received: 0
-Voluntary context switches: 2
+Voluntary context switches: 0
+Involuntary context switches: 0
+
+[process overall]
+
+User time: 0.09375
+System time: 0.09375
+Maximum resident set size: 22280
+Integral shared memory size: 0
+Integral unshared data size: 0
+Integral unshared stack size: 0
+Page reclaims: 6057
+Page faults: 0
+Swaps: 0
+Block input operations: 0
+Block output operations: 0
+Messages sent: 0
+Messages received: 0
+Signals received: 0
+Voluntary context switches: 0
+Involuntary context switches: 0
+
+[thread #0 overall]
+
+CPU usage: 7.95058%
+User time: 0.015625
+System time: 0.015625
+Maximum resident set size: 22180
+Integral shared memory size: 0
+Integral unshared data size: 0
+Integral unshared stack size: 0
+Page reclaims: 6026
+Page faults: 0
+Swaps: 0
+Block input operations: 0
+Block output operations: 0
+Messages sent: 0
+Messages received: 0
+Signals received: 0
+Voluntary context switches: 0
 Involuntary context switches: 0
 
 [thread #1 overall]
 
-CPU usage: 0.00570748%
-User time: 0.00012
+CPU usage: 3.97529%
+User time: 0.015625
 System time: 0
-Maximum resident set size: 139532
+Maximum resident set size: 22184
 Integral shared memory size: 0
 Integral unshared data size: 0
 Integral unshared stack size: 0
-Page reclaims: 4
+Page reclaims: 6027
 Page faults: 0
 Swaps: 0
 Block input operations: 0
@@ -113,5 +113,5 @@ Block output operations: 0
 Messages sent: 0
 Messages received: 0
 Signals received: 0
-Voluntary context switches: 3
+Voluntary context switches: 0
 Involuntary context switches: 0
