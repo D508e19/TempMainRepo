@@ -10,13 +10,17 @@ class Node;
 class Node {
 
 public:
-    Node *parent;
-    int parentWeight;
-    int x;
-    int y;
-    bool start;
-    enum direction{North, South, East, West};
+    Node *parent{};
+    int parentWeight{};
+    int x{};
+    int y{};
+    bool start{};
+    enum Direction{North, South, East, West};
+    Direction direction;
 
+    Node(int, int, Node::Direction);
+    static int heuristic(class Node, class Node);
+    static int CostToRoot(Node n);
 };
 
 

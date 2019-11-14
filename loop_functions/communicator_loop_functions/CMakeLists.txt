@@ -2,7 +2,7 @@ link_directories(${CMAKE_BINARY_DIR}/controllers/alibot)
 
 set(communicator_loop_functions_SOURCES
   communicator_loop_functions.h
-  communicator_loop_functions.cpp ../../environment/node.cpp ../../environment/node.h)
+  communicator_loop_functions.cpp ../../environment/node.cpp ../../environment/node.h ../../environment/pathfinding/aStar.cpp ../../environment/pathfinding/aStar.h)
 
 add_library(communicator_loop_functions MODULE 
   ${communicator_loop_functions_SOURCES})
