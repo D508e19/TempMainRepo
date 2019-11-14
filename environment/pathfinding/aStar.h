@@ -12,13 +12,14 @@
 
 class aStar {
 public:
-    aStar(int x, int y);
+    aStar(int x, int y, Node start);
 
 private:
     std::list<Node> openSet;
     std::list<Node> cheapestPath;
     std::map<Node, int> fScore;
-    Node current;
+    Node start;
+    Node current = start;
     int goalX;
     int goalY;
     int weight(Node, Node);
