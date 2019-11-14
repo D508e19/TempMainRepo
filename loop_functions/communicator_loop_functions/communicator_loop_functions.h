@@ -39,6 +39,8 @@ private:
 
    /* Print robot ids for all collected controllers. */
    void printControllers();
+
+   bool trigger = false;
 };
 
 #endif

@@ -24,13 +24,15 @@ CommunicatorLoopFunctions::~CommunicatorLoopFunctions(){
 void CommunicatorLoopFunctions::Init(TConfigurationNode& t_tree){
    
    CollectBotControllers();
-   
 
 }
 
 void CommunicatorLoopFunctions::PreStep(){
    printControllers();
-   
+   if(!trigger){
+      getController(0)->MoveForward(5);
+      trigger = true;
+   }
 }
 
 void CommunicatorLoopFunctions::printControllers(){

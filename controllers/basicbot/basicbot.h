@@ -74,6 +74,9 @@ public:
      * each time a robot scans a ground QR code. */
     CVector2 position;
 
+    /* Is the bot ready busy and not ready for a new action. */
+   bool isBusy = false;
+
     /* Makes the bot move the given number of cells forward. */
     bool MoveForward(int numberOfCells);
 
@@ -141,9 +144,6 @@ private:
     /* Returns the value of the sensor matching the given number. (param: 1-4) */
     Real getSensorReading(int sensorNumber);
 
-   /* Is the bot ready busy and not ready for a new action? */
-   bool isBusy = false;
-
    bool isTurning = false;
    bool isMoving = false;
 
@@ -163,6 +163,11 @@ private:
    /* Moves the bot forward until all sensors has left the start QR 
    and all sensors has reached the next QR. */
    void checkAndMove();
+
+   /* Used to move the bot to the next QR-code. */
+   void MoveToNextQR();
+
+   int tilesLeftToMove = 0;
 };
 
 #endif

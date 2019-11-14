@@ -72,7 +72,13 @@ void Basicbot::Init(TConfigurationNode &t_node)
 
 void Basicbot::ControlStep()
 {
-   
+   if(isBusy){
+      if(isTurning){
+         checkAndTurn();
+      }else if(isMoving){
+         MoveToNextQR();
+      }
+   }
 }
 
 /* Returns the value of the sensor matching the given number. (param: 1-4) */
@@ -94,6 +100,114 @@ Real Basicbot::getSensorReading(int sensorNumber){
 CVector2 Basicbot::GetPosition2D(){
     const CCI_PositioningSensor::SReading &tPosReads = m_pcPosSens->GetReading();
     return CVector2(tPosReads.Position.GetX(), tPosReads.Position.GetY());
+}
+
+/* ------------------------ PUBLIC METHODS ------------------- */
+
+/* Makes the bot move the given number of cells forward. */
+bool Basicbot::MoveForward(int numberOfCells){
+   isBusy = true;
+   isMoving = true;
+   tilesLeftToMove = numberOfCells;
+}
+
+/* Makes the bot turn the given number of degrees. */
+/* TODO the decription should reflect more details about the argument. */
+bool Basicbot::TurnDegrees(float degreesToTurn){
+   //TODO
+}
+
+/* Makes the bot pick up the pod on the current position. */
+bool Basicbot::PickupPod(){
+   //TODO
+}
+
+/* Makes the bot put down the pod on the current position. */
+bool Basicbot::PutDownPod(){
+   //TODO
+}
+
+/* Reads the pods QR code in the current cell. */
+/* TODO the return parameter should be changed. */
+bool Basicbot::ReadPodQR(){
+
+}
+
+/* ------------------------ PRIVATE METHODS ------------------- */
+
+/* Used to move the bot to the next QR-code.
+ * If param is false, the bot will stop on the next QR-code. */
+void Basicbot::MoveToNextQR(){
+   if(hasLeftStartQR){
+      //Check sensor one: reached next QR?
+      if(hasSensor1LeftQR){
+         if((getSensorReading(1) < 0.9))
+            hasSensor1LeftQR = false;
+      }
+
+      //Check sensor two: reached next QR?
+      if(hasSensor2LeftQR){
+         if((getSensorReading(2) < 0.9))
+            hasSensor2LeftQR = false;
+      }
+
+      //Check sensor three: reached next QR?
+      if(hasSensor3LeftQR){
+         if((getSensorReading(3) < 0.9))
+            hasSensor3LeftQR = false;
+      }
+
+      //Check sensor four: reached next QR?
+      if(hasSensor4LeftQR){
+         if((getSensorReading(4) < 0.9))
+            hasSensor4LeftQR = false;
+      }
+      
+      //Has all sensors reached the next QR?
+      if(!hasSensor1LeftQR && !hasSensor2LeftQR && !hasSensor3LeftQR && !hasSensor4LeftQR){
+         
+         if(tilesLeftToMove == 1){
+            m_pcWheels->SetLinearVelocity(0, 0);
+            isMoving = false;
+            isBusy = false;
+         }
+
+         tilesLeftToMove--;
+         hasLeftStartQR = false;
+      }
+
+   }else{
+      m_pcWheels->SetLinearVelocity(m_fWheelVelocity, m_fWheelVelocity);
+
+      //Check sensor one: has left start QR?
+      if(!hasSensor1LeftQR){
+         if(!(getSensorReading(1) < 0.9))
+            hasSensor1LeftQR = true;
+      }
+
+      //Check sensor two: has left start QR?
+      if(!hasSensor2LeftQR){
+         if(!(getSensorReading(2) < 0.9))
+            hasSensor2LeftQR = true;
+      }
+
+      //Check sensor three: has left start QR?
+      if(!hasSensor3LeftQR){
+         if(!(getSensorReading(3) < 0.9))
+            hasSensor3LeftQR = true;
+      }
+
+      //Check sensor four: has left start QR?
+      if(!hasSensor4LeftQR){
+         if(!(getSensorReading(4) < 0.9))
+            hasSensor4LeftQR = true;
+      }
+      
+      //Has all sensors left the start QR?
+      if(hasSensor1LeftQR && hasSensor2LeftQR && hasSensor3LeftQR && hasSensor4LeftQR){
+         hasLeftStartQR = true;
+      }
+   }
 }
 
 /****************************************/
