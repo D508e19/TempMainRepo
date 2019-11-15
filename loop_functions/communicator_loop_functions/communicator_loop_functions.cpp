@@ -10,15 +10,13 @@
 
 #include <controllers/alibot/alibot.h>
 
-#include <source/pods/PodManager.h>
+//#include "src/pods/PodManager.h"
 
 /****************************************/
 
-CommunicatorLoopFunctions::CommunicatorLoopFunctions(){
-}
+CommunicatorLoopFunctions::CommunicatorLoopFunctions(){}
 
-CommunicatorLoopFunctions::~CommunicatorLoopFunctions(){
-}
+CommunicatorLoopFunctions::~CommunicatorLoopFunctions(){}
 
 /****************************************/
 /****************************************/
@@ -32,11 +30,13 @@ void CommunicatorLoopFunctions::Init(TConfigurationNode& t_tree){
 }
 
 void CommunicatorLoopFunctions::PreStep(){
+
+   // --------------------- TODO: Remove ----------------
    Order temp = om.getNewOrder();
-   // Pod Ptemp = pm.GetPod(pm.GetCount());
-   
    argos::LOG << "OrderID: " << temp.getOrderID() << " PodID: "<< temp.getPodID() << std::endl;
    argos::LOG << "Pod count: " << pm.GetCount() << std::endl;
+   // ------------------------------------------------
+
 
    if(botControllers.size() > 0){ // Have we collected any controllers?
       Alibot* firstControllerPtr = getController(0);

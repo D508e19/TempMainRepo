@@ -1,16 +1,15 @@
 #ifndef ROBOTMANAGER_H
 #define ROBOTMANAGER_H
 
-#include <"Order.h>
-#include <QRcode.h>
+#include "orders/Order.h"
+#include "qrcodes/QRcode.h"
 
 class robotManager
 {
 private:
-    int m_controllerId;
 
 public:
-    robotManager(/* args */);
+    robotManager();
     ~robotManager();
 
     Order RequestOrder();
@@ -20,13 +19,9 @@ public:
 
 };
 
-robotManager::robotManager(/* args */)
-{
-}
+robotManager::robotManager(){}
 
-robotManager::~robotManager()
-{
-}
+robotManager::~robotManager(){}
 
 
 #endif

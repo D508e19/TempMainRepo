@@ -4,10 +4,11 @@
 class Order
 {
 private:
-	int m_orderID;
-	int m_timestamp_born;
+	const int m_orderID;
+	const int m_PodID;
+	const int m_timestamp_born;
 	int m_timestamp_completed;
-	int m_PodID;
+	
 public:
 	Order(int orderID, int timestampBorn, int PodID);
 	~Order();

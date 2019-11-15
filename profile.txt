@@ -1,14 +1,14 @@
 [profiled portion overall]
 
-Wall clock time: 0.354165
-CPU usage: 22.0589%
-User time: 0.03125
-System time: 0.046875
-Maximum resident set size: 424
+Wall clock time: 0.517355
+CPU usage: 24.1614%
+User time: 0.0625
+System time: 0.0625
+Maximum resident set size: 428
 Integral shared memory size: 0
 Integral unshared data size: 0
 Integral unshared stack size: 0
-Page reclaims: 109
+Page reclaims: 110
 Page faults: 0
 Swaps: 0
 Block input operations: 0
@@ -21,13 +21,13 @@ Involuntary context switches: 0
 
 [profiled portion start]
 
-User time: 0.0625
-System time: 0.09375
-Maximum resident set size: 21852
+User time: 0.046875
+System time: 0.046875
+Maximum resident set size: 21848
 Integral shared memory size: 0
 Integral unshared data size: 0
 Integral unshared stack size: 0
-Page reclaims: 5944
+Page reclaims: 5943
 Page faults: 0
 Swaps: 0
 Block input operations: 0
@@ -40,8 +40,8 @@ Involuntary context switches: 0
 
 [profiled portion end]
 
-User time: 0.09375
-System time: 0.140625
+User time: 0.109375
+System time: 0.109375
 Maximum resident set size: 22276
 Integral shared memory size: 0
 Integral unshared data size: 0
@@ -59,8 +59,8 @@ Involuntary context switches: 0
 
 [process overall]
 
-User time: 0.09375
-System time: 0.140625
+User time: 0.109375
+System time: 0.109375
 Maximum resident set size: 22276
 Integral shared memory size: 0
 Integral unshared data size: 0
@@ -78,14 +78,14 @@ Involuntary context switches: 0
 
 [thread #0 overall]
 
-CPU usage: 4.41179%
-User time: 0
+CPU usage: 9.06051%
+User time: 0.03125
 System time: 0.015625
-Maximum resident set size: 22180
+Maximum resident set size: 22176
 Integral shared memory size: 0
 Integral unshared data size: 0
 Integral unshared stack size: 0
-Page reclaims: 6026
+Page reclaims: 6025
 Page faults: 0
 Swaps: 0
 Block input operations: 0
@@ -98,14 +98,14 @@ Involuntary context switches: 0
 
 [thread #1 overall]
 
-CPU usage: 4.41179%
+CPU usage: 6.04034%
 User time: 0.015625
-System time: 0
-Maximum resident set size: 22184
+System time: 0.015625
+Maximum resident set size: 22180
 Integral shared memory size: 0
 Integral unshared data size: 0
 Integral unshared stack size: 0
-Page reclaims: 6027
+Page reclaims: 6026
 Page faults: 0
 Swaps: 0
 Block input operations: 0

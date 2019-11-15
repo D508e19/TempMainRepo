@@ -9,8 +9,8 @@
 
 #include <list>
 
-#include <source/pods/PodManager.h>
-#include <source/orders/OrderManager.h>
+#include <src/pods/PodManager.h>
+#include <src/orders/OrderManager.h>
 
 using namespace argos;
 

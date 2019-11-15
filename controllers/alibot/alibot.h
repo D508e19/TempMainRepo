@@ -1,9 +1,6 @@
 #ifndef FOOTBOT_DIFFUSION_H
 #define FOOTBOT_DIFFUSION_H
 
-/*
- * Include some necessary headers.
- */
 /* Definition of the CCI_Controller class. */
 #include <argos3/core/control_interface/ci_controller.h>
 /* Definition of the differential steering actuator */
