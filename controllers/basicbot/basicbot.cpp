@@ -118,14 +118,16 @@ bool Basicbot::PutDownPod(){
 }
 
 /* Reads the pods QR code in the current cell. */
-/* TODO the return parameter should be changed. */
-bool Basicbot::ReadPodQR(){
-   return false; //TODO Not yet implemented
+QRCode Basicbot::ReadPodQR(){
+   QRCode qr;
+   qr.SetPosition(GetPosition2D());
+
+   return qr;
 }
 
-/* Reads the QR code in the current cell and returns its coordinate. 
- * If the bot is not on a QR, it will return a CVector(-1,-1). */
-CVector2 Basicbot::ReadCellQR(){
+QRCode Basicbot::ReadCellQR(){
+
+   QRCode qr;
 
    Real sensor1 = getSensorReading(1);
    Real sensor2 = getSensorReading(2);
@@ -133,10 +135,12 @@ CVector2 Basicbot::ReadCellQR(){
    Real sensor4 = getSensorReading(4);
 
    //Is the bot currently on a QR code?
-   if(sensor1 < 0.9 && sensor2 < 0.9 && sensor3 < 0.9 && sensor4)
-      return GetPosition2D();
+   if(sensor1 < 0.9 && sensor2 < 0.9 && sensor3 < 0.9 && sensor4){
+      qr.SetPosition(GetPosition2D());
+      return qr;
+   }
    else
-      return CVector2(-1,-1);
+      return qr;
 }
 
 /* ------------------------ PRIVATE METHODS ------------------- */

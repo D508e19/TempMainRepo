@@ -11,9 +11,7 @@
 #include <argos3/plugins/robots/generic/control_interface/ci_positioning_sensor.h>
 #include <argos3/core/utility/math/vector2.h>
 #include <argos3/plugins/robots/foot-bot/control_interface/ci_footbot_motor_ground_sensor.h>
-
-/**/
-//#include <loop_functions/communicator_loop_functions/communicator_loop_functions.h> //This gives an error, be aware!
+#include <src/qrcodes/QRCode.h>
 
 /*
  * All the ARGoS stuff in the 'argos' namespace.
@@ -75,11 +73,9 @@ public:
    bool PutDownPod();
 
    /* Reads the pods QR code in the current cell. */
-   /* TODO the return parameter should be changed. */
-   bool ReadPodQR();
+   QRCode ReadPodQR();
 
-   /* Reads the QR code in the current cell and returns its coordinate. */
-   CVector2 ReadCellQR();
+   QRCode ReadCellQR();
 
 private:
 
