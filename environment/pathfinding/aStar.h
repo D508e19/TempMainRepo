@@ -12,17 +12,18 @@
 
 class aStar {
 public:
-    aStar(int x, int y, Node start);
+    aStar(const Node& goal, Node start);
 
-private:
     std::list<Node> openSet;
-    std::list<Node> cheapestPath;
+    std::map<Node, int> gScore;
     std::map<Node, int> fScore;
-    Node start;
-    Node current = start;
+    Node* start;
+    Node current = *start;
     int goalX;
     int goalY;
     int weight(Node, Node);
+
+    bool pairCompare(std::pair<Node, int> i, std::pair<Node, int> j);
 };
 
 
