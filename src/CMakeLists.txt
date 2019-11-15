@@ -5,7 +5,8 @@ add_subdirectory(pods)
 add_subdirectory(qrcodes)
 
 set(RobotManager_SOURCES
-  RobotManager.h)
+  RobotManager.h
+  robotWrapper.h)
 
 add_library(RobotManager MODULE
   ${src_SOURCES})
