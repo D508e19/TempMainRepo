@@ -74,32 +74,11 @@ void Basicbot::ControlStep()
 {
    if(isBusy){
       if(isTurning){
-         checkAndTurn();
+         TurnToDesiredDirection();
       }else if(isMoving){
          MoveToNextQR();
       }
    }
-}
-
-/* Returns the value of the sensor matching the given number. (param: 1-4) */
-Real Basicbot::getSensorReading(int sensorNumber){
-   const CCI_FootBotMotorGroundSensor::TReadings& tGroundReads = m_pcGroundSensor->GetReadings();
-
-   switch (sensorNumber)
-   {
-      case 1: return tGroundReads[0].Value;
-      case 2: return tGroundReads[1].Value;
-      case 3: return tGroundReads[2].Value;
-      case 4: return tGroundReads[3].Value;
-   
-      default: throw "Basicbot::getSonsorReading: Input number was not between 1 and 4!";
-   }
-}
-
-/* Returns the bots current postion as a 2D vector. */
-CVector2 Basicbot::GetPosition2D(){
-    const CCI_PositioningSensor::SReading &tPosReads = m_pcPosSens->GetReading();
-    return CVector2(tPosReads.Position.GetX(), tPosReads.Position.GetY());
 }
 
 /* ------------------------ PUBLIC METHODS ------------------- */
@@ -112,9 +91,28 @@ bool Basicbot::MoveForward(int numberOfCells){
 }
 
 /* Makes the bot turn the given number of degrees. */
-/* TODO the decription should reflect more details about the argument. */
 bool Basicbot::TurnDegrees(float degreesToTurn){
-   //TODO
+   isBusy = true;
+   isTurning = true;
+
+   CRadians cZAngle, cYAngle, cXAngle;
+   m_pcPosSens->GetReading().Orientation.ToEulerAngles(cZAngle, cYAngle, cXAngle);
+   double frontAngle = ToDegrees(cZAngle).GetValue();
+
+   std::cout << "Current front angle: " << frontAngle << std::endl;
+
+   CVector2 frontVector = CVector2(cos(cZAngle.GetValue()), sin(cZAngle.GetValue()));
+   //CVector2 frontVector = CVector2(cos(frontAngle), sin(frontAngle));
+
+   std::cout << "Current front vector: " << frontVector << std::endl;
+
+   double rotationRad = ToRadians(CDegrees(degreesToTurn)).GetValue();
+   CVector2 desiredDirectionVector = CVector2(frontVector.GetX() * cos(rotationRad) - frontVector.GetY() * sin(rotationRad),
+                                       frontVector.GetX() * sin(rotationRad) + frontVector.GetY() * cos(rotationRad));
+
+   std::cout << "Desired front vector: " << desiredDirectionVector << std::endl;
+
+   desiredTargetAngle = desiredDirectionVector.Angle().GetValue() * 57.2958;
 }
 
 /* Makes the bot pick up the pod on the current position. */
@@ -124,13 +122,13 @@ bool Basicbot::PickupPod(){
 
 /* Makes the bot put down the pod on the current position. */
 bool Basicbot::PutDownPod(){
-   //TODO
+   return false; //TODO Not yet implemented
 }
 
 /* Reads the pods QR code in the current cell. */
 /* TODO the return parameter should be changed. */
 bool Basicbot::ReadPodQR(){
-
+   return false; //TODO Not yet implemented
 }
 
 /* ------------------------ PRIVATE METHODS ------------------- */
@@ -207,6 +205,69 @@ void Basicbot::MoveToNextQR(){
       if(hasSensor1LeftQR && hasSensor2LeftQR && hasSensor3LeftQR && hasSensor4LeftQR){
          hasLeftStartQR = true;
       }
+   }
+}
+
+/* Turns the bot to point in the direction of the field: desiredDirection. */
+void Basicbot::TurnToDesiredDirection(){
+   CRadians cZAngle, cYAngle, cXAngle;
+
+   m_pcPosSens->GetReading().Orientation.ToEulerAngles(cZAngle, cYAngle, cXAngle);
+
+   double frontAngle = ToDegrees(cZAngle).GetValue();
+   //double targetAngle = desiredDirection.Angle().GetValue() * 57.2958;
+
+   //argos::LOG << "Front = " << frontAngle << std::endl;
+   //argos::LOG << "Target = " << desiredTargetAngle << std::endl;
+   //argos::LOG << "Abs value = " << abs(desiredTargetAngle - frontAngle) << std::endl;
+
+   if(abs(desiredTargetAngle - frontAngle) < 0.11){ //0.11
+      isBusy = false;
+      isTurning = false;
+      m_pcWheels->SetLinearVelocity(0, 0); //Stop the wheels from turning
+   }else{
+
+      //std::cout << " TURNINING" << std::endl;
+
+      /* Is the shortest turning to the right or left? */
+      bool shouldTurnRight;
+      int frontAngleShifted = frontAngle + 179;
+      int targetAngleShifted = desiredTargetAngle + 179;
+      shouldTurnRight = (targetAngleShifted - frontAngleShifted) < 0;
+
+      /* Calculate turn modifier. The smaller the angle the slower it turns. */
+      int turnSpeedModifier = getTurnSpeedModifier(abs(desiredTargetAngle - frontAngle));
+      //argos::LOG << "Turn speed mod: " << turnSpeedModifier << std::endl;
+
+      if(shouldTurnRight)
+         m_pcWheels->SetLinearVelocity(m_fWheelVelocity /turnSpeedModifier, -m_fWheelVelocity /turnSpeedModifier);
+      else
+         m_pcWheels->SetLinearVelocity(-m_fWheelVelocity /turnSpeedModifier, m_fWheelVelocity /turnSpeedModifier);
+   }
+}
+
+/* Returns the turn speed modifier based on the absolute angle difference.*/
+int Basicbot::getTurnSpeedModifier(double angleDiffAbs){
+
+   if(angleDiffAbs > 2)
+      return 4;
+
+   //Currently based on points: (0.11, 60) , (1, 25) , (2, 4)
+   return (23300 / 2403) * pow(angleDiffAbs, 2) - (40121 / 801) * angleDiffAbs + (157138 / 2403);
+}
+
+/* Returns the value of the sensor matching the given number. (param: 1-4) */
+Real Basicbot::getSensorReading(int sensorNumber){
+   const CCI_FootBotMotorGroundSensor::TReadings& tGroundReads = m_pcGroundSensor->GetReadings();
+
+   switch (sensorNumber)
+   {
+      case 1: return tGroundReads[0].Value;
+      case 2: return tGroundReads[1].Value;
+      case 3: return tGroundReads[2].Value;
+      case 4: return tGroundReads[3].Value;
+   
+      default: throw "Basicbot::getSonsorReading: Input number was not between 1 and 4!";
    }
 }
 

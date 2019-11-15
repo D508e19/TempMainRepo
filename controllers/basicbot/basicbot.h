@@ -90,9 +90,6 @@ public:
     /* Makes the bot put down the pod on the current position. */
     bool PutDownPod();
 
-    /* Returns the bots current postion as a 2D vector. */
-    CVector2 GetPosition2D();
-
     /* Reads the pods QR code in the current cell. */
     /* TODO the return parameter should be changed. */
     bool ReadPodQR();
@@ -168,6 +165,13 @@ private:
    void MoveToNextQR();
 
    int tilesLeftToMove = 0;
+   double desiredTargetAngle = 0;
+
+   /* Turns the bot to point in the direction of the field: desiredDirection. */
+   void TurnToDesiredDirection();
+
+   /* Returns the turn speed modifier based on the absolute angle difference.*/
+   int getTurnSpeedModifier(double angleDiffAbs);
 };
 
 #endif

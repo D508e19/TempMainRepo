@@ -28,10 +28,31 @@ void CommunicatorLoopFunctions::Init(TConfigurationNode& t_tree){
 }
 
 void CommunicatorLoopFunctions::PreStep(){
-   printControllers();
-   if(!trigger){
-      getController(0)->MoveForward(5);
-      trigger = true;
+   //printControllers();
+
+   if(!getController(0)->isBusy){
+
+      std::cout << "Giving robot next command. " << completedCommands << std::endl;
+
+      switch (completedCommands)
+      {
+      case 0: getController(0)->MoveForward(2); break;
+      case 1: getController(0)->TurnDegrees(90); break;
+      case 2: getController(0)->MoveForward(1); break;
+      case 3: getController(0)->TurnDegrees(-90); break;
+      case 4: getController(0)->MoveForward(3); break;
+      case 5: getController(0)->TurnDegrees(180); break;
+      case 6: getController(0)->MoveForward(3); break;
+      case 7: getController(0)->TurnDegrees(90); break;
+      case 8: getController(0)->MoveForward(1); break;
+      case 9: getController(0)->TurnDegrees(-90); break;
+      case 10: getController(0)->MoveForward(2); break;
+      
+      default:
+         break;
+      }
+
+      completedCommands++;
    }
 }
 
