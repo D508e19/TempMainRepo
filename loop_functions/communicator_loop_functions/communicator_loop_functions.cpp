@@ -9,25 +9,27 @@
 #include <list>
 #include <iterator>
 
+//#include "src/pods/PodManager.h"
+
 /****************************************/
 
-CommunicatorLoopFunctions::CommunicatorLoopFunctions() {
-}
+CommunicatorLoopFunctions::CommunicatorLoopFunctions(){}
 
-CommunicatorLoopFunctions::~CommunicatorLoopFunctions(){
-
-}
+CommunicatorLoopFunctions::~CommunicatorLoopFunctions(){}
 
 /****************************************/
 /****************************************/
 
 void CommunicatorLoopFunctions::Init(TConfigurationNode& t_tree){
-   
+   om = OrderManager(100);
+   pm = PodManager(50);
+   argos::LOG << "Pod count: " << pm.GetCount() << std::endl;
    CollectBotControllers();
 
 }
 
 void CommunicatorLoopFunctions::PreStep(){
+
    //printControllers();
 
    if(!getController(0)->isBusy){
@@ -50,10 +52,18 @@ void CommunicatorLoopFunctions::PreStep(){
       
       default:
          break;
-      }
+         }
 
       completedCommands++;
    }
+
+
+   // --------------------- TODO: Remove ----------------
+   Order temp = om.getNewOrder();
+   argos::LOG << "OrderID: " << temp.getOrderID() << " PodID: "<< temp.getPodID() << std::endl;
+   argos::LOG << "Pod count: " << pm.GetCount() << std::endl;
+   // ------------------------------------------------
+      
 }
 
 void CommunicatorLoopFunctions::printControllers(){

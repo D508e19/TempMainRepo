@@ -9,11 +9,16 @@
 
 #include <list>
 
+#include <src/pods/PodManager.h>
+#include <src/orders/OrderManager.h>
+
 using namespace argos;
 
 class CommunicatorLoopFunctions : public CLoopFunctions {
 
 public:
+   OrderManager om;
+   PodManager pm;
 
    CommunicatorLoopFunctions();
    virtual ~CommunicatorLoopFunctions();

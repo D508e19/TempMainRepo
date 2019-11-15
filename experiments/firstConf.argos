@@ -2,7 +2,7 @@
 <argos-configuration>
 	<framework>
 	<system threads="2" method="balance_quantity" />
-	<experiment length="0"
+	<experiment length="10"
 				ticks_per_second="10"
 				random_seed="1" />
 	<profiling 	file="profile.txt"
@@ -77,7 +77,7 @@
 		<led id="leds" />
 	</media>
 	<visualization>
-		<qt-opengl />
+		<!--<qt-opengl />-->
 	</visualization>
 	<!-- <loop_functions library="/path/to/libmy_loop_functions.so" label="my_loop_functions" /> -->
 </argos-configuration>
