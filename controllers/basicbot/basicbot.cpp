@@ -123,9 +123,20 @@ bool Basicbot::ReadPodQR(){
    return false; //TODO Not yet implemented
 }
 
-/* Reads the QR code in the current cell and returns its coordinate. */
-CVector2 ReadCellQR(){
-   return CVector2(0,0); //TODO Not yet implemented
+/* Reads the QR code in the current cell and returns its coordinate. 
+ * If the bot is not on a QR, it will return a CVector(-1,-1). */
+CVector2 Basicbot::ReadCellQR(){
+
+   Real sensor1 = getSensorReading(1);
+   Real sensor2 = getSensorReading(2);
+   Real sensor3 = getSensorReading(3);
+   Real sensor4 = getSensorReading(4);
+
+   //Is the bot currently on a QR code?
+   if(sensor1 < 0.9 && sensor2 < 0.9 && sensor3 < 0.9 && sensor4)
+      return GetPosition2D();
+   else
+      return CVector2(-1,-1);
 }
 
 /* ------------------------ PRIVATE METHODS ------------------- */
@@ -254,6 +265,12 @@ Real Basicbot::getSensorReading(int sensorNumber){
    
       default: throw "Basicbot::getSonsorReading: Input number was not between 1 and 4!";
    }
+}
+
+/* Returns the bots current postion as a 2D vector. */
+CVector2 Basicbot::GetPosition2D(){
+    const CCI_PositioningSensor::SReading &tPosReads = m_pcPosSens->GetReading();
+    return CVector2(tPosReads.Position.GetX(), tPosReads.Position.GetY());
 }
 
 /****************************************/

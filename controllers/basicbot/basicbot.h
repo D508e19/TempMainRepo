@@ -141,6 +141,9 @@ private:
 
    /* Returns the value of the sensor matching the given number. (param: 1-4) */
    Real getSensorReading(int sensorNumber);
+
+   /* Returns the bots current postion as a 2D vector. */
+   CVector2 GetPosition2D();
 };
 
 #endif
