@@ -36,63 +36,52 @@ public:
    /* Class destructor. */
    virtual ~Basicbot() {}
 
-   /*
-    * This function initializes the controller.
+   /* This function initializes the controller.
     * The 't_node' variable points to the <parameters> section in the XML
-    * file in the <controllers><footbot_diffusion_controller> section.
-    */
+    * file in the <controllers><footbot_diffusion_controller> section. */
    virtual void Init(TConfigurationNode& t_node);
 
-   /*
-    * This function is called once every time step.
-    * The length of the time step is set in the XML file.
-    */
+   /* This function is called once every time step.
+    * The length of the time step is set in the XML file. */
    virtual void ControlStep();
 
-   /*
-    * This function resets the controller to its state right after the
+   /* This function resets the controller to its state right after the
     * Init().
     * It is called when you press the reset button in the GUI.
     * In this example controller there is no need for resetting anything,
     * so the function could have been omitted. It's here just for
-    * completeness.
-    */
+    * completeness. */
    virtual void Reset() {}
 
-   /*
-    * Called to cleanup what done by Init() when the experiment finishes.
+   /* Called to cleanup what done by Init() when the experiment finishes.
     * In this example controller there is no need for clean anything up,
     * so the function could have been omitted. It's here just for
-    * completeness.
-    */
+    * completeness. */
    virtual void Destroy() {}
 
    /* The unique robot id. */
-    int robotID;
+   int robotID;
 
-    /* The robots current position. Will be updated 
-     * each time a robot scans a ground QR code. */
-    CVector2 position;
-
-    /* Is the bot ready busy and not ready for a new action. */
    bool isBusy = false;
 
-    /* Makes the bot move the given number of cells forward. */
-    bool MoveForward(int numberOfCells);
+   /* Makes the bot move the given number of cells forward. */
+   bool MoveForward(int numberOfCells);
 
-    /* Makes the bot turn the given number of degrees. */
-    /* TODO the decription should reflect more details about the argument. */
-    bool TurnDegrees(float degreesToTurn);
+   /* Makes the bot turn the given number of degrees. */
+   bool TurnDegrees(float degreesToTurn);
 
    /* Makes the bot pick up the pod on the current position. */
-    bool PickupPod();
+   bool PickupPod();
 
-    /* Makes the bot put down the pod on the current position. */
-    bool PutDownPod();
+   /* Makes the bot put down the pod on the current position. */
+   bool PutDownPod();
 
-    /* Reads the pods QR code in the current cell. */
-    /* TODO the return parameter should be changed. */
-    bool ReadPodQR();
+   /* Reads the pods QR code in the current cell. */
+   /* TODO the return parameter should be changed. */
+   bool ReadPodQR();
+
+   /* Reads the QR code in the current cell and returns its coordinate. */
+   CVector2 ReadCellQR();
 
 private:
 
@@ -105,12 +94,10 @@ private:
    /* Pointer to the ground sensor */
    CCI_FootBotMotorGroundSensor* m_pcGroundSensor;
 
-   /*
-    * The following variables are used as parameters for the
+   /* The following variables are used as parameters for the
     * algorithm. You can set their value in the <parameters> section
     * of the XML configuration file, under the
-    * <controllers><footbot_diffusion_controller> section.
-    */
+    * <controllers><footbot_diffusion_controller> section. */
 
    /* Maximum tolerance for the angle between
     * the robot heading direction and
@@ -120,8 +107,7 @@ private:
     * the robot and the closest obstacle.
     * The proximity reading is 0 when nothing is detected
     * and grows exponentially to 1 when the obstacle is
-    * touching the robot.
-    */
+    * touching the robot. */
    Real m_fDelta;
    /* Wheel speed. */
    Real m_fWheelVelocity;
@@ -129,49 +115,32 @@ private:
     * It is set to [-alpha,alpha]. */
    CRange<CRadians> m_cGoStraightAngleRange;
 
-   /* Reads the QR code in the current cell and returns its coordinate. */
-    CVector2 ReadCellQR();
-
-    /* Returns true if the bot is currently placed on a QR-code. */
-    bool isBotOnQRCode();
-
-    /* Returns the value from ground sensor number 2. */
-    Real getGroundSensorReading();
-
-    /* Returns the value of the sensor matching the given number. (param: 1-4) */
-    Real getSensorReading(int sensorNumber);
-
    bool isTurning = false;
    bool isMoving = false;
 
    /* These booleans is used when the bot is moving from one QR to the next. */
-   bool hasLeftStartQR = false; //TODO TEMP
-   bool hasSensor1LeftQR = false; //TODO TEMP
-   bool hasSensor2LeftQR = false; //TODO TEMP
-   bool hasSensor3LeftQR = false; //TODO TEMP
-   bool hasSensor4LeftQR = false; //TODO TEMP
+   bool hasLeftStartQR = false;
+   bool hasSensor1LeftQR = false;
+   bool hasSensor2LeftQR = false;
+   bool hasSensor3LeftQR = false;
+   bool hasSensor4LeftQR = false;
 
-   /* The direction the bot should be facing. */
    CVector2 desiredDirection;
-
-   /* Turns the bot to point in the direction of the field: desiredDirection. */
-   void checkAndTurn();
-
-   /* Moves the bot forward until all sensors has left the start QR 
-   and all sensors has reached the next QR. */
-   void checkAndMove();
-
-   /* Used to move the bot to the next QR-code. */
-   void MoveToNextQR();
 
    int tilesLeftToMove = 0;
    double desiredTargetAngle = 0;
+
+   /* Used to move the bot to the next QR-code. */
+   void MoveToNextQR();
 
    /* Turns the bot to point in the direction of the field: desiredDirection. */
    void TurnToDesiredDirection();
 
    /* Returns the turn speed modifier based on the absolute angle difference.*/
    int getTurnSpeedModifier(double angleDiffAbs);
+
+   /* Returns the value of the sensor matching the given number. (param: 1-4) */
+   Real getSensorReading(int sensorNumber);
 };
 
 #endif

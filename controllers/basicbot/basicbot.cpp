@@ -95,29 +95,21 @@ bool Basicbot::TurnDegrees(float degreesToTurn){
    isBusy = true;
    isTurning = true;
 
+   /* Convert the given degrees into the desired target angle. */
+   /* TODO optimize. Maybe not needed? */
    CRadians cZAngle, cYAngle, cXAngle;
    m_pcPosSens->GetReading().Orientation.ToEulerAngles(cZAngle, cYAngle, cXAngle);
    double frontAngle = ToDegrees(cZAngle).GetValue();
-
-   std::cout << "Current front angle: " << frontAngle << std::endl;
-
    CVector2 frontVector = CVector2(cos(cZAngle.GetValue()), sin(cZAngle.GetValue()));
-   //CVector2 frontVector = CVector2(cos(frontAngle), sin(frontAngle));
-
-   std::cout << "Current front vector: " << frontVector << std::endl;
-
    double rotationRad = ToRadians(CDegrees(degreesToTurn)).GetValue();
    CVector2 desiredDirectionVector = CVector2(frontVector.GetX() * cos(rotationRad) - frontVector.GetY() * sin(rotationRad),
                                        frontVector.GetX() * sin(rotationRad) + frontVector.GetY() * cos(rotationRad));
-
-   std::cout << "Desired front vector: " << desiredDirectionVector << std::endl;
-
    desiredTargetAngle = desiredDirectionVector.Angle().GetValue() * 57.2958;
 }
 
 /* Makes the bot pick up the pod on the current position. */
 bool Basicbot::PickupPod(){
-   //TODO
+   return false; //TODO Not yet implemented
 }
 
 /* Makes the bot put down the pod on the current position. */
@@ -131,10 +123,14 @@ bool Basicbot::ReadPodQR(){
    return false; //TODO Not yet implemented
 }
 
+/* Reads the QR code in the current cell and returns its coordinate. */
+CVector2 ReadCellQR(){
+   return CVector2(0,0); //TODO Not yet implemented
+}
+
 /* ------------------------ PRIVATE METHODS ------------------- */
 
-/* Used to move the bot to the next QR-code.
- * If param is false, the bot will stop on the next QR-code. */
+/* Used to move the bot to the next QR-code. */
 void Basicbot::MoveToNextQR(){
    if(hasLeftStartQR){
       //Check sensor one: reached next QR?
@@ -163,7 +159,6 @@ void Basicbot::MoveToNextQR(){
       
       //Has all sensors reached the next QR?
       if(!hasSensor1LeftQR && !hasSensor2LeftQR && !hasSensor3LeftQR && !hasSensor4LeftQR){
-         
          if(tilesLeftToMove == 1){
             m_pcWheels->SetLinearVelocity(0, 0);
             isMoving = false;
@@ -211,23 +206,14 @@ void Basicbot::MoveToNextQR(){
 /* Turns the bot to point in the direction of the field: desiredDirection. */
 void Basicbot::TurnToDesiredDirection(){
    CRadians cZAngle, cYAngle, cXAngle;
-
    m_pcPosSens->GetReading().Orientation.ToEulerAngles(cZAngle, cYAngle, cXAngle);
-
    double frontAngle = ToDegrees(cZAngle).GetValue();
-   //double targetAngle = desiredDirection.Angle().GetValue() * 57.2958;
-
-   //argos::LOG << "Front = " << frontAngle << std::endl;
-   //argos::LOG << "Target = " << desiredTargetAngle << std::endl;
-   //argos::LOG << "Abs value = " << abs(desiredTargetAngle - frontAngle) << std::endl;
 
    if(abs(desiredTargetAngle - frontAngle) < 0.11){ //0.11
       isBusy = false;
       isTurning = false;
       m_pcWheels->SetLinearVelocity(0, 0); //Stop the wheels from turning
    }else{
-
-      //std::cout << " TURNINING" << std::endl;
 
       /* Is the shortest turning to the right or left? */
       bool shouldTurnRight;
@@ -237,7 +223,6 @@ void Basicbot::TurnToDesiredDirection(){
 
       /* Calculate turn modifier. The smaller the angle the slower it turns. */
       int turnSpeedModifier = getTurnSpeedModifier(abs(desiredTargetAngle - frontAngle));
-      //argos::LOG << "Turn speed mod: " << turnSpeedModifier << std::endl;
 
       if(shouldTurnRight)
          m_pcWheels->SetLinearVelocity(m_fWheelVelocity /turnSpeedModifier, -m_fWheelVelocity /turnSpeedModifier);
