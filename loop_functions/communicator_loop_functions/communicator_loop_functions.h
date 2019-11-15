@@ -11,6 +11,7 @@
 
 #include <src/pods/PodManager.h>
 #include <src/orders/OrderManager.h>
+#include "src/robotManager.h"
 
 using namespace argos;
 
@@ -19,6 +20,7 @@ class CommunicatorLoopFunctions : public CLoopFunctions {
 public:
    OrderManager om;
    PodManager pm;
+   //RobotManager(listerobotID) rm;
 
    CommunicatorLoopFunctions();
    virtual ~CommunicatorLoopFunctions();

@@ -1,6 +1,8 @@
 #ifndef ROBOTMANAGER_H
 #define ROBOTMANAGER_H
 
+#include <list>
+
 #include "orders/Order.h"
 #include "qrcodes/QRcode.h"
 
@@ -10,6 +12,7 @@ private:
 
 public:
     robotManager();
+    //robotManager(std::map<int, Basicbot*>);
     ~robotManager();
 
     Order RequestOrder();

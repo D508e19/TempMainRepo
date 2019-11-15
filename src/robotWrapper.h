@@ -12,6 +12,8 @@ private:
     std::queue<instruction> instructionQueue;
     std::queue<int> instructionsValuesQueue;
 
+    Basicbot &m_bot;
+
     void MoveForward(int cells);
     void TurnLeft();
     void TurnRight();
@@ -22,13 +24,13 @@ private:
     void RunNextInstruction();
 
 public:
-    robotWrapper();
+    robotWrapper(Basicbot &bot);
     ~robotWrapper();
 };
 
 enum instruction{moveforward, turnleft, turnright, turn180, pickuppod, putdownpod};
 
-robotWrapper::robotWrapper(){}
+robotWrapper::robotWrapper(Basicbot &bot):m_bot(bot){}
 
 robotWrapper::~robotWrapper(){}
 

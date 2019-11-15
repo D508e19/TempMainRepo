@@ -9,8 +9,6 @@
 #include <list>
 #include <iterator>
 
-//#include "src/pods/PodManager.h"
-
 /****************************************/
 
 CommunicatorLoopFunctions::CommunicatorLoopFunctions(){}
@@ -21,10 +19,12 @@ CommunicatorLoopFunctions::~CommunicatorLoopFunctions(){}
 /****************************************/
 
 void CommunicatorLoopFunctions::Init(TConfigurationNode& t_tree){
+   CollectBotControllers();
+
    om = OrderManager(100);
    pm = PodManager(50);
-   argos::LOG << "Pod count: " << pm.GetCount() << std::endl;
-   CollectBotControllers();
+   //argos::LOG << "Pod count: " << pm.GetCount() << std::endl;
+   //rm = RobotManager(botControllers);
 
 }
 
