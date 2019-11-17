@@ -29,7 +29,6 @@ Warehouse::~Warehouse(){};
 
 void Warehouse::RunWarehouse() // skifte navn til Tick eller step?
 {
-    argos::LOG << "Hurra " << x << std::endl;
     om.RunOrderManager();
     rm.RunRobotManager();
     pm.RunPodManager();  
@@ -40,7 +39,7 @@ void Warehouse::SetupWarehouse(std::map<int, Basicbot*> botControllers)
     // andet setup ?
     rm.SetupRobotManager(botControllers);
     pm.SetupPodManager(100);
-    om.SetupOrderManager(pm.GetCount());
+    om.SetupOrderManager(pm.GetPodCount()); 
 }
 
 

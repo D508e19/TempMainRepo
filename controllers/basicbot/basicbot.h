@@ -92,11 +92,12 @@ private:
     * It is set to [-alpha,alpha]. */
    CRange<CRadians> m_cGoStraightAngleRange;
 
+   Real m_turningSpeed;
+
    int getTurnSpeedModifier(double angleDiffAbs);
    Real getSensorReading(int sensorNumber);
    CVector2 GetPosition2D();
 };
-
 
 
 #endif

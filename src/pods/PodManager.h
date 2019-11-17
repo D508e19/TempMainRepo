@@ -18,28 +18,24 @@ public:
     PodManager();
     ~PodManager();
 
-    Pod GetPod(int podId);
-    int GetCount();
-
     void SetupPodManager(int numOfPods);
     void RunPodManager();
+
+    Pod GetPod(int podId);
+    int GetPodCount();
 };
 
 PodManager::PodManager(){}
 PodManager::~PodManager(){}
 
-void PodManager::RunPodManager()
-{
-
-};
+void PodManager::RunPodManager(){};
 
 void PodManager::SetupPodManager(int numOfPods)
 {
-        m_podCount = 0;
+    m_podCount = 0;
 
     for (int i=0; i<numOfPods; i++)
     {
-        //argos::LOG << "Pod count: " << GetCount() << std::endl; //For testing TODO: del
         m_Pods.insert(
             std::pair<int, Pod>
                 (m_podCount, CreatePod(m_podCount)));
@@ -58,7 +54,7 @@ Pod PodManager::GetPod(int podId)
     return m_Pods[podId];
 };
 
-int PodManager::GetCount()
+int PodManager::GetPodCount()
 {
     return m_podCount;
 };

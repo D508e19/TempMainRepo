@@ -22,9 +22,9 @@ void CommunicatorLoopFunctions::Init(TConfigurationNode& t_tree){
 
 void CommunicatorLoopFunctions::PreStep()
 {  
-   wh.RunWarehouse();
+   wh.RunWarehouse(); 
 
-   int x = rand()%4;
+   int x = rand()%3;
 
    if(getController(0)->currentInstruction == idle){
       if (x==1){
@@ -36,8 +36,6 @@ void CommunicatorLoopFunctions::PreStep()
       else{
          getController(0)->currentInstruction = moveforward;
       }
-      //std::cout << "Giving robot next command. " << completedCommands << std::endl;
-      completedCommands++;
    }     
 }
 

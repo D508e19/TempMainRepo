@@ -16,7 +16,8 @@ Basicbot::Basicbot() :
    m_fDelta(0.5f),
    m_fWheelVelocity(2.5f),
    m_cGoStraightAngleRange(-ToRadians(m_cAlpha),
-   ToRadians(m_cAlpha)) {}
+   ToRadians(m_cAlpha)),
+   m_turningSpeed(5.49778714378213f) {}
 
 
 void Basicbot::Init(TConfigurationNode &t_node)
@@ -86,7 +87,6 @@ void Basicbot::ControlStep()
          break;   
       default:
          break;
-      
    }
 }
 
@@ -94,7 +94,7 @@ void Basicbot::MoveForward()
 {
    if (!isBusy){
       isBusy = true;
-      counter = 20*cellCounter;
+      counter = 20 * cellCounter;
    }
    
    if (counter > 0)
@@ -116,7 +116,7 @@ void Basicbot::TurnRight()
    }
    if (counter > 0)
    {
-      m_pcWheels->SetLinearVelocity(5.497787f, -5.497787f);
+      m_pcWheels->SetLinearVelocity(m_turningSpeed, -m_turningSpeed);
       counter--;
    }
    else
@@ -133,7 +133,7 @@ void Basicbot::TurnLeft()
    }
    if (counter > 0)
    {
-      m_pcWheels->SetLinearVelocity(-5.497787f, 5.497787f);
+      m_pcWheels->SetLinearVelocity(-m_turningSpeed, m_turningSpeed);
       counter--;
    }
    else
@@ -150,7 +150,7 @@ void Basicbot::Turn180()
    }
    if (counter > 0)
    {
-      m_pcWheels->SetLinearVelocity(5.497787f, -5.497787f);
+      m_pcWheels->SetLinearVelocity(m_turningSpeed, -m_turningSpeed);
       counter--;
    }
    else
@@ -167,7 +167,6 @@ void Basicbot::ResetBot()
       currentInstruction = idle;
       isBusy = false;
 }
-
 
 void Basicbot::LogReadablePosition(){
    CVector2 temp = GetPosition2D();
