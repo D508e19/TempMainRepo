@@ -3,25 +3,22 @@
 
 #include <argos3/core/simulator/loop_functions.h>
 #include <argos3/plugins/robots/foot-bot/simulator/footbot_entity.h>
-#include <controllers/basicbot/basicbot.h>
 #include <argos3/core/control_interface/ci_controller.h>
 #include <argos3/core/utility/math/vector2.h>
 
 #include <list>
 
-#include <src/pods/PodManager.h>
-#include <src/orders/OrderManager.h>
-#include "src/robotManager.h"
+#include <controllers/basicbot/basicbot.h>
+#include "src/warehouse/Warehouse.h"
+
 
 using namespace argos;
 
 class CommunicatorLoopFunctions : public CLoopFunctions {
 
 public:
-   OrderManager om;
-   PodManager pm;
-   //RobotManager(listerobotID) rm;
-
+   Warehouse wh;
+   
    CommunicatorLoopFunctions();
    virtual ~CommunicatorLoopFunctions();
 
@@ -30,7 +27,7 @@ public:
    virtual void PreStep();
 
 private:
-
+   
    /* A list for all controllers */
    //std::list<Basicbot*> botControllers;
 
@@ -48,6 +45,7 @@ private:
    void printControllers();
 
    int completedCommands = 0;
+
 };
 
 #endif

@@ -1,5 +1,3 @@
-#!/bin/shh
-
 cd build
 sudo cmake ..
 sudo make

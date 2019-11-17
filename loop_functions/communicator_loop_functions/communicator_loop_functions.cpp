@@ -3,67 +3,41 @@
 #include <argos3/plugins/robots/foot-bot/simulator/footbot_entity.h>
 #include <argos3/core/utility/logging/argos_log.h>
 #include <argos3/plugins/robots/foot-bot/simulator/footbot_entity.h>
-#include <controllers/basicbot/basicbot.h>
 #include <argos3/core/utility/math/vector2.h>
 
 #include <list>
 #include <iterator>
 
-/****************************************/
+//#include <controllers/basicbot/basicbot.h>
+#include "src/warehouse/Warehouse.h"
+//#include "src/orders/OrderManager.h"
 
 CommunicatorLoopFunctions::CommunicatorLoopFunctions(){}
-
 CommunicatorLoopFunctions::~CommunicatorLoopFunctions(){}
-
-/****************************************/
-/****************************************/
 
 void CommunicatorLoopFunctions::Init(TConfigurationNode& t_tree){
    CollectBotControllers();
 
-   om = OrderManager(100);
-   pm = PodManager(50);
-   //argos::LOG << "Pod count: " << pm.GetCount() << std::endl;
-   //rm = RobotManager(botControllers);
-
+   wh.SetupWarehouse(botControllers);
+   //int x = pd.GetCount();
+   //argos::LOG << "Pod count: " << x << std::endl;
 }
 
-void CommunicatorLoopFunctions::PreStep(){
+void CommunicatorLoopFunctions::PreStep()
+{  
+   wh.RunWarehouse();
 
-   //printControllers();
-
-   if(!getController(0)->isBusy){
-
-      std::cout << "Giving robot next command. " << completedCommands << std::endl;
-
-      switch (completedCommands)
-      {
-      case 0: getController(0)->MoveForward(2); break;
-      case 1: getController(0)->TurnDegrees(90); break;
-      case 2: getController(0)->MoveForward(1); break;
-      case 3: getController(0)->TurnDegrees(-90); break;
-      case 4: getController(0)->MoveForward(3); break;
-      case 5: getController(0)->TurnDegrees(180); break;
-      case 6: getController(0)->MoveForward(3); break;
-      case 7: getController(0)->TurnDegrees(90); break;
-      case 8: getController(0)->MoveForward(1); break;
-      case 9: getController(0)->TurnDegrees(-90); break;
-      case 10: getController(0)->MoveForward(2); break;
-      
-      default:
-         break;
-         }
-
+   if(getController(0)->currentInstruction == idle){
+      if (completedCommands%2==0){
+         getController(0)->currentInstruction = turnleft;
+      }
+      else{
+         getController(0)->cellCounter = 3;
+         getController(0)->currentInstruction = moveforward;
+      }
+      //std::cout << "Giving robot next command. " << completedCommands << std::endl;
       completedCommands++;
-   }
-
-
-   // --------------------- TODO: Remove ----------------
-   Order temp = om.getNewOrder();
-   argos::LOG << "OrderID: " << temp.getOrderID() << " PodID: "<< temp.getPodID() << std::endl;
-   argos::LOG << "Pod count: " << pm.GetCount() << std::endl;
-   // ------------------------------------------------
-      
+   }     
 }
 
 void CommunicatorLoopFunctions::printControllers(){
@@ -99,8 +73,5 @@ void CommunicatorLoopFunctions::CollectBotControllers(){
       botControllers[pr->robotID] = pr;
    }
 }
-
-/****************************************/
-/****************************************/
 
 REGISTER_LOOP_FUNCTIONS(CommunicatorLoopFunctions, "communicator_loop_functions");

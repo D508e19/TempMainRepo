@@ -3,8 +3,6 @@
 
 #include <map>
 
-#include <argos3/core/utility/logging/argos_log.h>
-
 #include "Pod.h"
 
 class PodManager
@@ -18,30 +16,40 @@ private:
 
 public:
     PodManager();
-    PodManager(int numOfPods);
     ~PodManager();
 
     Pod GetPod(int podId);
     int GetCount();
+
+    void SetupPodManager(int numOfPods);
+    void RunPodManager();
 };
 
 PodManager::PodManager(){}
+PodManager::~PodManager(){}
 
-PodManager::PodManager(int numOfPods)
+void PodManager::RunPodManager()
 {
-    m_podCount = 0;
+
+};
+
+void PodManager::SetupPodManager(int numOfPods)
+{
+        m_podCount = 0;
 
     for (int i=0; i<numOfPods; i++)
     {
-        argos::LOG << "Pod count: " << GetCount() << std::endl; //For testing TODO: del
+        //argos::LOG << "Pod count: " << GetCount() << std::endl; //For testing TODO: del
         m_Pods.insert(
             std::pair<int, Pod>
                 (m_podCount, CreatePod(m_podCount)));
         m_podCount++;
     };
-}
 
-PodManager::~PodManager(){}
+    for (int i =0; i<numOfPods; i++){
+        argos::LOG << "Pod instance id: " << m_Pods[i].getId() << std::endl;
+    }
+}
 
 Pod PodManager::CreatePod(int nextIndex)
 {
@@ -54,9 +62,9 @@ Pod PodManager::GetPod(int podId)
     return m_Pods[podId];
 };
 
-int PodManager::GetCount(){
+int PodManager::GetCount()
+{
     return m_podCount;
-}
-
+};
 
 #endif

@@ -1,30 +1,23 @@
-/* Include the controller definition */
 #include "basicbot.h"
-/* Function definitions for XML parsing */
-#include <argos3/core/utility/configuration/argos_configuration.h>
-/* 2D vector definition */
-#include <argos3/core/utility/math/vector2.h>
-/* 3D vector definition */
-#include <argos3/core/utility/math/vector3.h>
-/* Quick maths */
+
 #include <math.h> 
-/* Enable logging */
+#include <iomanip>
+#include <sstream>
+
+#include <argos3/core/utility/configuration/argos_configuration.h>
+#include <argos3/core/utility/math/vector2.h>
 #include <argos3/core/utility/logging/argos_log.h>
 
-/****************************************/
-/****************************************/
+Basicbot::Basicbot() : 
+   m_pcWheels(NULL),
+   m_pcGroundSensor(NULL),
+   m_pcProximity(NULL),
+   m_cAlpha(10.0f),
+   m_fDelta(0.5f),
+   m_fWheelVelocity(2.5f),
+   m_cGoStraightAngleRange(-ToRadians(m_cAlpha),
+   ToRadians(m_cAlpha)) {}
 
-Basicbot::Basicbot() : m_pcWheels(NULL),
-                                         m_pcGroundSensor(NULL),
-                                         m_pcProximity(NULL),
-                                         m_cAlpha(10.0f),
-                                         m_fDelta(0.5f),
-                                         m_fWheelVelocity(2.5f),
-                                         m_cGoStraightAngleRange(-ToRadians(m_cAlpha),
-                                                                 ToRadians(m_cAlpha)) {}
-
-/****************************************/
-/****************************************/
 
 void Basicbot::Init(TConfigurationNode &t_node)
 {
@@ -67,184 +60,125 @@ void Basicbot::Init(TConfigurationNode &t_node)
    GetNodeAttributeOrDefault(t_node, "velocity", m_fWheelVelocity, m_fWheelVelocity);
 }
 
-/****************************************/
-/****************************************/
-
 void Basicbot::ControlStep()
 {
-   if(isBusy){
-      if(isTurning){
-         TurnToDesiredDirection();
-      }else if(isMoving){
-         MoveToNextQR();
-      }
+   switch (currentInstruction)
+   {
+      case idle:
+         break;
+      case moveforward:
+         MoveForward();
+         break;
+      case turnleft:
+         TurnLeft();
+         break;
+      case turnright:
+         TurnRight();
+         break;
+      case turn180:
+         Turn180();
+         break;
+      case pickuppod:
+         //PickupPod();
+         break;
+      case putdownpod:
+         //PutDownPOd();
+         break;   
+      default:
+         break;
+      
    }
 }
 
-/* ------------------------ PUBLIC METHODS ------------------- */
-
-/* Makes the bot move the given number of cells forward. */
-bool Basicbot::MoveForward(int numberOfCells){
-   isBusy = true;
-   isMoving = true;
-   tilesLeftToMove = numberOfCells;
-}
-
-/* Makes the bot turn the given number of degrees. */
-bool Basicbot::TurnDegrees(float degreesToTurn){
-   isBusy = true;
-   isTurning = true;
-
-   /* Convert the given degrees into the desired target angle. */
-   /* TODO optimize. Maybe not needed? */
-   CRadians cZAngle, cYAngle, cXAngle;
-   m_pcPosSens->GetReading().Orientation.ToEulerAngles(cZAngle, cYAngle, cXAngle);
-   double frontAngle = ToDegrees(cZAngle).GetValue();
-   CVector2 frontVector = CVector2(cos(cZAngle.GetValue()), sin(cZAngle.GetValue()));
-   double rotationRad = ToRadians(CDegrees(degreesToTurn)).GetValue();
-   CVector2 desiredDirectionVector = CVector2(frontVector.GetX() * cos(rotationRad) - frontVector.GetY() * sin(rotationRad),
-                                       frontVector.GetX() * sin(rotationRad) + frontVector.GetY() * cos(rotationRad));
-   desiredTargetAngle = desiredDirectionVector.Angle().GetValue() * 57.2958;
-}
-
-/* Makes the bot pick up the pod on the current position. */
-bool Basicbot::PickupPod(){
-   return false; //TODO Not yet implemented
-}
-
-/* Makes the bot put down the pod on the current position. */
-bool Basicbot::PutDownPod(){
-   return false; //TODO Not yet implemented
-}
-
-/* Reads the pods QR code in the current cell. */
-QRCode Basicbot::ReadPodQR(){
-   QRCode qr;
-   qr.SetPosition(GetPosition2D());
-
-   return qr;
-}
-
-QRCode Basicbot::ReadCellQR(){
-
-   QRCode qr;
-
-   Real sensor1 = getSensorReading(1);
-   Real sensor2 = getSensorReading(2);
-   Real sensor3 = getSensorReading(3);
-   Real sensor4 = getSensorReading(4);
-
-   //Is the bot currently on a QR code?
-   if(sensor1 < 0.9 && sensor2 < 0.9 && sensor3 < 0.9 && sensor4){
-      qr.SetPosition(GetPosition2D());
-      return qr;
+void Basicbot::MoveForward()
+{
+   if (!isBusy){
+      isBusy = true;
+      counter = 20*cellCounter;
+   }
+   
+   if (counter > 0)
+   {
+      m_pcWheels->SetLinearVelocity(10.0f, 10.0f);
+      counter--;
    }
    else
-      return qr;
-}
-
-/* ------------------------ PRIVATE METHODS ------------------- */
-
-/* Used to move the bot to the next QR-code. */
-void Basicbot::MoveToNextQR(){
-   if(hasLeftStartQR){
-      //Check sensor one: reached next QR?
-      if(hasSensor1LeftQR){
-         if((getSensorReading(1) < 0.9))
-            hasSensor1LeftQR = false;
-      }
-
-      //Check sensor two: reached next QR?
-      if(hasSensor2LeftQR){
-         if((getSensorReading(2) < 0.9))
-            hasSensor2LeftQR = false;
-      }
-
-      //Check sensor three: reached next QR?
-      if(hasSensor3LeftQR){
-         if((getSensorReading(3) < 0.9))
-            hasSensor3LeftQR = false;
-      }
-
-      //Check sensor four: reached next QR?
-      if(hasSensor4LeftQR){
-         if((getSensorReading(4) < 0.9))
-            hasSensor4LeftQR = false;
-      }
-      
-      //Has all sensors reached the next QR?
-      if(!hasSensor1LeftQR && !hasSensor2LeftQR && !hasSensor3LeftQR && !hasSensor4LeftQR){
-         if(tilesLeftToMove == 1){
-            m_pcWheels->SetLinearVelocity(0, 0);
-            isMoving = false;
-            isBusy = false;
-         }
-
-         tilesLeftToMove--;
-         hasLeftStartQR = false;
-      }
-
-   }else{
-      m_pcWheels->SetLinearVelocity(m_fWheelVelocity, m_fWheelVelocity);
-
-      //Check sensor one: has left start QR?
-      if(!hasSensor1LeftQR){
-         if(!(getSensorReading(1) < 0.9))
-            hasSensor1LeftQR = true;
-      }
-
-      //Check sensor two: has left start QR?
-      if(!hasSensor2LeftQR){
-         if(!(getSensorReading(2) < 0.9))
-            hasSensor2LeftQR = true;
-      }
-
-      //Check sensor three: has left start QR?
-      if(!hasSensor3LeftQR){
-         if(!(getSensorReading(3) < 0.9))
-            hasSensor3LeftQR = true;
-      }
-
-      //Check sensor four: has left start QR?
-      if(!hasSensor4LeftQR){
-         if(!(getSensorReading(4) < 0.9))
-            hasSensor4LeftQR = true;
-      }
-      
-      //Has all sensors left the start QR?
-      if(hasSensor1LeftQR && hasSensor2LeftQR && hasSensor3LeftQR && hasSensor4LeftQR){
-         hasLeftStartQR = true;
-      }
+   {
+      ResetBot();
    }
 }
 
-/* Turns the bot to point in the direction of the field: desiredDirection. */
-void Basicbot::TurnToDesiredDirection(){
-   CRadians cZAngle, cYAngle, cXAngle;
-   m_pcPosSens->GetReading().Orientation.ToEulerAngles(cZAngle, cYAngle, cXAngle);
-   double frontAngle = ToDegrees(cZAngle).GetValue();
+void Basicbot::TurnRight()
+{
+   if (!isBusy){
+      isBusy = true;
+      counter = 20;
+   }
+   if (counter > 0)
+   {
+      m_pcWheels->SetLinearVelocity(5.497787f, -5.497787f);
+      counter--;
+   }
+   else
+   {
+     ResetBot();
+   }
+}
 
-   if(abs(desiredTargetAngle - frontAngle) < 0.11){ //0.11
+void Basicbot::TurnLeft()
+{
+   if (!isBusy){
+      isBusy = true;
+      counter = 20;
+   }
+   if (counter > 0)
+   {
+      m_pcWheels->SetLinearVelocity(-5.497787f, 5.497787f);
+      counter--;
+   }
+   else
+   {
+      ResetBot();
+   }
+}
+
+void Basicbot::Turn180()
+{
+   if (!isBusy){
+      isBusy = true;
+      counter = 40;
+   }
+   if (counter > 0)
+   {
+      m_pcWheels->SetLinearVelocity(5.497787f, -5.497787f);
+      counter--;
+   }
+   else
+   {
+      ResetBot();
+   }
+}
+
+void Basicbot::ResetBot()
+{
+      m_pcWheels->SetLinearVelocity(0, 0);
+      cellCounter = 1;
+      LogReadablePosition();
+      currentInstruction = idle;
       isBusy = false;
-      isTurning = false;
-      m_pcWheels->SetLinearVelocity(0, 0); //Stop the wheels from turning
-   }else{
-
-      /* Is the shortest turning to the right or left? */
-      bool shouldTurnRight;
-      int frontAngleShifted = frontAngle + 179;
-      int targetAngleShifted = desiredTargetAngle + 179;
-      shouldTurnRight = (targetAngleShifted - frontAngleShifted) < 0;
-
-      /* Calculate turn modifier. The smaller the angle the slower it turns. */
-      int turnSpeedModifier = getTurnSpeedModifier(abs(desiredTargetAngle - frontAngle));
-
-      if(shouldTurnRight)
-         m_pcWheels->SetLinearVelocity(m_fWheelVelocity /turnSpeedModifier, -m_fWheelVelocity /turnSpeedModifier);
-      else
-         m_pcWheels->SetLinearVelocity(-m_fWheelVelocity /turnSpeedModifier, m_fWheelVelocity /turnSpeedModifier);
-   }
 }
+
+
+void Basicbot::LogReadablePosition(){
+   CVector2 temp = GetPosition2D();
+   double x = temp.GetX();
+   double y = temp.GetY();
+
+   std::stringstream stream;
+   stream << std::fixed << std::setprecision(3) << x << ", " << y;
+   std::string s = stream.str();
+   argos::LOG << "Position: " << s << std::endl;
+};
 
 /* Returns the turn speed modifier based on the absolute angle difference.*/
 int Basicbot::getTurnSpeedModifier(double angleDiffAbs){
@@ -277,8 +211,6 @@ CVector2 Basicbot::GetPosition2D(){
     return CVector2(tPosReads.Position.GetX(), tPosReads.Position.GetY());
 }
 
-/****************************************/
-/****************************************/
 
 /*
  * This statement notifies ARGoS of the existence of the controller.

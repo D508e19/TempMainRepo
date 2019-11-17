@@ -1,35 +1,24 @@
-#ifndef FOOTBOT_DIFFUSION_H
-#define FOOTBOT_DIFFUSION_H
+#ifndef BASICBOT_H
+#define BASICBOT_H
 
-/* Definition of the CCI_Controller class. */
 #include <argos3/core/control_interface/ci_controller.h>
-/* Definition of the differential steering actuator */
 #include <argos3/plugins/robots/generic/control_interface/ci_differential_steering_actuator.h>
-/* Definition of the foot-bot proximity sensor */
 #include <argos3/plugins/robots/foot-bot/control_interface/ci_footbot_proximity_sensor.h>
-/* Definition of the positioning sensor */
 #include <argos3/plugins/robots/generic/control_interface/ci_positioning_sensor.h>
 #include <argos3/core/utility/math/vector2.h>
 #include <argos3/plugins/robots/foot-bot/control_interface/ci_footbot_motor_ground_sensor.h>
+
 #include <src/qrcodes/QRCode.h>
 
-/*
- * All the ARGoS stuff in the 'argos' namespace.
- * With this statement, you save typing argos:: every time.
- */
+#include "src/customDataStructures.h"
+
 using namespace argos;
 
-/*
- * A controller is simply an implementation of the CCI_Controller class.
- */
 class Basicbot : public CCI_Controller {
 
 public:
 
-   /* Class constructor. */
    Basicbot();
-
-   /* Class destructor. */
    virtual ~Basicbot() {}
 
    /* This function initializes the controller.
@@ -55,27 +44,21 @@ public:
     * completeness. */
    virtual void Destroy() {}
 
-   /* The unique robot id. */
    int robotID;
-
    bool isBusy = false;
+   instruction currentInstruction = idle;
 
-   /* Makes the bot move the given number of cells forward. */
-   bool MoveForward(int numberOfCells);
+   void MoveForward();
+   void TurnLeft();
+   void TurnRight();
+   void Turn180();
 
-   /* Makes the bot turn the given number of degrees. */
-   bool TurnDegrees(float degreesToTurn);
+   int counter = 0;
+   int cellCounter;
 
-   /* Makes the bot pick up the pod on the current position. */
-   bool PickupPod();
+   void LogReadablePosition();
+   void ResetBot();
 
-   /* Makes the bot put down the pod on the current position. */
-   bool PutDownPod();
-
-   /* Reads the pods QR code in the current cell. */
-   QRCode ReadPodQR();
-
-   QRCode ReadCellQR();
 
 private:
 
@@ -109,35 +92,11 @@ private:
     * It is set to [-alpha,alpha]. */
    CRange<CRadians> m_cGoStraightAngleRange;
 
-   bool isTurning = false;
-   bool isMoving = false;
-
-   /* These booleans is used when the bot is moving from one QR to the next. */
-   bool hasLeftStartQR = false;
-   bool hasSensor1LeftQR = false;
-   bool hasSensor2LeftQR = false;
-   bool hasSensor3LeftQR = false;
-   bool hasSensor4LeftQR = false;
-
-   CVector2 desiredDirection;
-
-   int tilesLeftToMove = 0;
-   double desiredTargetAngle = 0;
-
-   /* Used to move the bot to the next QR-code. */
-   void MoveToNextQR();
-
-   /* Turns the bot to point in the direction of the field: desiredDirection. */
-   void TurnToDesiredDirection();
-
-   /* Returns the turn speed modifier based on the absolute angle difference.*/
    int getTurnSpeedModifier(double angleDiffAbs);
-
-   /* Returns the value of the sensor matching the given number. (param: 1-4) */
    Real getSensorReading(int sensorNumber);
-
-   /* Returns the bots current postion as a 2D vector. */
    CVector2 GetPosition2D();
 };
+
+
 
 #endif

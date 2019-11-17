@@ -1,7 +1,7 @@
 #ifndef QRCODES_H
 #define QRCODES_H
 
-#include <argos3/core/utility/math/vector2.h>
+//#include <argos3/core/utility/math/vector2.h>
 
 class QRCode
 {

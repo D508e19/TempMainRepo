@@ -13,20 +13,28 @@ private:
 	int m_numberOfPods;
 public:
 	OrderManager();
-	OrderManager(int numOfPods);
 	~OrderManager();
+
+	void SetupOrderManager(int numOfPods);
+	void RunOrderManager();
 
 	Order getNewOrder();
 };
 
 OrderManager::OrderManager(){}
-
-OrderManager::OrderManager(int numOfPods): m_orderCount(0), m_numberOfPods(numOfPods)
-{
-	srand (time(NULL));	// seed
-}
-
 OrderManager::~OrderManager(){}
+
+void OrderManager::RunOrderManager()
+{
+	
+};
+
+void OrderManager::SetupOrderManager(int numOfPods)
+{
+	m_orderCount = 0;
+	m_numberOfPods = numOfPods;
+	srand (time(NULL));	// seed for rng
+}
 
 Order OrderManager::getNewOrder()
    {
@@ -35,6 +43,5 @@ Order OrderManager::getNewOrder()
     Order newOrder(m_orderCount++, currentTime, sid);
     return newOrder;
 }
-
 
 #endif
