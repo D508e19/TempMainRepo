@@ -14,8 +14,6 @@ private:
 
     bool distributed = false;
 
-    int x =5;
-
 public:
     Warehouse();
     ~Warehouse();

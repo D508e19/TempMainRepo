@@ -33,7 +33,7 @@ RobotWrapper::~RobotWrapper(){};
 RobotWrapper::RobotWrapper(Basicbot *bot):m_bot(bot)
 {   
     //temp instruksgenerator 
-    for (int i = 0; i < 20; i++)
+    for (int i = 0; i < 500; i++)
     {
         int j = rand() % 4;
         switch (j)

@@ -13,6 +13,8 @@ class RobotManager
 private:
     std::map<int, RobotWrapper> Wrappers;
 
+    int robotCount = 0;
+
 public:
     RobotManager();
     //RobotManager(std::map<int, Basicbot*>);
@@ -26,33 +28,28 @@ public:
 RobotManager::RobotManager(){};
 RobotManager::~RobotManager(){};
 
-RobotWrapper RobotManager::CreateRobotWrapper(Basicbot* b)
-{
-    RobotWrapper rw(b);
-    return rw;
-};
-
 void RobotManager::SetupRobotManager(std::map<int, Basicbot*> botControllers)
 {
-    RobotWrapper rw = CreateRobotWrapper(botControllers[0]);
-    Wrappers.insert(std::pair<int, RobotWrapper> (0, rw));
-    /*
-    // for hver controller: lav en wrpper : læg dem 
-    int numberOfBots = botControllers.size();
-    
-    for (int i=0; i<numberOfBots; i++)
+    for (int i=0; i<botControllers.size(); i++)
     {
-        RobotWrapper rw(botControllers[i]);
-        //#rw = CreateRobotWrapper(botControllers[i]);
-
+        RobotWrapper rw = CreateRobotWrapper(botControllers[i]);
         Wrappers.insert(std::pair<int, RobotWrapper> (i, rw));
     }
-    */
 };
 
 void RobotManager::RunRobotManager()
 {
-    Wrappers[0].RunRobotWrapper();
+    for (int i = 0; i < robotCount; i++)
+    {
+        Wrappers[i].RunRobotWrapper();
+    }
+};
+
+RobotWrapper RobotManager::CreateRobotWrapper(Basicbot* b)
+{
+    RobotWrapper rw(b);
+    robotCount++;
+    return rw;
 };
 
 #endif
