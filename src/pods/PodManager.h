@@ -45,10 +45,6 @@ void PodManager::SetupPodManager(int numOfPods)
                 (m_podCount, CreatePod(m_podCount)));
         m_podCount++;
     };
-
-    for (int i =0; i<numOfPods; i++){
-        argos::LOG << "Pod instance id: " << m_Pods[i].getId() << std::endl;
-    }
 }
 
 Pod PodManager::CreatePod(int nextIndex)

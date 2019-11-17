@@ -54,7 +54,7 @@ public:
    void Turn180();
 
    int counter = 0;
-   int cellCounter;
+   int cellCounter = 1;
 
    void LogReadablePosition();
    void ResetBot();

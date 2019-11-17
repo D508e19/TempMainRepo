@@ -8,9 +8,8 @@
 #include <list>
 #include <iterator>
 
-//#include <controllers/basicbot/basicbot.h>
+
 #include "src/warehouse/Warehouse.h"
-//#include "src/orders/OrderManager.h"
 
 CommunicatorLoopFunctions::CommunicatorLoopFunctions(){}
 CommunicatorLoopFunctions::~CommunicatorLoopFunctions(){}
@@ -19,20 +18,22 @@ void CommunicatorLoopFunctions::Init(TConfigurationNode& t_tree){
    CollectBotControllers();
 
    wh.SetupWarehouse(botControllers);
-   //int x = pd.GetCount();
-   //argos::LOG << "Pod count: " << x << std::endl;
 }
 
 void CommunicatorLoopFunctions::PreStep()
 {  
    wh.RunWarehouse();
 
+   int x = rand()%4;
+
    if(getController(0)->currentInstruction == idle){
-      if (completedCommands%2==0){
+      if (x==1){
          getController(0)->currentInstruction = turnleft;
       }
+      else if (x==2){
+         getController(0)->currentInstruction = turnright;
+      }
       else{
-         getController(0)->cellCounter = 3;
          getController(0)->currentInstruction = moveforward;
       }
       //std::cout << "Giving robot next command. " << completedCommands << std::endl;
