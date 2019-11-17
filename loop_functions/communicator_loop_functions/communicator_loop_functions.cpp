@@ -24,6 +24,7 @@ void CommunicatorLoopFunctions::PreStep()
 {  
    wh.RunWarehouse(); 
 
+   /*
    int x = rand()%3;
 
    if(getController(0)->currentInstruction == idle){
@@ -36,7 +37,8 @@ void CommunicatorLoopFunctions::PreStep()
       else{
          getController(0)->currentInstruction = moveforward;
       }
-   }     
+   }   
+   */  
 }
 
 void CommunicatorLoopFunctions::printControllers(){

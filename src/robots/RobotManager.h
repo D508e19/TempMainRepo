@@ -34,6 +34,8 @@ RobotWrapper RobotManager::CreateRobotWrapper(Basicbot* b)
 
 void RobotManager::SetupRobotManager(std::map<int, Basicbot*> botControllers)
 {
+    RobotWrapper rw = CreateRobotWrapper(botControllers[0]);
+    Wrappers.insert(std::pair<int, RobotWrapper> (0, rw));
     /*
     // for hver controller: lav en wrpper : læg dem 
     int numberOfBots = botControllers.size();
@@ -50,7 +52,7 @@ void RobotManager::SetupRobotManager(std::map<int, Basicbot*> botControllers)
 
 void RobotManager::RunRobotManager()
 {
-
+    Wrappers[0].RunRobotWrapper();
 };
 
 #endif

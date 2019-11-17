@@ -21,8 +21,10 @@ public:
     RobotWrapper(Basicbot *bot);
     ~RobotWrapper();
 
+    void RunRobotWrapper();
+
     void AddInstructionToQueue(instruction ins, int tiles);
-    void RunNextInstruction();
+    void SendNextInstruction();
 };
 
 RobotWrapper::RobotWrapper(){};
@@ -33,7 +35,7 @@ RobotWrapper::RobotWrapper(Basicbot *bot):m_bot(bot)
     //temp instruksgenerator 
     for (int i = 0; i < 20; i++)
     {
-        int j = rand() % 8;
+        int j = rand() % 4;
         switch (j)
         {
         case 1:
@@ -50,7 +52,15 @@ RobotWrapper::RobotWrapper(Basicbot *bot):m_bot(bot)
     }
 };
 
-void RobotWrapper::RunNextInstruction()
+void RobotWrapper::RunRobotWrapper()
+{
+    if (m_bot->currentInstruction == idle)
+    {
+        SendNextInstruction();
+    }
+}
+
+void RobotWrapper::SendNextInstruction()
 {
     if(!instructionQueue.empty()){
         instruction nextInstruction = instructionQueue.front();
