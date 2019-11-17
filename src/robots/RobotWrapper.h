@@ -68,7 +68,7 @@ void RobotWrapper::SendNextInstruction()
         switch (nextInstruction)
         {
         case moveforward:
-            m_bot->cellCounter = instructionsValuesQueue.front();
+            m_bot->cellsToMove = instructionsValuesQueue.front();
             instructionsValuesQueue.pop();
             m_bot->currentInstruction = moveforward;
             break;

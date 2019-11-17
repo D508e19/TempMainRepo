@@ -36,7 +36,7 @@ public:
     * In this example controller there is no need for resetting anything,
     * so the function could have been omitted. It's here just for
     * completeness. */
-   virtual void Reset() {}
+   virtual void Reset(){ResetBot();};
 
    /* Called to cleanup what done by Init() when the experiment finishes.
     * In this example controller there is no need for clean anything up,
@@ -54,7 +54,7 @@ public:
    void Turn180();
 
    int counter = 0;
-   int cellCounter = 1;
+   int cellsToMove = 1;
 
    void LogReadablePosition();
    void ResetBot();
@@ -93,9 +93,9 @@ private:
    CRange<CRadians> m_cGoStraightAngleRange;
 
    Real m_turningSpeed;
+   int m_ticksToTurn;
+   int m_ticksToMoveOneCell;
 
-   int getTurnSpeedModifier(double angleDiffAbs);
-   Real getSensorReading(int sensorNumber);
    CVector2 GetPosition2D();
 };
 

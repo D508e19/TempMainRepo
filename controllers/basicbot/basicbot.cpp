@@ -13,11 +13,15 @@ Basicbot::Basicbot() :
    m_pcGroundSensor(NULL),
    m_pcProximity(NULL),
    m_cAlpha(10.0f),
-   m_fDelta(0.5f),
+   m_fDelta(0.5f), // default: 0.5
    m_fWheelVelocity(2.5f),
    m_cGoStraightAngleRange(-ToRadians(m_cAlpha),
    ToRadians(m_cAlpha)),
-   m_turningSpeed(5.49778714378213f) {}
+
+   m_turningSpeed(5.49778714378213f),
+   m_ticksToTurn(20),
+   m_ticksToMoveOneCell(20)
+   {}
 
 
 void Basicbot::Init(TConfigurationNode &t_node)
@@ -94,7 +98,7 @@ void Basicbot::MoveForward()
 {
    if (!isBusy){
       isBusy = true;
-      counter = 20 * cellCounter;
+      counter = m_ticksToMoveOneCell * cellsToMove;
    }
    
    if (counter > 0)
@@ -112,7 +116,7 @@ void Basicbot::TurnRight()
 {
    if (!isBusy){
       isBusy = true;
-      counter = 20;
+      counter = m_ticksToTurn;
    }
    if (counter > 0)
    {
@@ -129,7 +133,7 @@ void Basicbot::TurnLeft()
 {
    if (!isBusy){
       isBusy = true;
-      counter = 20;
+      counter = m_ticksToTurn;
    }
    if (counter > 0)
    {
@@ -146,7 +150,7 @@ void Basicbot::Turn180()
 {
    if (!isBusy){
       isBusy = true;
-      counter = 40;
+      counter = m_ticksToTurn * 2;
    }
    if (counter > 0)
    {
@@ -162,11 +166,11 @@ void Basicbot::Turn180()
 void Basicbot::ResetBot()
 {
       m_pcWheels->SetLinearVelocity(0, 0);
-      cellCounter = 1;
+      cellsToMove = 1;
       LogReadablePosition();
       currentInstruction = idle;
       isBusy = false;
-}
+      }
 
 void Basicbot::LogReadablePosition(){
    CVector2 temp = GetPosition2D();
@@ -178,31 +182,6 @@ void Basicbot::LogReadablePosition(){
    std::string s = stream.str();
    argos::LOG << "Position: " << s << std::endl;
 };
-
-/* Returns the turn speed modifier based on the absolute angle difference.*/
-int Basicbot::getTurnSpeedModifier(double angleDiffAbs){
-
-   if(angleDiffAbs > 2)
-      return 4;
-
-   //Currently based on points: (0.11, 60) , (1, 25) , (2, 4)
-   return (23300 / 2403) * pow(angleDiffAbs, 2) - (40121 / 801) * angleDiffAbs + (157138 / 2403);
-}
-
-/* Returns the value of the sensor matching the given number. (param: 1-4) */
-Real Basicbot::getSensorReading(int sensorNumber){
-   const CCI_FootBotMotorGroundSensor::TReadings& tGroundReads = m_pcGroundSensor->GetReadings();
-
-   switch (sensorNumber)
-   {
-      case 1: return tGroundReads[0].Value;
-      case 2: return tGroundReads[1].Value;
-      case 3: return tGroundReads[2].Value;
-      case 4: return tGroundReads[3].Value;
-   
-      default: throw "Basicbot::getSonsorReading: Input number was not between 1 and 4!";
-   }
-}
 
 /* Returns the bots current postion as a 2D vector. */
 CVector2 Basicbot::GetPosition2D(){
