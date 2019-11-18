@@ -20,7 +20,7 @@ public:
     RobotWrapper(Basicbot *bot);
     ~RobotWrapper();
 
-    void RunRobotWrapper();
+    void Tick();
 
     void AddInstructionToQueue(instruction ins, int tiles);
     void SendNextInstruction();
@@ -51,7 +51,7 @@ RobotWrapper::RobotWrapper(Basicbot *bot):m_bot(bot)
     }
 };
 
-void RobotWrapper::RunRobotWrapper()
+void RobotWrapper::Tick()
 {
     if (m_bot->currentInstruction == idle)
     {

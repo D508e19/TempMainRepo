@@ -16,7 +16,7 @@ public:
 	~OrderManager();
 
 	void SetupOrderManager(int numOfPods);
-	void RunOrderManager();
+	void Tick();
 
 	Order getNewOrder();
 };
@@ -24,7 +24,7 @@ public:
 OrderManager::OrderManager(){}
 OrderManager::~OrderManager(){}
 
-void OrderManager::RunOrderManager()
+void OrderManager::Tick()
 {
 	
 };

@@ -19,17 +19,17 @@ public:
     ~Warehouse();
 
     void SetupWarehouse(std::map<int, Basicbot*> botControllers);
-    void RunWarehouse();    
+    void Tick();    
 };
 
 Warehouse::Warehouse(){};
 Warehouse::~Warehouse(){};
 
-void Warehouse::RunWarehouse() // skifte navn til Tick eller step?
+void Warehouse::Tick() // skifte navn til Tick eller step?
 {
-    om.RunOrderManager();
-    rm.RunRobotManager();
-    pm.RunPodManager();  
+    om.Tick();
+    rm.Tick();
+    pm.Tick();  
 };
 
 void Warehouse::SetupWarehouse(std::map<int, Basicbot*> botControllers)

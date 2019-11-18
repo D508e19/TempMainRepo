@@ -23,7 +23,7 @@ public:
     RobotWrapper CreateRobotWrapper(Basicbot*);
 
     void SetupRobotManager(std::map<int, Basicbot*> botControllers);
-    void RunRobotManager();
+    void Tick();
 };
 RobotManager::RobotManager(){};
 RobotManager::~RobotManager(){};
@@ -37,11 +37,11 @@ void RobotManager::SetupRobotManager(std::map<int, Basicbot*> botControllers)
     }
 };
 
-void RobotManager::RunRobotManager()
+void RobotManager::Tick()
 {
     for (int i = 0; i < robotCount; i++)
     {
-        Wrappers[i].RunRobotWrapper();
+        Wrappers[i].Tick();
     }
 };
 

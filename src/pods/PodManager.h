@@ -19,7 +19,7 @@ public:
     ~PodManager();
 
     void SetupPodManager(int numOfPods);
-    void RunPodManager();
+    void Tick();
 
     Pod GetPod(int podId);
     int GetPodCount();
@@ -28,7 +28,7 @@ public:
 PodManager::PodManager(){}
 PodManager::~PodManager(){}
 
-void PodManager::RunPodManager(){};
+void PodManager::Tick(){};
 
 void PodManager::SetupPodManager(int numOfPods)
 {

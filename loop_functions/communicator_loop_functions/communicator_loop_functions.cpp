@@ -22,7 +22,7 @@ void CommunicatorLoopFunctions::Init(TConfigurationNode& t_tree){
 
 void CommunicatorLoopFunctions::PreStep()
 {  
-   wh.RunWarehouse(); 
+   wh.Tick(); 
 }
 
 void CommunicatorLoopFunctions::printControllers(){
