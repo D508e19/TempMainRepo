@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.12)
-project(KBot)
+project(Dat5RobotWareHouse)
 
 if(APPLE)
   option(ASAN "Use Clang Address Sanitizer in Debug builds")
@@ -17,7 +17,7 @@ endif(APPLE)
 set(CMAKE_MACOSX_RPATH 0)
 
 # Set the path where CMake will find additional scripts
-set(CMAKE_MODULE_PATH $ENV{CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake)
+#set(CMAKE_MODULE_PATH $ENV{CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake)
 
 # Find the ARGoS package, make sure to save the ARGoS prefix
 find_package(PkgConfig)
@@ -29,12 +29,6 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${ARGOS_PREFIX}/share/argos3/cmake)
 # code that depends on Qt and OpenGL
 include(ARGoSCheckQTOpenGL)
 
-# Look for the (optional) galib library
-find_package(GALIB)
-if(GALIB_FOUND)
-  include_directories(${GALIB_INCLUDE_DIRS})
-endif(GALIB_FOUND)
-
 # Find Lua
 find_package(Lua52 REQUIRED)
 
@@ -45,14 +39,4 @@ include_directories(${CMAKE_SOURCE_DIR} ${ARGOS_INCLUDE_DIRS} ${LUA_INCLUDE_DIR}
 link_directories(${ARGOS_LIBRARY_DIRS})
 
 
-#add_subdirectory(src)
-
-
-# Descend into the controllers directory
-add_subdirectory(controllers)
-
-# Descend into the loop_functions directory
-add_subdirectory(loop_functions)
-
-# Descend into the embedding directory
-#add_subdirectory(embedding)
+add_subdirectory(src)
