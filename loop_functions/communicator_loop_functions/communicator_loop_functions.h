@@ -27,10 +27,6 @@ public:
    virtual void PreStep();
 
 private:
-   
-   /* A list for all controllers */
-   //std::list<Basicbot*> botControllers;
-
    /* A map for all controllers. */
    std::map<int, Basicbot*> botControllers;
 

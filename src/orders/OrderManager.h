@@ -33,12 +33,12 @@ void OrderManager::SetupOrderManager(int numOfPods)
 {
 	m_orderCount = 0;
 	m_numberOfPods = numOfPods;
-	srand (time(NULL));	// seed for rng
 }
 
 Order OrderManager::getNewOrder()
    {
-    int currentTime = -1; // placeholder
+	// placeholder
+    int currentTime = -1; 
     int sid = rand() % m_numberOfPods;
     Order newOrder(m_orderCount++, currentTime, sid);
     return newOrder;

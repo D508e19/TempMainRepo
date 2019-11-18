@@ -34,6 +34,7 @@ void Warehouse::RunWarehouse() // skifte navn til Tick eller step?
 
 void Warehouse::SetupWarehouse(std::map<int, Basicbot*> botControllers)
 {
+    srand (time(NULL));	// seed for rng
     // andet setup ?
     rm.SetupRobotManager(botControllers);
     pm.SetupPodManager(100);

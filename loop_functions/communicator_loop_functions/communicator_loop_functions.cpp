@@ -23,22 +23,6 @@ void CommunicatorLoopFunctions::Init(TConfigurationNode& t_tree){
 void CommunicatorLoopFunctions::PreStep()
 {  
    wh.RunWarehouse(); 
-
-   /*
-   int x = rand()%3;
-
-   if(getController(0)->currentInstruction == idle){
-      if (x==1){
-         getController(0)->currentInstruction = turnleft;
-      }
-      else if (x==2){
-         getController(0)->currentInstruction = turnright;
-      }
-      else{
-         getController(0)->currentInstruction = moveforward;
-      }
-   }   
-   */  
 }
 
 void CommunicatorLoopFunctions::printControllers(){

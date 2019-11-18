@@ -5,7 +5,7 @@
 #include <queue>
 
 #include "controllers/basicbot/basicbot.h"
-#include "src/customDataStructures.h"
+#include "src/datatypes/ds_instruction.h"
 
 class RobotWrapper
 {
@@ -13,7 +13,6 @@ private:
     std::queue<instruction> instructionQueue;
     std::queue<int> instructionsValuesQueue;
 
-    //Basicbot::Basicbot* m_bot;
     Basicbot* m_bot;
 
 public:

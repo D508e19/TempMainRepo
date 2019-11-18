@@ -10,14 +10,13 @@
 
 #include <src/qrcodes/QRCode.h>
 
-#include "src/customDataStructures.h"
+#include "src/datatypes/ds_instruction.h"
 
 using namespace argos;
 
 class Basicbot : public CCI_Controller {
 
 public:
-
    Basicbot();
    virtual ~Basicbot() {}
 
@@ -36,7 +35,7 @@ public:
     * In this example controller there is no need for resetting anything,
     * so the function could have been omitted. It's here just for
     * completeness. */
-   virtual void Reset(){ResetBot();};
+   virtual void Reset(){ResetBot();}; //TODO: rykkes til cpp-filen?
 
    /* Called to cleanup what done by Init() when the experiment finishes.
     * In this example controller there is no need for clean anything up,
@@ -47,6 +46,8 @@ public:
    int robotID;
    bool isBusy = false;
    instruction currentInstruction = idle;
+   // last read pod QR
+   // last read cell QR
 
    void MoveForward();
    void TurnLeft();
