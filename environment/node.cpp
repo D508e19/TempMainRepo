@@ -14,6 +14,7 @@ int Node::CostToRoot(class Node n){
     }
 }
 
+//Vi mangler vel det vigtigste i form a distance til goal node?
 int Node::heuristic(class Node n, class Node goal){
     int gx = goal.x;
     int gy = goal.y;
