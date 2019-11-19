@@ -1,5 +1,10 @@
 set(CUSTOMDATATYPES_SOURCES
-  ds_instruction.h)
+  Coordinate.h
+  ds_instruction.h
+  
+  
+  
+  )
 
 add_library(CUSTOMDATATYPES SHARED
   ${CUSTOMDATATYPES_SOURCES})

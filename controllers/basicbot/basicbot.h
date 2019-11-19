@@ -11,6 +11,8 @@
 #include <src/qrcodes/QRCode.h>
 
 #include "src/datatypes/ds_instruction.h"
+#include "src/datatypes/direction"
+#include "src/datatypes/Coordinate.h"
 
 using namespace argos;
 
@@ -44,10 +46,12 @@ public:
    virtual void Destroy() {}
 
    int robotID;
+   direction facing;
+   Coordinate lastReadCellQR = Coordinate(0,0);
+   int lastReadPodQR;
+
    bool isBusy = false;
    instruction currentInstruction = idle;
-   // last read pod QR
-   // last read cell QR
 
    void MoveForward();
    void TurnLeft();
@@ -57,10 +61,10 @@ public:
    int counter = 0;
    int cellsToMove = 1;
 
-   void LogReadablePosition();
    void ResetBot();
 
-
+   void LogReadablePosition();
+   void ReadCellQR();
 private:
 
    /* Pointer to the differential steering actuator */

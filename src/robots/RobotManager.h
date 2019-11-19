@@ -12,7 +12,6 @@ class RobotManager
 {
 private:
     std::map<int, RobotWrapper> Wrappers;
-
     int robotCount = 0;
 
 public:

@@ -63,6 +63,9 @@ void Basicbot::Init(TConfigurationNode &t_node)
    m_cGoStraightAngleRange.Set(-ToRadians(m_cAlpha), ToRadians(m_cAlpha));
    GetNodeAttributeOrDefault(t_node, "delta", m_fDelta, m_fDelta);
    GetNodeAttributeOrDefault(t_node, "velocity", m_fWheelVelocity, m_fWheelVelocity);
+
+
+   ReadCellQR();
 }
 
 void Basicbot::ControlStep()
@@ -108,6 +111,7 @@ void Basicbot::MoveForward()
    }
    else
    {
+      argos::LOG << lastReadCellQR.x << " , " << lastReadCellQR.y << std::endl;
       ResetBot();
    }
 }
@@ -125,7 +129,11 @@ void Basicbot::TurnRight()
    }
    else
    {
-     ResetBot();
+      if(facing == north){facing=east;}
+      else if(facing == south){facing=west;}
+      else if(facing == east){facing=south;}
+      else if(facing == west){facing=north;}
+      ResetBot();
    }
 }
 
@@ -142,6 +150,10 @@ void Basicbot::TurnLeft()
    }
    else
    {
+      if(facing == north){facing=west;}
+      else if(facing == south){facing=east;}
+      else if(facing == east){facing=east;}
+      else if(facing == west){facing=south;}
       ResetBot();
    }
 }
@@ -159,6 +171,10 @@ void Basicbot::Turn180()
    }
    else
    {
+      if(facing == north){facing=south;}
+      else if(facing == south){facing=north;}
+      else if(facing == east){facing=west;}
+      else if(facing == west){facing=east;}
       ResetBot();
    }
 }
@@ -167,10 +183,40 @@ void Basicbot::ResetBot()
 {
       m_pcWheels->SetLinearVelocity(0, 0);
       cellsToMove = 1;
-      LogReadablePosition();
+      //LogReadablePosition();
+      ReadCellQR();
       currentInstruction = idle;
       isBusy = false;
-      }
+      
+      /* for testing
+      switch (facing)
+      {
+      case north:
+         argos::LOG << "Direction: North" << std::endl;
+         break;
+      case south:
+         argos::LOG << "Direction: South" << std::endl;
+         break;
+      case east:
+         argos::LOG << "Direction: East" << std::endl;
+         break;
+      case west:
+         argos::LOG << "Direction: West" << std::endl;
+         break;      
+      
+      default:
+         break;
+      }  */
+}
+
+void Basicbot::ReadCellQR(){
+   CVector2 temp = GetPosition2D();
+   double x = temp.GetX() * 5;
+   double y = temp.GetY() * 5;
+   x = std::round(x);
+   y = std::round(y);
+   lastReadCellQR = Coordinate((int)x, (int)y);
+}
 
 void Basicbot::LogReadablePosition(){
    CVector2 temp = GetPosition2D();
@@ -178,8 +224,9 @@ void Basicbot::LogReadablePosition(){
    double y = temp.GetY();
 
    std::stringstream stream;
-   stream << std::fixed << std::setprecision(3) << x << ", " << y;
+   stream << std::fixed << std::setprecision(2) << x << ", " << y;
    std::string s = stream.str();
+   
    argos::LOG << "Position: " << s << std::endl;
 };
 

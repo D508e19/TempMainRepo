@@ -5,7 +5,9 @@
 #include <queue>
 
 #include "controllers/basicbot/basicbot.h"
+#include "src/pathfinder/Pathfinder.h"
 #include "src/datatypes/ds_instruction.h"
+#include "src/datatypes/Path.h"
 
 class RobotWrapper
 {
@@ -14,6 +16,10 @@ private:
     std::queue<int> instructionsValuesQueue;
 
     Basicbot* m_bot;
+    Pathfinder pf = Pathfinder();
+
+    direction lastFacing;
+    Coordinate lastCoordinate;
 
 public:
     RobotWrapper();
@@ -22,41 +28,108 @@ public:
 
     void Tick();
 
+    void TranslatePathToInstructions(Path p);
     void AddInstructionToQueue(instruction ins, int tiles);
     void SendNextInstruction();
+
+    direction GetFaceTowardsInstruction(Coordinate wantsToFace, Coordinate current, direction lastFacing);
 };
 
 RobotWrapper::RobotWrapper(){};
 RobotWrapper::~RobotWrapper(){};
 
-RobotWrapper::RobotWrapper(Basicbot *bot):m_bot(bot)
-{   
-    //temp instruksgenerator 
-    for (int i = 0; i < 500; i++)
-    {
-        int j = rand() % 4;
-        switch (j)
-        {
-        case 1:
-            AddInstructionToQueue(turnleft, 1);
-            break;
-        case 2:
-            AddInstructionToQueue(turnright, 1);
-            break;
-        case 3:
-            AddInstructionToQueue(moveforward, rand()%5);
-        default:
-            break;
-        }
-    }
-};
+RobotWrapper::RobotWrapper(Basicbot *bot):m_bot(bot){};
 
 void RobotWrapper::Tick()
 {
-    if (m_bot->currentInstruction == idle)
+    if(instructionQueue.empty()&&m_bot->isBusy==false)
     {
+        TranslatePathToInstructions(pf.GetStupidPath(m_bot->lastReadCellQR, Coordinate(rand()%5,rand()%5)));
+    }
+    if (m_bot->currentInstruction == idle)
+    { 
         SendNextInstruction();
     }
+}
+
+void RobotWrapper::TranslatePathToInstructions(Path p)
+{
+    //Coordinate lastCoordinate = m_bot->lastReadCellQR;
+    int counter = p.waypoints.size();
+    int diff = 0;
+
+    for (int i = 0; i < counter; i++)
+    {
+        instruction n;
+        direction f = GetFaceTowardsInstruction(p.waypoints.front(), lastCoordinate, lastFacing);
+        switch (lastFacing)
+        {
+            case north :
+                if (f==north){n=ignore;}
+                else if(f==south){n=turn180;}
+                else if(f==east){n=turnleft;}
+                else if(f==west){n=turnright;}
+                break;
+            case south : 
+                if (f==north){n=turn180;}
+                else if(f==south){n=ignore;}
+                else if(f==east){n=turnright;}
+                else if(f==west){n=turnleft;}   
+                break;
+            case east :
+                if (f==north){n=turnright;}
+                else if(f==south){n=turnleft;}
+                else if(f==east){n=ignore;}
+                else if(f==west){n=turn180;}
+                break;
+            case west :
+                if (f==north){n=turnleft;}
+                else if(f==south){n=turnright;}
+                else if(f==east){n=turn180;}
+                else if(f==west){n=ignore;}
+                break;
+            default:
+                break;
+        }
+        lastFacing = f; 
+        //std::cout << "Sending ins to face: " << f << std::endl;
+        AddInstructionToQueue(n, 1);
+
+        //change to ternary?
+        if(lastCoordinate.x != p.waypoints.front().x){
+            diff = abs(lastCoordinate.x - p.waypoints.front().x);}
+        else{
+            diff = abs(lastCoordinate.y - p.waypoints.front().y);
+        }
+        AddInstructionToQueue(moveforward, diff);
+       
+        lastCoordinate = p.waypoints.front();
+        
+        p.waypoints.pop();
+    }
+}
+
+direction RobotWrapper::GetFaceTowardsInstruction(Coordinate cToFace, Coordinate lastCoordinate, direction _lastFacing)
+{
+    //std::cout << "In cell: " << lastCoordinate.x << ","<< lastCoordinate.y<< std::endl;
+    //std::cout << "Last faced: " << _lastFacing << std::endl;
+    //std::cout << "Want to face: " << cToFace.x << ","<< cToFace.y<< std::endl;
+    instruction i;
+    direction nextFacing = _lastFacing;
+    Coordinate c = lastCoordinate;
+
+    int xdiff = c.x-cToFace.x;
+    int ydiff = c.y-cToFace.y;
+
+    if(xdiff!=0){
+        nextFacing = (xdiff < 0) ? north : south;
+    }
+    else{
+        nextFacing = (ydiff < 0) ?  east : west; 
+    }
+    //std::cout << "Gonna face: " << nextFacing << std::endl;
+    return nextFacing;
+
 }
 
 void RobotWrapper::SendNextInstruction()
@@ -95,6 +168,9 @@ void RobotWrapper::SendNextInstruction()
 
 void RobotWrapper::AddInstructionToQueue(instruction ins, int tiles = 1)
 {
+    if(ins == ignore){return;}
+
+    //std::cout << "queuing ins: " << ins << std::endl;
     instructionQueue.push(ins);
     if(ins == moveforward)
     {
