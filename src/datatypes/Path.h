@@ -15,7 +15,7 @@ public:
 
     std::queue <Coordinate> waypoints;
 
-    void AddWayPoint(Coordinate newCoord);
+    void AddWayPoint(Coordinate newCoord, Coordinate lastCord);
     Coordinate GetNextWaypoint();
     
 };
@@ -23,20 +23,21 @@ public:
 Path::Path(){}
 Path::~Path(){}
 
-//check om nyt wp er somme koordinat som sidste koor. hvis så ignorer
-void Path::AddWayPoint(Coordinate newCord)
+void Path::AddWayPoint(Coordinate newCord, Coordinate lastCoord)
 {
+    int xLast = lastCoord.x;
+    int yLast = lastCoord.y;
+
     if(waypoints.empty())
     {
+        std::cout << xLast << "," << yLast << " -> "<< newCord.x << ", " << newCord.y << std::endl;
         waypoints.push(newCord);
-
         return;
     }
 
-    int xLast = waypoints.back().x;
-    int yLast = waypoints.back().y;
 
-    std::cout << xLast << "," << yLast << " -> "<< newCord.x << " , " << newCord.y << std::endl;
+
+    std::cout << xLast << "," << yLast << " -> "<< newCord.x << ", " << newCord.y << std::endl;
     {
         if(xLast == newCord.x && yLast == newCord.y)
             {

@@ -22,6 +22,8 @@ public:
    Basicbot();
    virtual ~Basicbot() {}
 
+   bool first = true;
+
    /* This function initializes the controller.
     * The 't_node' variable points to the <parameters> section in the XML
     * file in the <controllers><footbot_diffusion_controller> section. */

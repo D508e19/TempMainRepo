@@ -64,12 +64,15 @@ void Basicbot::Init(TConfigurationNode &t_node)
    GetNodeAttributeOrDefault(t_node, "delta", m_fDelta, m_fDelta);
    GetNodeAttributeOrDefault(t_node, "velocity", m_fWheelVelocity, m_fWheelVelocity);
 
-
    ReadCellQR();
+   argos::LOG << "Arrived at: " << lastReadCellQR.x << " , " << lastReadCellQR.y << std::endl;
+
 }
 
 void Basicbot::ControlStep()
 {
+   if(first){LogReadablePosition();first=false;}
+
    switch (currentInstruction)
    {
       case idle:
@@ -111,7 +114,7 @@ void Basicbot::MoveForward()
    }
    else
    {
-      argos::LOG << lastReadCellQR.x << " , " << lastReadCellQR.y << std::endl;
+      argos::LOG << "Arrived at: " << lastReadCellQR.x << " , " << lastReadCellQR.y << std::endl;
       ResetBot();
    }
 }
@@ -181,32 +184,12 @@ void Basicbot::Turn180()
 
 void Basicbot::ResetBot()
 {
-      m_pcWheels->SetLinearVelocity(0, 0);
-      cellsToMove = 1;
-      //LogReadablePosition();
-      ReadCellQR();
-      currentInstruction = idle;
-      isBusy = false;
-      
-      /* for testing
-      switch (facing)
-      {
-      case north:
-         argos::LOG << "Direction: North" << std::endl;
-         break;
-      case south:
-         argos::LOG << "Direction: South" << std::endl;
-         break;
-      case east:
-         argos::LOG << "Direction: East" << std::endl;
-         break;
-      case west:
-         argos::LOG << "Direction: West" << std::endl;
-         break;      
-      
-      default:
-         break;
-      }  */
+   m_pcWheels->SetLinearVelocity(0, 0);
+   cellsToMove = 1;
+   ReadCellQR();
+   currentInstruction = idle;
+   isBusy = false;
+
 }
 
 void Basicbot::ReadCellQR(){

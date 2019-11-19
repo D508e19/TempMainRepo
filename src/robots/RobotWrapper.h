@@ -38,13 +38,18 @@ public:
 RobotWrapper::RobotWrapper(){};
 RobotWrapper::~RobotWrapper(){};
 
-RobotWrapper::RobotWrapper(Basicbot *bot):m_bot(bot){};
+RobotWrapper::RobotWrapper(Basicbot *bot):m_bot(bot)
+{
+    lastFacing = m_bot->facing;
+    lastCoordinate = m_bot->lastReadCellQR;
+
+};
 
 void RobotWrapper::Tick()
 {
     if(instructionQueue.empty()&&m_bot->isBusy==false)
     {
-        TranslatePathToInstructions(pf.GetStupidPath(m_bot->lastReadCellQR, Coordinate(rand()%5,rand()%5)));
+        TranslatePathToInstructions(pf.GetStupidPath(lastCoordinate, Coordinate(rand()%5,rand()%5)));
     }
     if (m_bot->currentInstruction == idle)
     { 
@@ -101,6 +106,7 @@ void RobotWrapper::TranslatePathToInstructions(Path p)
         else{
             diff = abs(lastCoordinate.y - p.waypoints.front().y);
         }
+        argos::LOG << "moving: "<< diff << std::endl;
         AddInstructionToQueue(moveforward, diff);
        
         lastCoordinate = p.waypoints.front();
@@ -114,12 +120,12 @@ direction RobotWrapper::GetFaceTowardsInstruction(Coordinate cToFace, Coordinate
     //std::cout << "In cell: " << lastCoordinate.x << ","<< lastCoordinate.y<< std::endl;
     //std::cout << "Last faced: " << _lastFacing << std::endl;
     //std::cout << "Want to face: " << cToFace.x << ","<< cToFace.y<< std::endl;
-    instruction i;
+    //instruction i;
     direction nextFacing = _lastFacing;
-    Coordinate c = lastCoordinate;
+    //Coordinate c = lastCoordinate;
 
-    int xdiff = c.x-cToFace.x;
-    int ydiff = c.y-cToFace.y;
+    int xdiff = lastCoordinate.x-cToFace.x;
+    int ydiff = lastCoordinate.y-cToFace.y;
 
     if(xdiff!=0){
         nextFacing = (xdiff < 0) ? north : south;
