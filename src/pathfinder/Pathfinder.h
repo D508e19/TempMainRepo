@@ -26,9 +26,12 @@ Path Pathfinder::GetStupidPath(Coordinate start, Coordinate end)
     //end.PrintCoord();
     std::cout << "Want to go to: " << end.x << ", " << end.y << std::endl;
     Path newPath;
-    newPath.AddWayPoint(start);
-    newPath.AddWayPoint(Coordinate(end.x, start.y));
-    newPath.AddWayPoint(Coordinate(end.x, end.y));
+    //std::cout << "Adding waypoint:" << start.x << " " << start.y << std::endl;
+    //newPath.AddWayPoint(start);
+    std::cout << "Adding waypoint:" << end.x << " " << start.y << std::endl;
+    newPath.AddWayPoint(Coordinate(end.x, start.y), start);
+    std::cout << "Adding waypoint:" << end.x << " " << end.y << std::endl;
+    newPath.AddWayPoint(Coordinate(end.x, end.y), Coordinate(end.x, start.y));
 
     return newPath;
 }
