@@ -1,7 +1,3 @@
-//
-// Created by Christopher krejler on 12/11/2019.
-//
-
 #include "node.h"
 
 //
@@ -88,6 +84,7 @@ bool Node::calculateNeighbour() {
         this->neighbours.push_back(new Node(this->x, this->y, South, this, 3));
         this->neighbours.push_back(new Node(this->x, this->y, East, this, 3));
         this->neighbours.push_back(new Node(this->x, this->y, West, this, 3));
+        this->neighbours.push_back(new Node(this->x, this->y, North, this, 1));
     }
 
     if(this->direction == South){
@@ -95,18 +92,21 @@ bool Node::calculateNeighbour() {
         this->neighbours.push_back(new Node(this->x, this->y-1, South, this, 1));
         this->neighbours.push_back(new Node(this->x, this->y, East, this, 3));
         this->neighbours.push_back(new Node(this->x, this->y, West, this, 3));
+        this->neighbours.push_back(new Node(this->x, this->y, South, this, 1));
     }
     if(this->direction == East){
         this->neighbours.push_back(new Node(this->x, this->y, North, this, 3));
         this->neighbours.push_back(new Node(this->x, this->y, South, this, 3));
         this->neighbours.push_back(new Node(this->x, this->y+1, East, this, 1));
         this->neighbours.push_back(new Node(this->x, this->y, West, this, 3));
+        this->neighbours.push_back(new Node(this->x, this->y, East, this, 1));
     }
     if(this->direction == West){
         this->neighbours.push_back(new Node(this->x, this->y, North, this, 3));
         this->neighbours.push_back(new Node(this->x, this->y, South, this, 3));
         this->neighbours.push_back(new Node(this->x, this->y, East, this, 3));
         this->neighbours.push_back(new Node(this->x, this->y-1, West, this, 1));
+        this->neighbours.push_back(new Node(this->x, this->y, West, this, 1));
     }
     return true;
 }
