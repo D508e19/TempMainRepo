@@ -11,6 +11,7 @@ aStar::aStar(){
 
 std::list<Node*> aStar::pathFinder(Coordinate start, direction d, Coordinate goal) {
 
+    std::list<Node*> pathList;
     Node* startNode = new Node(start,d);
     endNode = startNode;
     openSet.push_back(startNode);

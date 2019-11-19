@@ -17,7 +17,6 @@ public:
     std::list<Node*> openSet;
     Node* current;
     Node* endNode;
-    std::list<Node*> pathList;
 
     std::list<Node*> constructPath(Node*, std::list<Node*>);
     std::list<Node*> pathFinder(Coordinate, enum direction, Coordinate);
