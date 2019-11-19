@@ -13,23 +13,19 @@ std::list<Coordinate> aStar::pathFinder(Coordinate start, direction d, Coordinat
 
     std::list<Coordinate> pathList;
     Node* startNode = new Node(start,d);
+    startNode->gScore = 0;
     endNode = startNode;
-    openSet.push_back(startNode);
 
-
-    while (!openSet.empty()){
+    do {
         endNode = startNode->leastCost(startNode, goal);
         if ((endNode->coordinate.x == goal.x) && (endNode->coordinate.y == goal.y)){
             return constructPath(endNode, pathList);
         }
 
-        openSet.remove(startNode);
-
-        if(endNode->neighbours.empty()){
-            if(!endNode->calculateNeighbour()){
-                //cry
-            }
+        if (endNode->neighbours.empty()){
+            endNode->calculateNeighbour();
         }
+
         for(Node* node: endNode->neighbours){
             int tentative = endNode->gScore + node->parentWeight;
 
@@ -37,14 +33,9 @@ std::list<Coordinate> aStar::pathFinder(Coordinate start, direction d, Coordinat
                 endNode = node;
                 node->gScore = tentative;
                 node->fScore = node->gScore + node->heuristic(goal);
-
-                // if openset contains node
-                if(true){
-                    openSet.emplace_back(node);
-                }
             }
         }
-    }
+    } while ((startNode->neighbours.empty()));
 }
 
 std::list<Coordinate> aStar::constructPath(Node* node, std::list<Coordinate> list) {

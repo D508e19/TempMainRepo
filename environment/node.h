@@ -14,9 +14,9 @@
 class Node {
 public:
     Node* parent;
-    int parentWeight;
-    int fScore;
-    int gScore;
+    int parentWeight = 0;
+    int fScore = INT32_MAX;
+    int gScore = INT32_MAX;
     bool start;
     Coordinate coordinate;
     direction direction;
