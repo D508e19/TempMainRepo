@@ -283,7 +283,10 @@ Qt5_DIR:PATH=/usr/local/Cellar/qt/5.13.2/lib/cmake/Qt5
 alibot_LIB_DEPENDS:STATIC=general;argos3core_simulator;general;argos3plugin_simulator_footbot;general;argos3plugin_simulator_genericrobot;
 
 //Dependencies for the target
-communicator_loop_functions_LIB_DEPENDS:STATIC=general;alibot;general;argos3core_simulator;general;argos3plugin_simulator_entities;general;argos3plugin_simulator_footbot;
+basicbot_LIB_DEPENDS:STATIC=general;argos3core_simulator;general;argos3plugin_simulator_footbot;general;argos3plugin_simulator_genericrobot;
+
+//Dependencies for the target
+communicator_loop_functions_LIB_DEPENDS:STATIC=general;basicbot;general;argos3core_simulator;general;argos3plugin_simulator_entities;general;argos3plugin_simulator_footbot;
 
 //Path to a library.
 pkgcfg_lib_ARGOS_argos3core_simulator:FILEPATH=/usr/local/lib/argos3/libargos3core_simulator.dylib

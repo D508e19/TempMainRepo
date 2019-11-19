@@ -5,7 +5,7 @@
 		<Option title="KBot"/>
 		<Option makefile_is_custom="1"/>
 		<Option compiler="clang"/>
-		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\usr\;CMake Files\..\..\..\..\usr\local\;CMake Files\..\..\..\..\usr\local\share\;CMake Files\..\..\..\..\usr\local\share\argos3\;CMake Files\..\..\..\..\usr\local\share\argos3\cmake\;CMake Files\..\..\..\..\usr\local\Cellar\;CMake Files\..\..\..\..\usr\local\Cellar\qt\;CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\;CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\lib\;CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\lib\cmake\;CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\lib\cmake\Qt5\;CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\lib\cmake\Qt5Widgets\;CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\lib\cmake\Qt5Gui\;CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\lib\cmake\Qt5Core\;CMake Files\cmake\;CMake Files\controllers\;CMake Files\controllers\alibot\;CMake Files\loop_functions\;CMake Files\loop_functions\communicator_loop_functions\;"/>
+		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\usr\;CMake Files\..\..\..\..\usr\local\;CMake Files\..\..\..\..\usr\local\share\;CMake Files\..\..\..\..\usr\local\share\argos3\;CMake Files\..\..\..\..\usr\local\share\argos3\cmake\;CMake Files\..\..\..\..\usr\local\Cellar\;CMake Files\..\..\..\..\usr\local\Cellar\qt\;CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\;CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\lib\;CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\lib\cmake\;CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\lib\cmake\Qt5\;CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\lib\cmake\Qt5Widgets\;CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\lib\cmake\Qt5Gui\;CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\lib\cmake\Qt5Core\;CMake Files\cmake\;CMake Files\controllers\;CMake Files\controllers\basicbot\;CMake Files\loop_functions\;CMake Files\loop_functions\communicator_loop_functions\;"/>
 		<Build>
 			<Target title="all">
 				<Option working_dir="/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug"/>
@@ -37,9 +37,9 @@
 					<DistClean command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="alibot">
-				<Option output="/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/alibot/libalibot.dylib" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/alibot"/>
+			<Target title="basicbot">
+				<Option output="/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/basicbot/libbasicbot.dylib" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/basicbot"/>
 				<Option object_output="./"/>
 				<Option type="3"/>
 				<Option compiler="clang"/>
@@ -48,9 +48,9 @@
 					<Add option="-DQT_WIDGETS_LIB"/>
 					<Add option="-DQT_GUI_LIB"/>
 					<Add option="-DQT_CORE_LIB"/>
-					<Add directory="/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/alibot"/>
-					<Add directory="/Users/chris/CLionProjects/TempMainRepo/controllers/alibot"/>
-					<Add directory="/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/alibot/alibot_autogen/include"/>
+					<Add directory="/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/basicbot"/>
+					<Add directory="/Users/chris/CLionProjects/TempMainRepo/controllers/basicbot"/>
+					<Add directory="/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/basicbot/basicbot_autogen/include"/>
 					<Add directory="/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/OpenGL.framework/Headers"/>
 					<Add directory="/usr/local/Cellar/qt/5.13.2/lib/QtWidgets.framework"/>
 					<Add directory="/usr/local/Cellar/qt/5.13.2/lib/QtWidgets.framework/Headers"/>
@@ -69,15 +69,15 @@
 					<Add directory="/Library/Frameworks"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/alibot/Makefile&quot;  VERBOSE=1 alibot"/>
-					<CompileFile command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/alibot/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/alibot/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/alibot/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/basicbot/Makefile&quot;  VERBOSE=1 basicbot"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/basicbot/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/basicbot/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/basicbot/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="alibot/fast">
-				<Option output="/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/alibot/libalibot.dylib" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/alibot"/>
+			<Target title="basicbot/fast">
+				<Option output="/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/basicbot/libbasicbot.dylib" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/basicbot"/>
 				<Option object_output="./"/>
 				<Option type="3"/>
 				<Option compiler="clang"/>
@@ -86,9 +86,9 @@
 					<Add option="-DQT_WIDGETS_LIB"/>
 					<Add option="-DQT_GUI_LIB"/>
 					<Add option="-DQT_CORE_LIB"/>
-					<Add directory="/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/alibot"/>
-					<Add directory="/Users/chris/CLionProjects/TempMainRepo/controllers/alibot"/>
-					<Add directory="/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/alibot/alibot_autogen/include"/>
+					<Add directory="/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/basicbot"/>
+					<Add directory="/Users/chris/CLionProjects/TempMainRepo/controllers/basicbot"/>
+					<Add directory="/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/basicbot/basicbot_autogen/include"/>
 					<Add directory="/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/OpenGL.framework/Headers"/>
 					<Add directory="/usr/local/Cellar/qt/5.13.2/lib/QtWidgets.framework"/>
 					<Add directory="/usr/local/Cellar/qt/5.13.2/lib/QtWidgets.framework/Headers"/>
@@ -107,20 +107,20 @@
 					<Add directory="/Library/Frameworks"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/alibot/Makefile&quot;  VERBOSE=1 alibot/fast"/>
-					<CompileFile command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/alibot/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/alibot/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/alibot/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/basicbot/Makefile&quot;  VERBOSE=1 basicbot/fast"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/basicbot/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/basicbot/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/basicbot/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="alibot_autogen">
-				<Option working_dir="/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/alibot"/>
+			<Target title="basicbot_autogen">
+				<Option working_dir="/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/basicbot"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/alibot/Makefile&quot;  VERBOSE=1 alibot_autogen"/>
-					<CompileFile command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/alibot/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/alibot/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/alibot/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/basicbot/Makefile&quot;  VERBOSE=1 basicbot_autogen"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/basicbot/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/basicbot/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/basicbot/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="communicator_loop_functions">
@@ -208,17 +208,17 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/alibot/alibot_autogen/mocs_compilation.cpp">
-			<Option target="alibot"/>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/basicbot/basicbot_autogen/mocs_compilation.cpp">
+			<Option target="basicbot"/>
 		</Unit>
 		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/loop_functions/communicator_loop_functions/communicator_loop_functions_autogen/mocs_compilation.cpp">
 			<Option target="communicator_loop_functions"/>
 		</Unit>
-		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/controllers/alibot/alibot.cpp">
-			<Option target="alibot"/>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/controllers/basicbot/basicbot.cpp">
+			<Option target="basicbot"/>
 		</Unit>
-		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/controllers/alibot/alibot.h">
-			<Option target="alibot"/>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/controllers/basicbot/basicbot.h">
+			<Option target="basicbot"/>
 		</Unit>
 		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/environment/node.cpp">
 			<Option target="communicator_loop_functions"/>
@@ -352,8 +352,8 @@
 		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/controllers/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\controllers\"/>
 		</Unit>
-		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/controllers/alibot/CMakeLists.txt">
-			<Option virtualFolder="CMake Files\controllers\alibot\"/>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/controllers/basicbot/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\controllers\basicbot\"/>
 		</Unit>
 		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/loop_functions/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\loop_functions\"/>

@@ -39,7 +39,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
-  "/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/alibot/CMakeFiles/alibot.dir/DependInfo.cmake"
+  "/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/basicbot/CMakeFiles/basicbot.dir/DependInfo.cmake"
   )
 
 # Fortran module output directory.

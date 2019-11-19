@@ -4,19 +4,21 @@
 
 #include "aStar.h"
 
+
 aStar::aStar(){
 }
 
 
-std::list<Node*> aStar::pathFinder(Node* startNode, Node goal) {
+std::list<Node*> aStar::pathFinder(Coordinate start, direction d, Coordinate goal) {
 
+    Node* startNode = new Node(start,d);
     endNode = startNode;
     openSet.push_back(startNode);
 
 
     while (!openSet.empty()){
         endNode = startNode->leastCost(startNode, goal);
-        if ((endNode->x == goal.x) && (endNode->y == goal.y)){
+        if ((endNode->coordinate.x == goal.x) && (endNode->coordinate.y == goal.y)){
             return constructPath(endNode, pathList);
         }
 

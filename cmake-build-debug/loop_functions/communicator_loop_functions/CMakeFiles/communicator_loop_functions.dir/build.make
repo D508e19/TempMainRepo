@@ -124,7 +124,7 @@ loop_functions/communicator_loop_functions/libcommunicator_loop_functions.so: lo
 loop_functions/communicator_loop_functions/libcommunicator_loop_functions.so: loop_functions/communicator_loop_functions/CMakeFiles/communicator_loop_functions.dir/__/__/environment/node.cpp.o
 loop_functions/communicator_loop_functions/libcommunicator_loop_functions.so: loop_functions/communicator_loop_functions/CMakeFiles/communicator_loop_functions.dir/__/__/environment/pathfinding/aStar.cpp.o
 loop_functions/communicator_loop_functions/libcommunicator_loop_functions.so: loop_functions/communicator_loop_functions/CMakeFiles/communicator_loop_functions.dir/build.make
-loop_functions/communicator_loop_functions/libcommunicator_loop_functions.so: controllers/alibot/libalibot.dylib
+loop_functions/communicator_loop_functions/libcommunicator_loop_functions.so: controllers/basicbot/libbasicbot.dylib
 loop_functions/communicator_loop_functions/libcommunicator_loop_functions.so: loop_functions/communicator_loop_functions/CMakeFiles/communicator_loop_functions.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX shared module libcommunicator_loop_functions.so"
 	cd /Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/loop_functions/communicator_loop_functions && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/communicator_loop_functions.dir/link.txt --verbose=$(VERBOSE)

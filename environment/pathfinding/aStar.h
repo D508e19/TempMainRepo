@@ -8,6 +8,8 @@
 
 #include <map>
 #include "../node.h"
+#include "../../src/datatypes/Coordinate.h"
+#include "../../src/datatypes/direction"
 
 class aStar {
 public:
@@ -18,7 +20,7 @@ public:
     std::list<Node*> pathList;
 
     std::list<Node*> constructPath(Node*, std::list<Node*>);
-    std::list<Node*> pathFinder(Node* h, Node t);
+    std::list<Node*> pathFinder(Coordinate, enum direction, Coordinate);
 };
 
 

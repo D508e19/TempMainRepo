@@ -111,30 +111,30 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named alibot
+# Target rules for targets named basicbot
 
 # Build rule for target.
-alibot: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 alibot
-.PHONY : alibot
+basicbot: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 basicbot
+.PHONY : basicbot
 
 # fast build rule for target.
-alibot/fast:
-	$(MAKE) -f controllers/alibot/CMakeFiles/alibot.dir/build.make controllers/alibot/CMakeFiles/alibot.dir/build
-.PHONY : alibot/fast
+basicbot/fast:
+	$(MAKE) -f controllers/basicbot/CMakeFiles/basicbot.dir/build.make controllers/basicbot/CMakeFiles/basicbot.dir/build
+.PHONY : basicbot/fast
 
 #=============================================================================
-# Target rules for targets named alibot_autogen
+# Target rules for targets named basicbot_autogen
 
 # Build rule for target.
-alibot_autogen: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 alibot_autogen
-.PHONY : alibot_autogen
+basicbot_autogen: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 basicbot_autogen
+.PHONY : basicbot_autogen
 
 # fast build rule for target.
-alibot_autogen/fast:
-	$(MAKE) -f controllers/alibot/CMakeFiles/alibot_autogen.dir/build.make controllers/alibot/CMakeFiles/alibot_autogen.dir/build
-.PHONY : alibot_autogen/fast
+basicbot_autogen/fast:
+	$(MAKE) -f controllers/basicbot/CMakeFiles/basicbot_autogen.dir/build.make controllers/basicbot/CMakeFiles/basicbot_autogen.dir/build
+.PHONY : basicbot_autogen/fast
 
 #=============================================================================
 # Target rules for targets named communicator_loop_functions
@@ -170,8 +170,8 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... alibot"
-	@echo "... alibot_autogen"
+	@echo "... basicbot"
+	@echo "... basicbot_autogen"
 	@echo "... communicator_loop_functions"
 	@echo "... communicator_loop_functions_autogen"
 .PHONY : help

@@ -46,7 +46,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "CMakeFiles/3.15.3/CMakeSystem.cmake"
   "../cmake/FindGALIB.cmake"
   "../controllers/CMakeLists.txt"
-  "../controllers/alibot/CMakeLists.txt"
+  "../controllers/basicbot/CMakeLists.txt"
   "../loop_functions/CMakeLists.txt"
   "../loop_functions/communicator_loop_functions/CMakeLists.txt"
   "/usr/local/Cellar/qt/5.13.2/lib/cmake/Qt5/Qt5Config.cmake"
@@ -96,15 +96,15 @@ set(CMAKE_MAKEFILE_OUTPUTS
 set(CMAKE_MAKEFILE_PRODUCTS
   "CMakeFiles/CMakeDirectoryInformation.cmake"
   "controllers/CMakeFiles/CMakeDirectoryInformation.cmake"
-  "controllers/alibot/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "controllers/basicbot/CMakeFiles/CMakeDirectoryInformation.cmake"
   "loop_functions/CMakeFiles/CMakeDirectoryInformation.cmake"
   "loop_functions/communicator_loop_functions/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "controllers/alibot/CMakeFiles/alibot.dir/DependInfo.cmake"
-  "controllers/alibot/CMakeFiles/alibot_autogen.dir/DependInfo.cmake"
+  "controllers/basicbot/CMakeFiles/basicbot.dir/DependInfo.cmake"
+  "controllers/basicbot/CMakeFiles/basicbot_autogen.dir/DependInfo.cmake"
   "loop_functions/communicator_loop_functions/CMakeFiles/communicator_loop_functions.dir/DependInfo.cmake"
   "loop_functions/communicator_loop_functions/CMakeFiles/communicator_loop_functions_autogen.dir/DependInfo.cmake"
   )

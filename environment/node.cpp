@@ -10,14 +10,15 @@
 Node::Node() {
 }
 
-Node::Node(int x, int y, Node::Direction d) {
-    this->x = x;
-    this->y = y;
+Node::Node(Coordinate c, enum direction d) {
+    this->coordinate.x = c.x;
+    this->coordinate.y = c.y;
     this->direction = d;
 }
-Node::Node(int x, int y, Node::Direction d, Node* parent, int weight) {
-    this->x = x;
-    this->y = y;
+Node::Node(Coordinate c, enum direction d, Node* parent, int weight) {
+    this->coordinate.x = c.x;
+    this->coordinate.y = c.y;
+    this->direction = d;
     this->direction = d;
     this->parent = parent;
     this->parentWeight = weight;
@@ -45,29 +46,29 @@ std::list<Node> Node::ReturnPath(class Node n, std::list<Node> path){
     }
 }
 
-int Node::heuristic(Node goal){
+int Node::heuristic(Coordinate goal){
     int gx = goal.x;
     int gy = goal.y;
-    int nx = this->x;
-    int ny = this->y;
+    int nx = this->coordinate.x;
+    int ny = this->coordinate.y;
     int h = 0;
 
 
-    if ((this->direction == North || this->direction == South) && gx != nx){
+    if ((this->direction == north || this->direction == south) && gx != nx){
         h += 3;
-    } else if ((this->direction == West || this->direction == East) && gy != ny){
-        h += 3;
-    }
-    if (gy < ny && this->direction != South){
+    } else if ((this->direction == west || this->direction == east) && gy != ny){
         h += 3;
     }
-    else if (gy > ny && this->direction != North){
+    if (gy < ny && this->direction != south){
+        h += 3;
+    }
+    else if (gy > ny && this->direction != north){
         h+= 3;
     }
-    else if (gx > nx && this->direction != East){
+    else if (gx > nx && this->direction != east){
         h+= 3;
     }
-    else if (gx < nx && this->direction != West){
+    else if (gx < nx && this->direction != west){
         h += 3;
     }
 
@@ -79,39 +80,39 @@ int Node::heuristic(Node goal){
 
 
 bool Node::calculateNeighbour() {
-    if(this->direction == North){
-        this->neighbours.push_back(new Node(this->x, this->y + 1, North, this, 1));
-        this->neighbours.push_back(new Node(this->x, this->y, South, this, 3));
-        this->neighbours.push_back(new Node(this->x, this->y, East, this, 3));
-        this->neighbours.push_back(new Node(this->x, this->y, West, this, 3));
-        this->neighbours.push_back(new Node(this->x, this->y, North, this, 1));
+    if(this->direction == north){
+        this->neighbours.push_back(new Node(*(new Coordinate(this->coordinate.x+1, this->coordinate.y)), north, this, 1));
+        this->neighbours.push_back(new Node(this->coordinate, south, this, 3));
+        this->neighbours.push_back(new Node(this->coordinate, east, this, 3));
+        this->neighbours.push_back(new Node(this->coordinate, west, this, 3));
+        this->neighbours.push_back(new Node(this->coordinate, north, this, 1));
     }
 
-    if(this->direction == South){
-        this->neighbours.push_back(new Node(this->x, this->y, North, this, 3));
-        this->neighbours.push_back(new Node(this->x, this->y-1, South, this, 1));
-        this->neighbours.push_back(new Node(this->x, this->y, East, this, 3));
-        this->neighbours.push_back(new Node(this->x, this->y, West, this, 3));
-        this->neighbours.push_back(new Node(this->x, this->y, South, this, 1));
+    if(this->direction == south){
+        this->neighbours.push_back(new Node(this->coordinate, north, this, 3));
+        this->neighbours.push_back(new Node(*(new Coordinate(this->coordinate.x, this->coordinate.y-1)), south, this, 1));
+        this->neighbours.push_back(new Node(this->coordinate, east, this, 3));
+        this->neighbours.push_back(new Node(this->coordinate, west, this, 3));
+        this->neighbours.push_back(new Node(this->coordinate, south, this, 1));
     }
-    if(this->direction == East){
-        this->neighbours.push_back(new Node(this->x, this->y, North, this, 3));
-        this->neighbours.push_back(new Node(this->x, this->y, South, this, 3));
-        this->neighbours.push_back(new Node(this->x, this->y+1, East, this, 1));
-        this->neighbours.push_back(new Node(this->x, this->y, West, this, 3));
-        this->neighbours.push_back(new Node(this->x, this->y, East, this, 1));
+    if(this->direction == east){
+        this->neighbours.push_back(new Node(this->coordinate, north, this, 3));
+        this->neighbours.push_back(new Node(this->coordinate, south, this, 3));
+        this->neighbours.push_back(new Node(*(new Coordinate(this->coordinate.x+1, this->coordinate.y)), east, this, 1));
+        this->neighbours.push_back(new Node(this->coordinate, west, this, 3));
+        this->neighbours.push_back(new Node(this->coordinate, east, this, 1));
     }
-    if(this->direction == West){
-        this->neighbours.push_back(new Node(this->x, this->y, North, this, 3));
-        this->neighbours.push_back(new Node(this->x, this->y, South, this, 3));
-        this->neighbours.push_back(new Node(this->x, this->y, East, this, 3));
-        this->neighbours.push_back(new Node(this->x, this->y-1, West, this, 1));
-        this->neighbours.push_back(new Node(this->x, this->y, West, this, 1));
+    if(this->direction == west){
+        this->neighbours.push_back(new Node(this->coordinate, north, this, 3));
+        this->neighbours.push_back(new Node(this->coordinate, south, this, 3));
+        this->neighbours.push_back(new Node(this->coordinate, east, this, 3));
+        this->neighbours.push_back(new Node(*(new Coordinate(this->coordinate.x, this->coordinate.y-1)), west, this, 1));
+        this->neighbours.push_back(new Node(this->coordinate, west, this, 1));
     }
     return true;
 }
 
-Node* Node::leastCost(Node* node, Node goal) {
+Node* Node::leastCost(Node* node, Coordinate goal) {
 
     if(node->neighbours.empty()){
         return node;

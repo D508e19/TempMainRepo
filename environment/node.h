@@ -7,6 +7,9 @@
 
 
 #include <list>
+#include "../src/datatypes/direction"
+#include "../src/datatypes/Coordinate.h"
+
 
 class Node {
 public:
@@ -14,25 +17,23 @@ public:
     int parentWeight;
     int fScore;
     int gScore;
-    int x;
-    int y;
     bool start;
-    enum Direction{North, South, East, West};
-    Direction direction;
+    Coordinate coordinate;
+    direction direction;
 
     std::list<Node*> neighbours;
 
     Node();
-    Node(int, int, Node::Direction);
-    Node(int, int, Node::Direction, Node*,int);
-    int heuristic(Node goal);
+    Node(Coordinate, enum direction);
+    Node(Coordinate, enum direction, Node*, int);
+    int heuristic(Coordinate goal);
     int CostToRoot(Node n);
     bool calculateNeighbour();
 
 
     std::list<Node> ReturnPath(Node n, std::list<Node> path);
 
-    Node* leastCost(Node* base, Node goal);
+    Node* leastCost(Node* base, Coordinate goal);
 };
 
 
