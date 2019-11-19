@@ -1,30 +1,25 @@
 //
-// Created by Christopher krejler on 14/11/2019.
+// Created by Christopher krejler on 15/11/2019.
 //
 
-#ifndef KBOT_ASTAR_H
-#define KBOT_ASTAR_H
+#ifndef UNTITLED1_ASTAR_H
+#define UNTITLED1_ASTAR_H
 
 
-#include <environment/node.h>
-#include <list>
 #include <map>
+#include "../node.h"
 
 class aStar {
 public:
-    aStar(const Node& goal, Node start);
+    aStar();
+    std::list<Node*> openSet;
+    Node* current;
+    Node* endNode;
+    std::list<Node*> pathList;
 
-    std::list<Node> openSet;
-    std::map<Node, int> gScore;
-    std::map<Node, int> fScore;
-    Node* start;
-    Node current = *start;
-    int goalX;
-    int goalY;
-    int weight(Node, Node);
-
-    bool pairCompare(std::pair<Node, int> i, std::pair<Node, int> j);
+    std::list<Node*> constructPath(Node*, std::list<Node*>);
+    std::list<Node*> pathFinder(Node* h, Node t);
 };
 
 
-#endif //KBOT_ASTAR_H
+#endif //UNTITLED1_ASTAR_H

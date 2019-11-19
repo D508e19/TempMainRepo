@@ -1,52 +1,57 @@
 //
-// Created by Christopher krejler on 14/11/2019.
+// Created by Christopher krejler on 15/11/2019.
 //
 
 #include "aStar.h"
 
-int aStar::weight(Node, Node) {
-    return 0;
+aStar::aStar(){
 }
 
-aStar::aStar(const Node& goal, Node startNode){
-    gScore[*start] = 0;
-    fScore[*start] = start->heuristic(goal);
-    Node endNode = startNode;
-    openSet.emplace_back(start);
+
+std::list<Node*> aStar::pathFinder(Node* startNode, Node goal) {
+
+    endNode = startNode;
+    openSet.push_back(startNode);
+
 
     while (!openSet.empty()){
-        current = (*min_element(fScore.begin(), fScore.end
-                (), &aStar::pairCompare )).first;
-        if ((current.x == goal.x) && (current.y == goal.y)){
-            //Success madafacka
+        endNode = startNode->leastCost(startNode, goal);
+        if ((endNode->x == goal.x) && (endNode->y == goal.y)){
+            return constructPath(endNode, pathList);
         }
 
-        openSet.remove(current);
+        openSet.remove(startNode);
 
-        if(current.neighbours.empty()){
-            if(!current.calculateNeighbour()){
+        if(endNode->neighbours.empty()){
+            if(!endNode->calculateNeighbour()){
                 //cry
             }
         }
-        for(Node node: current.neighbours){
-            int tentative = gScore[current] + node.parentWeight;
+        for(Node* node: endNode->neighbours){
+            int tentative = endNode->gScore + node->parentWeight;
 
-            if (gScore.count(node) > 0  && tentative < gScore[node]){
+            if (tentative < node->gScore){
                 endNode = node;
-                gScore[node] = tentative;
-                fScore[node] = gScore[node] + node.heuristic(goal);
-                if((std::find(openSet.begin(), openSet.end(), node) != openSet.end())){
+                node->gScore = tentative;
+                node->fScore = node->gScore + node->heuristic(goal);
+
+                // if openset contains node
+                if(true){
                     openSet.emplace_back(node);
                 }
             }
         }
-
-
     }
 }
 
-bool aStar::pairCompare(std::pair<Node, int> i, std::pair<Node, int> j) {
-    return i.second < j.second;
+std::list<Node*> aStar::constructPath(Node* node, std::list<Node*> list) {
+
+    if(node->start){
+        list.push_back(node);
+        return list;
+    }
+    else {
+        list.push_back(node);
+        return constructPath(node->parent, list);
+    }
 }
-
-
