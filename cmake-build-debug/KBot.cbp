@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="KBot"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="clang"/>
+		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\usr\;CMake Files\..\..\..\..\usr\local\;CMake Files\..\..\..\..\usr\local\share\;CMake Files\..\..\..\..\usr\local\share\argos3\;CMake Files\..\..\..\..\usr\local\share\argos3\cmake\;CMake Files\..\..\..\..\usr\local\Cellar\;CMake Files\..\..\..\..\usr\local\Cellar\qt\;CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\;CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\lib\;CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\lib\cmake\;CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\lib\cmake\Qt5\;CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\lib\cmake\Qt5Widgets\;CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\lib\cmake\Qt5Gui\;CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\lib\cmake\Qt5Core\;CMake Files\cmake\;CMake Files\controllers\;CMake Files\controllers\alibot\;CMake Files\loop_functions\;CMake Files\loop_functions\communicator_loop_functions\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="alibot">
+				<Option output="/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/alibot/libalibot.dylib" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/alibot"/>
+				<Option object_output="./"/>
+				<Option type="3"/>
+				<Option compiler="clang"/>
+				<Compiler>
+					<Add option="-DGL_SILENCE_DEPRECATION"/>
+					<Add option="-DQT_WIDGETS_LIB"/>
+					<Add option="-DQT_GUI_LIB"/>
+					<Add option="-DQT_CORE_LIB"/>
+					<Add directory="/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/alibot"/>
+					<Add directory="/Users/chris/CLionProjects/TempMainRepo/controllers/alibot"/>
+					<Add directory="/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/alibot/alibot_autogen/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/OpenGL.framework/Headers"/>
+					<Add directory="/usr/local/Cellar/qt/5.13.2/lib/QtWidgets.framework"/>
+					<Add directory="/usr/local/Cellar/qt/5.13.2/lib/QtWidgets.framework/Headers"/>
+					<Add directory="/usr/local/Cellar/qt/5.13.2/lib/QtGui.framework"/>
+					<Add directory="/usr/local/Cellar/qt/5.13.2/lib/QtGui.framework/Headers"/>
+					<Add directory="/usr/local/Cellar/qt/5.13.2/lib/QtCore.framework"/>
+					<Add directory="/usr/local/Cellar/qt/5.13.2/lib/QtCore.framework/Headers"/>
+					<Add directory="/usr/local/Cellar/qt/5.13.2/./mkspecs/macx-clang"/>
+					<Add directory="/Users/chris/CLionProjects/TempMainRepo"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Users/chris/CLionProjects/TempMainRepo/controllers"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include/c++/v1"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/10.0.1/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/alibot/Makefile&quot;  VERBOSE=1 alibot"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/alibot/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/alibot/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/alibot/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="alibot/fast">
+				<Option output="/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/alibot/libalibot.dylib" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/alibot"/>
+				<Option object_output="./"/>
+				<Option type="3"/>
+				<Option compiler="clang"/>
+				<Compiler>
+					<Add option="-DGL_SILENCE_DEPRECATION"/>
+					<Add option="-DQT_WIDGETS_LIB"/>
+					<Add option="-DQT_GUI_LIB"/>
+					<Add option="-DQT_CORE_LIB"/>
+					<Add directory="/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/alibot"/>
+					<Add directory="/Users/chris/CLionProjects/TempMainRepo/controllers/alibot"/>
+					<Add directory="/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/alibot/alibot_autogen/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/OpenGL.framework/Headers"/>
+					<Add directory="/usr/local/Cellar/qt/5.13.2/lib/QtWidgets.framework"/>
+					<Add directory="/usr/local/Cellar/qt/5.13.2/lib/QtWidgets.framework/Headers"/>
+					<Add directory="/usr/local/Cellar/qt/5.13.2/lib/QtGui.framework"/>
+					<Add directory="/usr/local/Cellar/qt/5.13.2/lib/QtGui.framework/Headers"/>
+					<Add directory="/usr/local/Cellar/qt/5.13.2/lib/QtCore.framework"/>
+					<Add directory="/usr/local/Cellar/qt/5.13.2/lib/QtCore.framework/Headers"/>
+					<Add directory="/usr/local/Cellar/qt/5.13.2/./mkspecs/macx-clang"/>
+					<Add directory="/Users/chris/CLionProjects/TempMainRepo"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Users/chris/CLionProjects/TempMainRepo/controllers"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include/c++/v1"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/10.0.1/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/alibot/Makefile&quot;  VERBOSE=1 alibot/fast"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/alibot/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/alibot/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/alibot/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="alibot_autogen">
+				<Option working_dir="/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/alibot"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/alibot/Makefile&quot;  VERBOSE=1 alibot_autogen"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/alibot/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/alibot/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/alibot/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="communicator_loop_functions">
+				<Option output="/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/loop_functions/communicator_loop_functions/libcommunicator_loop_functions.so" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/loop_functions/communicator_loop_functions"/>
+				<Option object_output="./"/>
+				<Option type="3"/>
+				<Option compiler="clang"/>
+				<Compiler>
+					<Add option="-DGL_SILENCE_DEPRECATION"/>
+					<Add option="-DQT_WIDGETS_LIB"/>
+					<Add option="-DQT_GUI_LIB"/>
+					<Add option="-DQT_CORE_LIB"/>
+					<Add directory="/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/loop_functions/communicator_loop_functions"/>
+					<Add directory="/Users/chris/CLionProjects/TempMainRepo/loop_functions/communicator_loop_functions"/>
+					<Add directory="/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/loop_functions/communicator_loop_functions/communicator_loop_functions_autogen/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/OpenGL.framework/Headers"/>
+					<Add directory="/usr/local/Cellar/qt/5.13.2/lib/QtWidgets.framework"/>
+					<Add directory="/usr/local/Cellar/qt/5.13.2/lib/QtWidgets.framework/Headers"/>
+					<Add directory="/usr/local/Cellar/qt/5.13.2/lib/QtGui.framework"/>
+					<Add directory="/usr/local/Cellar/qt/5.13.2/lib/QtGui.framework/Headers"/>
+					<Add directory="/usr/local/Cellar/qt/5.13.2/lib/QtCore.framework"/>
+					<Add directory="/usr/local/Cellar/qt/5.13.2/lib/QtCore.framework/Headers"/>
+					<Add directory="/usr/local/Cellar/qt/5.13.2/./mkspecs/macx-clang"/>
+					<Add directory="/Users/chris/CLionProjects/TempMainRepo"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include/c++/v1"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/10.0.1/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/loop_functions/communicator_loop_functions/Makefile&quot;  VERBOSE=1 communicator_loop_functions"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/loop_functions/communicator_loop_functions/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/loop_functions/communicator_loop_functions/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/loop_functions/communicator_loop_functions/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="communicator_loop_functions/fast">
+				<Option output="/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/loop_functions/communicator_loop_functions/libcommunicator_loop_functions.so" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/loop_functions/communicator_loop_functions"/>
+				<Option object_output="./"/>
+				<Option type="3"/>
+				<Option compiler="clang"/>
+				<Compiler>
+					<Add option="-DGL_SILENCE_DEPRECATION"/>
+					<Add option="-DQT_WIDGETS_LIB"/>
+					<Add option="-DQT_GUI_LIB"/>
+					<Add option="-DQT_CORE_LIB"/>
+					<Add directory="/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/loop_functions/communicator_loop_functions"/>
+					<Add directory="/Users/chris/CLionProjects/TempMainRepo/loop_functions/communicator_loop_functions"/>
+					<Add directory="/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/loop_functions/communicator_loop_functions/communicator_loop_functions_autogen/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/OpenGL.framework/Headers"/>
+					<Add directory="/usr/local/Cellar/qt/5.13.2/lib/QtWidgets.framework"/>
+					<Add directory="/usr/local/Cellar/qt/5.13.2/lib/QtWidgets.framework/Headers"/>
+					<Add directory="/usr/local/Cellar/qt/5.13.2/lib/QtGui.framework"/>
+					<Add directory="/usr/local/Cellar/qt/5.13.2/lib/QtGui.framework/Headers"/>
+					<Add directory="/usr/local/Cellar/qt/5.13.2/lib/QtCore.framework"/>
+					<Add directory="/usr/local/Cellar/qt/5.13.2/lib/QtCore.framework/Headers"/>
+					<Add directory="/usr/local/Cellar/qt/5.13.2/./mkspecs/macx-clang"/>
+					<Add directory="/Users/chris/CLionProjects/TempMainRepo"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include/c++/v1"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/10.0.1/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/loop_functions/communicator_loop_functions/Makefile&quot;  VERBOSE=1 communicator_loop_functions/fast"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/loop_functions/communicator_loop_functions/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/loop_functions/communicator_loop_functions/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/loop_functions/communicator_loop_functions/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="communicator_loop_functions_autogen">
+				<Option working_dir="/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/loop_functions/communicator_loop_functions"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/loop_functions/communicator_loop_functions/Makefile&quot;  VERBOSE=1 communicator_loop_functions_autogen"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/loop_functions/communicator_loop_functions/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/loop_functions/communicator_loop_functions/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/loop_functions/communicator_loop_functions/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/alibot/alibot_autogen/mocs_compilation.cpp">
+			<Option target="alibot"/>
+		</Unit>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/loop_functions/communicator_loop_functions/communicator_loop_functions_autogen/mocs_compilation.cpp">
+			<Option target="communicator_loop_functions"/>
+		</Unit>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/controllers/alibot/alibot.cpp">
+			<Option target="alibot"/>
+		</Unit>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/controllers/alibot/alibot.h">
+			<Option target="alibot"/>
+		</Unit>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/environment/node.cpp">
+			<Option target="communicator_loop_functions"/>
+		</Unit>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/environment/node.h">
+			<Option target="communicator_loop_functions"/>
+		</Unit>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/environment/pathfinding/aStar.cpp">
+			<Option target="communicator_loop_functions"/>
+		</Unit>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/environment/pathfinding/aStar.h">
+			<Option target="communicator_loop_functions"/>
+		</Unit>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/loop_functions/communicator_loop_functions/communicator_loop_functions.cpp">
+			<Option target="communicator_loop_functions"/>
+		</Unit>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/loop_functions/communicator_loop_functions/communicator_loop_functions.h">
+			<Option target="communicator_loop_functions"/>
+		</Unit>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/../../../../usr/local/share/argos3/cmake/ARGoSCheckQTOpenGL.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\share\argos3\cmake\"/>
+		</Unit>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/../../../../usr/local/share/argos3/cmake/FindLua52.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\share\argos3\cmake\"/>
+		</Unit>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/../../../../usr/local/Cellar/qt/5.13.2/lib/cmake/Qt5/Qt5Config.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\lib\cmake\Qt5\"/>
+		</Unit>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/../../../../usr/local/Cellar/qt/5.13.2/lib/cmake/Qt5/Qt5ConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\lib\cmake\Qt5\"/>
+		</Unit>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/../../../../usr/local/Cellar/qt/5.13.2/lib/cmake/Qt5/Qt5ModuleLocation.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\lib\cmake\Qt5\"/>
+		</Unit>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/../../../../usr/local/Cellar/qt/5.13.2/lib/cmake/Qt5Widgets/Qt5WidgetsConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\lib\cmake\Qt5Widgets\"/>
+		</Unit>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/../../../../usr/local/Cellar/qt/5.13.2/lib/cmake/Qt5Widgets/Qt5WidgetsConfigExtras.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\lib\cmake\Qt5Widgets\"/>
+		</Unit>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/../../../../usr/local/Cellar/qt/5.13.2/lib/cmake/Qt5Widgets/Qt5WidgetsConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\lib\cmake\Qt5Widgets\"/>
+		</Unit>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/../../../../usr/local/Cellar/qt/5.13.2/lib/cmake/Qt5Widgets/Qt5WidgetsMacros.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\lib\cmake\Qt5Widgets\"/>
+		</Unit>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/../../../../usr/local/Cellar/qt/5.13.2/lib/cmake/Qt5Widgets/Qt5Widgets_QMacStylePlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\lib\cmake\Qt5Widgets\"/>
+		</Unit>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/../../../../usr/local/Cellar/qt/5.13.2/lib/cmake/Qt5Gui/Qt5GuiConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/../../../../usr/local/Cellar/qt/5.13.2/lib/cmake/Qt5Gui/Qt5GuiConfigExtras.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/../../../../usr/local/Cellar/qt/5.13.2/lib/cmake/Qt5Gui/Qt5GuiConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/../../../../usr/local/Cellar/qt/5.13.2/lib/cmake/Qt5Gui/Qt5Gui_QCocoaIntegrationPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/../../../../usr/local/Cellar/qt/5.13.2/lib/cmake/Qt5Gui/Qt5Gui_QGifPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/../../../../usr/local/Cellar/qt/5.13.2/lib/cmake/Qt5Gui/Qt5Gui_QICNSPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/../../../../usr/local/Cellar/qt/5.13.2/lib/cmake/Qt5Gui/Qt5Gui_QICOPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/../../../../usr/local/Cellar/qt/5.13.2/lib/cmake/Qt5Gui/Qt5Gui_QJpegPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/../../../../usr/local/Cellar/qt/5.13.2/lib/cmake/Qt5Gui/Qt5Gui_QMacHeifPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/../../../../usr/local/Cellar/qt/5.13.2/lib/cmake/Qt5Gui/Qt5Gui_QMacJp2Plugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/../../../../usr/local/Cellar/qt/5.13.2/lib/cmake/Qt5Gui/Qt5Gui_QMinimalIntegrationPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/../../../../usr/local/Cellar/qt/5.13.2/lib/cmake/Qt5Gui/Qt5Gui_QOffscreenIntegrationPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/../../../../usr/local/Cellar/qt/5.13.2/lib/cmake/Qt5Gui/Qt5Gui_QTgaPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/../../../../usr/local/Cellar/qt/5.13.2/lib/cmake/Qt5Gui/Qt5Gui_QTiffPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/../../../../usr/local/Cellar/qt/5.13.2/lib/cmake/Qt5Gui/Qt5Gui_QTuioTouchPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/../../../../usr/local/Cellar/qt/5.13.2/lib/cmake/Qt5Gui/Qt5Gui_QVirtualKeyboardPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/../../../../usr/local/Cellar/qt/5.13.2/lib/cmake/Qt5Gui/Qt5Gui_QWbmpPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/../../../../usr/local/Cellar/qt/5.13.2/lib/cmake/Qt5Gui/Qt5Gui_QWebGLIntegrationPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/../../../../usr/local/Cellar/qt/5.13.2/lib/cmake/Qt5Gui/Qt5Gui_QWebpPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/../../../../usr/local/Cellar/qt/5.13.2/lib/cmake/Qt5Gui/Qt5Gui_QXdgDesktopPortalThemePlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/../../../../usr/local/Cellar/qt/5.13.2/lib/cmake/Qt5Core/Qt5CoreConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\lib\cmake\Qt5Core\"/>
+		</Unit>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/../../../../usr/local/Cellar/qt/5.13.2/lib/cmake/Qt5Core/Qt5CoreConfigExtras.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\lib\cmake\Qt5Core\"/>
+		</Unit>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/../../../../usr/local/Cellar/qt/5.13.2/lib/cmake/Qt5Core/Qt5CoreConfigExtrasMkspecDir.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\lib\cmake\Qt5Core\"/>
+		</Unit>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/../../../../usr/local/Cellar/qt/5.13.2/lib/cmake/Qt5Core/Qt5CoreConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\lib\cmake\Qt5Core\"/>
+		</Unit>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/../../../../usr/local/Cellar/qt/5.13.2/lib/cmake/Qt5Core/Qt5CoreMacros.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt\5.13.2\lib\cmake\Qt5Core\"/>
+		</Unit>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/cmake/FindGALIB.cmake">
+			<Option virtualFolder="CMake Files\cmake\"/>
+		</Unit>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/controllers/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\controllers\"/>
+		</Unit>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/controllers/alibot/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\controllers\alibot\"/>
+		</Unit>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/loop_functions/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\loop_functions\"/>
+		</Unit>
+		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/loop_functions/communicator_loop_functions/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\loop_functions\communicator_loop_functions\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
