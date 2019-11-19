@@ -3,82 +3,60 @@
 #include <argos3/plugins/robots/foot-bot/simulator/footbot_entity.h>
 #include <argos3/core/utility/logging/argos_log.h>
 #include <argos3/plugins/robots/foot-bot/simulator/footbot_entity.h>
-#include <controllers/alibot/alibot.h>
 #include <argos3/core/utility/math/vector2.h>
 
 #include <list>
 #include <iterator>
 
-/****************************************/
 
-CommunicatorLoopFunctions::CommunicatorLoopFunctions() {
-}
+#include "src/warehouse/Warehouse.h"
 
-CommunicatorLoopFunctions::~CommunicatorLoopFunctions(){
-
-}
-
-/****************************************/
-/****************************************/
+CommunicatorLoopFunctions::CommunicatorLoopFunctions(){}
+CommunicatorLoopFunctions::~CommunicatorLoopFunctions(){}
 
 void CommunicatorLoopFunctions::Init(TConfigurationNode& t_tree){
-   
    CollectBotControllers();
+
+   wh.SetupWarehouse(botControllers);
 }
 
-void CommunicatorLoopFunctions::PreStep(){
+void CommunicatorLoopFunctions::PreStep()
+{  
+   wh.Tick(); 
+}
 
-   if(botControllers.size() > 0){ // Have we collected any controllers?
-      Alibot* firstControllerPtr = getController(0);
-
-      if(!firstControllerPtr->getIsBusy()){ //Is controller ready for a command?
-
-         switch (commandCompletionCounter)
-         {
-         case 0:  firstControllerPtr->pointTowards(Alibot::CompassDirection::east); break;
-         case 1:  firstControllerPtr->moveOneCellForward(); break;
-         case 2:  firstControllerPtr->pointTowards(Alibot::CompassDirection::north); break;
-         case 3:  firstControllerPtr->moveOneCellForward(); break;
-         case 4:  firstControllerPtr->pointTowards(Alibot::CompassDirection::east); break;
-         case 5:  firstControllerPtr->moveOneCellForward(); break;
-         case 6:  firstControllerPtr->pointTowards(Alibot::CompassDirection::west); break;
-         case 7:  firstControllerPtr->moveOneCellForward(); break;
-         
-         default: argos::LOG << "All commands has been executed!" << std::endl;
-            break;
-         }
-
-         commandCompletionCounter++;
-      }
+void CommunicatorLoopFunctions::printControllers(){
+   
+   std::map<int, Basicbot*>::iterator it;
+   for(it = botControllers.begin(); it != botControllers.end(); it++){
+      int robotID = it->first;
+      std::cout << "Robot ID: " << robotID << std::endl;
    }
 }
 
 /* Returns the desired controller if it exits. */
-Alibot* CommunicatorLoopFunctions::getController(int controllerNumber){
-
-   std::list<Alibot*>::iterator it = botControllers.begin();
-   std::advance(it, controllerNumber);
-
-   return *it;
+Basicbot* CommunicatorLoopFunctions::getController(int robotID){
+   return botControllers[robotID];
 }
 
 /* Find and collects all foot-bot controllers.
- * (Only works with alibots) */
+ * (Only works with Basicbot) */
 void CommunicatorLoopFunctions::CollectBotControllers(){
    
    /* Get a map containing all active foot-bots */
    CSpace::TMapPerType& botMap = GetSpace().GetEntitiesByType("foot-bot");
 
+   int robotIDCounter = 0;
+
    /* Iterate through all bots and collect their controller */
    for(CSpace::TMapPerType::iterator it = botMap.begin(); it != botMap.end(); it++){
       CFootBotEntity& cFootbot = *any_cast<CFootBotEntity*>(it->second); //Get the footbot
-      Alibot& controller = dynamic_cast<Alibot&>(cFootbot.GetControllableEntity().GetController()); //Get the controller of the footbot
-      Alibot *pr = &controller;
-      botControllers.push_back(pr); //Put it a the end of the list
+      Basicbot& controller = dynamic_cast<Basicbot&>(cFootbot.GetControllableEntity().GetController()); //Get the controller of the footbot
+      Basicbot *pr = &controller;
+      //int robotID = pr->robotID; //TODO This will be correct when a manager is made
+      pr->robotID = robotIDCounter++;
+      botControllers[pr->robotID] = pr;
    }
 }
-
-/****************************************/
-/****************************************/
 
 REGISTER_LOOP_FUNCTIONS(CommunicatorLoopFunctions, "communicator_loop_functions");

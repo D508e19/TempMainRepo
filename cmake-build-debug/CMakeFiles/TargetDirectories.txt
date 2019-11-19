@@ -1,0 +1,14 @@
+/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/CMakeFiles/rebuild_cache.dir
+/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/CMakeFiles/edit_cache.dir
+/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/alibot/CMakeFiles/rebuild_cache.dir
+/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/alibot/CMakeFiles/edit_cache.dir
+/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/alibot/CMakeFiles/alibot.dir
+/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/controllers/alibot/CMakeFiles/alibot_autogen.dir
+/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/loop_functions/CMakeFiles/rebuild_cache.dir
+/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/loop_functions/CMakeFiles/edit_cache.dir
+/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/loop_functions/communicator_loop_functions/CMakeFiles/rebuild_cache.dir
+/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/loop_functions/communicator_loop_functions/CMakeFiles/edit_cache.dir
+/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/loop_functions/communicator_loop_functions/CMakeFiles/communicator_loop_functions.dir
+/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/loop_functions/communicator_loop_functions/CMakeFiles/communicator_loop_functions_autogen.dir
