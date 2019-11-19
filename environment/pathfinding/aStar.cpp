@@ -9,9 +9,9 @@ aStar::aStar(){
 }
 
 
-std::list<Node*> aStar::pathFinder(Coordinate start, direction d, Coordinate goal) {
+std::list<Coordinate> aStar::pathFinder(Coordinate start, direction d, Coordinate goal) {
 
-    std::list<Node*> pathList;
+    std::list<Coordinate> pathList;
     Node* startNode = new Node(start,d);
     endNode = startNode;
     openSet.push_back(startNode);
@@ -47,14 +47,14 @@ std::list<Node*> aStar::pathFinder(Coordinate start, direction d, Coordinate goa
     }
 }
 
-std::list<Node*> aStar::constructPath(Node* node, std::list<Node*> list) {
+std::list<Coordinate> aStar::constructPath(Node* node, std::list<Coordinate> list) {
 
     if(node->start){
-        list.push_back(node);
+        list.push_back(node->coordinate);
         return list;
     }
     else {
-        list.push_back(node);
+        list.push_back(node->coordinate);
         return constructPath(node->parent, list);
     }
 }

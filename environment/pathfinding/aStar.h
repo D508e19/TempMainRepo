@@ -18,8 +18,8 @@ public:
     Node* current;
     Node* endNode;
 
-    std::list<Node*> constructPath(Node*, std::list<Node*>);
-    std::list<Node*> pathFinder(Coordinate, enum direction, Coordinate);
+    std::list<Coordinate> constructPath(Node*, std::list<Coordinate>);
+    std::list<Coordinate> pathFinder(Coordinate, enum direction, Coordinate);
 };
 
 
