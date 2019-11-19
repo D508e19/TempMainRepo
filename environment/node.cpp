@@ -74,6 +74,10 @@ int Node::heuristic(Node goal){
     else if (gx < nx && this->direction != West){
         h += 3;
     }
+
+    h+= abs(nx-gx);
+    h+= abs(ny-gy);
+
     return h;
 }
 
