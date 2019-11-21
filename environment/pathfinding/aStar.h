@@ -19,8 +19,8 @@ public:
     Node* endNode;
     std::pair<int, Node*> gScore;
 
-
-    Path constructPath(Node*, Path);
+    Path pathConstructer(Node* node, Path path);
+    std::list<std::pair<Coordinate, Coordinate>> constructPath(Node*, std::list<std::pair<Coordinate, Coordinate>>);
     Path pathFinder(Coordinate, enum direction, Coordinate);
 };
 

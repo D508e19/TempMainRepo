@@ -19,6 +19,8 @@ public:
 
     void AddWayPoint(Coordinate newCoord, Coordinate lastCord);
     Coordinate GetNextWaypoint();
+
+    int GetPathSize();
     
 };
 
@@ -57,6 +59,11 @@ Coordinate Path::GetNextWaypoint()
     waypoints.pop();
     return nextWaypoint;
 }
+
+int Path::GetPathSize(){
+    return waypoints.size();
+}
+
 
 
 #endif

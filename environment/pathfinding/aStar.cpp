@@ -24,7 +24,7 @@ Path aStar::pathFinder(Coordinate start, direction d, Coordinate goal) {
         current = startNode->leastCost(startNode, goal);
         //Check if the node is goal node
         if ((current->coordinate.x == goal.x) && (current->coordinate.y == goal.y)){
-            return constructPath(current, pathList);
+            return pathConstructer(current, pathList);
         }
         //Calculate neighbors of the node, should always be true, since current is always a leaf
         if (current->neighbours.empty()){
@@ -50,13 +50,29 @@ Path aStar::pathFinder(Coordinate start, direction d, Coordinate goal) {
     } while (!(startNode->neighbours.empty()));
 }
 
-Path aStar::constructPath(Node* node, Path path) {
+Path aStar::pathConstructer(Node* node, Path path){
+    std::list<std::pair<Coordinate, Coordinate>> wrong;
+    Path right;
+    std::pair<Coordinate, Coordinate> pair;
+
+    wrong = constructPath(node, wrong);
+
+    while (!wrong.empty()){
+        pair = wrong.front();
+        wrong.pop_front();
+        right.AddWayPoint(pair.first, pair.second);
+    }
+    return right;
+}
+
+
+std::list<std::pair<Coordinate, Coordinate>> aStar::constructPath(Node* node, std::list<std::pair<Coordinate, Coordinate>> path) {
 
     if(node->start){
         return path;
     }
     else {
-        path.AddWayPoint(node->coordinate, node->parent->coordinate);
+        path.push_back(std::pair<Coordinate, Coordinate>(node->coordinate, node->parent->coordinate));
         return constructPath(node->parent, path);
     }
 }
