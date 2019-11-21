@@ -9,7 +9,8 @@ enum instruction{
     turn180, 
     pickuppod, 
     putdownpod,
-    ignore
+    ignore,
+    wait
     };
 
 #endif

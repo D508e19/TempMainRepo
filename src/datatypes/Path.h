@@ -35,8 +35,6 @@ void Path::AddWayPoint(Coordinate newCord, Coordinate lastCoord)
         return;
     }
 
-
-
     std::cout << xLast << "," << yLast << " -> "<< newCord.x << ", " << newCord.y << std::endl;
     {
         if(xLast == newCord.x && yLast == newCord.y)

@@ -95,6 +95,8 @@ void Basicbot::ControlStep()
       case putdownpod:
          //PutDownPOd();
          break;   
+      case wait:
+         Wait();
       default:
          break;
    }
@@ -182,10 +184,63 @@ void Basicbot::Turn180()
    }
 }
 
+void Basicbot::PickUpPod()
+{
+   if (!isBusy){
+      isBusy = true;
+      counter = ticksToPickUpPod;
+   }
+   
+   if (counter > 0)
+   {
+      counter--;
+   }
+   else
+   {
+      ResetBot();
+   }
+}
+
+void Basicbot::PutDownPod()
+{
+   if (!isBusy){
+      isBusy = true;
+      counter = ticksToPutDownPod;
+   }
+   
+   if (counter > 0)
+   {
+      counter--;
+   }
+   else
+   {
+      ResetBot();
+   }
+}
+
+
+void Basicbot::Wait()
+{
+   if (!isBusy){
+      isBusy = true;
+      counter = ticksToWait;
+   }
+   
+   if (counter > 0)
+   {
+      counter--;
+   }
+   else
+   {
+      ResetBot();
+   }
+}
+
 void Basicbot::ResetBot()
 {
    m_pcWheels->SetLinearVelocity(0, 0);
    cellsToMove = 1;
+   ticksToWait = 1;
    ReadCellQR();
    currentInstruction = idle;
    isBusy = false;

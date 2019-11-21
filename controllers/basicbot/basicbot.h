@@ -59,9 +59,16 @@ public:
    void TurnLeft();
    void TurnRight();
    void Turn180();
+   void PickUpPod();
+   void PutDownPod();
+   void Wait();
 
    int counter = 0;
    int cellsToMove = 1;
+   int ticksToWait = 1;
+
+   int ticksToPickUpPod = 20;
+   int ticksToPutDownPod = 20;
 
    void ResetBot();
 

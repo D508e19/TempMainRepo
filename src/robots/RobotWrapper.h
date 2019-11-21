@@ -165,6 +165,10 @@ void RobotWrapper::SendNextInstruction()
         case putdownpod:
             m_bot->currentInstruction = putdownpod;
             break;
+        case wait:
+            m_bot->ticksToWait = instructionsValuesQueue.front();
+            instructionsValuesQueue.pop();
+            m_bot->currentInstruction = wait;
         
         default:
             break;
@@ -176,9 +180,12 @@ void RobotWrapper::AddInstructionToQueue(instruction ins, int tiles = 1)
 {
     if(ins == ignore){return;}
 
-    //std::cout << "queuing ins: " << ins << std::endl;
     instructionQueue.push(ins);
     if(ins == moveforward)
+    {
+        instructionsValuesQueue.push(tiles);
+    }
+    if(ins == wait)
     {
         instructionsValuesQueue.push(tiles);
     }
