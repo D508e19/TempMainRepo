@@ -143,6 +143,13 @@ void RobotWrapper::SendNextInstruction()
     if(!instructionQueue.empty()){
         instruction nextInstruction = instructionQueue.front();
         instructionQueue.pop();
+
+        if(rand()%3==0){
+            m_bot->ticksToWait = 20;
+            m_bot->currentInstruction = wait;
+            return;
+        }
+
         switch (nextInstruction)
         {
         case moveforward:
