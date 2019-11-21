@@ -2,6 +2,8 @@
 // Created by Christopher krejler on 15/11/2019.
 //
 
+#include <queue>
+#include <src/datatypes/Path.h>
 #include "aStar.h"
 
 
@@ -9,43 +11,52 @@ aStar::aStar(){
 }
 
 
-std::list<Coordinate> aStar::pathFinder(Coordinate start, direction d, Coordinate goal) {
+Path aStar::pathFinder(Coordinate start, direction d, Coordinate goal) {
 
-    std::list<Coordinate> pathList;
+    Path pathList;
     Node* startNode = new Node(start,d);
     startNode->gScore = 0;
-    endNode = startNode;
+    current = startNode;
+    bool flag = true;
 
     do {
-        endNode = startNode->leastCost(startNode, goal);
-        if ((endNode->coordinate.x == goal.x) && (endNode->coordinate.y == goal.y)){
-            return constructPath(endNode, pathList);
+        //Find the leaf with the lowest cost
+        current = startNode->leastCost(startNode, goal);
+        //Check if the node is goal node
+        if ((current->coordinate.x == goal.x) && (current->coordinate.y == goal.y)){
+            return constructPath(current, pathList);
         }
-
-        if (endNode->neighbours.empty()){
-            endNode->calculateNeighbour();
+        //Calculate neighbors of the node, should always be true, since current is always a leaf
+        if (current->neighbours.empty()){
+            current->calculateNeighbour();
         }
-
-        for(Node* node: endNode->neighbours){
-            int tentative = endNode->gScore + node->parentWeight;
-
-            if (tentative < node->gScore){
-                endNode = node;
-                node->gScore = tentative;
-                node->fScore = node->gScore + node->heuristic(goal);
-            }
+        //Iterate through neighbors to find the best neighbor
+        for(Node* node: current->neighbours){
+            //Set gScore
+            node->gScore = node->parent->gScore + node->parentWeight;
+            //Set fScore
+            node->fScore = node->gScore + node->heuristic(goal);
+//            //Check if it's the first neighbor, if not, check if it's the best neighbor
+//            if (flag){
+//                current = node;
+//                flag = false;
+//            }
+//            else if(current->fScore > node->fScore){
+//                current = node;
+//            }
         }
-    } while ((startNode->neighbours.empty()));
+        //Reset flag
+        flag = true;
+    } while (!(startNode->neighbours.empty()));
 }
 
-std::list<Coordinate> aStar::constructPath(Node* node, std::list<Coordinate> list) {
+Path aStar::constructPath(Node* node, Path path) {
 
     if(node->start){
-        list.push_back(node->coordinate);
-        return list;
+        return path;
     }
     else {
-        list.push_back(node->coordinate);
-        return constructPath(node->parent, list);
+        path.AddWayPoint(node->coordinate, node->parent->coordinate);
+        return constructPath(node->parent, path);
     }
 }

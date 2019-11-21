@@ -17,7 +17,8 @@ public:
     int parentWeight = 0;
     int fScore = INT32_MAX;
     int gScore = INT32_MAX;
-    bool start;
+    bool start = false;
+    bool open = true;
     Coordinate coordinate;
     direction direction;
 

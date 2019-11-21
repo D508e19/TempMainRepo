@@ -2,6 +2,8 @@
 #define PATH_H
 
 #include <queue>
+#include <iostream>
+#include <argos3/core/utility/logging/argos_log.h>
 
 #include "Coordinate.h"
 

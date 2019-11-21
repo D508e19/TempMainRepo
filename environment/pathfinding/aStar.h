@@ -17,9 +17,11 @@ public:
     std::list<Node*> openSet;
     Node* current;
     Node* endNode;
+    std::pair<int, Node*> gScore;
 
-    std::list<Coordinate> constructPath(Node*, std::list<Coordinate>);
-    std::list<Coordinate> pathFinder(Coordinate, enum direction, Coordinate);
+
+    Path constructPath(Node*, Path);
+    Path pathFinder(Coordinate, enum direction, Coordinate);
 };
 
 
