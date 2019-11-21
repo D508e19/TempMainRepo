@@ -65,17 +65,14 @@ void Basicbot::Init(TConfigurationNode &t_node)
    GetNodeAttributeOrDefault(t_node, "velocity", m_fWheelVelocity, m_fWheelVelocity);
 
    ReadCellQR();
-   argos::LOG << "Arrived at: " << lastReadCellQR.x << " , " << lastReadCellQR.y << std::endl;
-
 }
 
 void Basicbot::ControlStep()
 {
-   if(first){LogReadablePosition();first=false;}
-
    switch (currentInstruction)
    {
       case idle:
+
          break;
       case moveforward:
          MoveForward();
@@ -116,6 +113,7 @@ void Basicbot::MoveForward()
    }
    else
    {
+      ReadCellQR();
       argos::LOG << "Arrived at: " << lastReadCellQR.x << " , " << lastReadCellQR.y << std::endl;
       ResetBot();
    }
@@ -242,7 +240,6 @@ void Basicbot::ResetBot()
    m_pcWheels->SetLinearVelocity(0, 0);
    cellsToMove = 1;
    ticksToWait = 1;
-   ReadCellQR();
    currentInstruction = idle;
    isBusy = false;
 

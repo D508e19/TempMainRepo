@@ -16,7 +16,6 @@ private:
 
 public:
     RobotManager();
-    //RobotManager(std::map<int, Basicbot*>);
     ~RobotManager();
 
     RobotWrapper CreateRobotWrapper(Basicbot*);

@@ -43,28 +43,43 @@ RobotWrapper::RobotWrapper(Basicbot *bot):m_bot(bot)
     lastFacing = m_bot->facing;
     lastCoordinate = m_bot->lastReadCellQR;
 
+    for (int i = 0; i < 5; i++)
+    {
+        TranslatePathToInstructions(pf.GetStupidPath(lastCoordinate, Coordinate(rand()%5,rand()%5)));
+    }
+    
 };
 
 void RobotWrapper::Tick()
 {
-    if(instructionQueue.empty()&&m_bot->isBusy==false)
-    {
-        TranslatePathToInstructions(pf.GetStupidPath(lastCoordinate, Coordinate(rand()%5,rand()%5)));
-    }
     if (m_bot->currentInstruction == idle)
     { 
+        /*
+        if(instructionQueue.empty())
+        {
+            argos::LOG << "InstructionQueue empty. Generate new random path." << std::endl;
+            // Add random path
+            // TODO: Delete 
+            TranslatePathToInstructions(pf.GetStupidPath(lastCoordinate, Coordinate(rand()%5,rand()%5)));
+        }*/
         SendNextInstruction();
     }
+    
 }
 
 void RobotWrapper::TranslatePathToInstructions(Path p)
 {
-    //Coordinate lastCoordinate = m_bot->lastReadCellQR;
     int counter = p.waypoints.size();
     int diff = 0;
 
     for (int i = 0; i < counter; i++)
     {
+        // wait instruction is added TODO comment more
+        if(p.waypoints.front().x == -1){
+            AddInstructionToQueue(wait, p.waypoints.front().y);
+            continue;
+        }
+
         instruction n;
         direction f = GetFaceTowardsInstruction(p.waypoints.front(), lastCoordinate, lastFacing);
         switch (lastFacing)
@@ -97,10 +112,10 @@ void RobotWrapper::TranslatePathToInstructions(Path p)
                 break;
         }
         lastFacing = f; 
-        //std::cout << "Sending ins to face: " << f << std::endl;
+
         AddInstructionToQueue(n, 1);
 
-        //change to ternary?
+        // Todo: change to ternary?
         if(lastCoordinate.x != p.waypoints.front().x){
             diff = abs(lastCoordinate.x - p.waypoints.front().x);}
         else{
@@ -110,30 +125,24 @@ void RobotWrapper::TranslatePathToInstructions(Path p)
         AddInstructionToQueue(moveforward, diff);
        
         lastCoordinate = p.waypoints.front();
-        
         p.waypoints.pop();
     }
 }
 
-direction RobotWrapper::GetFaceTowardsInstruction(Coordinate cToFace, Coordinate lastCoordinate, direction _lastFacing)
+direction RobotWrapper::GetFaceTowardsInstruction(Coordinate coordToFace, Coordinate lastCoordinate, direction _lastFacing)
 {
-    //std::cout << "In cell: " << lastCoordinate.x << ","<< lastCoordinate.y<< std::endl;
-    //std::cout << "Last faced: " << _lastFacing << std::endl;
-    //std::cout << "Want to face: " << cToFace.x << ","<< cToFace.y<< std::endl;
-    //instruction i;
     direction nextFacing = _lastFacing;
-    //Coordinate c = lastCoordinate;
 
-    int xdiff = lastCoordinate.x-cToFace.x;
-    int ydiff = lastCoordinate.y-cToFace.y;
+    int xdiff = lastCoordinate.x-coordToFace.x;
+    int ydiff = lastCoordinate.y-coordToFace.y;
 
-    if(xdiff!=0){
+    if(xdiff != 0){
         nextFacing = (xdiff < 0) ? north : south;
     }
-    else{
+    else if (ydiff != 0){
         nextFacing = (ydiff < 0) ?  east : west; 
     }
-    //std::cout << "Gonna face: " << nextFacing << std::endl;
+
     return nextFacing;
 
 }
@@ -143,12 +152,6 @@ void RobotWrapper::SendNextInstruction()
     if(!instructionQueue.empty()){
         instruction nextInstruction = instructionQueue.front();
         instructionQueue.pop();
-
-        if(rand()%3==0){
-            m_bot->ticksToWait = 20;
-            m_bot->currentInstruction = wait;
-            return;
-        }
 
         switch (nextInstruction)
         {
