@@ -12,24 +12,26 @@ class RobotManager
 {
 private:
     std::map<int, RobotWrapper> Wrappers;
-
     int robotCount = 0;
+
+    Warehouse* wh;
 
 public:
     RobotManager();
-    //RobotManager(std::map<int, Basicbot*>);
     ~RobotManager();
 
     RobotWrapper CreateRobotWrapper(Basicbot*);
 
-    void SetupRobotManager(std::map<int, Basicbot*> botControllers);
-    void RunRobotManager();
+    void SetupRobotManager(Warehouse* _wh, std::map<int, Basicbot*> botControllers);
+    void Tick();
 };
 RobotManager::RobotManager(){};
 RobotManager::~RobotManager(){};
 
-void RobotManager::SetupRobotManager(std::map<int, Basicbot*> botControllers)
+void RobotManager::SetupRobotManager(Warehouse* _wh, std::map<int, Basicbot*> botControllers)
 {
+    wh = _wh;
+
     for (int i=0; i<botControllers.size(); i++)
     {
         RobotWrapper rw = CreateRobotWrapper(botControllers[i]);
@@ -37,11 +39,11 @@ void RobotManager::SetupRobotManager(std::map<int, Basicbot*> botControllers)
     }
 };
 
-void RobotManager::RunRobotManager()
+void RobotManager::Tick()
 {
     for (int i = 0; i < robotCount; i++)
     {
-        Wrappers[i].RunRobotWrapper();
+        Wrappers[i].Tick();
     }
 };
 

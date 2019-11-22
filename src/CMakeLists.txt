@@ -7,5 +7,8 @@ add_subdirectory(pods)
 add_subdirectory(qrcodes)
 add_subdirectory(robots)
 add_subdirectory(warehouse)
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> origin/Jon
