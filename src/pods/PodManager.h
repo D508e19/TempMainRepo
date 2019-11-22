@@ -5,11 +5,15 @@
 
 #include "Pod.h"
 
+class Warehouse;
+
 class PodManager
 {
 private:
     std::map<int, Pod> m_Pods; // TODO: laves om til vector?
     int m_podCount;
+
+    Warehouse *wh;
 
     Pod CreatePod(int);
     bool DeletePod();
@@ -18,7 +22,7 @@ public:
     PodManager();
     ~PodManager();
 
-    void SetupPodManager(int numOfPods);
+    void SetupPodManager(Warehouse * _wh, int numOfPods);
     void Tick();
 
     Pod GetPod(int podId);
@@ -30,8 +34,11 @@ PodManager::~PodManager(){}
 
 void PodManager::Tick(){};
 
-void PodManager::SetupPodManager(int numOfPods)
+void PodManager::SetupPodManager(Warehouse* _wh, int numOfPods)
 {
+    wh = _wh;
+    
+
     m_podCount = 0;
 
     for (int i=0; i<numOfPods; i++)

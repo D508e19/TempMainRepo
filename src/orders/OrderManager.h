@@ -6,16 +6,22 @@
 
 #include "Order.h"
 
+// forward declaration
+//class Warehouse;
+
 class OrderManager
 {
 private:
 	int m_orderCount;
 	int m_numberOfPods;
+
+	Warehouse *wh;
+
 public:
 	OrderManager();
 	~OrderManager();
 
-	void SetupOrderManager(int numOfPods);
+	void SetupOrderManager(Warehouse *_wh);
 	void Tick();
 
 	Order getNewOrder();
@@ -29,10 +35,11 @@ void OrderManager::Tick()
 	
 };
 
-void OrderManager::SetupOrderManager(int numOfPods)
+void OrderManager::SetupOrderManager(Warehouse* _wh)
 {
+	wh = _wh;
 	m_orderCount = 0;
-	m_numberOfPods = numOfPods;
+
 }
 
 Order OrderManager::getNewOrder()
