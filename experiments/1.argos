@@ -1,13 +1,10 @@
 <?xml version="1.0" ?>
 <argos-configuration>
 	<framework>
-	<system threads="3" method="balance_quantity" />
-	<experiment length="500"
-				ticks_per_second="10"
-				random_seed="1" />
-	<profiling 	file="profile.txt"
-				format = "human_readable"
-				truncate_file="true" />
+		<system threads="3" method="balance_quantity" />
+		<experiment length="500" ticks_per_second="10" random_seed="1" />
+		<profiling file="profile.txt"
+				format = "human_readable" truncate_file="true" />
 	</framework>
 	<controllers>
 		<Basicbot_controller id="bc" library="build/controllers/basicbot/libbasicbot">
@@ -22,12 +19,11 @@
 			<params alpha="7.5" delta="0.1" velocity="5" />
 		</Basicbot_controller>
 	</controllers>
-	
-	<loop_functions library="build/loop_functions/communicator_loop_functions/libcommunicator_loop_functions"
-					label="communicator_loop_functions">
+
+	<loop_functions library="build/loop_functions/communicator_loop_functions/libcommunicator_loop_functions" label="communicator_loop_functions">
 	</loop_functions>
-	
-	<arena size="8, 8, 1" center="0,0,0.5">
+
+	<arena size="8, 9, 1" center="0,0,0.5">
 		<box id="wall_north" size="68, 0.1,0.5" movable="false">
 			<body position="0,34,0" orientation="0,0,0" />
 		</box>
@@ -41,13 +37,13 @@
 			<body position="-34,0,0" orientation="0,0,0" />
 		</box>
 
-	    <floor id="floor" source="loop_functions" pixels_per_meter="50" /> 
-	
+		<floor id="floor" source="loop_functions" pixels_per_meter="50" />
+
 		<foot-bot id="fb_0">
 			<body position="0,0,0" orientation="0,0,0" />
 			<controller config="bc" />
 		</foot-bot>
-		
+
 	</arena>
 
 	<physics_engines>
