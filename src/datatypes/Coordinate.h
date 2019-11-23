@@ -3,26 +3,25 @@
 
 class Coordinate
 {
-private:
-
 public:
     Coordinate();
     Coordinate(int x, int y);
     ~Coordinate();
 
-    int x;
-    int y;
+    int x{};
+    int y{};
 
-    void PrintCoordinate();
+    //void PrintCoordinate();
 };
 
-Coordinate::Coordinate(){}
+Coordinate::Coordinate()= default;
 Coordinate::Coordinate(int px, int py):x(px), y(py){}
-Coordinate::~Coordinate(){}
+Coordinate::~Coordinate()= default;
 
 
-void Coordinate::PrintCoordinate(){
-    std::cout << "(" << x << ", " << y << ")" << std::endl;    
-}
+//void Coordinate::PrintCoordinate(){
+//    std::cout << "(" << x << ", " << y << ")" << std::endl;
+//}
 
-#endif
+#endif //KBOT_COORDINATE_H
+

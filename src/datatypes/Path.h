@@ -44,13 +44,13 @@ void Path::AddWayPoint(Coordinate newCord, Coordinate lastCoord)
     std::cout << xLast << "," << yLast << " -> "<< newCord.x << ", " << newCord.y << std::endl;
     {
         if(xLast == newCord.x && yLast == newCord.y)
-            {
-                argos::LOG << "nope" << std::endl;
-                return;
-            }
+        {
+            argos::LOG << "nope" << std::endl;
+            return;
+        }
         argos::LOG << "ok" << std::endl;
         waypoints.push(newCord);
-    }    
+    }
 }
 
 Coordinate Path::GetNextWaypoint()

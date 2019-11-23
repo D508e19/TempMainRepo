@@ -1,5 +1,5 @@
 #ifndef PATHFINDER_H
-#define PATHFINDER_h
+#define PATHFINDER_H
 
 #include <environment/pathfinding/aStar.h>
 #include "src/datatypes/Coordinate.h"
@@ -22,10 +22,9 @@ public:
 Pathfinder::Pathfinder(){}
 Pathfinder::~Pathfinder(){}
 
-aStar::aStar(){}
-
 Path Pathfinder::GetStupidPath(Coordinate start, Coordinate end)
 {
+    aStar astar = aStar();
 //    //argos::LOG << "Find path to: ";
 //    //end.PrintCoord();
 //    std::cout << "Want to go to: " << end.x << ", " << end.y << std::endl;
@@ -36,6 +35,8 @@ Path Pathfinder::GetStupidPath(Coordinate start, Coordinate end)
 //    newPath.AddWayPoint(Coordinate(end.x, start.y), start);
 //    std::cout << "Adding waypoint:" << end.x << " " << end.y << std::endl;
 //    newPath.AddWayPoint(Coordinate(end.x, end.y), Coordinate(end.x, start.y));
+//
+//    return newPath;
 
     return astar.pathFinder(start, north, end);
 }

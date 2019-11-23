@@ -220,18 +220,6 @@
 		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/controllers/basicbot/basicbot.h">
 			<Option target="basicbot"/>
 		</Unit>
-		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/environment/node.cpp">
-			<Option target="communicator_loop_functions"/>
-		</Unit>
-		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/environment/node.h">
-			<Option target="communicator_loop_functions"/>
-		</Unit>
-		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/environment/pathfinding/aStar.cpp">
-			<Option target="communicator_loop_functions"/>
-		</Unit>
-		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/environment/pathfinding/aStar.h">
-			<Option target="communicator_loop_functions"/>
-		</Unit>
 		<Unit filename="/Users/chris/CLionProjects/TempMainRepo/loop_functions/communicator_loop_functions/communicator_loop_functions.cpp">
 			<Option target="communicator_loop_functions"/>
 		</Unit>

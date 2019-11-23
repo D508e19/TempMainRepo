@@ -13,29 +13,228 @@
 
 class Node {
 public:
+    Node();
+    Node(const Coordinate&, enum direction);
+    Node(const Coordinate&, enum direction, Node*, int);
+
+    Node* GetParent();
+    int GetParentWeight();
+    int GetfScore();
+    void SetfScore(int score);
+    int GetgScore();
+    void SetgScore(int);
+    bool Getstart();
+    bool Getopen();
+    Coordinate GetCoordinate();
+    direction GetDirection();
+
+    std::list<Node*> GetNeighbours();
+
+    Node* leastCost(const Coordinate& goal);
+    bool calculateNeighbour();
+    int heuristic(const Coordinate& goal);
+    static int CostToRoot(Node n);
+    static std::list<Node> ReturnPath(Node n, std::list<Node> path);
+
+private:
     Node* parent;
-    int parentWeight = 0;
-    int fScore = INT32_MAX;
-    int gScore = INT32_MAX;
-    bool start = false;
-    bool open = true;
+    int parentWeight;
+    int fScore;
+    int gScore;
+    bool start;
+    bool open;
     Coordinate coordinate;
     direction direction;
 
     std::list<Node*> neighbours;
-
-    Node();
-    Node(Coordinate, enum direction);
-    Node(Coordinate, enum direction, Node*, int);
-    int heuristic(Coordinate goal);
-    int CostToRoot(Node n);
-    bool calculateNeighbour();
-
-
-    std::list<Node> ReturnPath(Node n, std::list<Node> path);
-
-    Node* leastCost(Node* base, Coordinate goal);
 };
+
+Node::Node() {
+    this->parentWeight = 0;
+    this->fScore = 1000000000;
+    this->gScore = 1000000000;
+    this->start = false;
+    this->open = true;
+}
+
+Node::Node(const Coordinate& c, enum direction d) {
+    this->coordinate.x = c.x;
+    this->coordinate.y = c.y;
+    this->direction = d;
+
+    this->parentWeight = 0;
+    this->fScore = 1000000000;
+    this->gScore = 1000000000;
+    this->start = false;
+    this->open = true;
+}
+Node::Node(const Coordinate& c, enum direction d, Node* parent, int weight) {
+    this->fScore = 1000000000;
+    this->gScore = 1000000000;
+    this->start = false;
+    this->open = true;
+
+    this->coordinate.x = c.x;
+    this->coordinate.y = c.y;
+    this->direction = d;
+    this->direction = d;
+    this->parent = parent;
+    this->parentWeight = weight;
+}
+
+
+int Node::CostToRoot(class Node n){
+    if (n.start){
+        return 0;
+    }
+    else{
+        return CostToRoot(*n.parent)+n.parentWeight;
+    }
+}
+
+
+std::list<Node> Node::ReturnPath(class Node n, std::list<Node> path){
+    if (n.start){
+        path.push_back(n);
+        return path;
+    }
+    else{
+        path.push_back(n);
+        return ReturnPath(reinterpret_cast<Node &&>(n.parent), path);
+    }
+}
+
+int Node::heuristic(const Coordinate& goal){
+    int gx = goal.x;
+    int gy = goal.y;
+    int nx = this->coordinate.x;
+    int ny = this->coordinate.y;
+    int h = 0;
+
+
+    if ((this->direction == north || this->direction == south) && gx != nx){
+        h += 3;
+    } else if ((this->direction == west || this->direction == east) && gy != ny){
+        h += 3;
+    }
+    if (gy < ny && this->direction != south){
+        h += 3;
+    }
+    else if (gy > ny && this->direction != north){
+        h+= 3;
+    }
+    else if (gx > nx && this->direction != east){
+        h+= 3;
+    }
+    else if (gx < nx && this->direction != west){
+        h += 3;
+    }
+
+    h+= abs(nx-gx);
+    h+= abs(ny-gy);
+
+    return h;
+}
+
+
+bool Node::calculateNeighbour() {
+    if(this->direction == north){
+        this->neighbours.push_back(new Node(*(new Coordinate(this->coordinate.x+1, this->coordinate.y)), north, this, 1));
+        this->neighbours.push_back(new Node(this->coordinate, south, this, 3));
+        this->neighbours.push_back(new Node(this->coordinate, east, this, 3));
+        this->neighbours.push_back(new Node(this->coordinate, west, this, 3));
+        //this->neighbours.push_back(new Node(this->coordinate, north, this, 1));
+    }
+
+    if(this->direction == south){
+        this->neighbours.push_back(new Node(this->coordinate, north, this, 3));
+        this->neighbours.push_back(new Node(*(new Coordinate(this->coordinate.x, this->coordinate.y-1)), south, this, 1));
+        this->neighbours.push_back(new Node(this->coordinate, east, this, 3));
+        this->neighbours.push_back(new Node(this->coordinate, west, this, 3));
+        //this->neighbours.push_back(new Node(this->coordinate, south, this, 1));
+    }
+    if(this->direction == east){
+        this->neighbours.push_back(new Node(this->coordinate, north, this, 3));
+        this->neighbours.push_back(new Node(this->coordinate, south, this, 3));
+        this->neighbours.push_back(new Node(*(new Coordinate(this->coordinate.x+1, this->coordinate.y)), east, this, 1));
+        this->neighbours.push_back(new Node(this->coordinate, west, this, 3));
+        //this->neighbours.push_back(new Node(this->coordinate, east, this, 1));
+    }
+    if(this->direction == west){
+        this->neighbours.push_back(new Node(this->coordinate, north, this, 3));
+        this->neighbours.push_back(new Node(this->coordinate, south, this, 3));
+        this->neighbours.push_back(new Node(this->coordinate, east, this, 3));
+        this->neighbours.push_back(new Node(*(new Coordinate(this->coordinate.x, this->coordinate.y-1)), west, this, 1));
+        //this->neighbours.push_back(new Node(this->coordinate, west, this, 1));
+    }
+    return true;
+}
+
+Node* Node::leastCost(const Coordinate& goal) {
+
+    if(this->neighbours.empty()){
+        return this;
+    }
+
+    else{
+        Node* lowestCost;
+        bool flag = true;
+        for(Node* n: this->neighbours){
+            if(flag){
+                lowestCost = n->leastCost(goal);
+                flag = false;
+            } else if(lowestCost->fScore < n->leastCost(goal)->fScore){
+                lowestCost = n;
+            }
+        }
+        return lowestCost;
+    }
+}
+
+Node *Node::GetParent() {
+    return this->parent;
+}
+
+int Node::GetParentWeight() {
+    return this->parentWeight;
+}
+
+int Node::GetfScore() {
+    return this->fScore;
+}
+
+int Node::GetgScore() {
+    return this->gScore;
+}
+
+bool Node::Getstart() {
+    return this->start;
+}
+
+bool Node::Getopen() {
+    return this->open;
+}
+
+Coordinate Node::GetCoordinate() {
+    return this->coordinate;
+}
+
+direction Node::GetDirection() {
+    return this->direction;
+}
+
+std::list<Node *> Node::GetNeighbours() {
+    return this->neighbours;
+}
+
+void Node::SetgScore(int score) {
+    this->gScore = score;
+}
+
+void Node::SetfScore(int score) {
+    this->fScore = score;
+}
+
 
 
 

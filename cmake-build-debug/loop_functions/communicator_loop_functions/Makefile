@@ -140,60 +140,6 @@ communicator_loop_functions_autogen/fast:
 	cd /Users/chris/CLionProjects/TempMainRepo/cmake-build-debug && $(MAKE) -f loop_functions/communicator_loop_functions/CMakeFiles/communicator_loop_functions_autogen.dir/build.make loop_functions/communicator_loop_functions/CMakeFiles/communicator_loop_functions_autogen.dir/build
 .PHONY : communicator_loop_functions_autogen/fast
 
-__/__/environment/node.o: __/__/environment/node.cpp.o
-
-.PHONY : __/__/environment/node.o
-
-# target to build an object file
-__/__/environment/node.cpp.o:
-	cd /Users/chris/CLionProjects/TempMainRepo/cmake-build-debug && $(MAKE) -f loop_functions/communicator_loop_functions/CMakeFiles/communicator_loop_functions.dir/build.make loop_functions/communicator_loop_functions/CMakeFiles/communicator_loop_functions.dir/__/__/environment/node.cpp.o
-.PHONY : __/__/environment/node.cpp.o
-
-__/__/environment/node.i: __/__/environment/node.cpp.i
-
-.PHONY : __/__/environment/node.i
-
-# target to preprocess a source file
-__/__/environment/node.cpp.i:
-	cd /Users/chris/CLionProjects/TempMainRepo/cmake-build-debug && $(MAKE) -f loop_functions/communicator_loop_functions/CMakeFiles/communicator_loop_functions.dir/build.make loop_functions/communicator_loop_functions/CMakeFiles/communicator_loop_functions.dir/__/__/environment/node.cpp.i
-.PHONY : __/__/environment/node.cpp.i
-
-__/__/environment/node.s: __/__/environment/node.cpp.s
-
-.PHONY : __/__/environment/node.s
-
-# target to generate assembly for a file
-__/__/environment/node.cpp.s:
-	cd /Users/chris/CLionProjects/TempMainRepo/cmake-build-debug && $(MAKE) -f loop_functions/communicator_loop_functions/CMakeFiles/communicator_loop_functions.dir/build.make loop_functions/communicator_loop_functions/CMakeFiles/communicator_loop_functions.dir/__/__/environment/node.cpp.s
-.PHONY : __/__/environment/node.cpp.s
-
-__/__/environment/pathfinding/aStar.o: __/__/environment/pathfinding/aStar.cpp.o
-
-.PHONY : __/__/environment/pathfinding/aStar.o
-
-# target to build an object file
-__/__/environment/pathfinding/aStar.cpp.o:
-	cd /Users/chris/CLionProjects/TempMainRepo/cmake-build-debug && $(MAKE) -f loop_functions/communicator_loop_functions/CMakeFiles/communicator_loop_functions.dir/build.make loop_functions/communicator_loop_functions/CMakeFiles/communicator_loop_functions.dir/__/__/environment/pathfinding/aStar.cpp.o
-.PHONY : __/__/environment/pathfinding/aStar.cpp.o
-
-__/__/environment/pathfinding/aStar.i: __/__/environment/pathfinding/aStar.cpp.i
-
-.PHONY : __/__/environment/pathfinding/aStar.i
-
-# target to preprocess a source file
-__/__/environment/pathfinding/aStar.cpp.i:
-	cd /Users/chris/CLionProjects/TempMainRepo/cmake-build-debug && $(MAKE) -f loop_functions/communicator_loop_functions/CMakeFiles/communicator_loop_functions.dir/build.make loop_functions/communicator_loop_functions/CMakeFiles/communicator_loop_functions.dir/__/__/environment/pathfinding/aStar.cpp.i
-.PHONY : __/__/environment/pathfinding/aStar.cpp.i
-
-__/__/environment/pathfinding/aStar.s: __/__/environment/pathfinding/aStar.cpp.s
-
-.PHONY : __/__/environment/pathfinding/aStar.s
-
-# target to generate assembly for a file
-__/__/environment/pathfinding/aStar.cpp.s:
-	cd /Users/chris/CLionProjects/TempMainRepo/cmake-build-debug && $(MAKE) -f loop_functions/communicator_loop_functions/CMakeFiles/communicator_loop_functions.dir/build.make loop_functions/communicator_loop_functions/CMakeFiles/communicator_loop_functions.dir/__/__/environment/pathfinding/aStar.cpp.s
-.PHONY : __/__/environment/pathfinding/aStar.cpp.s
-
 communicator_loop_functions.o: communicator_loop_functions.cpp.o
 
 .PHONY : communicator_loop_functions.o
@@ -258,12 +204,6 @@ help:
 	@echo "... edit_cache"
 	@echo "... communicator_loop_functions"
 	@echo "... communicator_loop_functions_autogen"
-	@echo "... __/__/environment/node.o"
-	@echo "... __/__/environment/node.i"
-	@echo "... __/__/environment/node.s"
-	@echo "... __/__/environment/pathfinding/aStar.o"
-	@echo "... __/__/environment/pathfinding/aStar.i"
-	@echo "... __/__/environment/pathfinding/aStar.s"
 	@echo "... communicator_loop_functions.o"
 	@echo "... communicator_loop_functions.i"
 	@echo "... communicator_loop_functions.s"

@@ -24,6 +24,7 @@ public:
     void SetupRobotManager(std::map<int, Basicbot*> botControllers);
     void Tick();
 };
+
 RobotManager::RobotManager(){};
 RobotManager::~RobotManager(){};
 

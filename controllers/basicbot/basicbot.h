@@ -10,9 +10,20 @@
 
 #include <src/qrcodes/QRCode.h>
 
-#include "src/datatypes/ds_instruction.h"
-#include "src/datatypes/direction"
-#include "src/datatypes/Coordinate.h"
+#include <math.h>
+#include <iomanip>
+#include <sstream>
+
+#include <argos3/core/utility/configuration/argos_configuration.h>
+#include <argos3/core/utility/math/vector2.h>
+#include <argos3/core/utility/logging/argos_log.h>
+
+
+#include "../../src/datatypes/ds_instruction.h"
+#include "../../src/datatypes/direction"
+#include "../../src/datatypes/Coordinate.h"
+#include "../../src/pathfinder/Pathfinder.h"
+#include "../../src/datatypes/Path.h"
 
 using namespace argos;
 

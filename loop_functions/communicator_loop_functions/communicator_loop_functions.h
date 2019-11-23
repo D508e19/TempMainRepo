@@ -11,7 +11,6 @@
 #include <controllers/basicbot/basicbot.h>
 #include "src/warehouse/Warehouse.h"
 
-
 using namespace argos;
 
 class CommunicatorLoopFunctions : public CLoopFunctions {

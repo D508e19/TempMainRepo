@@ -2,8 +2,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/communicator_loop_functions_autogen.dir/AutogenOldSettings.txt"
   "CMakeFiles/communicator_loop_functions_autogen.dir/ParseCache.txt"
   "communicator_loop_functions_autogen"
-  "CMakeFiles/communicator_loop_functions.dir/__/__/environment/node.cpp.o"
-  "CMakeFiles/communicator_loop_functions.dir/__/__/environment/pathfinding/aStar.cpp.o"
   "CMakeFiles/communicator_loop_functions.dir/communicator_loop_functions.cpp.o"
   "CMakeFiles/communicator_loop_functions.dir/communicator_loop_functions_autogen/mocs_compilation.cpp.o"
   "libcommunicator_loop_functions.pdb"

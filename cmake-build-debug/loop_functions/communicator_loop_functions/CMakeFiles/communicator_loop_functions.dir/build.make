@@ -83,50 +83,20 @@ loop_functions/communicator_loop_functions/CMakeFiles/communicator_loop_function
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/communicator_loop_functions.dir/communicator_loop_functions.cpp.s"
 	cd /Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/loop_functions/communicator_loop_functions && /Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/chris/CLionProjects/TempMainRepo/loop_functions/communicator_loop_functions/communicator_loop_functions.cpp -o CMakeFiles/communicator_loop_functions.dir/communicator_loop_functions.cpp.s
 
-loop_functions/communicator_loop_functions/CMakeFiles/communicator_loop_functions.dir/__/__/environment/node.cpp.o: loop_functions/communicator_loop_functions/CMakeFiles/communicator_loop_functions.dir/flags.make
-loop_functions/communicator_loop_functions/CMakeFiles/communicator_loop_functions.dir/__/__/environment/node.cpp.o: ../environment/node.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object loop_functions/communicator_loop_functions/CMakeFiles/communicator_loop_functions.dir/__/__/environment/node.cpp.o"
-	cd /Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/loop_functions/communicator_loop_functions && /Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/communicator_loop_functions.dir/__/__/environment/node.cpp.o -c /Users/chris/CLionProjects/TempMainRepo/environment/node.cpp
-
-loop_functions/communicator_loop_functions/CMakeFiles/communicator_loop_functions.dir/__/__/environment/node.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/communicator_loop_functions.dir/__/__/environment/node.cpp.i"
-	cd /Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/loop_functions/communicator_loop_functions && /Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/chris/CLionProjects/TempMainRepo/environment/node.cpp > CMakeFiles/communicator_loop_functions.dir/__/__/environment/node.cpp.i
-
-loop_functions/communicator_loop_functions/CMakeFiles/communicator_loop_functions.dir/__/__/environment/node.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/communicator_loop_functions.dir/__/__/environment/node.cpp.s"
-	cd /Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/loop_functions/communicator_loop_functions && /Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/chris/CLionProjects/TempMainRepo/environment/node.cpp -o CMakeFiles/communicator_loop_functions.dir/__/__/environment/node.cpp.s
-
-loop_functions/communicator_loop_functions/CMakeFiles/communicator_loop_functions.dir/__/__/environment/pathfinding/aStar.cpp.o: loop_functions/communicator_loop_functions/CMakeFiles/communicator_loop_functions.dir/flags.make
-loop_functions/communicator_loop_functions/CMakeFiles/communicator_loop_functions.dir/__/__/environment/pathfinding/aStar.cpp.o: ../environment/pathfinding/aStar.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object loop_functions/communicator_loop_functions/CMakeFiles/communicator_loop_functions.dir/__/__/environment/pathfinding/aStar.cpp.o"
-	cd /Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/loop_functions/communicator_loop_functions && /Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/communicator_loop_functions.dir/__/__/environment/pathfinding/aStar.cpp.o -c /Users/chris/CLionProjects/TempMainRepo/environment/pathfinding/aStar.cpp
-
-loop_functions/communicator_loop_functions/CMakeFiles/communicator_loop_functions.dir/__/__/environment/pathfinding/aStar.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/communicator_loop_functions.dir/__/__/environment/pathfinding/aStar.cpp.i"
-	cd /Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/loop_functions/communicator_loop_functions && /Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/chris/CLionProjects/TempMainRepo/environment/pathfinding/aStar.cpp > CMakeFiles/communicator_loop_functions.dir/__/__/environment/pathfinding/aStar.cpp.i
-
-loop_functions/communicator_loop_functions/CMakeFiles/communicator_loop_functions.dir/__/__/environment/pathfinding/aStar.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/communicator_loop_functions.dir/__/__/environment/pathfinding/aStar.cpp.s"
-	cd /Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/loop_functions/communicator_loop_functions && /Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/chris/CLionProjects/TempMainRepo/environment/pathfinding/aStar.cpp -o CMakeFiles/communicator_loop_functions.dir/__/__/environment/pathfinding/aStar.cpp.s
-
 # Object files for target communicator_loop_functions
 communicator_loop_functions_OBJECTS = \
 "CMakeFiles/communicator_loop_functions.dir/communicator_loop_functions_autogen/mocs_compilation.cpp.o" \
-"CMakeFiles/communicator_loop_functions.dir/communicator_loop_functions.cpp.o" \
-"CMakeFiles/communicator_loop_functions.dir/__/__/environment/node.cpp.o" \
-"CMakeFiles/communicator_loop_functions.dir/__/__/environment/pathfinding/aStar.cpp.o"
+"CMakeFiles/communicator_loop_functions.dir/communicator_loop_functions.cpp.o"
 
 # External object files for target communicator_loop_functions
 communicator_loop_functions_EXTERNAL_OBJECTS =
 
 loop_functions/communicator_loop_functions/libcommunicator_loop_functions.so: loop_functions/communicator_loop_functions/CMakeFiles/communicator_loop_functions.dir/communicator_loop_functions_autogen/mocs_compilation.cpp.o
 loop_functions/communicator_loop_functions/libcommunicator_loop_functions.so: loop_functions/communicator_loop_functions/CMakeFiles/communicator_loop_functions.dir/communicator_loop_functions.cpp.o
-loop_functions/communicator_loop_functions/libcommunicator_loop_functions.so: loop_functions/communicator_loop_functions/CMakeFiles/communicator_loop_functions.dir/__/__/environment/node.cpp.o
-loop_functions/communicator_loop_functions/libcommunicator_loop_functions.so: loop_functions/communicator_loop_functions/CMakeFiles/communicator_loop_functions.dir/__/__/environment/pathfinding/aStar.cpp.o
 loop_functions/communicator_loop_functions/libcommunicator_loop_functions.so: loop_functions/communicator_loop_functions/CMakeFiles/communicator_loop_functions.dir/build.make
 loop_functions/communicator_loop_functions/libcommunicator_loop_functions.so: controllers/basicbot/libbasicbot.dylib
 loop_functions/communicator_loop_functions/libcommunicator_loop_functions.so: loop_functions/communicator_loop_functions/CMakeFiles/communicator_loop_functions.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX shared module libcommunicator_loop_functions.so"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX shared module libcommunicator_loop_functions.so"
 	cd /Users/chris/CLionProjects/TempMainRepo/cmake-build-debug/loop_functions/communicator_loop_functions && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/communicator_loop_functions.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

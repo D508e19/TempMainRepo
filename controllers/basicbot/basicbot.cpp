@@ -1,13 +1,5 @@
 #include "basicbot.h"
 
-#include <math.h> 
-#include <iomanip>
-#include <sstream>
-
-#include <argos3/core/utility/configuration/argos_configuration.h>
-#include <argos3/core/utility/math/vector2.h>
-#include <argos3/core/utility/logging/argos_log.h>
-
 Basicbot::Basicbot() : 
    m_pcWheels(NULL),
    m_pcGroundSensor(NULL),
@@ -22,7 +14,6 @@ Basicbot::Basicbot() :
    m_ticksToTurn(20),
    m_ticksToMoveOneCell(20)
    {}
-
 
 void Basicbot::Init(TConfigurationNode &t_node)
 {
