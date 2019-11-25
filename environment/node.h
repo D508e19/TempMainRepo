@@ -84,7 +84,7 @@ Node::Node(const Coordinate& c, enum direction d, Node* parent, int weight) {
 }
 
 
-int Node::CostToRoot(class Node n){
+int Node::CostToRoot(Node n){
     if (n.start){
         return 0;
     }
@@ -94,14 +94,14 @@ int Node::CostToRoot(class Node n){
 }
 
 
-std::list<Node> Node::ReturnPath(class Node n, std::list<Node> path){
+std::list<Node> Node::ReturnPath(Node n, std::list<Node> path){
     if (n.start){
         path.push_back(n);
         return path;
     }
     else{
         path.push_back(n);
-        return ReturnPath(reinterpret_cast<Node &&>(n.parent), path);
+        return ReturnPath(*n.parent, path);
     }
 }
 
@@ -239,6 +239,7 @@ void Node::SetfScore(int score) {
 void Node::Setstart(bool start) {
     this->start = start;
 }
+
 
 
 
