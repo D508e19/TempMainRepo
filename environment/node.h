@@ -24,6 +24,7 @@ public:
     int GetgScore();
     void SetgScore(int);
     bool Getstart();
+    void Setstart(bool);
     bool Getopen();
     Coordinate GetCoordinate();
     direction GetDirection();
@@ -233,6 +234,10 @@ void Node::SetgScore(int score) {
 
 void Node::SetfScore(int score) {
     this->fScore = score;
+}
+
+void Node::Setstart(bool start) {
+    this->start = start;
 }
 
 

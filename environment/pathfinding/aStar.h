@@ -36,6 +36,7 @@ Path aStar::pathFinder(const Coordinate& start, direction d, const Coordinate& g
 
     Path pathList;
     Node* startNode = new Node(start,d);
+    startNode->Setstart(true);
     startNode->SetgScore(0);
     current = startNode;
     bool flag = true;
