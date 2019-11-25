@@ -28,7 +28,7 @@ Path Pathfinder::GetStupidPath(Coordinate start, Coordinate end)
     std::mutex mtx;
 
     Path newPath;
-//    //argos::LOG << "Find path to: ";
+    argos::LOG << "Find path to: ";
 //    //end.PrintCoord();
 //    std::cout << "Want to go to: " << end.x << ", " << end.y << std::endl;
 //    //std::cout << "Adding waypoint:" << start.x << " " << start.y << std::endl;

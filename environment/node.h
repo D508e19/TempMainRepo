@@ -27,7 +27,6 @@ public:
     void Setstart(bool);
     bool Getopen();
     Coordinate GetCoordinate();
-    void SetDirection(direction);
     direction GetDirection();
 
     std::list<Node*> GetNeighbours();
@@ -62,11 +61,11 @@ Node::Node() {
 Node::Node(Coordinate c, direction d) {
     this->coordinate.x = c.x;
     this->coordinate.y = c.y;
-
+    this->Direction = d;
     this->parentWeight = 0;
-    this->fScore = 1000000000;
-    this->gScore = 1000000000;
-    this->start = false;
+    this->fScore = 0;
+    this->gScore = 0;
+    this->start = true;
     this->open = true;
 }
 Node::Node(Coordinate c, direction d, Node* parent, int weight) {
@@ -74,7 +73,7 @@ Node::Node(Coordinate c, direction d, Node* parent, int weight) {
     this->gScore = 1000000000;
     this->start = false;
     this->open = true;
-
+    this->Direction = d;
     this->coordinate.x = c.x;
     this->coordinate.y = c.y;
     this->parent = parent;
@@ -138,55 +137,61 @@ int Node::heuristic(Coordinate goal){
 
 
 bool Node::calculateNeighbour() {
+    switch (this->Direction)
+    {
+        case north :
+            argos::LOG << "Hello6 ";
+            this->neighbours.push_back(new Node(*(new Coordinate(this->coordinate.x+1, this->coordinate.y)), north, this, 1));
+            argos::LOG << "Hello6 ";
+            this->neighbours.push_back(new Node(this->coordinate, south, this, 3));
+            argos::LOG << "Hello6 ";
+            this->neighbours.push_back(new Node(this->coordinate, east, this, 3));
+            argos::LOG << "Hello6 ";
+            this->neighbours.push_back(new Node(this->coordinate, west, this, 3));
+            argos::LOG << "Hello6 ";
+            //this->neighbours.push_back(new Node(this->coordinate, north, this, 1));
+            break;
+        case south :
+            argos::LOG << "Hello6 ";
+            this->neighbours.push_back(new Node(this->coordinate, north, this, 3));
+            argos::LOG << "Hello6 ";
+            this->neighbours.push_back(new Node(*(new Coordinate(this->coordinate.x, this->coordinate.y-1)), south, this, 1));
+            argos::LOG << "Hello6 ";
+            this->neighbours.push_back(new Node(this->coordinate, east, this, 3));
+            argos::LOG << "Hello6 ";
+            this->neighbours.push_back(new Node(this->coordinate, west, this, 3));
+            argos::LOG << "Hello6 ";
+            //this->neighbours.push_back(new Node(this->coordinate, south, this, 1));
+            break;
+        case east :
+            argos::LOG << "Hello6 ";
+            this->neighbours.push_back(new Node(this->coordinate, north, this, 3));
+            argos::LOG << "Hello6 ";
+            this->neighbours.push_back(new Node(this->coordinate, south, this, 3));
+            argos::LOG << "Hello6 ";
+            this->neighbours.push_back(new Node(*(new Coordinate(this->coordinate.x+1, this->coordinate.y)), east, this, 1));
+            argos::LOG << "Hello6 ";
+            this->neighbours.push_back(new Node(this->coordinate, west, this, 3));
+            argos::LOG << "Hello6 ";
+            //this->neighbours.push_back(new Node(this->coordinate, east, this, 1));
+            break;
+        case west :
+            argos::LOG << "Hello6 ";
+            this->neighbours.push_back(new Node(this->coordinate, north, this, 3));
+            argos::LOG << "Hello6 ";
+            this->neighbours.push_back(new Node(this->coordinate, south, this, 3));
+            argos::LOG << "Hello6 ";
+            this->neighbours.push_back(new Node(this->coordinate, east, this, 3));
+            argos::LOG << "Hello6 ";
+            this->neighbours.push_back(new Node(*(new Coordinate(this->coordinate.x, this->coordinate.y-1)), west, this, 1));
+            argos::LOG << "Hello6 ";
+            //this->neighbours.push_back(new Node(this->coordinate, west, this, 1));
+            break;
+        default:
+            argos::LOG << "Hello6 ";
+            break;
+    }
 
-    if(this->Direction == north){
-        argos::LOG << "Hello6 ";
-        this->neighbours.push_back(new Node(*(new Coordinate(this->coordinate.x+1, this->coordinate.y)), north, this, 1));
-        argos::LOG << "Hello6 ";
-        this->neighbours.push_back(new Node(this->coordinate, south, this, 3));
-        argos::LOG << "Hello6 ";
-        this->neighbours.push_back(new Node(this->coordinate, east, this, 3));
-        argos::LOG << "Hello6 ";
-        this->neighbours.push_back(new Node(this->coordinate, west, this, 3));
-        argos::LOG << "Hello6 ";
-        //this->neighbours.push_back(new Node(this->coordinate, north, this, 1));
-    }
-    else if(this->Direction == south){
-        argos::LOG << "Hello6 ";
-        this->neighbours.push_back(new Node(this->coordinate, north, this, 3));
-        argos::LOG << "Hello6 ";
-        this->neighbours.push_back(new Node(*(new Coordinate(this->coordinate.x, this->coordinate.y-1)), south, this, 1));
-        argos::LOG << "Hello6 ";
-        this->neighbours.push_back(new Node(this->coordinate, east, this, 3));
-        argos::LOG << "Hello6 ";
-        this->neighbours.push_back(new Node(this->coordinate, west, this, 3));
-        argos::LOG << "Hello6 ";
-        //this->neighbours.push_back(new Node(this->coordinate, south, this, 1));
-    }
-    else if(this->Direction == east){
-        argos::LOG << "Hello6 ";
-        this->neighbours.push_back(new Node(this->coordinate, north, this, 3));
-        argos::LOG << "Hello6 ";
-        this->neighbours.push_back(new Node(this->coordinate, south, this, 3));
-        argos::LOG << "Hello6 ";
-        this->neighbours.push_back(new Node(*(new Coordinate(this->coordinate.x+1, this->coordinate.y)), east, this, 1));
-        argos::LOG << "Hello6 ";
-        this->neighbours.push_back(new Node(this->coordinate, west, this, 3));
-        argos::LOG << "Hello6 ";
-        //this->neighbours.push_back(new Node(this->coordinate, east, this, 1));
-    }
-    else if(this->Direction == west){
-        argos::LOG << "Hello6 ";
-        this->neighbours.push_back(new Node(this->coordinate, north, this, 3));
-        argos::LOG << "Hello6 ";
-        this->neighbours.push_back(new Node(this->coordinate, south, this, 3));
-        argos::LOG << "Hello6 ";
-        this->neighbours.push_back(new Node(this->coordinate, east, this, 3));
-        argos::LOG << "Hello6 ";
-        this->neighbours.push_back(new Node(*(new Coordinate(this->coordinate.x, this->coordinate.y-1)), west, this, 1));
-        argos::LOG << "Hello6 ";
-        //this->neighbours.push_back(new Node(this->coordinate, west, this, 1));
-    }
     argos::LOG << "Hello6 ";
     return true;
 }
@@ -262,10 +267,5 @@ void Node::SetfScore(int score) {
 void Node::Setstart(bool start) {
     this->start = start;
 }
-
-void Node::SetDirection(direction d) {
-    this->Direction = d;
-}
-
 
 #endif //UNTITLED1_NODE_H
