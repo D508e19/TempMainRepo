@@ -4,6 +4,7 @@
 #include <environment/pathfinding/aStar.h>
 #include "src/datatypes/Coordinate.h"
 #include "src/datatypes/Path.h"
+#include "src/datatypes/direction"
 
 class Pathfinder
 {
@@ -14,7 +15,7 @@ public:
     Pathfinder();
     Pathfinder(Coordinate);
     ~Pathfinder();
-    aStar astar;
+    aStar astar = aStar();
 
     Path GetStupidPath(Coordinate start, Coordinate end);
 };
@@ -24,11 +25,12 @@ Pathfinder::~Pathfinder(){}
 
 Path Pathfinder::GetStupidPath(Coordinate start, Coordinate end)
 {
-    aStar astar = aStar();
+    std::mutex mtx;
+
+    Path newPath;
 //    //argos::LOG << "Find path to: ";
 //    //end.PrintCoord();
 //    std::cout << "Want to go to: " << end.x << ", " << end.y << std::endl;
-//    Path newPath;
 //    //std::cout << "Adding waypoint:" << start.x << " " << start.y << std::endl;
 //    //newPath.AddWayPoint(start);
 //    std::cout << "Adding waypoint:" << end.x << " " << start.y << std::endl;
@@ -36,9 +38,9 @@ Path Pathfinder::GetStupidPath(Coordinate start, Coordinate end)
 //    std::cout << "Adding waypoint:" << end.x << " " << end.y << std::endl;
 //    newPath.AddWayPoint(Coordinate(end.x, end.y), Coordinate(end.x, start.y));
 //
-//    return newPath;
-
-    return astar.pathFinder(start, north, end);
+    newPath = this->astar.pathFinder(start, north, end);
+    return newPath;
+    //return this->astar.pathFinder(start, north, end);
 }
 
 

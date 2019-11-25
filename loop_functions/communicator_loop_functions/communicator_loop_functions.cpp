@@ -21,8 +21,8 @@ void CommunicatorLoopFunctions::Init(TConfigurationNode& t_tree){
 }
 
 void CommunicatorLoopFunctions::PreStep()
-{  
-   wh.Tick(); 
+{
+   wh.Tick();
 }
 
 void CommunicatorLoopFunctions::printControllers(){

@@ -47,9 +47,13 @@ RobotWrapper::RobotWrapper(Basicbot *bot):m_bot(bot)
 
 void RobotWrapper::Tick()
 {
+    std::mutex mtx;
+
     if(instructionQueue.empty()&&m_bot->isBusy==false)
     {
-        TranslatePathToInstructions(pf.GetStupidPath(lastCoordinate, Coordinate(rand()%5,rand()%5)));
+        mtx.lock();
+        TranslatePathToInstructions(pf.GetStupidPath(lastCoordinate, Coordinate(5,5)));
+        mtx.unlock();
     }
     if (m_bot->currentInstruction == idle)
     { 

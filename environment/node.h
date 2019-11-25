@@ -14,8 +14,8 @@
 class Node {
 public:
     Node();
-    Node(const Coordinate&, direction);
-    Node(const Coordinate&, direction, Node*, int);
+    Node(Coordinate, direction);
+    Node(Coordinate, direction, Node*, int);
 
     Node* GetParent();
     int GetParentWeight();
@@ -27,13 +27,14 @@ public:
     void Setstart(bool);
     bool Getopen();
     Coordinate GetCoordinate();
+    void SetDirection(direction);
     direction GetDirection();
 
     std::list<Node*> GetNeighbours();
 
-    Node* leastCost(const Coordinate& goal);
+    Node* leastCost();
     bool calculateNeighbour();
-    int heuristic(const Coordinate& goal);
+    int heuristic(Coordinate goal);
     static int CostToRoot(Node n);
     static std::list<Node> ReturnPath(Node n, std::list<Node> path);
 
@@ -47,7 +48,6 @@ private:
     Coordinate coordinate;
     direction Direction;
 
-
     std::list<Node*> neighbours;
 };
 
@@ -59,7 +59,7 @@ Node::Node() {
     this->open = true;
 }
 
-Node::Node(const Coordinate& c, direction d) {
+Node::Node(Coordinate c, direction d) {
     this->coordinate.x = c.x;
     this->coordinate.y = c.y;
 
@@ -69,7 +69,7 @@ Node::Node(const Coordinate& c, direction d) {
     this->start = false;
     this->open = true;
 }
-Node::Node(const Coordinate& c, direction d, Node* parent, int weight) {
+Node::Node(Coordinate c, direction d, Node* parent, int weight) {
     this->fScore = 1000000000;
     this->gScore = 1000000000;
     this->start = false;
@@ -94,6 +94,7 @@ int Node::CostToRoot(Node n){
 
 std::list<Node> Node::ReturnPath(Node n, std::list<Node> path){
     if (n.start){
+        argos::LOG << "Hello11 ";
         path.push_back(n);
         return path;
     }
@@ -103,7 +104,7 @@ std::list<Node> Node::ReturnPath(Node n, std::list<Node> path){
     }
 }
 
-int Node::heuristic(const Coordinate& goal){
+int Node::heuristic(Coordinate goal){
     int gx = goal.x;
     int gy = goal.y;
     int nx = this->coordinate.x;
@@ -137,55 +138,79 @@ int Node::heuristic(const Coordinate& goal){
 
 
 bool Node::calculateNeighbour() {
+
     if(this->Direction == north){
+        argos::LOG << "Hello6 ";
         this->neighbours.push_back(new Node(*(new Coordinate(this->coordinate.x+1, this->coordinate.y)), north, this, 1));
+        argos::LOG << "Hello6 ";
         this->neighbours.push_back(new Node(this->coordinate, south, this, 3));
+        argos::LOG << "Hello6 ";
         this->neighbours.push_back(new Node(this->coordinate, east, this, 3));
+        argos::LOG << "Hello6 ";
         this->neighbours.push_back(new Node(this->coordinate, west, this, 3));
+        argos::LOG << "Hello6 ";
         //this->neighbours.push_back(new Node(this->coordinate, north, this, 1));
     }
-
-    if(this->Direction == south){
+    else if(this->Direction == south){
+        argos::LOG << "Hello6 ";
         this->neighbours.push_back(new Node(this->coordinate, north, this, 3));
+        argos::LOG << "Hello6 ";
         this->neighbours.push_back(new Node(*(new Coordinate(this->coordinate.x, this->coordinate.y-1)), south, this, 1));
+        argos::LOG << "Hello6 ";
         this->neighbours.push_back(new Node(this->coordinate, east, this, 3));
+        argos::LOG << "Hello6 ";
         this->neighbours.push_back(new Node(this->coordinate, west, this, 3));
+        argos::LOG << "Hello6 ";
         //this->neighbours.push_back(new Node(this->coordinate, south, this, 1));
     }
-    if(this->Direction == east){
+    else if(this->Direction == east){
+        argos::LOG << "Hello6 ";
         this->neighbours.push_back(new Node(this->coordinate, north, this, 3));
+        argos::LOG << "Hello6 ";
         this->neighbours.push_back(new Node(this->coordinate, south, this, 3));
+        argos::LOG << "Hello6 ";
         this->neighbours.push_back(new Node(*(new Coordinate(this->coordinate.x+1, this->coordinate.y)), east, this, 1));
+        argos::LOG << "Hello6 ";
         this->neighbours.push_back(new Node(this->coordinate, west, this, 3));
+        argos::LOG << "Hello6 ";
         //this->neighbours.push_back(new Node(this->coordinate, east, this, 1));
     }
-    if(this->Direction == west){
+    else if(this->Direction == west){
+        argos::LOG << "Hello6 ";
         this->neighbours.push_back(new Node(this->coordinate, north, this, 3));
+        argos::LOG << "Hello6 ";
         this->neighbours.push_back(new Node(this->coordinate, south, this, 3));
+        argos::LOG << "Hello6 ";
         this->neighbours.push_back(new Node(this->coordinate, east, this, 3));
+        argos::LOG << "Hello6 ";
         this->neighbours.push_back(new Node(*(new Coordinate(this->coordinate.x, this->coordinate.y-1)), west, this, 1));
+        argos::LOG << "Hello6 ";
         //this->neighbours.push_back(new Node(this->coordinate, west, this, 1));
     }
+    argos::LOG << "Hello6 ";
     return true;
 }
 
-Node* Node::leastCost(const Coordinate& goal) {
+Node* Node::leastCost() {
+
+    Node* lowestCost;
+    bool flag = true;
 
     if(this->neighbours.empty()){
         return this;
     }
 
     else{
-        Node* lowestCost;
-        bool flag = true;
+        argos::LOG << "LeastCost else ";
         for(Node* n: this->neighbours){
             if(flag){
-                lowestCost = n->leastCost(goal);
+                lowestCost = n->leastCost();
                 flag = false;
-            } else if(lowestCost->fScore < n->leastCost(goal)->fScore){
+            } else if(lowestCost->fScore < (n->leastCost())->fScore){
                 lowestCost = n;
             }
         }
+        argos::LOG << "returning least cost ";
         return lowestCost;
     }
 }
@@ -238,8 +263,9 @@ void Node::Setstart(bool start) {
     this->start = start;
 }
 
-
-
+void Node::SetDirection(direction d) {
+    this->Direction = d;
+}
 
 
 #endif //UNTITLED1_NODE_H
