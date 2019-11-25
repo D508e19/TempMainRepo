@@ -14,8 +14,8 @@
 class Node {
 public:
     Node();
-    Node(const Coordinate&, enum direction);
-    Node(const Coordinate&, enum direction, Node*, int);
+    Node(const Coordinate&, direction);
+    Node(const Coordinate&, direction, Node*, int);
 
     Node* GetParent();
     int GetParentWeight();
@@ -45,7 +45,8 @@ private:
     bool start;
     bool open;
     Coordinate coordinate;
-    direction direction;
+    direction Direction;
+
 
     std::list<Node*> neighbours;
 };
@@ -58,10 +59,9 @@ Node::Node() {
     this->open = true;
 }
 
-Node::Node(const Coordinate& c, enum direction d) {
+Node::Node(const Coordinate& c, direction d) {
     this->coordinate.x = c.x;
     this->coordinate.y = c.y;
-    this->direction = d;
 
     this->parentWeight = 0;
     this->fScore = 1000000000;
@@ -69,7 +69,7 @@ Node::Node(const Coordinate& c, enum direction d) {
     this->start = false;
     this->open = true;
 }
-Node::Node(const Coordinate& c, enum direction d, Node* parent, int weight) {
+Node::Node(const Coordinate& c, direction d, Node* parent, int weight) {
     this->fScore = 1000000000;
     this->gScore = 1000000000;
     this->start = false;
@@ -77,8 +77,6 @@ Node::Node(const Coordinate& c, enum direction d, Node* parent, int weight) {
 
     this->coordinate.x = c.x;
     this->coordinate.y = c.y;
-    this->direction = d;
-    this->direction = d;
     this->parent = parent;
     this->parentWeight = weight;
 }
@@ -113,21 +111,21 @@ int Node::heuristic(const Coordinate& goal){
     int h = 0;
 
 
-    if ((this->direction == north || this->direction == south) && gx != nx){
+    if ((this->Direction == north || this->Direction == south) && gx != nx){
         h += 3;
-    } else if ((this->direction == west || this->direction == east) && gy != ny){
-        h += 3;
-    }
-    if (gy < ny && this->direction != south){
+    } else if ((this->Direction == west || this->Direction == east) && gy != ny){
         h += 3;
     }
-    else if (gy > ny && this->direction != north){
+    if (gy < ny && this->Direction != south){
+        h += 3;
+    }
+    else if (gy > ny && this->Direction != north){
         h+= 3;
     }
-    else if (gx > nx && this->direction != east){
+    else if (gx > nx && this->Direction != east){
         h+= 3;
     }
-    else if (gx < nx && this->direction != west){
+    else if (gx < nx && this->Direction != west){
         h += 3;
     }
 
@@ -139,7 +137,7 @@ int Node::heuristic(const Coordinate& goal){
 
 
 bool Node::calculateNeighbour() {
-    if(this->direction == north){
+    if(this->Direction == north){
         this->neighbours.push_back(new Node(*(new Coordinate(this->coordinate.x+1, this->coordinate.y)), north, this, 1));
         this->neighbours.push_back(new Node(this->coordinate, south, this, 3));
         this->neighbours.push_back(new Node(this->coordinate, east, this, 3));
@@ -147,21 +145,21 @@ bool Node::calculateNeighbour() {
         //this->neighbours.push_back(new Node(this->coordinate, north, this, 1));
     }
 
-    if(this->direction == south){
+    if(this->Direction == south){
         this->neighbours.push_back(new Node(this->coordinate, north, this, 3));
         this->neighbours.push_back(new Node(*(new Coordinate(this->coordinate.x, this->coordinate.y-1)), south, this, 1));
         this->neighbours.push_back(new Node(this->coordinate, east, this, 3));
         this->neighbours.push_back(new Node(this->coordinate, west, this, 3));
         //this->neighbours.push_back(new Node(this->coordinate, south, this, 1));
     }
-    if(this->direction == east){
+    if(this->Direction == east){
         this->neighbours.push_back(new Node(this->coordinate, north, this, 3));
         this->neighbours.push_back(new Node(this->coordinate, south, this, 3));
         this->neighbours.push_back(new Node(*(new Coordinate(this->coordinate.x+1, this->coordinate.y)), east, this, 1));
         this->neighbours.push_back(new Node(this->coordinate, west, this, 3));
         //this->neighbours.push_back(new Node(this->coordinate, east, this, 1));
     }
-    if(this->direction == west){
+    if(this->Direction == west){
         this->neighbours.push_back(new Node(this->coordinate, north, this, 3));
         this->neighbours.push_back(new Node(this->coordinate, south, this, 3));
         this->neighbours.push_back(new Node(this->coordinate, east, this, 3));
@@ -221,7 +219,7 @@ Coordinate Node::GetCoordinate() {
 }
 
 direction Node::GetDirection() {
-    return this->direction;
+    return this->Direction;
 }
 
 std::list<Node *> Node::GetNeighbours() {
