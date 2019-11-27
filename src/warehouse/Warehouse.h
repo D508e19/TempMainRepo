@@ -6,6 +6,7 @@ class Warehouse;
 #include "src/orders/OrderManager.h"
 #include "src/pods/PodManager.h"
 #include "src/robots/RobotManager.h"
+#include "src/networking/Networking.h"
 
 class Warehouse
 {
@@ -13,6 +14,7 @@ private:
     OrderManager om;
     PodManager pm;
     RobotManager rm;
+    Networking net;
 
     bool distributed = false;
 
@@ -29,6 +31,8 @@ Warehouse::~Warehouse(){};
 
 void Warehouse::Tick()
 {
+    net.WriteMsg("Tick!");
+    net.ReceiveMsg();
     om.Tick();
     rm.Tick();
     pm.Tick();  
@@ -42,7 +46,7 @@ void Warehouse::SetupWarehouse(std::map<int, Basicbot*> botControllers)
     pm.SetupPodManager(this, 100);
     rm.SetupRobotManager(this, botControllers);
 
-
+    net.Connect();
 }
 
 

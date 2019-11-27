@@ -1,1 +1,10 @@
-add_library(Warehouse SHARED Warehouse.h)
+set(WAREHOUSE_SOURCES
+  Warehouse.h))
+
+
+add_library(WAREHOUSE_SOURCES SHARED ${WAREHOUSE_SOURCES})
+
+target_link_libraries(WAREHOUSE_SOURCES
+  NETWORKING_SOURCES)
+
+  
