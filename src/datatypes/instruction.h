@@ -1,5 +1,5 @@
-#ifndef DS_INSTRUCTION_H
-#define DS_INSTRUCTION_H
+#ifndef INSTRUCTION_H
+#define INSTRUCTION_H
 
 enum instruction{
     idle, 
