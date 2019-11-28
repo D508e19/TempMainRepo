@@ -47,13 +47,10 @@ RobotWrapper::RobotWrapper(Basicbot *bot):m_bot(bot)
 
 void RobotWrapper::Tick()
 {
-    std::mutex mtx;
 
-    if(instructionQueue.empty()&&m_bot->isBusy==false)
+    if(instructionQueue.empty() && !m_bot->isBusy)
     {
-        mtx.lock();
         TranslatePathToInstructions(pf.GetStupidPath(lastCoordinate, Coordinate(5,5)));
-        mtx.unlock();
     }
     if (m_bot->currentInstruction == idle)
     { 
@@ -79,11 +76,11 @@ void RobotWrapper::TranslatePathToInstructions(Path p)
                 else if(f==east){n=turnleft;}
                 else if(f==west){n=turnright;}
                 break;
-            case south : 
+            case south :
                 if (f==north){n=turn180;}
                 else if(f==south){n=ignore;}
                 else if(f==east){n=turnright;}
-                else if(f==west){n=turnleft;}   
+                else if(f==west){n=turnleft;}
                 break;
             case east :
                 if (f==north){n=turnright;}
@@ -100,7 +97,7 @@ void RobotWrapper::TranslatePathToInstructions(Path p)
             default:
                 break;
         }
-        lastFacing = f; 
+        lastFacing = f;
         //std::cout << "Sending ins to face: " << f << std::endl;
         AddInstructionToQueue(n, 1);
 
@@ -112,9 +109,9 @@ void RobotWrapper::TranslatePathToInstructions(Path p)
         }
         argos::LOG << "moving: "<< diff << std::endl;
         AddInstructionToQueue(moveforward, diff);
-       
+
         lastCoordinate = p.waypoints.front();
-        
+
         p.waypoints.pop();
     }
 }
@@ -135,7 +132,7 @@ direction RobotWrapper::GetFaceTowardsInstruction(Coordinate cToFace, Coordinate
         nextFacing = (xdiff < 0) ? north : south;
     }
     else{
-        nextFacing = (ydiff < 0) ?  east : west; 
+        nextFacing = (ydiff < 0) ?  east : west;
     }
     //std::cout << "Gonna face: " << nextFacing << std::endl;
     return nextFacing;

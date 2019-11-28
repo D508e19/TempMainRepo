@@ -20,7 +20,6 @@
 
 
 #include "../../src/datatypes/ds_instruction.h"
-#include "../../src/datatypes/direction"
 #include "../../src/datatypes/Coordinate.h"
 #include "../../src/pathfinder/Pathfinder.h"
 #include "../../src/datatypes/Path.h"

@@ -25,7 +25,6 @@ Pathfinder::~Pathfinder(){}
 
 Path Pathfinder::GetStupidPath(Coordinate start, Coordinate end)
 {
-    std::mutex mtx;
 
     Path newPath;
     argos::LOG << "Find path to: ";
