@@ -9,8 +9,6 @@
 #include <iterator>
 
 
-#include "src/warehouse/Warehouse.h"
-
 CommunicatorLoopFunctions::CommunicatorLoopFunctions(){}
 CommunicatorLoopFunctions::~CommunicatorLoopFunctions(){}
 

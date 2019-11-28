@@ -1,39 +1,7 @@
-#ifndef ROBOTWRAPPER_H
-#define ROBOTWRAPPER_H
-
-#include <vector> 
-#include <queue>
+#ifndef ROBOTWRAPPER_CPP
+#define ROBOTWRAPPER_CPP
 
 #include "controllers/basicbot/basicbot.h"
-#include "src/pathfinder/Pathfinder.h"
-#include "src/datatypes/instruction.h"
-#include "src/datatypes/Path.h"
-
-class RobotWrapper
-{
-private:
-    std::queue<instruction> instructionQueue;
-    std::queue<int> instructionsValuesQueue;
-
-    Basicbot* m_bot;
-    Pathfinder pf = Pathfinder();
-
-    direction lastFacing;
-    Coordinate lastCoordinate;
-
-public:
-    RobotWrapper();
-    RobotWrapper(Basicbot *bot);
-    ~RobotWrapper();
-
-    void Tick();
-
-    void TranslatePathToInstructions(Path p);
-    void AddInstructionToQueue(instruction ins, int tiles);
-    void SendNextInstruction();
-
-    direction GetFaceTowardsInstruction(Coordinate wantsToFace, Coordinate current, direction lastFacing);
-};
 
 RobotWrapper::RobotWrapper(){};
 RobotWrapper::~RobotWrapper(){};
@@ -198,6 +166,5 @@ void RobotWrapper::AddInstructionToQueue(instruction ins, int tiles = 1)
         instructionsValuesQueue.push(tiles);
     }
 };
-
 
 #endif

@@ -20,15 +20,5 @@ public:
     int getOrderID(){ return Order::orderID; }
 };
 
-Order::Order(){};
-
-Order::Order(int orderID, int timestampBorn):
-	orderID(orderID), 
-    timestamp_born(timestampBorn), 
-	underWay(false)
-    {};
-
-Order::~Order(){}
-
 
 #endif

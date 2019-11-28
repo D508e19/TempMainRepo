@@ -1,23 +1,7 @@
-#ifndef PATH_H
-#define PATH_H
+#ifndef PATH_CPP
+#define PATH_CPP
 
 #include <queue>
-
-#include "Coordinate.h"
-
-class Path
-{
-private:
-
-public:
-    Path();
-    ~Path();
-
-    std::queue <Coordinate> waypoints;
-
-    void AddWayPoint(Coordinate newCoord, Coordinate lastCord);
-    Coordinate GetNextWaypoint();   
-};
 
 Path::Path(){}
 Path::~Path(){}

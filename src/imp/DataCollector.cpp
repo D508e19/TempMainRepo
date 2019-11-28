@@ -1,22 +1,11 @@
-#ifndef DATA_DATACOLLECTOR_H
-#define DATA_DATACOLLECTOR_H
+#ifndef DATA_DATACOLLECTOR_CPP
+#define DATA_DATACOLLECTOR_CPP
 
 #include <iostream>
 #include <fstream>
 #include <string>
 
-class DataCollector
-{
-private:
-    std::ofstream output;
-    
-public:
-    DataCollector();
-    ~DataCollector();
-
-    void CollectData(std::map<int, Basicbot*> botControllers);
-    void WriteLineToFile(std::string x);
-};
+#include "controllers/basicbot/basicbot.h"
 
 DataCollector::DataCollector(){}
 DataCollector::~DataCollector(){}

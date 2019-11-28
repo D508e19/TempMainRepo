@@ -1,20 +1,5 @@
-#ifndef PATHFINDER_H
-#define PATHFINDER_h
-
-#include "src/datatypes/Coordinate.h"
-#include "src/datatypes/Path.h"
-
-class Pathfinder
-{
-private:
-    
-    
-public:
-    Pathfinder();
-    ~Pathfinder();
-   
-    Path GetStupidPath(Coordinate start, Coordinate end);
-};
+#ifndef PATHFINDER_CPP
+#define PATHFINDER_CPP
 
 Pathfinder::Pathfinder(){}
 Pathfinder::~Pathfinder(){}

@@ -1,18 +1,5 @@
-#ifndef POD_H
-#define POD_H
-
-class Pod
-{
-private:
-    const int m_id;
-
-public:
-    Pod();
-    Pod(int);
-    ~Pod();
-
-    int getId();
-};
+#ifndef POD_CPP
+#define POD_CPP
 
 Pod::Pod():
     m_id(-1)
@@ -27,6 +14,5 @@ Pod::~Pod(){}
 int Pod::getId(){
     return m_id;
 }
-
 
 #endif
