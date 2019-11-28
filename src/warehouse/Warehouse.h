@@ -34,18 +34,21 @@ void Warehouse::Tick()
     net.Tick();
     om.Tick();
     rm.Tick();
-    pm.Tick();  
+    pm.Tick();
 };
 
 void Warehouse::SetupWarehouse(std::map<int, Basicbot*> botControllers)
 {
     srand (time(NULL));	// seed for rng
     // andet setup ?
+    net.Connect();
     om.SetupOrderManager(this); 
     pm.SetupPodManager(this, 100);
     rm.SetupRobotManager(this, botControllers);
 
-    net.Connect();
+    net.QueueMsg("Hey1", 4);
+    //net.QueueMsg("Hey2", 4);
+    //net.QueueMsg("Hey3", 4); 
 }
 
 
