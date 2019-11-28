@@ -1,10 +1,10 @@
 #ifndef ROBOTWRAPPER_H
 #define ROBOTWRAPPER_H
 
-#include <vector> 
+#include <vector>
 #include <queue>
 
-#include "controllers/basicbot/basicbot.h"
+#include "src/argos/controllers/basicbot/basicbot.h"
 #include "src/pathfinder/Pathfinder.h"
 #include "src/datatypes/ds_instruction.h"
 #include "src/datatypes/Path.h"
@@ -47,24 +47,24 @@ RobotWrapper::RobotWrapper(Basicbot *bot):m_bot(bot)
     {
         TranslatePathToInstructions(pf.GetStupidPath(lastCoordinate, Coordinate(rand()%5,rand()%5)));
     }
-    
+
 };
 
 void RobotWrapper::Tick()
 {
     if (m_bot->currentInstruction == idle)
-    { 
+    {
         /*
         if(instructionQueue.empty())
         {
             argos::LOG << "InstructionQueue empty. Generate new random path." << std::endl;
             // Add random path
-            // TODO: Delete 
+            // TODO: Delete
             TranslatePathToInstructions(pf.GetStupidPath(lastCoordinate, Coordinate(rand()%5,rand()%5)));
         }*/
         SendNextInstruction();
     }
-    
+
 }
 
 void RobotWrapper::TranslatePathToInstructions(Path p)
@@ -90,11 +90,11 @@ void RobotWrapper::TranslatePathToInstructions(Path p)
                 else if(f==east){n=turnleft;}
                 else if(f==west){n=turnright;}
                 break;
-            case south : 
+            case south :
                 if (f==north){n=turn180;}
                 else if(f==south){n=ignore;}
                 else if(f==east){n=turnright;}
-                else if(f==west){n=turnleft;}   
+                else if(f==west){n=turnleft;}
                 break;
             case east :
                 if (f==north){n=turnright;}
@@ -111,7 +111,7 @@ void RobotWrapper::TranslatePathToInstructions(Path p)
             default:
                 break;
         }
-        lastFacing = f; 
+        lastFacing = f;
 
         AddInstructionToQueue(n, 1);
 
@@ -123,7 +123,7 @@ void RobotWrapper::TranslatePathToInstructions(Path p)
         }
         argos::LOG << "moving: "<< diff << std::endl;
         AddInstructionToQueue(moveforward, diff);
-       
+
         lastCoordinate = p.waypoints.front();
         p.waypoints.pop();
     }
@@ -140,7 +140,7 @@ direction RobotWrapper::GetFaceTowardsInstruction(Coordinate coordToFace, Coordi
         nextFacing = (xdiff < 0) ? north : south;
     }
     else if (ydiff != 0){
-        nextFacing = (ydiff < 0) ?  east : west; 
+        nextFacing = (ydiff < 0) ?  east : west;
     }
 
     return nextFacing;
@@ -179,7 +179,7 @@ void RobotWrapper::SendNextInstruction()
             m_bot->ticksToWait = instructionsValuesQueue.front();
             instructionsValuesQueue.pop();
             m_bot->currentInstruction = wait;
-        
+
         default:
             break;
         }

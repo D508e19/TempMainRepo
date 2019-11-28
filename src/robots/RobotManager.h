@@ -6,7 +6,7 @@
 
 #include "RobotWrapper.h"
 #include "src/robots/RobotWrapper.h"
-#include "controllers/basicbot/basicbot.h"
+#include "src/argos/controllers/basicbot/basicbot.h"
 
 class RobotManager
 {
@@ -14,28 +14,28 @@ private:
     std::map<int, RobotWrapper> Wrappers;
     int robotCount = 0;
 
-    Warehouse* wh;
+    Warehouse *wh;
 
 public:
     RobotManager();
     ~RobotManager();
 
-    RobotWrapper CreateRobotWrapper(Basicbot*);
+    RobotWrapper CreateRobotWrapper(Basicbot *);
 
-    void SetupRobotManager(Warehouse* _wh, std::map<int, Basicbot*> botControllers);
+    void SetupRobotManager(Warehouse *_wh, std::map<int, Basicbot *> botControllers);
     void Tick();
 };
 RobotManager::RobotManager(){};
 RobotManager::~RobotManager(){};
 
-void RobotManager::SetupRobotManager(Warehouse* _wh, std::map<int, Basicbot*> botControllers)
+void RobotManager::SetupRobotManager(Warehouse *_wh, std::map<int, Basicbot *> botControllers)
 {
     wh = _wh;
 
-    for (int i=0; i<botControllers.size(); i++)
+    for (int i = 0; i < botControllers.size(); i++)
     {
         RobotWrapper rw = CreateRobotWrapper(botControllers[i]);
-        Wrappers.insert(std::pair<int, RobotWrapper> (i, rw));
+        Wrappers.insert(std::pair<int, RobotWrapper>(i, rw));
     }
 };
 
@@ -47,7 +47,7 @@ void RobotManager::Tick()
     }
 };
 
-RobotWrapper RobotManager::CreateRobotWrapper(Basicbot* b)
+RobotWrapper RobotManager::CreateRobotWrapper(Basicbot *b)
 {
     RobotWrapper rw(b);
     robotCount++;

@@ -1,19 +1,7 @@
-#ifndef COORDINATE_H
-#define COORDINATE_H
 
-class Coordinate
-{
-private:
-public:
-    Coordinate();
-    Coordinate(int x, int y);
-    ~Coordinate();
+#include <stdlib.h>
 
-    int x;
-    int y;
-
-    void PrintCoordinate();
-};
+#include "Coordinate.h"
 
 Coordinate::Coordinate() {}
 Coordinate::Coordinate(int px, int py) : x(px), y(py) {}
@@ -23,5 +11,3 @@ void Coordinate::PrintCoordinate()
 {
     std::cout << "(" << x << ", " << y << ")" << std::endl;
 }
-
-#endif
