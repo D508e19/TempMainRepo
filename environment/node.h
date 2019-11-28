@@ -31,7 +31,7 @@ public:
 
     std::list<Node> GetNeighbours();
 
-    Node leastCost();
+    Node leastCost(Node base);
     bool calculateNeighbour();
     int heuristic(Coordinate goal);
     static int CostToRoot(Node n);
@@ -102,30 +102,41 @@ int Node::heuristic(Coordinate goal){
     int ny = this->coordinate.y;
     int h = 0;
 
+    int deltaX = abs(nx-gx);;
+    int deltaY = abs(ny-gy);
+
+
 
     if(gx == nx && gy == ny){
         return h;
     }
     if ((this->Dir == north || this->Dir == south) && gx != nx){
         h += 3;
-    } else if ((this->Dir == west || this->Dir == east) && gy != ny){
+    }
+    else if ((this->Dir == west || this->Dir == east) && gy != ny){
         h += 3;
     }
-    if (gy < ny && this->Dir != south){
+    if (gy > ny && this->Dir == south){
         h += 3;
     }
-    else if (gy > ny && this->Dir != north){
+    if (gy < ny && this->Dir == north){
         h+= 3;
     }
-    else if (gx > nx && this->Dir != east){
+    else if (gx < nx && this->Dir == east){
         h+= 3;
     }
-    else if (gx < nx && this->Dir != west){
+    else if (gx > nx && this->Dir == west){
         h += 3;
     }
 
-    h+= abs(nx-gx);
-    h+= abs(ny-gy);
+    h+= deltaX;
+    h+= deltaY;
+
+
+
+    argos::LOG << h;
+    argos::LOG << "\n";
+
 
     return h;
 }
@@ -136,7 +147,7 @@ bool Node::calculateNeighbour() {
     switch (this->Dir)
     {
         case north :
-            this->neighbours.push_back((*(new Node(*(new Coordinate(this->coordinate.x+1, this->coordinate.y)), north, this, 1))));
+            this->neighbours.push_back((*(new Node(*(new Coordinate(this->coordinate.x+1, this->coordinate.y)), north, this, 3))));
             this->neighbours.push_back((*(new Node(this->coordinate, south, this, 3))));
             this->neighbours.push_back((*(new Node(this->coordinate, east, this, 3))));
             this->neighbours.push_back((*(new Node(this->coordinate, west, this, 3))));
@@ -145,7 +156,7 @@ bool Node::calculateNeighbour() {
         case south :
 
             this->neighbours.push_back((*(new Node(this->coordinate, north, this, 3))));
-            this->neighbours.push_back((*(new Node(*(new Coordinate(this->coordinate.x, this->coordinate.y-1)), south, this, 1))));
+            this->neighbours.push_back((*(new Node(*(new Coordinate(this->coordinate.x, this->coordinate.y-1)), south, this, 3))));
             this->neighbours.push_back((*(new Node(this->coordinate, east, this, 3))));
             this->neighbours.push_back((*(new Node(this->coordinate, west, this, 3))));
             //this->neighbours.push_back(new Node(this->coordinate, south, this, 1));
@@ -155,7 +166,7 @@ bool Node::calculateNeighbour() {
 
             this->neighbours.push_back((*(new Node(this->coordinate, north, this, 3))));
             this->neighbours.push_back((*(new Node(this->coordinate, south, this, 3))));
-            this->neighbours.push_back((*(new Node(*(new Coordinate(this->coordinate.x+1, this->coordinate.y)), east, this, 1))));
+            this->neighbours.push_back((*(new Node(*(new Coordinate(this->coordinate.x+1, this->coordinate.y)), east, this, 3))));
             this->neighbours.push_back((*(new Node(this->coordinate, west, this, 3))));
             //this->neighbours.push_back(new Node(this->coordinate, east, this, 1));
 
@@ -165,36 +176,37 @@ bool Node::calculateNeighbour() {
             this->neighbours.push_back((*(new Node(this->coordinate, north, this, 3))));
             this->neighbours.push_back((*(new Node(this->coordinate, south, this, 3))));
             this->neighbours.push_back((*(new Node(this->coordinate, east, this, 3))));
-            this->neighbours.push_back((*(new Node(*(new Coordinate(this->coordinate.x, this->coordinate.y-1)), west, this, 1))));
+            this->neighbours.push_back((*(new Node(*(new Coordinate(this->coordinate.x, this->coordinate.y-1)), west, this, 3))));
             //this->neighbours.push_back(new Node(this->coordinate, west, this, 1));
 
             break;
         default:
-            argos::LOG << "Hello6 ";
             break;
     }
 
-    argos::LOG << "Hello6 ";
+
     return true;
 }
 
-Node Node::leastCost() {
+Node Node::leastCost(Node node) {
 
     Node lowestCost;
     bool flag = true;
 
-    if((*this).neighbours.empty()){
+    argos::LOG << node.neighbours.size();
+
+    if(node.neighbours.empty()){
         argos::LOG << "Leaf ";
 
         return (*this);
     }
     else{
         argos::LOG << "LeastCost else ";
-        for(Node n: (*this).neighbours){
+        for(Node n: node.neighbours){
             if(flag){
-                lowestCost = n.leastCost();
+                lowestCost = n.leastCost(n);
                 flag = false;
-            } else if(lowestCost.fScore < n.leastCost().fScore){
+            } else if(lowestCost.fScore < n.leastCost(n).fScore){
                 lowestCost = n;
             }
         }

@@ -31,17 +31,41 @@ aStar::aStar(){
 }
 
 Path aStar::pathFinder(Coordinate start, direction d, Coordinate goal) {
-    argos::LOG << "Hello1";
+
+
+    argos::LOG << "\n";
+    argos::LOG << start.x;
+    argos::LOG << "\n";
+    argos::LOG << start.y;
+    argos::LOG << "\n";
+
 
     Path pathList;
     Node startNode = (*new Node(start,d));
     current = startNode;
     int i = 0;
     do {
-        argos::LOG << "Hello2 ";
         //Find the leaf with the lowest cost
 
-        current = startNode.leastCost();
+        current = startNode.leastCost(startNode);
+
+        if (current.GetDir() == north){
+            argos::LOG << "\n  North ";
+
+        }
+        else if (current.GetDir() == south){
+            argos::LOG << "\n  South ";
+
+        }
+        else if (current.GetDir() == east){
+            argos::LOG << "\n  East ";
+
+        }
+        else if (current.GetDir() == west){
+            argos::LOG << "\n  West ";
+
+        }
+
 
         //Check if the node is goal node
 
@@ -50,19 +74,18 @@ Path aStar::pathFinder(Coordinate start, direction d, Coordinate goal) {
         }
         //Calculate neighbors of the node, should always be true, since current is always a leaf
         if (current.GetNeighbours().empty()){
-            argos::LOG << "Hello3 ";
             current.calculateNeighbour();
         }
-        argos::LOG << "Hello5 ";
 
         //Iterate through neighbors to find the best neighbor
+        argos::LOG << "\n  ---Neighbours size: ";
+
+        argos::LOG << current.neighbours.size();
+
         for(Node node: current.GetNeighbours()){
-            argos::LOG << "Hello7 ";
             //Set gScore
             node.SetgScore((*node.GetParent()).GetgScore() + node.GetParentWeight());
             //Set fScore
-            argos::LOG << "Hello8 ";
-
             node.SetfScore(node.GetgScore() + node.heuristic(goal));
         }
         //Reset flag
