@@ -35,6 +35,7 @@ void Warehouse::Tick()
     om.Tick();
     rm.Tick();
     pm.Tick();
+    //std::cout << "Warehouse: " << net.GetMsg() << std::endl;
 };
 
 void Warehouse::SetupWarehouse(std::map<int, Basicbot*> botControllers)

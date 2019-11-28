@@ -15,6 +15,9 @@ private:
 	static const int msgArraySize = 80;
 	int sockfd; //socket file descriptor 
 
+	char currentDataString[msgArraySize];
+	int nextDataStringCharIndex;
+
 	std::queue<Message> ReceivedQueue;
 	std::queue<Message> OutgoingQueue;
 
@@ -31,7 +34,11 @@ public:
 	void Tick();
 };
 
-Networking::Networking(){};
+Networking::Networking()
+{
+	nextDataStringCharIndex = 0;
+}
+
 Networking::~Networking(){}
 
 void Networking::Connect()
@@ -97,7 +104,7 @@ char* Networking::GetMsg()
 void Networking::Tick()
 {
 	//std::cout << "3 Socket id: " << sockfd << std::endl;
-	std::cout << "Networking tick" << std::endl;
+	//std::cout << "Networking tick" << std::endl;
 	//SendMsg();
 	ReceiveMsg();
 }
@@ -164,37 +171,61 @@ void Networking::ReceiveMsg()
 	fd_set readset;
 	FD_ZERO(&readset);
 	FD_SET(sockfd, &readset);
+
+	// Set up maximum allowed hang time for looking for response.
 	struct timeval tv;
 	tv.tv_sec = 0;
 	tv.tv_usec = 1;
 
 	int selectAnswer = select(sockfd +1, &readset, NULL, NULL, &tv);
-	std::cout << "Select answer: " << selectAnswer << std::endl;
 
-	if(selectAnswer == -1)
+	if(selectAnswer == -1) //ERROR
 	{
-		std::cout << "Select failed!!" << std::endl;
-		return;
+		std::cout << "Select failed!! Something is wrong with the network/socket connection." << std::endl;
 	}
-	else if(selectAnswer)
+	else if(selectAnswer) //DATA AVAILABLE
 	{
-		std::cout << "Select says that data is available" << std::endl;
-	}
-	else
-	{
-		std::cout << "Select waited all allowed time, and did not receive anything" << std::endl;
-		return;
-	}
+		msghdr *msg;
+		char buffer[msgArraySize];
+		//Null all chars in buffer
+		for(int i = 0; i < sizeof(buffer); i++)
+			buffer[i] = '\0';
+		//std::cout << "Before recv" << std::endl;
+		int sizeOfMsg = recv(sockfd, buffer, sizeof(buffer), 0);
+		//std::cout << "AFter recv" << std::endl;
+		//std::cout << "Size: " << sizeOfMsg << " Received msg: " << buffer << std::endl;
 		
-	msghdr *msg;
-	char buffer[msgArraySize];
-	std::cout << "Before recv" << std::endl;
-	int sizeOfMsg = recv(sockfd, buffer, sizeof(buffer), 0);
-	std::cout << "AFter recv" << std::endl;
-	std::cout << "Size: " << sizeOfMsg << " Received msg: " << buffer << std::endl;
-	Message receivedMsg = Message(buffer, msgArraySize);
-	//TODO THE RECEIVED MSG MIGHT CONTAIN MORE THAN ONE MSG!!
-	ReceivedQueue.push(receivedMsg);
+		for(int i = 0; i < sizeof(buffer); i++)
+		{
+			char currentChar = buffer[i];
+			//std::cout << "For loop. Current char: " << currentChar << " Value: " << int(currentChar) << std::endl;
+
+			if(int(currentChar) == 0) //TODO add: '\n' ??
+			{
+				//std::cout << "Current char is 0" << std::endl;
+				//Is currentDataString not empty?
+				if(nextDataStringCharIndex != 0) 
+				{
+					Message receivedMsg = Message(currentDataString, nextDataStringCharIndex);
+					ReceivedQueue.push(receivedMsg);
+					//std::cout << "Saved msg: " << currentDataString << std::endl;
+					nextDataStringCharIndex = 0;
+					strcpy(currentDataString, ""); //TODO Does this empty char[]?
+				}
+			}
+			else
+			{
+				currentDataString[nextDataStringCharIndex++] = currentChar;
+				//std::cout << "Current data string: " << currentDataString << std::endl;
+			}
+
+			//std::cout << "Char: " << " " << buffer[i] << " " << int(buffer[i]) << std::endl;
+		}
+	}
+	else //TIMEOUT
+	{
+		return;
+	}
 }
 
 #endif

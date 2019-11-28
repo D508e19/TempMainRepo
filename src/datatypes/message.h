@@ -19,7 +19,7 @@ public:
 Message::Message(char* _text, int _length)
 {
     //char temp[_length];
-    strcpy(text, _text);
+    strncpy(text, _text, _length); //TODO strcpy or strncpy
 }
 
 char* Message::GetTextCharArray()
