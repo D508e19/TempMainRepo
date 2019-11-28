@@ -10,7 +10,7 @@
 
 #include <src/qrcodes/QRCode.h>
 
-#include "src/datatypes/ds_instruction.h"
+#include "src/datatypes/instruction.h"
 #include "src/datatypes/direction"
 #include "src/datatypes/Coordinate.h"
 
