@@ -26,6 +26,8 @@ public:
 
    virtual void PreStep();
 
+   virtual void Destroy();
+
 private:
    /* A map for all controllers. */
    std::map<int, Basicbot*> botControllers;

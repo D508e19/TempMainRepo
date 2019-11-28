@@ -21,8 +21,8 @@ Pathfinder::~Pathfinder(){}
 
 Path Pathfinder::GetStupidPath(Coordinate start, Coordinate end)
 {
-    std::cout << "From: " << start.x << ", " << start.y << std::endl;
-    std::cout << "Want to go to: " << end.x << ", " << end.y << std::endl;
+    //std::cout << "From: " << start.x << ", " << start.y << std::endl;
+    //std::cout << "Want to go to: " << end.x << ", " << end.y << std::endl;
    
     Path newPath;
 

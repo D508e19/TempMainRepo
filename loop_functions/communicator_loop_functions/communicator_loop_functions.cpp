@@ -59,4 +59,10 @@ void CommunicatorLoopFunctions::CollectBotControllers(){
    }
 }
 
+
+void CommunicatorLoopFunctions::Destroy()
+{
+   wh.CollectData();
+}
+
 REGISTER_LOOP_FUNCTIONS(CommunicatorLoopFunctions, "communicator_loop_functions");

@@ -20,7 +20,18 @@ Basicbot::Basicbot() :
 
    m_turningSpeed(5.49778714378213f),
    m_ticksToTurn(20),
-   m_ticksToMoveOneCell(20)
+   m_ticksToMoveOneCell(20),
+
+   ticksIdle(0),
+   ticksMoveforward(0),
+   ticksTurnleft(0),
+   ticksTurnright(0),
+   ticksTurn180(0),
+   ticksPickuppod(0), 
+   ticksPutdownpod(0),
+   ticksIgnore(0),
+   ticksWait(0)
+
    {}
 
 
@@ -72,7 +83,7 @@ void Basicbot::ControlStep()
    switch (currentInstruction)
    {
       case idle:
-
+         ticksIdle++;
          break;
       case moveforward:
          MoveForward();
@@ -109,12 +120,13 @@ void Basicbot::MoveForward()
    if (counter > 0)
    {
       m_pcWheels->SetLinearVelocity(10.0f, 10.0f);
+      ticksMoveforward++;
       counter--;
    }
    else
    {
       ReadCellQR();
-      argos::LOG << "Arrived at: " << lastReadCellQR.x << " , " << lastReadCellQR.y << std::endl;
+      //argos::LOG << "Arrived at: " << lastReadCellQR.x << " , " << lastReadCellQR.y << std::endl;
       ResetBot();
    }
 }
@@ -128,6 +140,7 @@ void Basicbot::TurnRight()
    if (counter > 0)
    {
       m_pcWheels->SetLinearVelocity(m_turningSpeed, -m_turningSpeed);
+      ticksTurnright++;
       counter--;
    }
    else
@@ -149,6 +162,7 @@ void Basicbot::TurnLeft()
    if (counter > 0)
    {
       m_pcWheels->SetLinearVelocity(-m_turningSpeed, m_turningSpeed);
+      ticksTurnleft++;
       counter--;
    }
    else
@@ -170,6 +184,7 @@ void Basicbot::Turn180()
    if (counter > 0)
    {
       m_pcWheels->SetLinearVelocity(m_turningSpeed, -m_turningSpeed);
+      ticksTurn180++;
       counter--;
    }
    else
@@ -191,6 +206,7 @@ void Basicbot::PickUpPod()
    
    if (counter > 0)
    {
+      ticksPickuppod++;
       counter--;
    }
    else
@@ -208,6 +224,7 @@ void Basicbot::PutDownPod()
    
    if (counter > 0)
    {
+      ticksPutdownpod++;
       counter--;
    }
    else
@@ -215,7 +232,6 @@ void Basicbot::PutDownPod()
       ResetBot();
    }
 }
-
 
 void Basicbot::Wait()
 {
@@ -226,6 +242,7 @@ void Basicbot::Wait()
    
    if (counter > 0)
    {
+      ticksWait++;
       counter--;
    }
    else

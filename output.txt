@@ -1,0 +1,50 @@
+Bot: 0 - Ticks idle: 3
+Bot: 0 - Ticks moveforward: 3180
+Bot: 0 - Ticks turnleft: 700
+Bot: 0 - Ticks turnright: 720
+Bot: 0 - Ticks turn180: 240
+Bot: 0 - Ticks pickuppod: 0
+Bot: 0 - Ticks putdownpod: 0
+Bot: 0 - Ticks ignore: 0
+Bot: 0 - Ticks wait: 0
+
+Bot: 1 - Ticks idle: 2
+Bot: 1 - Ticks moveforward: 3160
+Bot: 1 - Ticks turnleft: 700
+Bot: 1 - Ticks turnright: 585
+Bot: 1 - Ticks turn180: 400
+Bot: 1 - Ticks pickuppod: 0
+Bot: 1 - Ticks putdownpod: 0
+Bot: 1 - Ticks ignore: 0
+Bot: 1 - Ticks wait: 0
+
+Bot: 2 - Ticks idle: 2
+Bot: 2 - Ticks moveforward: 3218
+Bot: 2 - Ticks turnleft: 600
+Bot: 2 - Ticks turnright: 560
+Bot: 2 - Ticks turn180: 480
+Bot: 2 - Ticks pickuppod: 0
+Bot: 2 - Ticks putdownpod: 0
+Bot: 2 - Ticks ignore: 0
+Bot: 2 - Ticks wait: 0
+
+Bot: 3 - Ticks idle: 2
+Bot: 3 - Ticks moveforward: 3120
+Bot: 3 - Ticks turnleft: 560
+Bot: 3 - Ticks turnright: 840
+Bot: 3 - Ticks turn180: 320
+Bot: 3 - Ticks pickuppod: 0
+Bot: 3 - Ticks putdownpod: 0
+Bot: 3 - Ticks ignore: 0
+Bot: 3 - Ticks wait: 0
+
+Bot: 4 - Ticks idle: 0
+Bot: 4 - Ticks moveforward: 3133
+Bot: 4 - Ticks turnleft: 600
+Bot: 4 - Ticks turnright: 560
+Bot: 4 - Ticks turn180: 560
+Bot: 4 - Ticks pickuppod: 0
+Bot: 4 - Ticks putdownpod: 0
+Bot: 4 - Ticks ignore: 0
+Bot: 4 - Ticks wait: 0
+

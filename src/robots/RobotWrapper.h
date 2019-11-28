@@ -43,28 +43,26 @@ RobotWrapper::RobotWrapper(Basicbot *bot):m_bot(bot)
     lastFacing = m_bot->facing;
     lastCoordinate = m_bot->lastReadCellQR;
 
+    /* TODO: Delete
     for (int i = 0; i < 5; i++)
     {
         TranslatePathToInstructions(pf.GetStupidPath(lastCoordinate, Coordinate(rand()%5,rand()%5)));
-    }
-    
-};
+    }*/
+}
 
 void RobotWrapper::Tick()
 {
     if (m_bot->currentInstruction == idle)
-    { 
-        /*
+    {    
         if(instructionQueue.empty())
         {
-            argos::LOG << "InstructionQueue empty. Generate new random path." << std::endl;
+            //argos::LOG << "InstructionQueue empty. Generate new random path." << std::endl;
             // Add random path
             // TODO: Delete 
             TranslatePathToInstructions(pf.GetStupidPath(lastCoordinate, Coordinate(rand()%5,rand()%5)));
-        }*/
+        }
         SendNextInstruction();
     }
-    
 }
 
 void RobotWrapper::TranslatePathToInstructions(Path p)
@@ -121,7 +119,7 @@ void RobotWrapper::TranslatePathToInstructions(Path p)
         else{
             diff = abs(lastCoordinate.y - p.waypoints.front().y);
         }
-        argos::LOG << "moving: "<< diff << std::endl;
+        //argos::LOG << "moving: "<< diff << std::endl;
         AddInstructionToQueue(moveforward, diff);
        
         lastCoordinate = p.waypoints.front();

@@ -29,11 +29,11 @@ void Path::AddWayPoint(Coordinate newCord, Coordinate lastCoord)
 
     if(xLast == newCord.x && yLast == newCord.y)
         {
-            std::cout << "dublicate waypoint. " << newCord.x << " " << newCord.y << " .Ignored" << std::endl;
+            //std::cout << "dublicate waypoint. " << newCord.x << " " << newCord.y << " .Ignored" << std::endl;
             return;
         }
 
-    std::cout << "Adding waypoint:" << newCord.x << " " << newCord.y << std::endl;
+    //std::cout << "Adding waypoint:" << newCord.x << " " << newCord.y << std::endl;
     waypoints.push(newCord);   
 }
 

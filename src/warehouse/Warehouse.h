@@ -6,6 +6,7 @@ class Warehouse;
 #include "src/orders/OrderManager.h"
 #include "src/pods/PodManager.h"
 #include "src/robots/RobotManager.h"
+#include "src/data/DataCollector.h"
 
 class Warehouse
 {
@@ -13,6 +14,9 @@ private:
     OrderManager om;
     PodManager pm;
     RobotManager rm;
+    DataCollector dc;
+
+    std::map<int, Basicbot*> bots;
 
     bool distributed = false;
 
@@ -22,6 +26,8 @@ public:
 
     void SetupWarehouse(std::map<int, Basicbot*> botControllers);
     void Tick();    
+
+    void CollectData();
 };
 
 Warehouse::Warehouse(){};
@@ -36,13 +42,17 @@ void Warehouse::Tick()
 
 void Warehouse::SetupWarehouse(std::map<int, Basicbot*> botControllers)
 {
+    bots = botControllers;
     srand (time(NULL));	// seed for rng
     // andet setup ?
     om.SetupOrderManager(this); 
     pm.SetupPodManager(this, 100);
     rm.SetupRobotManager(this, botControllers);
+}
 
-
+void Warehouse::CollectData()
+{
+    dc.CollectData(bots);
 }
 
 

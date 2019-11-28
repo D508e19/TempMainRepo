@@ -74,6 +74,18 @@ public:
 
    void LogReadablePosition();
    void ReadCellQR();
+
+   // for data collection
+   int ticksIdle = 0;
+   int ticksMoveforward = 0;
+   int ticksTurnleft = 0; 
+   int ticksTurnright = 0;
+   int ticksTurn180 = 0;
+   int ticksPickuppod = 0; 
+   int ticksPutdownpod = 0;
+   int ticksIgnore = 0;
+   int ticksWait = 0;
+
 private:
 
    /* Pointer to the differential steering actuator */

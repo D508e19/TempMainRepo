@@ -32,7 +32,7 @@ OrderManager::~OrderManager(){}
 
 void OrderManager::Tick()
 {
-	
+
 };
 
 void OrderManager::SetupOrderManager(Warehouse* _wh)
