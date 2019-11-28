@@ -59,18 +59,18 @@ void Networking::Connect()
 	serv_addr.sin_family = AF_INET;
 	bcopy((char *)server->h_addr, (char *)&serv_addr.sin_addr.s_addr, server->h_length);
 	serv_addr.sin_port = htons(portNumber);
-	
+
 	if (connect(sockfd,(struct sockaddr *)&serv_addr,sizeof(serv_addr)) < 0)
 	{
 		std::cout << "ERROR connecting" << std::endl;
 	}
 
-	std::cout << "1 Socket id: " << sockfd << std::endl;
+	//std::cout << "1 Socket id: " << sockfd << std::endl;
 
 	char testMsg[] = "C++ msg\n";
 	//wbuff = (char *)msg.c_str(); // convert from string to c string, has to have \0 terminal 
 
-	std::cout << "2 Socket id: " << sockfd << std::endl;
+	//std::cout << "2 Socket id: " << sockfd << std::endl;
 }
 
 void Networking::QueueMsg(char msg[], int sizeOfArray)
@@ -96,10 +96,10 @@ char* Networking::GetMsg()
 
 void Networking::Tick()
 {
-	std::cout << "3 Socket id: " << sockfd << std::endl;
-	//std::cout << "Networking tick" << std::endl;
-	SendMsg();
-	//ReceiveMsg();
+	//std::cout << "3 Socket id: " << sockfd << std::endl;
+	std::cout << "Networking tick" << std::endl;
+	//SendMsg();
+	ReceiveMsg();
 }
 
 void Networking::SendMsg()
@@ -161,11 +161,39 @@ void Networking::SendMsg()
 
 void Networking::ReceiveMsg()
 {
+	fd_set readset;
+	FD_ZERO(&readset);
+	FD_SET(sockfd, &readset);
+	struct timeval tv;
+	tv.tv_sec = 0;
+	tv.tv_usec = 1;
+
+	int selectAnswer = select(sockfd +1, &readset, NULL, NULL, &tv);
+	std::cout << "Select answer: " << selectAnswer << std::endl;
+
+	if(selectAnswer == -1)
+	{
+		std::cout << "Select failed!!" << std::endl;
+		return;
+	}
+	else if(selectAnswer)
+	{
+		std::cout << "Select says that data is available" << std::endl;
+	}
+	else
+	{
+		std::cout << "Select waited all allowed time, and did not receive anything" << std::endl;
+		return;
+	}
+		
 	msghdr *msg;
 	char buffer[msgArraySize];
+	std::cout << "Before recv" << std::endl;
 	int sizeOfMsg = recv(sockfd, buffer, sizeof(buffer), 0);
+	std::cout << "AFter recv" << std::endl;
 	std::cout << "Size: " << sizeOfMsg << " Received msg: " << buffer << std::endl;
 	Message receivedMsg = Message(buffer, msgArraySize);
+	//TODO THE RECEIVED MSG MIGHT CONTAIN MORE THAN ONE MSG!!
 	ReceivedQueue.push(receivedMsg);
 }
 
