@@ -5,19 +5,28 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netdb.h>
+#include <queue>
 
 class Networking
 {
 private:
+	static const int msgArraySize = 80;
 	int sockfd; //socket file descriptor 
+
+	std::queue<char[msgArraySize]> ReceivedQueue;
+	std::queue<char[msgArraySize]> OutgoingQueue;
+
+	void SendMsg();
+	void ReceiveMsg();
 
 public:
 	Networking();
 	~Networking();
 
 	void Connect();
-	void WriteMsg(std::string msg);
-	void ReceiveMsg();
+	void QueueMsg(char msg[], int sizeOfArray);
+	char* GetMsg();
+	void Tick();
 };
 
 Networking::Networking(){};
@@ -55,19 +64,55 @@ void Networking::Connect()
 	}
 }
 
-void Networking::WriteMsg(std::string msg)
+void Networking::QueueMsg(char msg[], int sizeOfArray)
 {
-	int wbytes;
-	char * wbuff; 
-	char testMsg[] = "C++ msg\n";
-	wbuff = (char *)msg.c_str(); // convert from string to c string, has to have \0 terminal 
+	char msgConverted[msgArraySize];
+	for(int i = 0; i < sizeOfArray; i++)
+	{
+		msgConverted[i] = msg[i];
+	}
 
-	send(sockfd, testMsg , strlen(testMsg) , 0 );
+	OutgoingQueue.push(msgConverted);
+}
+
+char* Networking::GetMsg()
+{
+	char* receivedMsg = ReceivedQueue.front();
+	ReceivedQueue.pop();
+	return receivedMsg;
+}
+
+void Networking::Tick()
+{
+	SendMsg();
+	ReceiveMsg();
+}
+
+void Networking::SendMsg()
+{
+	if(OutgoingQueue.size() == 0)
+	{
+		return;
+	}
+
+	int wbytes;
+	char * wbuff;
+
+	std::string msgToSendString = OutgoingQueue.front(); //Get msg to send
+	OutgoingQueue.pop();
+	msgToSendString = msgToSendString + "\n"; //append newline
+
+	char cstr[msgToSendString.size() + 1];
+	strcpy(cstr, msgToSendString.c_str());
+	
+	//wbuff = (char *)msg.c_str(); // convert from string to c string, has to have \n terminal 
+
+	send(sockfd, cstr , strlen(cstr) , 0 );
 
 	if(wbytes < 0)
 	{
 		std::cout << "Cannot write to socket" << std::endl;
-	} 
+	}
 
 	std::cout << "msg send" << std::endl;
 }
@@ -75,9 +120,10 @@ void Networking::WriteMsg(std::string msg)
 void Networking::ReceiveMsg()
 {
 	msghdr *msg;
-	char buffer[80];
+	char buffer[msgArraySize];
 	recv(sockfd, buffer, sizeof(buffer), 0);
 	std::cout << "Received msg: " << buffer << std::endl;
+	ReceivedQueue.push(buffer);
 }
 
 #endif

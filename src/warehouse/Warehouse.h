@@ -31,8 +31,7 @@ Warehouse::~Warehouse(){};
 
 void Warehouse::Tick()
 {
-    net.WriteMsg("Tick!");
-    net.ReceiveMsg();
+    net.Tick();
     om.Tick();
     rm.Tick();
     pm.Tick();  
