@@ -18,6 +18,8 @@ private:
 
     std::map<int, Basicbot*> bots;
 
+    std::queue<Order*> orderQueue;
+
     bool distributed = false;
 
 public:
@@ -27,7 +29,9 @@ public:
     void SetupWarehouse(std::map<int, Basicbot*> botControllers);
     void Tick();    
 
-    void CollectData();
+    void AddOrderToProcessQueue(Order* order);
+
+    void CollectData(); 
 };
 
 Warehouse::Warehouse(){};
@@ -54,6 +58,13 @@ void Warehouse::CollectData()
 {
     dc.CollectData(bots);
 }
+
+void Warehouse::AddOrderToProcessQueue(Order* order)
+{
+    argos::LOG << order->getOrderID() << std::endl;
+    orderQueue.push(order);
+};
+
 
 
 #endif

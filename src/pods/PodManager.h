@@ -5,7 +5,6 @@
 
 #include "Pod.h"
 
-class Warehouse;
 
 class PodManager
 {

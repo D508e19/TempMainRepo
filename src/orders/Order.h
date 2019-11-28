@@ -4,24 +4,27 @@
 class Order
 {
 private:
-	const int m_orderID;
-	const int m_PodID;
-	const int m_timestamp_born;
-	int m_timestamp_completed;
+	int orderID;
+	int podID;
+	int timestamp_born;
+	int timestamp_assigned;
+	int timestamp_completed;
 	bool underWay;
 	
 public:
-	Order(int orderID, int timestampBorn, int PodID);
+	Order();
+	Order(int orderID, int timestampBorn);
 	~Order();
 
-    int getPodID(){ return Order::m_PodID; }
-    int getOrderID(){ return Order::m_orderID; }
+    int getPodID(){ return Order::podID; }
+    int getOrderID(){ return Order::orderID; }
 };
 
-Order::Order(int orderID, int timestampBorn, int PodID):
-	m_orderID(orderID), 
-    m_timestamp_born(timestampBorn), 
-    m_PodID(PodID),
+Order::Order(){};
+
+Order::Order(int orderID, int timestampBorn):
+	orderID(orderID), 
+    timestamp_born(timestampBorn), 
 	underWay(false)
     {};
 
