@@ -1,5 +1,7 @@
-#ifndef COORDINATE_CPP
-#define COORDINATE_CPP
+
+#include <stdlib.h>
+
+#include "Coordinate.h"
 
 Coordinate::Coordinate() {}
 Coordinate::Coordinate(int px, int py) : x(px), y(py) {}
@@ -9,5 +11,3 @@ void Coordinate::PrintCoordinate()
 {
     std::cout << "(" << x << ", " << y << ")" << std::endl;
 }
-
-#endif

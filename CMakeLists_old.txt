@@ -1,8 +1,5 @@
-cmake_minimum_required(VERSION 3.10.2)
-
-set(Project Dat5RobotWareHouse)
-
-project(${Project} C CXX)
+cmake_minimum_required(VERSION 2.8.12)
+project(Dat5RobotWareHouse)
 
 if(APPLE)
   option(ASAN "Use Clang Address Sanitizer in Debug builds")
@@ -15,8 +12,6 @@ if(APPLE)
     set(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_MODULE_LINKER_FLAGS_DEBUG} -fsanitize=address")
   endif(ASAN)
 endif(APPLE)
-
-
 
 # Deactivate RPATH for MacOSX
 set(CMAKE_MACOSX_RPATH 0)
@@ -43,22 +38,5 @@ include_directories(${CMAKE_SOURCE_DIR} ${ARGOS_INCLUDE_DIRS} ${LUA_INCLUDE_DIR}
 # Set ARGoS link dir
 link_directories(${ARGOS_LIBRARY_DIRS})
 
-file (GLOB CPP_FILES src/*.cpp src/*.cc)
-file(GLOB H_FILES src/*.h)
-set(SOURCE_FILES ${CPP_FILES} ${H_FILES})
 
-
-#main program
 add_subdirectory(src)
-
-<<<<<<< HEAD
-=======
-#Test
-enable_testing()
-add_subdirectory(lib/googletest)
-add_subdirectory(tests)
->>>>>>> 8084382536ee297a9e4bfa90ab52414ba68667c4
-
-
-
-
