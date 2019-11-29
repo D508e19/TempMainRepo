@@ -43,13 +43,13 @@ include_directories(${CMAKE_SOURCE_DIR} ${ARGOS_INCLUDE_DIRS} ${LUA_INCLUDE_DIR}
 # Set ARGoS link dir
 link_directories(${ARGOS_LIBRARY_DIRS})
 
-file (GLOB CPP_FILES src/*.cpp src/*.cc)
-file(GLOB H_FILES src/*.h)
-set(SOURCE_FILES ${CPP_FILES} ${H_FILES})
+#file (GLOB CPP_FILES src/*.cpp src/*.cc)
+#file(GLOB H_FILES src/*.h)
+#set(SOURCE_FILES ${CPP_FILES} ${H_FILES})
 
 
 #main program
-add_subdirectory(src)
+add_subdirectory(src/argos)
 
 #Test
 enable_testing()
