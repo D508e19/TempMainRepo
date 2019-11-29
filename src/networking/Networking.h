@@ -30,7 +30,9 @@ public:
 
 	void Connect();
 	void QueueMsg(char msg[], int sizeOfArray);
+	bool IsMsgAvailable();
 	char* GetMsg();
+	Message GetMsgClass();
 	void Tick();
 };
 
@@ -94,11 +96,35 @@ void Networking::QueueMsg(char msg[], int sizeOfArray)
 	OutgoingQueue.push(message);
 }
 
+bool Networking::IsMsgAvailable()
+{
+	return ReceivedQueue.size() != 0;
+}
+
+/* Don't call this if there is no msg in queue!!! */
 char* Networking::GetMsg()
 {
+	/*
+	if(ReceivedQueue.size() == 0)
+	{
+		char temp[0];
+		return "";
+	}*/
+
+	std::cout << "Get msg called!" << " msg count: " << ReceivedQueue.size() << std::endl;
 	Message receivedMsg = ReceivedQueue.front();
 	ReceivedQueue.pop();
+	std::cout << "Networking: msg: " << receivedMsg.GetTextCharArray() << std::endl;
 	return receivedMsg.GetTextCharArray();
+}
+
+Message Networking::GetMsgClass()
+{
+	std::cout << "Get msg called!" << " msg count: " << ReceivedQueue.size() << std::endl;
+	Message receivedMsg = ReceivedQueue.front();
+	ReceivedQueue.pop();
+	std::cout << "Networking: msg: " << receivedMsg.GetTextCharArray() << std::endl;
+	return receivedMsg;
 }
 
 void Networking::Tick()

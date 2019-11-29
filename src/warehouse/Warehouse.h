@@ -35,7 +35,19 @@ void Warehouse::Tick()
     om.Tick();
     rm.Tick();
     pm.Tick();
-    //std::cout << "Warehouse: " << net.GetMsg() << std::endl;
+
+    if(net.IsMsgAvailable())
+    {
+        Message msg = net.GetMsgClass();
+        std::cout << "Warehouse: " << msg.GetTextCharArray() << " Length: " << msg.GetLength() << std::endl;
+    }
+
+    /*
+    if(net.IsMsgAvailable())
+    {
+        char* temp = net.GetMsg();
+        std::cout << "Warehouse: " << temp << std::endl;
+    }*/
 };
 
 void Warehouse::SetupWarehouse(std::map<int, Basicbot*> botControllers)
