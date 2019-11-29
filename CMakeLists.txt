@@ -51,13 +51,10 @@ set(SOURCE_FILES ${CPP_FILES} ${H_FILES})
 #main program
 add_subdirectory(src)
 
-<<<<<<< HEAD
-=======
 #Test
 enable_testing()
 add_subdirectory(lib/googletest)
 add_subdirectory(tests)
->>>>>>> 8084382536ee297a9e4bfa90ab52414ba68667c4
 
 
 
