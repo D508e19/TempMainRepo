@@ -2,4 +2,4 @@ cd build
 sudo cmake ..
 sudo make
 cd ..
-argos3 -c experiments/firstConf.argos
+argos3 -c experiments/1.argos
