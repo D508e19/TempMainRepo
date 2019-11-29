@@ -1,30 +1,6 @@
-#ifndef ROBOTMANAGER_H
-#define ROBOTMANAGER_H
+#ifndef ROBOTMANAGER_CPP
+#define ROBOTMANAGER_CPP
 
-#include <list>
-#include <map>
-
-#include "RobotWrapper.h"
-#include "src/robots/RobotWrapper.h"
-#include "controllers/basicbot/basicbot.h"
-
-class RobotManager
-{
-private:
-    std::map<int, RobotWrapper> Wrappers;
-    int robotCount = 0;
-
-    Warehouse* wh;
-
-public:
-    RobotManager();
-    ~RobotManager();
-
-    RobotWrapper CreateRobotWrapper(Basicbot*);
-
-    void SetupRobotManager(Warehouse* _wh, std::map<int, Basicbot*> botControllers);
-    void Tick();
-};
 RobotManager::RobotManager(){};
 RobotManager::~RobotManager(){};
 

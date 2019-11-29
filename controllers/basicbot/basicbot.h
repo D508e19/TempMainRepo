@@ -1,6 +1,8 @@
 #ifndef BASICBOT_H
 #define BASICBOT_H
 
+#include <queue>
+
 #include <argos3/core/control_interface/ci_controller.h>
 #include <argos3/plugins/robots/generic/control_interface/ci_differential_steering_actuator.h>
 #include <argos3/plugins/robots/foot-bot/control_interface/ci_footbot_proximity_sensor.h>
@@ -8,11 +10,9 @@
 #include <argos3/core/utility/math/vector2.h>
 #include <argos3/plugins/robots/foot-bot/control_interface/ci_footbot_motor_ground_sensor.h>
 
-#include <src/qrcodes/QRCode.h>
-
+#include "src/datatypes/direction.h"
 #include "src/datatypes/instruction.h"
-#include "src/datatypes/direction"
-#include "src/datatypes/Coordinate.h"
+#include "src/headers/Coordinate.h"
 
 using namespace argos;
 

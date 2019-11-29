@@ -8,9 +8,7 @@
 
 #include <list>
 
-#include <controllers/basicbot/basicbot.h>
-#include "src/warehouse/Warehouse.h"
-
+#include "src/includefile.h"
 
 using namespace argos;
 

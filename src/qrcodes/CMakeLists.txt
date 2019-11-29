@@ -1,5 +1,0 @@
-set(QRCODES_SOURCES
-  QRCode.h)
-
-add_library(QRCODES SHARED
-  ${QRCODES_SOURCES})
