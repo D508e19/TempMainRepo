@@ -1,6 +1,7 @@
 #ifndef includefile
 #define includefile
 
+// forward declarations
 class Pod;
 class Coordinate;
 class Order;
@@ -13,9 +14,11 @@ class PodManager;
 class RobotManager;
 class Warehouse;
 
+// datatypes
 #include "datatypes/instruction.h"
 #include "datatypes/direction.h"
 
+// headers
 #include "headers/Pod.h"
 #include "headers/Coordinate.h"
 #include "headers/Order.h"
@@ -28,6 +31,7 @@ class Warehouse;
 #include "headers/RobotManager.h"
 #include "headers/Warehouse.h"
 
+// implementation
 #include "imp/Pod.cpp"
 #include "imp/Coordinate.cpp"
 #include "imp/Order.cpp"

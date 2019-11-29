@@ -10,11 +10,9 @@
 #include <argos3/core/utility/math/vector2.h>
 #include <argos3/plugins/robots/foot-bot/control_interface/ci_footbot_motor_ground_sensor.h>
 
-
 #include "src/datatypes/direction.h"
 #include "src/datatypes/instruction.h"
 #include "src/headers/Coordinate.h"
-
 
 using namespace argos;
 

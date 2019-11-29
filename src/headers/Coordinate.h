@@ -4,6 +4,7 @@
 class Coordinate
 {
 private:
+  
 
 public:
     Coordinate();

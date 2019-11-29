@@ -8,8 +8,6 @@
 
 #include <list>
 
-//#include <controllers/basicbot/basicbot.h>
-
 #include "src/includefile.h"
 
 using namespace argos;

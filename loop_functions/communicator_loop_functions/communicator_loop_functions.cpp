@@ -8,7 +8,6 @@
 #include <list>
 #include <iterator>
 
-
 CommunicatorLoopFunctions::CommunicatorLoopFunctions(){}
 CommunicatorLoopFunctions::~CommunicatorLoopFunctions(){}
 
