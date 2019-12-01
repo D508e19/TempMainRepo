@@ -4,13 +4,9 @@
 PodManager::PodManager(){}
 PodManager::~PodManager(){}
 
-void PodManager::Tick(){};
-
 void PodManager::SetupPodManager(Warehouse* _wh, int numOfPods)
 {
     wh = _wh;
-    
-
     m_podCount = 0;
 
     for (int i=0; i<numOfPods; i++)
@@ -22,21 +18,35 @@ void PodManager::SetupPodManager(Warehouse* _wh, int numOfPods)
     };
 }
 
+void PodManager::Tick()
+{  
+    while (!ordersToBeProcessed.empty())
+	{
+		Order* nextOrder = ordersToBeProcessed.front();
+        argos::LOG << "pm. read order id: " << ordersToBeProcessed.front()->orderID << std::endl;
+        // add pod id
+		wh->rm.ordersToBeProcessed.push(nextOrder);
+		ordersToBeProcessed.pop();
+	}
+};
+
+
+
 Pod PodManager::CreatePod(int nextIndex)
 {
     Pod newPod = Pod(nextIndex);
     return newPod;
-};
+}
 
 Pod PodManager::GetPod(int podId)
 {
     return m_Pods[podId];
-};
+}
 
 int PodManager::GetPodCount()
 {
     return m_podCount;
-};
+}
 
 
 #endif

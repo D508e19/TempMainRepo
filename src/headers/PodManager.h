@@ -20,6 +20,8 @@ public:
     void SetupPodManager(Warehouse * _wh, int numOfPods);
     void Tick();
 
+    std::queue<Order*> ordersToBeProcessed;
+
     Pod GetPod(int podId);
     int GetPodCount();
 };
