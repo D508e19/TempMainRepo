@@ -18,9 +18,10 @@ class aStar {
 public:
     aStar();
     Path pathFinder(Coordinate, direction, Coordinate);
-private:
 
-    Node current;
+    Node* current;
+    Path pathList;
+private:
 
     Path pathConstructer(Node node, Path path);
     std::list<std::pair<Coordinate, Coordinate>> constructPath(Node, std::list<std::pair<Coordinate, Coordinate>>);
@@ -32,65 +33,48 @@ aStar::aStar(){
 
 Path aStar::pathFinder(Coordinate start, direction d, Coordinate goal) {
 
-
-    argos::LOG << "\n";
-    argos::LOG << start.x;
-    argos::LOG << "\n";
-    argos::LOG << start.y;
-    argos::LOG << "\n";
-
-
-    Path pathList;
-    Node startNode = (*new Node(start,d));
+    Node* startNode = new Node(start,d);
     current = startNode;
     int i = 0;
+
     do {
         //Find the leaf with the lowest cost
+        current = (*startNode).leastCost();
+        bool flag = true;
 
-        current = startNode.leastCost(startNode);
-
-        if (current.GetDir() == north){
-            argos::LOG << "\n  North ";
-
-        }
-        else if (current.GetDir() == south){
-            argos::LOG << "\n  South ";
-
-        }
-        else if (current.GetDir() == east){
-            argos::LOG << "\n  East ";
-
-        }
-        else if (current.GetDir() == west){
-            argos::LOG << "\n  West ";
-
-        }
-
+        argos::LOG << "Children after: " <<(*current).children.size() << std::endl;
 
         //Check if the node is goal node
 
-        if ((current.GetCoordinate().x == goal.x) && (current.GetCoordinate().y == goal.y)){
-            return pathConstructer(current, pathList);
+        if (((*current).coordinate.x == goal.x) && ((*current).coordinate.y == goal.y)){
+            argos::LOG << "\n IM FREEEEE ";
+
+            return pathList;
+            //return pathConstructer((*current), pathList);
         }
         //Calculate neighbors of the node, should always be true, since current is always a leaf
-        if (current.GetNeighbours().empty()){
-            current.calculateNeighbour();
+        if ((*current).children.empty()){
+
+            (*current).calculateNeighbour();
+
+            for (Node n : (*current).children){
+                n.gScore = (*current).gScore + n.parentWeight;
+                n.fScore = n.gScore + n.heuristic(goal);
+                if(flag){
+                    (*current).lowestCost = n.fScore;
+                    flag = false;
+                }
+                else if(n.fScore < (*current).lowestCost){
+                    (*current).lowestCost = n.fScore;
+                }
+            }
         }
+        argos::LOG << "Children after after: " <<(*current).children.size() << std::endl;
+
 
         //Iterate through neighbors to find the best neighbor
-        argos::LOG << "\n  ---Neighbours size: ";
-
-        argos::LOG << current.neighbours.size();
-
-        for(Node node: current.GetNeighbours()){
-            //Set gScore
-            node.SetgScore((*node.GetParent()).GetgScore() + node.GetParentWeight());
-            //Set fScore
-            node.SetfScore(node.GetgScore() + node.heuristic(goal));
-        }
-        //Reset flag
         i++;
-    } while (i<1000);
+    } while (i<100);
     argos::LOG << "CRY!!! ";
 
     return pathList;
@@ -117,13 +101,13 @@ Path aStar::pathConstructer(Node node, Path path){
 
 std::list<std::pair<Coordinate, Coordinate>> aStar::constructPath(Node node, std::list<std::pair<Coordinate, Coordinate>> path) {
 
-    if(node.Getstart()){
+    if(node.start){
         return path;
     }
     else {
-        path.emplace_back(node.GetCoordinate(), (*node.GetParent()).GetCoordinate());
+        path.emplace_back(node.coordinate, (*node.parent).coordinate);
 
-        return constructPath((*node.GetParent()), path);
+        return constructPath((*node.parent), path);
     }
 }
 
