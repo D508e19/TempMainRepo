@@ -7,7 +7,6 @@ class Coordinate;
 class Node;
 class Order;
 class Path;
-class Astar;
 class DataCollector;
 class Pathfinder;
 class RobotWrapper;
@@ -27,7 +26,6 @@ class Warehouse;
 #include "headers/Node.h"
 #include "headers/Order.h"
 #include "headers/Path.h"
-#include "headers/Astar.h"
 #include "headers/DataCollector.h"
 #include "headers/Pathfinder.h"
 #include "headers/RobotWrapper.h"
@@ -43,7 +41,6 @@ class Warehouse;
 #include "imp/Node.cpp"
 #include "imp/Order.cpp"
 #include "imp/Path.cpp"
-#include "imp/Astar.cpp"
 #include "imp/DataCollector.cpp"
 #include "imp/Pathfinder.cpp"
 #include "imp/RobotWrapper.cpp"
@@ -52,5 +49,6 @@ class Warehouse;
 #include "imp/RobotManager.cpp"
 #include "imp/EnvironmentManager.cpp"
 #include "imp/Warehouse.cpp"
+
 
 #endif
