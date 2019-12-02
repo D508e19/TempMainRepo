@@ -13,7 +13,7 @@ void OrderManager::SetupOrderManager(Warehouse* _wh)
 	wh = _wh;
 	orderCount = 0;
 
-	// /* TODO delete 
+	// /* TODO delete
 	for (int i = 0; i < 10; i++)
 	{
 		CreateOrder();
@@ -29,12 +29,12 @@ void OrderManager::Tick()
 
 void OrderManager::CreateOrder()
 {
-	argos::LOG << "create order with id: " << orderCount << std::endl;
+	//argos::LOG << "create order with id: " << orderCount << std::endl;
     Order* newOrder = new Order(orderCount, -1);
 	orders.insert(std::pair<int, Order*> (orderCount, newOrder));
 	wh->pm.ordersToBeProcessed.push(newOrder);
 	ordersOngoing.push(newOrder);
-	
+
 	orderCount++;
 }
 

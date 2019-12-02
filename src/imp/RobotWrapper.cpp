@@ -1,7 +1,7 @@
 #ifndef ROBOTWRAPPER_CPP
 #define ROBOTWRAPPER_CPP
 
-#include "controllers/basicbot/basicbot.h"
+#include "src/argos/controllers/basicbot/basicbot.h"
 
 RobotWrapper::RobotWrapper(){};
 RobotWrapper::~RobotWrapper(){};
@@ -43,7 +43,7 @@ void RobotWrapper::TranslatePathToInstructions(Path p)
         // wait instruction is added TODO comment more
         if (p.waypoints.front().x == -1)
         {
-            AddInstructionToQueue(wait, p.waypoints.front().y);
+            AddInstructionToQueue(_wait, p.waypoints.front().y);
             continue;
         }
 
@@ -195,10 +195,10 @@ void RobotWrapper::SendNextInstruction()
         case putdownpod:
             m_bot->currentInstruction = putdownpod;
             break;
-        case wait:
+        case _wait:
             m_bot->ticksToWait = instructionsValuesQueue.front();
             instructionsValuesQueue.pop();
-            m_bot->currentInstruction = wait;
+            m_bot->currentInstruction = _wait;
 
         default:
             break;
@@ -218,7 +218,7 @@ void RobotWrapper::AddInstructionToQueue(instruction ins, int tiles = 1)
     {
         instructionsValuesQueue.push(tiles);
     }
-    if (ins == wait)
+    if (ins == _wait)
     {
         instructionsValuesQueue.push(tiles);
     }

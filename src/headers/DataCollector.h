@@ -5,13 +5,13 @@
 #include <fstream>
 #include <string>
 
-#include "controllers/basicbot/basicbot.h"
+#include "src/argos/controllers/basicbot/basicbot.h"
 
 class DataCollector
 {
 private:
     std::ofstream output;
-    
+
 public:
     DataCollector();
     ~DataCollector();

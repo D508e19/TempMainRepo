@@ -1,6 +1,6 @@
 #include "basicbot.h"
 
-#include <math.h> 
+#include <math.h>
 #include <iomanip>
 #include <sstream>
 
@@ -8,7 +8,7 @@
 #include <argos3/core/utility/math/vector2.h>
 #include <argos3/core/utility/logging/argos_log.h>
 
-Basicbot::Basicbot() : 
+Basicbot::Basicbot() :
    m_pcWheels(NULL),
    m_pcGroundSensor(NULL),
    m_pcProximity(NULL),
@@ -27,7 +27,7 @@ Basicbot::Basicbot() :
    ticksTurnleft(0),
    ticksTurnright(0),
    ticksTurn180(0),
-   ticksPickuppod(0), 
+   ticksPickuppod(0),
    ticksPutdownpod(0),
    ticksIgnore(0),
    ticksWait(0)
@@ -102,8 +102,8 @@ void Basicbot::ControlStep()
          break;
       case putdownpod:
          //PutDownPOd();
-         break;   
-      case wait:
+         break;
+      case _wait:
          Wait();
       default:
          break;
@@ -116,7 +116,7 @@ void Basicbot::MoveForward()
       isBusy = true;
       counter = m_ticksToMoveOneCell * cellsToMove;
    }
-   
+
    if (counter > 0)
    {
       m_pcWheels->SetLinearVelocity(10.0f, 10.0f);
@@ -203,7 +203,7 @@ void Basicbot::PickUpPod()
       isBusy = true;
       counter = ticksToPickUpPod;
    }
-   
+
    if (counter > 0)
    {
       ticksPickuppod++;
@@ -221,7 +221,7 @@ void Basicbot::PutDownPod()
       isBusy = true;
       counter = ticksToPutDownPod;
    }
-   
+
    if (counter > 0)
    {
       ticksPutdownpod++;
@@ -239,7 +239,7 @@ void Basicbot::Wait()
       isBusy = true;
       counter = ticksToWait;
    }
-   
+
    if (counter > 0)
    {
       ticksWait++;
@@ -279,7 +279,7 @@ void Basicbot::LogReadablePosition(){
    std::stringstream stream;
    stream << std::fixed << std::setprecision(2) << x << ", " << y;
    std::string s = stream.str();
-   
+
    argos::LOG << "Position: " << s << std::endl;
 };
 

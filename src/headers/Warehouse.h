@@ -1,7 +1,7 @@
 #ifndef WAREHOUSE_H
 #define WAREHOUSE_H
 
-#include "controllers/basicbot/basicbot.h"
+#include "src/argos/controllers/basicbot/basicbot.h"
 
 class Warehouse
 {
@@ -9,7 +9,7 @@ private:
     std::map<int, Basicbot*> bots;
 
     bool distributed = false;
-    
+
 public:
     Warehouse();
     ~Warehouse();
@@ -20,9 +20,9 @@ public:
     DataCollector dc;
 
     void SetupWarehouse(std::map<int, Basicbot*> botControllers);
-    void Tick();    
+    void Tick();
 
-    void CollectData(); 
+    void CollectData();
 };
 
 #endif
