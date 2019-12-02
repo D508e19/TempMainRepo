@@ -28,10 +28,4 @@ void Warehouse::CollectData()
     dc.CollectData(bots);
 }
 
-void Warehouse::AddOrderToProcessQueue(Order* order)
-{
-    argos::LOG << order->getOrderID() << std::endl;
-    orderQueue.push(order);
-};
-
 #endif

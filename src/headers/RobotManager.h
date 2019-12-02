@@ -14,6 +14,8 @@ public:
     ~RobotManager();
 
     RobotWrapper CreateRobotWrapper(Basicbot*);
+    
+    std::queue<Order*> ordersToBeProcessed;
 
     void SetupRobotManager(Warehouse* _wh, std::map<int, Basicbot*> botControllers);
     void Tick();

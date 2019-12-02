@@ -4,20 +4,18 @@
 class Order
 {
 private:
-	int orderID;
+
+public:
+	Order(int orderID, int timestampBorn);
+	~Order();
+
+	int orderID = -1;
 	int podID;
 	int timestamp_born;
 	int timestamp_assigned;
 	int timestamp_completed;
 	bool underWay;
-	
-public:
-	Order();
-	Order(int orderID, int timestampBorn);
-	~Order();
 
-    int getPodID(){ return Order::podID; }
-    int getOrderID(){ return Order::orderID; }
 };
 
 

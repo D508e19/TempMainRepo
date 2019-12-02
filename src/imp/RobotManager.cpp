@@ -17,6 +17,16 @@ void RobotManager::SetupRobotManager(Warehouse *_wh, std::map<int, Basicbot *> b
 
 void RobotManager::Tick()
 {
+    
+    while (!ordersToBeProcessed.empty())
+	{
+		Order* nextOrder = ordersToBeProcessed.front();
+        argos::LOG << "rm. OrderID: "<< nextOrder->orderID << std::endl;
+		wh->om.ordersOngoing.push(nextOrder);
+		ordersToBeProcessed.pop();
+	}
+    
+
     for (int i = 0; i < robotCount; i++)
     {
         Wrappers[i].Tick();
