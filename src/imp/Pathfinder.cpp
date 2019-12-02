@@ -7,17 +7,22 @@ Pathfinder::Pathfinder()
 }
 Pathfinder::~Pathfinder(){}
 
-Path Pathfinder::FindPath(Coordinate start, Coordinate end)
+Path Pathfinder::FindPath(Coordinate start, Coordinate end, direction lastDirection)
 {
     Path p; 
+    //Astar a;// = Astar();
     switch (selectedAlgorithm)
     {
-    case 0:
-        p = GetStupidPath(start, end);
-        break;
-    
-    default:
-        break;
+        case 0:
+            p = GetStupidPath(start, end);
+            break;
+
+        case 1:
+            //p = a.PathFinder(start, lastDirection, end);
+            break;
+        
+        default:
+            break;
     }
     
     return p;

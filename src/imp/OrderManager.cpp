@@ -29,7 +29,7 @@ void OrderManager::Tick()
 
 void OrderManager::CreateOrder()
 {
-	argos::LOG << "create order with id: " << orderCount << std::endl;
+	//argos::LOG << "create order with id: " << orderCount << std::endl;
     Order* newOrder = new Order(orderCount, -1);
 	orders.insert(std::pair<int, Order*> (orderCount, newOrder));
 	wh->pm.ordersToBeProcessed.push(newOrder);

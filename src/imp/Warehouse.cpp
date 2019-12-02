@@ -8,6 +8,7 @@ Warehouse::~Warehouse(){};
 
 void Warehouse::Tick()
 {
+    em->Tick();
     om.Tick();
     rm.Tick();
     pm.Tick();  
@@ -18,6 +19,9 @@ void Warehouse::SetupWarehouse(std::map<int, Basicbot*> botControllers)
     bots = botControllers;
     srand (time(NULL));	// seed for rng
     // andet setup ?
+    em = new EnvironmentManager();
+    em->SetupEnvirionmentManager();
+
     om.SetupOrderManager(this); 
     pm.SetupPodManager(this, 100);
     rm.SetupRobotManager(this, botControllers);

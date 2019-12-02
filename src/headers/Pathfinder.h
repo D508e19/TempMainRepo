@@ -10,7 +10,7 @@ public:
     Pathfinder();
     ~Pathfinder();
    
-    Path FindPath(Coordinate start, Coordinate end);
+    Path FindPath(Coordinate start, Coordinate end, direction last);
 
     Path GetStupidPath(Coordinate start, Coordinate end);
 };

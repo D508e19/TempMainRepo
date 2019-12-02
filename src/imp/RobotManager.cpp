@@ -21,7 +21,7 @@ void RobotManager::Tick()
     while (!ordersToBeProcessed.empty())
 	{
 		Order* nextOrder = ordersToBeProcessed.front();
-        argos::LOG << "rm. OrderID: "<< nextOrder->orderID << std::endl;
+        //argos::LOG << "rm. OrderID: "<< nextOrder->orderID << std::endl;
 		wh->om.ordersOngoing.push(nextOrder);
 		ordersToBeProcessed.pop();
 	}

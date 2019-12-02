@@ -23,7 +23,7 @@ void PodManager::Tick()
     while (!ordersToBeProcessed.empty())
 	{
 		Order* nextOrder = ordersToBeProcessed.front();
-        argos::LOG << "pm. read order id: " << ordersToBeProcessed.front()->orderID << std::endl;
+        //argos::LOG << "pm. read order id: " << ordersToBeProcessed.front()->orderID << std::endl;
         nextOrder->orderID += 100;
         // add pod id
 		wh->rm.ordersToBeProcessed.push(nextOrder);

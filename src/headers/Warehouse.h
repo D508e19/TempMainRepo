@@ -7,13 +7,12 @@ class Warehouse
 {
 private:
     std::map<int, Basicbot*> bots;
-
-    bool distributed = false;
-    
+   
 public:
     Warehouse();
     ~Warehouse();
 
+    EnvironmentManager* em;
     OrderManager om;
     PodManager pm;
     RobotManager rm;
