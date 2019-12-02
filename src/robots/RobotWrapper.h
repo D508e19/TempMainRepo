@@ -50,7 +50,7 @@ void RobotWrapper::Tick()
 
     if(instructionQueue.empty() && !m_bot->isBusy)
     {
-        TranslatePathToInstructions(pf.GetStupidPath(lastCoordinate, Coordinate(5,5)));
+        TranslatePathToInstructions(pf.GetStupidPath(lastCoordinate, Coordinate(rand() % 10, rand() % 10), lastFacing));
     }
     if (m_bot->currentInstruction == idle)
     { 

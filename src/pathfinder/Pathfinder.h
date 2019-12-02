@@ -17,13 +17,13 @@ public:
     ~Pathfinder();
     aStar astar = aStar();
 
-    Path GetStupidPath(Coordinate start, Coordinate end);
+    Path GetStupidPath(Coordinate start, Coordinate end, direction d);
 };
 
 Pathfinder::Pathfinder(){}
 Pathfinder::~Pathfinder(){}
 
-Path Pathfinder::GetStupidPath(Coordinate start, Coordinate end)
+Path Pathfinder::GetStupidPath(Coordinate start, Coordinate end, direction d)
 {
 
     Path newPath;
@@ -37,7 +37,7 @@ Path Pathfinder::GetStupidPath(Coordinate start, Coordinate end)
 //    std::cout << "Adding waypoint:" << end.x << " " << end.y << std::endl;
 //    newPath.AddWayPoint(Coordinate(end.x, end.y), Coordinate(end.x, start.y));
 //
-    newPath = this->astar.pathFinder(start, north, end);
+    newPath = this->astar.pathFinder(start, d, end);
     return newPath;
     //return this->astar.pathFinder(start, north, end);
 }

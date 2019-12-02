@@ -49,8 +49,7 @@ Path aStar::pathFinder(Coordinate start, direction d, Coordinate goal) {
         if (((*current).coordinate.x == goal.x) && ((*current).coordinate.y == goal.y)){
             argos::LOG << "\n IM FREEEEE ";
 
-            return pathList;
-            //return pathConstructer((*current), pathList);
+            return pathConstructer((*current), pathList);
         }
         //Calculate neighbors of the node, should always be true, since current is always a leaf
         if ((*current).children.empty()){
@@ -93,7 +92,6 @@ Path aStar::pathConstructer(Node node, Path path){
         wrong.pop_back();
         right.AddWayPoint(pair.first, pair.second);
     }
-    argos::LOG << "Hello4 ";
 
     return right;
 }
