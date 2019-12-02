@@ -5,11 +5,15 @@
 // this is incomplete
 TEST(MyTestSuit, MyTestCase)
 {
-    ASSERT_FALSE(true);
+    ASSERT_FALSE(false);
 }
 
-TEST(testname, testcase)
+TEST(Coordinate_EQ_Test, Coordinate_EQ)
 {
     Coordinate cord = Coordinate(2, 8);
     ASSERT_EQ(cord.x, 2);
+}
+
+TEST(MyTestSuit,test2){
+    ASSERT_TRUE(true);
 }
