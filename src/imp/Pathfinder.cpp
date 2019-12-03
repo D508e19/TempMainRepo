@@ -46,10 +46,10 @@ Path Pathfinder::GetStupidPath(Coordinate start, Coordinate end)
 
 Path Pathfinder::GetAstarPath(Coordinate start, Coordinate goal, direction _direction) 
 {
-    Node* startNode = new Node(start, _direction);
+    Node* startNode = new Node(start, _direction); // TODO: remove from heap when path is done
     currentNode = startNode;
     int i = 0;
-    argos::LOG << currentNode->nodeDirection << std::endl;
+    //argos::LOG << currentNode->nodeDirection << std::endl; //TODO: for testing
 
     for (int i = 0; i < 100; i++)
     {

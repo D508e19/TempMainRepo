@@ -25,7 +25,7 @@ Node::Node(Coordinate c, direction d, Node* p, int weight)
     parentWeight = weight;
 }
 
-int Node::CostToRoot(Node node)
+int Node::CostToRoot(Node node) //TODO: name change
 {
     if (node.start)
     {
@@ -37,7 +37,7 @@ int Node::CostToRoot(Node node)
     }
 }
 
-std::list<Node> Node::ReturnPath(Node node, std::list<Node> path)
+std::list<Node> Node::ReturnPath(Node node, std::list<Node> path) //TODO: name change
 {
     if (node.start)
     {
@@ -68,46 +68,34 @@ int Node::CalculateHeuristic(Coordinate goal)
     }
 
     if(nodeDirection == north){
-        if(gx != nx){
+        if(gx != nx){ 
             h+= 3;
-            if(gy<ny){
-                h+=3;
-            }
-        }else if(gy < ny){
-            h+=6;
+            if(gy < ny){ h+=3; }
         }
+        else if(gy < ny){ h+=6; }
     }
 
     else if(nodeDirection == south){
         if(gx != nx){
             h+= 3;
-            if(gy>ny){
-                h+=3;
-            }
-        }else if(gy > ny){
-            h+=6;
+            if(gy > ny){ h += 3; }
         }
+        else if(gy > ny){ h+=6; }
     }
 
     else if(nodeDirection == east){
         if(gy != ny){
             h+= 3;
-            if(gx<nx){
-                h+=3;
-            }
-        }else if(gx < nx){
-            h+=6;
+            if(gx < nx){ h += 3; }
         }
+        else if(gx < nx){ h+=6; }
     }
     else if(nodeDirection == west){
         if(gy != ny){
             h+= 3;
-            if(gx>nx){
-                h+=3;
-            }
-        }else if(gx > nx){
-            h+=6;
+            if(gx > nx){ h += 3; }
         }
+        else if(gx > nx){ h += 6; }
     }
 
     h+= deltaX;
@@ -146,12 +134,12 @@ void Node::CalculateNeighbour()
             children.emplace_back(Node(Coordinate(coordinate.x - 1, coordinate.y), west, this, 1));
             break;
         default:
-            argos::LOG << "default" << std::endl;
+            argos::LOG << "default. You shouldn't be here." << std::endl;
             break;
     }
 }
 
-Node* Node::LeastCost() 
+Node* Node::LeastCost() // TODO: change name to describe functionality
 {
     if(children.empty())
     {

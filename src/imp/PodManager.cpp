@@ -9,25 +9,27 @@ void PodManager::SetupPodManager(Warehouse* _wh, int numOfPods)
     wh = _wh;
     podCount = 0;
 
+    nullPodPnt = new Pod(-1); // todo. maybe just use NULL instead??
+
     for (int i=0; i<numOfPods; i++)
     {
         CreatePod();
     }
+
+    wh->em->AddParkingSpotsForPods(podCount, nullPodPnt);
 }
 
 void PodManager::Tick()
 {  
-    int temp = rand()%99;
-    argos::LOG << "PodCount" << podCount << std::endl; 
-    argos::LOG << "Pod id: " << pods[temp]->getId() << "is = " << temp << std::endl;
-
     while (!ordersToBeProcessed.empty())
 	{
 		Order* nextOrder = ordersToBeProcessed.front();
-        //argos::LOG << "pm. read order id: " << ordersToBeProcessed.front()->orderID << std::endl;
-        nextOrder->orderID += 100;
-        // add pod id
-		wh->rm.ordersToBeProcessed.push(nextOrder);
+   
+        // add pod id - fakeish for now 
+        nextOrder->podID = nextOrder->orderID;
+    
+        // send the order onwards to the Robot Manager
+    	wh->rm.ordersToBeProcessed.push(nextOrder);
 		ordersToBeProcessed.pop();
 	}
 }

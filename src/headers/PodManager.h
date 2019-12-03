@@ -17,6 +17,7 @@ public:
 
     std::map<int, Pod*> pods; // TODO: laves om til vector?
     std::queue<Order*> ordersToBeProcessed;
+    Pod* nullPodPnt;
 
     int podCount;
 

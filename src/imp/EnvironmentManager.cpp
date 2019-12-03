@@ -3,7 +3,7 @@
 
 //#include <tuple>
 
-#include "src/headers/EnvironmentManager.h"
+//#include "src/headers/EnvironmentManager.h"
 
 EnvironmentManager::EnvironmentManager(){}
 EnvironmentManager::~EnvironmentManager(){}
@@ -38,24 +38,14 @@ void EnvironmentManager::SetupEnvirionmentManager()
 		currentTimeslots.push_back(timeslot);
 		timeslot += numberOfTicksPerTimeslot;
 	}
-
-	Coordinate t1 = Coordinate(1,5);
-	Coordinate t2 = Coordinate(1,50);
-	Coordinate t3 = Coordinate(-1,9);
-	argos::LOG << IsValidCoordinate(t1) << std::endl;
-	argos::LOG << IsValidCoordinate(t2) << std::endl;
-	argos::LOG << IsValidCoordinate(t3) << std::endl;
-
 }
 
 void EnvironmentManager::Tick()
 {
 	tickCounter++;
 
-	//argos::LOG << "Current tick: " << tickCounter << std::endl;
-	//argos::LOG << "Current timeslot: " << currentTimeslots.front() << std::endl;
-
-	if (tickCounter == currentTimeslots[1])
+	// Checking if first timeslot is in the past
+	if (tickCounter >= currentTimeslots[1]) 
 	{
 		int nextTimeslot = currentTimeslots.back() + numberOfTicksPerTimeslot;
 		
@@ -65,6 +55,18 @@ void EnvironmentManager::Tick()
 
 		currentTimeslots.erase(currentTimeslots.begin());
 		currentTimeslots.push_back(nextTimeslot);
+	}
+
+	//TODO: delete. for testing
+	if (!podParking.empty())
+	{
+		if(podParking[std::pair<int,int>(1,5)]){
+			argos::LOG << "Pod for 1,4 is not null " << std::endl;
+		}
+		else
+		{
+			argos::LOG << "Pod for 1,4 is null " << std::endl;;
+		}
 	}
 }
 
@@ -81,18 +83,46 @@ bool EnvironmentManager::ReserveCell(Coordinate cell, int startTick, int endTick
 		return false;
 	}
 
+	if(startTick > endTick)
+	{
+		// timespan illegal
+		return false;
+	}
+
 	if(startTick < currentTimeslots.front())//-numberOfTicksPerTimeslot)
 	{
 		// startTick is in the past
 		return false;
 	}
 
-	//find timeslot
-		
+	//find timeslot for startTick		
+    //find timeslot for endTick	
+	//calculate if any inbetween
 
-	//reservationsTable
+	//find timeslots in reservationsTable
+	//if already blocked return false
+	//else block and return true 
 
+	return false;
+}
 
+void EnvironmentManager::AddParkingSpotsForPods(int numberOfPods, Pod* nullPod)
+{
+	// TODO: hardcoded podparking. Should be changed.
+	podParking[std::pair<int,int>(1,4)] = NULL;
+	podParking[std::pair<int,int>(1,5)] = nullPod;
+	podParking[std::pair<int,int>(1,6)] = nullPod;
+	podParking[std::pair<int,int>(1,7)] = nullPod;
+	podParking[std::pair<int,int>(2,4)] = nullPod;
+	podParking[std::pair<int,int>(2,5)] = nullPod;
+	podParking[std::pair<int,int>(2,6)] = nullPod;
+	podParking[std::pair<int,int>(2,7)] = NULL;
+
+}
+    
+bool EnvironmentManager::ParkPod(Pod* pod)
+{
+	//TODO
 	return false;
 }
 

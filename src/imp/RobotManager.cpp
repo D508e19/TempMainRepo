@@ -13,13 +13,20 @@ void RobotManager::SetupRobotManager(Warehouse* _wh, std::map<int, Basicbot*> bo
         RobotWrapper rw = CreateRobotWrapper(botControllers[i]);
         Wrappers.insert(std::pair<int, RobotWrapper> (i, rw));
     }
-};
+}
 
 void RobotManager::Tick()
 {   
     while (!ordersToBeProcessed.empty())
 	{
 		Order* nextOrder = ordersToBeProcessed.front();
+        // TODO:
+        // pick robot
+        // get path
+        // send path to wrapper
+        // ???
+        // profit
+
 		wh->om.ordersOngoing.push(nextOrder);
 		ordersToBeProcessed.pop();
 	}
@@ -28,13 +35,13 @@ void RobotManager::Tick()
     {
         Wrappers[i].Tick();
     }
-};
+}
 
 RobotWrapper RobotManager::CreateRobotWrapper(Basicbot* b)
 {
     RobotWrapper rw(b);
     robotCount++;
     return rw;
-};
+}
 
 #endif

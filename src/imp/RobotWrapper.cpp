@@ -8,8 +8,8 @@ RobotWrapper::~RobotWrapper(){};
 
 RobotWrapper::RobotWrapper(Basicbot *bot):m_bot(bot)
 {
-    lastFacing = m_bot->facing;
-    lastCoordinate = m_bot->lastReadCellQR;
+    lastFacing = m_bot->facing; // check if working. seems like not.
+    lastCoordinate = m_bot->lastReadCellQR; // check if working. seems like not.
 
     /* TODO: Delete
     for (int i = 0; i < 5; i++)
@@ -112,7 +112,6 @@ direction RobotWrapper::GetFaceTowardsInstruction(Coordinate coordToFace, Coordi
     }
 
     return nextFacing;
-
 }
 
 void RobotWrapper::SendNextInstruction()

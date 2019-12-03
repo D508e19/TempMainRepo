@@ -35,7 +35,10 @@ public:
     bool IsValidCoordinate(Coordinate cand);
     bool ReserveCell(Coordinate cell, int startTick, int endTick);
 
-    std::map <Coordinate, Pod*> podParking;
+    void AddParkingSpotsForPods(int numberOfPods, Pod* nullPod);
+    bool ParkPod(Pod* pod);
+
+    std::map <std::pair<int,int>, Pod*> podParking;
     std::vector <Coordinate> pickingStations;
 
 
