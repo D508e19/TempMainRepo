@@ -5,25 +5,23 @@
 class PodManager
 {
 private:
-    std::map<int, Pod> m_Pods; // TODO: laves om til vector?
-    int m_podCount;
-
-    Warehouse *wh;
-
-    Pod CreatePod(int);
-    bool DeletePod();
 
 public:
     PodManager();
     ~PodManager();
 
+    Warehouse *wh;
+
     void SetupPodManager(Warehouse * _wh, int numOfPods);
     void Tick();
 
+    std::map<int, Pod*> pods; // TODO: laves om til vector?
     std::queue<Order*> ordersToBeProcessed;
 
-    Pod GetPod(int podId);
-    int GetPodCount();
+    int podCount;
+
+    void CreatePod();
+
 };
 
 

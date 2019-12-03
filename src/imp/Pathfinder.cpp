@@ -10,7 +10,7 @@ Pathfinder::~Pathfinder(){}
 Path Pathfinder::FindPath(Coordinate start, Coordinate end, direction currentDirection)
 {
     Path p; 
-    argos::LOG << "Find path from: " << start.x << "," << start.y << ". to: " << end.x << "," << end.y << std::endl;
+    //argos::LOG << "Find path from: " << start.x << "," << start.y << ". to: " << end.x << "," << end.y << std::endl;
 
     switch (selectedAlgorithm)
     {
@@ -46,12 +46,11 @@ Path Pathfinder::GetStupidPath(Coordinate start, Coordinate end)
 
 Path Pathfinder::GetAstarPath(Coordinate start, Coordinate goal, direction _direction) 
 {
-    argos::LOG << "ready for new node." << std::endl;
     Node* startNode = new Node(start, _direction);
     currentNode = startNode;
     int i = 0;
     argos::LOG << currentNode->nodeDirection << std::endl;
-    argos::LOG << "ready for for loop." << std::endl;
+
     for (int i = 0; i < 100; i++)
     {
         //Find the leaf with the lowest cost
