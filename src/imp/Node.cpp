@@ -1,51 +1,58 @@
 #ifndef CUSTOM_NODE_CPP
 #define CUSTOM_NODE_CPP
 
-Node::Node() {
-}
-Node::Node(Coordinate c, direction d) {
+Node::Node(){}
+
+Node::Node(Coordinate c, direction d) 
+{
     coordinate = c;
+    nodeDirection = d;
     lowestCost = 100000000;
-    Dir = d;
-    parentWeight = 0;
     fScore = 100000000;
     gScore = 0;
     start = true;
+    parentWeight = 0;
 }
-Node::Node(Coordinate c, direction d, Node* p, int weight) {
+
+Node::Node(Coordinate c, direction d, Node* p, int weight)
+{
+    coordinate = c;
+    nodeDirection = d;
     fScore = 1000000000;
     gScore = 1000000000;
     start = false;
-    Dir = d;
-    coordinate= c;
     parent = p;
     parentWeight = weight;
 }
 
-
-int Node::CostToRoot(Node n){
-    if (n.start){
+int Node::CostToRoot(Node node)
+{
+    if (node.start)
+    {
         return 0;
     }
-    else{
-        return CostToRoot(*n.parent)+n.parentWeight;
+    else
+    {
+        return CostToRoot(*node.parent) + node.parentWeight;
     }
 }
 
-
-std::list<Node> Node::ReturnPath(Node n, std::list<Node> path){
-    if (n.start){
-        argos::LOG << "Hello11 ";
-        path.push_back(n);
+std::list<Node> Node::ReturnPath(Node node, std::list<Node> path)
+{
+    if (node.start)
+    {
+        path.push_back(node);
         return path;
     }
-    else{
-        path.push_back(n);
-        return ReturnPath(*n.parent, path);
+    else
+    {
+        path.push_back(node);
+        return ReturnPath(*node.parent, path);
     }
 }
 
-int Node::heuristic(Coordinate goal){
+int Node::CalculateHeuristic(Coordinate goal)
+{
     int gx = goal.x;
     int gy = goal.y;
     int nx = coordinate.x;
@@ -55,12 +62,12 @@ int Node::heuristic(Coordinate goal){
     int deltaX = abs(nx-gx);;
     int deltaY = abs(ny-gy);
 
-
-    if(gx == nx && gy == ny){
+    if(gx == nx && gy == ny)
+    {
         return h;
     }
 
-    if(Dir == north){
+    if(nodeDirection == north){
         if(gx != nx){
             h+= 3;
             if(gy<ny){
@@ -71,7 +78,7 @@ int Node::heuristic(Coordinate goal){
         }
     }
 
-    else if(Dir == south){
+    else if(nodeDirection == south){
         if(gx != nx){
             h+= 3;
             if(gy>ny){
@@ -82,7 +89,7 @@ int Node::heuristic(Coordinate goal){
         }
     }
 
-    else if(Dir == east){
+    else if(nodeDirection == east){
         if(gy != ny){
             h+= 3;
             if(gx<nx){
@@ -92,7 +99,7 @@ int Node::heuristic(Coordinate goal){
             h+=6;
         }
     }
-    else if(Dir == west){
+    else if(nodeDirection == west){
         if(gy != ny){
             h+= 3;
             if(gx>nx){
@@ -106,65 +113,62 @@ int Node::heuristic(Coordinate goal){
     h+= deltaX;
     h+= deltaY;
 
-    argos::LOG << h << std::endl;
-    argos::LOG << "( " << nx << " , " << ny << " )" << std::endl;
-
     return h;
 }
 
+void Node::CalculateNeighbour()
+{
 
-void Node::calculateNeighbour() {
-    switch (Dir)
+    switch (nodeDirection)
     {
         case north :
-            children.emplace_back(Node((*(new Coordinate(coordinate.x, coordinate.y + 1))), north, this, 1));
-            children.emplace_back(Node((*this).coordinate, south, this, 3));
-            children.emplace_back(Node((*this).coordinate, east, this, 3));
-            children.emplace_back(Node((*this).coordinate, west, this, 3));
-            //(*this).children.push_back(new Node((*this).coordinate, north, this, 1));
+            children.emplace_back(Node(Coordinate(coordinate.x, coordinate.y + 1), north, this, 1));
+            children.emplace_back(Node(coordinate, south, this, 3));
+            children.emplace_back(Node(coordinate, east, this, 3));
+            children.emplace_back(Node(coordinate, west, this, 3));
             break;
         case south :
-            (*this).children.emplace_back(Node((*this).coordinate, north, this, 3));
-            (*this).children.emplace_back(Node((*(new Coordinate(coordinate.x, coordinate.y - 1))), south, this, 1));
-            (*this).children.emplace_back(Node((*this).coordinate, east, this, 3));
-            (*this).children.emplace_back(Node((*this).coordinate, west, this, 3));
-            //(*this).children.push_back(new Node((*this).coordinate, south, this, 1));
-
+            children.emplace_back(Node(coordinate, north, this, 3));
+            children.emplace_back(Node(Coordinate(coordinate.x, coordinate.y - 1), south, this, 1));
+            children.emplace_back(Node(coordinate, east, this, 3));
+            children.emplace_back(Node(coordinate, west, this, 3));
             break;
         case east :
-            (*this).children.emplace_back(Node((*this).coordinate, north, this, 3));
-            (*this).children.emplace_back(Node((*this).coordinate, south, this, 3));
-            (*this).children.emplace_back(Node((*(new Coordinate(coordinate.x + 1, coordinate.y))), east, this, 1));
-            (*this).children.emplace_back(Node((*this).coordinate, west, this, 3));
-            //(*this).children.push_back(new Node((*this).coordinate, east, this, 1));
-
+            children.emplace_back(Node(coordinate, north, this, 3));
+            children.emplace_back(Node(coordinate, south, this, 3));
+            children.emplace_back(Node(Coordinate(coordinate.x + 1, coordinate.y), east, this, 1));
+            children.emplace_back(Node(coordinate, west, this, 3));
             break;
         case west :
-            (*this).children.emplace_back(Node((*this).coordinate, north, this, 3));
-            (*this).children.emplace_back(Node((*this).coordinate, south, this, 3));
-            (*this).children.emplace_back(Node((*this).coordinate, east, this, 3));
-            (*this).children.emplace_back(Node((*(new Coordinate(coordinate.x - 1, coordinate.y))), west, this, 1));
-            //(*this).children.push_back(new Node((*this).coordinate, west, this, 1));
+            children.emplace_back(Node(coordinate, north, this, 3));
+            children.emplace_back(Node(coordinate, south, this, 3));
+            children.emplace_back(Node(coordinate, east, this, 3));
+            children.emplace_back(Node(Coordinate(coordinate.x - 1, coordinate.y), west, this, 1));
             break;
         default:
+            argos::LOG << "default" << std::endl;
             break;
     }
 }
 
-Node* Node::leastCost() {
-
-    if(children.empty()){
+Node* Node::LeastCost() 
+{
+    if(children.empty())
+    {
         return this;
     }
-    else{
-        Node* lowboi = (&children.front());
+    else
+    {
+        Node* nodeWithLowestChild = (&children.front());
 
-        for(Node& n : children) {
-            if ((*lowboi).lowestCost > n.lowestCost) {
-                lowboi= (&n);
+        for(Node& n : children) 
+        {
+            if ((*nodeWithLowestChild).lowestCost > n.lowestCost)
+            {
+                nodeWithLowestChild= (&n);
             }
         }
-        return (*lowboi).leastCost();
+        return (*nodeWithLowestChild).LeastCost();
     }
 }
 

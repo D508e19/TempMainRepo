@@ -263,6 +263,7 @@ void Basicbot::ResetBot()
 }
 
 void Basicbot::ReadCellQR(){
+   argos::LOG << "read QR" << std::endl;
    CVector2 temp = GetPosition2D();
    double x = temp.GetX() * 5;
    double y = temp.GetY() * 5;

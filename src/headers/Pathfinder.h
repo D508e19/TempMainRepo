@@ -8,7 +8,7 @@ class Pathfinder
 private:
     int selectedAlgorithm;
 
-    Node* current;
+    Node* currentNode;
     Path pathList;
     
     Path PathConstructer(Node node, Path path);
@@ -22,7 +22,6 @@ public:
 
     Path GetStupidPath(Coordinate start, Coordinate end);
     Path GetAstarPath(Coordinate start, Coordinate end, direction last);
-
 
 };
 
