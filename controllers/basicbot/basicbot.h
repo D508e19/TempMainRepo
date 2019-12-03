@@ -61,7 +61,7 @@ public:
    void Turn180();
    void PickUpPod();
    void PutDownPod();
-   void Wait();
+   void BotWait();
 
    int counter = 0;
    int cellsToMove = 1;

@@ -11,7 +11,7 @@ private:
     Node* currentNode;
     Path pathList;
     
-    Path PathConstructer(Node node, Path path);
+    Path ReversePath(Node node, Path path);
     simplePath ConstructPath(Node, simplePath);
         
 public:

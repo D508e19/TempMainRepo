@@ -61,7 +61,7 @@ Path Pathfinder::GetAstarPath(Coordinate start, Coordinate goal, direction _dire
         //Check if the node is goal node
         if ((currentNode->coordinate.x == goal.x) && (currentNode->coordinate.y == goal.y))
         {
-               return PathConstructer((*currentNode), pathList);
+               return ReversePath((*currentNode), pathList);
         }
 
         //Calculate neighbors of the node, should always be true, since currentNode is always a leaf
@@ -85,13 +85,10 @@ Path Pathfinder::GetAstarPath(Coordinate start, Coordinate goal, direction _dire
             }
         }
     } 
-
-
-
     return pathList;
 }
 
-Path Pathfinder::PathConstructer(Node node, Path path)
+Path Pathfinder::ReversePath(Node node, Path path)
 {
     simplePath wrong;
     Path right;

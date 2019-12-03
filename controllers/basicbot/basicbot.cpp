@@ -103,8 +103,8 @@ void Basicbot::ControlStep()
       case putdownpod:
          //PutDownPOd();
          break;   
-      case wait:
-         Wait();
+      case _wait:
+         BotWait();
       default:
          break;
    }
@@ -233,7 +233,7 @@ void Basicbot::PutDownPod()
    }
 }
 
-void Basicbot::Wait()
+void Basicbot::BotWait()
 {
    if (!isBusy){
       isBusy = true;
