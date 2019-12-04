@@ -12,9 +12,6 @@ typedef std::tuple<int, int, bool> reservation;
 class EnvironmentManager
 {
 private:
-    int warehouseLength; //x = warehouseLength -1
-    int warehouseHeight; //y = warehouseHeight -1
-    
     int numberOfTicksPerTimeslot;
     int timeslotsIntoTheFuture;
 
@@ -41,7 +38,8 @@ public:
     std::map <std::pair<int,int>, Pod*> podParking;
     std::vector <Coordinate> pickingStations;
 
-
+    int warehouseLength; //x = warehouseLength -1
+    int warehouseHeight; //y = warehouseHeight -1
 };
 
 
