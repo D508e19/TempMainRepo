@@ -25,7 +25,7 @@ Node::Node(Coordinate c, direction d, Node* p, int weight)
     parentWeight = weight;
 }
 
-int Node::CostToRoot(Node node) //TODO: name change
+int Node::CostToRoot(Node node) //TODO: name change?
 {
     if (node.start)
     {

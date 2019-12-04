@@ -24,7 +24,7 @@ void RobotWrapper::Tick()
     {    
         if(instructionQueue.empty())
         {
-            argos::LOG << lastFacing << std::endl;
+            //argos::LOG << lastFacing << std::endl;
 
             //argos::LOG << "InstructionQueue empty. Generate new random path." << std::endl;
             // Add random path

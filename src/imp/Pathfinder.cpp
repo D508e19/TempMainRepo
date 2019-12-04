@@ -10,7 +10,7 @@ Pathfinder::~Pathfinder(){}
 Path Pathfinder::FindPath(Coordinate start, Coordinate end, direction currentDirection)
 {
     Path p; 
-    //argos::LOG << "Find path from: " << start.x << "," << start.y << ". to: " << end.x << "," << end.y << std::endl;
+    argos::LOG << "Find path from: " << start.x << "," << start.y << ". to: " << end.x << "," << end.y << std::endl;
 
     switch (selectedAlgorithm)
     {
@@ -49,7 +49,6 @@ Path Pathfinder::GetAstarPath(Coordinate start, Coordinate goal, direction _dire
     Node* startNode = new Node(start, _direction); // TODO: remove from heap when path is done
     currentNode = startNode;
     int i = 0;
-    //argos::LOG << currentNode->nodeDirection << std::endl; //TODO: for testing
 
     for (int i = 0; i < 100; i++)
     {
