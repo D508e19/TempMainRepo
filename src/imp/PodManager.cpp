@@ -18,8 +18,8 @@ void PodManager::SetupPodManager(Warehouse* _wh, int numOfPods)
 
     wh->em->AddParkingSpotsForPods(podCount, nullPodPnt);
 
-    //GeneratePodLayout(wh->em->warehouseLength, wh->em->warehouseHeight);
-    GeneratePodLayout(30, 18);
+    GeneratePodLayout(wh->em->warehouseLength, wh->em->warehouseHeight);
+    //GeneratePodLayout(30, 18);
 }
 
 void PodManager::Tick()
@@ -44,7 +44,6 @@ void PodManager::CreatePod()
 	podCount++;
 }
 
-
 void PodManager::GeneratePodLayout(int warehouse_widthInTiles, int warehouse_heightInTiles)
 {
     //TODO DEBUG: initialize array
@@ -56,14 +55,6 @@ void PodManager::GeneratePodLayout(int warehouse_widthInTiles, int warehouse_hei
             tiles[x][y] = 'E';
         }
     }
-
-    /*
-    const int layout_startzone_width = 4;
-    const int layout_hallway_size = 1;
-    const int layout_edge_size = 1;
-    const int layout_podcluster_height = 2;
-    const int layout_podcluster_width = 4;
-    */
 
     int currentX = layout_startzone_width;
     int currentY = layout_edge_size;
@@ -84,6 +75,9 @@ void PodManager::GeneratePodLayout(int warehouse_widthInTiles, int warehouse_hei
         if(pod_horizontal_check && pod_vertical_check)
         {
             tiles[currentX][currentY] = 'P';
+
+            CreatePod();
+            wh->em->PlacePod( pods[podCount-1], Coordinate(currentX, currentY));
         }
         else
         {

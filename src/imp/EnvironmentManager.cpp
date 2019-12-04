@@ -126,4 +126,9 @@ bool EnvironmentManager::ParkPod(Pod* pod)
 	return false;
 }
 
+void EnvironmentManager::PlacePod(Pod* pod, Coordinate cord)
+{
+	podParking[std::pair<int, int>(cord.x, cord.y)] = pod;
+}
+
 #endif

@@ -40,6 +40,8 @@ public:
 
     int warehouseLength; //x = warehouseLength -1
     int warehouseHeight; //y = warehouseHeight -1
+
+    void PlacePod(Pod* pod, Coordinate cord);
 };
 
 
