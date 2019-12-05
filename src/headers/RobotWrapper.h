@@ -13,6 +13,10 @@ private:
     direction lastFacing;
     Coordinate lastCoordinate;
 
+    bool waitinForOrder = true;
+    Order* currentOrder;
+    bool isCarrying = false;
+
 public:
     RobotWrapper();
     RobotWrapper(Basicbot *bot); 

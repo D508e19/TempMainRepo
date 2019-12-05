@@ -8,6 +8,8 @@ class Pathfinder
 private:
     int selectedAlgorithm;
 
+    int pathReturnedEmpty = 0;
+
     Node* currentNode;
     Path pathList;
     

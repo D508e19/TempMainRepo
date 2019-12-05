@@ -29,6 +29,7 @@ Path Pathfinder::FindPath(Coordinate start, Coordinate end, direction currentDir
     if (p.waypoints.empty())
     {
         argos::LOG << "The path returned is empty." << std::endl;
+        pathReturnedEmpty++;
     }
 
     return p;

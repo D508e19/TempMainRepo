@@ -47,9 +47,9 @@ void EnvironmentManager::Tick()
 	// Checking if first timeslot is in the past
 	UpdateTimeslots(tickCounter);
 
-	IsReserved(Coordinate(1,1), 45);
-	ReserveCell(Coordinate(1,1), 44, 205);
-	ReserveCell(Coordinate(1,1), 4, 25);
+	//IsReserved(Coordinate(1,1), 45);
+	//ReserveCell(Coordinate(1,1), 44, 205);
+	//ReserveCell(Coordinate(1,1), 4, 25);
 	//ReserveCell(Coordinate(1,1), 144, 50);
 
 	//TODO: delete. for testing
