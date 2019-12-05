@@ -7,7 +7,7 @@ Pathfinder::Pathfinder()
 }
 Pathfinder::~Pathfinder(){}
 
-Path Pathfinder::FindPath(Coordinate start, Coordinate end, direction currentDirection)
+Path Pathfinder::FindPath(Coordinate start, Coordinate end, direction currentDirection, bool isCarrying)
 {
     Path p; 
     argos::LOG << "Find path from: " << start.x << "," << start.y << ". to: " << end.x << "," << end.y << std::endl;
@@ -19,7 +19,7 @@ Path Pathfinder::FindPath(Coordinate start, Coordinate end, direction currentDir
             break;
 
         case 1:
-            p = GetAstarPath(start, end, currentDirection);
+            p = GetAstarPath(start, end, currentDirection, isCarrying);
             break;
         
         default:
@@ -44,7 +44,7 @@ Path Pathfinder::GetStupidPath(Coordinate start, Coordinate end)
     return newPath;
 }
 
-Path Pathfinder::GetAstarPath(Coordinate start, Coordinate goal, direction _direction) 
+Path Pathfinder::GetAstarPath(Coordinate start, Coordinate goal, direction _direction, bool isCarrying) 
 {
     Node* startNode = new Node(start, _direction); // TODO: remove from heap when path is done
     currentNode = startNode;
