@@ -43,6 +43,7 @@ public:
 
     bool IsValidCoordinate(Coordinate cand);
     bool IsReserved(Coordinate cell, int tick);
+    bool IsReserved(Coordinate cell, int startTick, int endTick);
 
     std::map <std::pair<int,int>, Pod*> podParking;
     std::vector <Coordinate> pickingStations;

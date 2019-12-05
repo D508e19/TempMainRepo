@@ -15,7 +15,7 @@ private:
 
 public:
     RobotWrapper();
-    RobotWrapper(Basicbot *bot);
+    RobotWrapper(Basicbot *bot); 
     ~RobotWrapper();
 
     void Tick();

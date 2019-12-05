@@ -47,7 +47,6 @@ void EnvironmentManager::Tick()
 	// Checking if first timeslot is in the past
 	UpdateTimeslots(tickCounter);
 
-
 	IsReserved(Coordinate(1,1), 45);
 	ReserveCell(Coordinate(1,1), 44, 205);
 	ReserveCell(Coordinate(1,1), 4, 25);
@@ -98,6 +97,51 @@ bool EnvironmentManager::IsReserved(Coordinate cell, int tick)
 	}
 	bool ans = (reservationsTable[timeslot][std::pair<int,int>(cell.x,cell.y)]);
 	argos::LOG << cell.x << "," << cell.y << "IsReserved: "<< ans << std::endl;
+	return ans;
+}
+
+bool EnvironmentManager::IsReserved(Coordinate cell, int startTick, int endTick)
+{
+	// get all timeslots between startTick and endTick
+	// call IsReserved for all
+
+	int startTimeslot; 
+	for (int i = currentTimeslots[0]; i < timeslotsIntoTheFuture; i++)
+	{
+		if (startTick < currentTimeslots[i+1]){
+			startTimeslot = currentTimeslots[i];
+			break;
+		}
+	}
+	argos::LOG << "startTick:" << startTick << " . Is in timeslot: "<< startTimeslot << std::endl;
+	
+    //find timeslot for endTick	
+	int endTimeslot; 
+	for (int i = currentTimeslots[0]; i < timeslotsIntoTheFuture; i++)
+	{
+		if (endTick < currentTimeslots[i+1]){
+			endTimeslot = currentTimeslots[i];
+			break;
+		}
+	}
+	argos::LOG << "endTick:" << endTick << " . Is in timeslot: "<< endTimeslot << std::endl; 
+
+	//put start, end and all inbetween in a queue
+	int nextTimeslotToCheck = startTimeslot;
+	std::queue <int> timeslotsToCheck;
+
+	while (nextTimeslotToCheck <= endTimeslot)
+	{
+		timeslotsToCheck.push(nextTimeslotToCheck);
+		nextTimeslotToCheck += numberOfTicksPerTimeslot;
+	}
+
+	bool ans = false;
+	while (!timeslotsToCheck.empty()){
+		if(IsReserved(cell, timeslotsToCheck.front()))
+			{ans=true;}
+		timeslotsToCheck.pop();
+	}
 	return ans;
 }
 
