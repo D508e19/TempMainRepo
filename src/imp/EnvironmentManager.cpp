@@ -105,20 +105,6 @@ bool EnvironmentManager::ReserveCell(Coordinate cell, int startTick, int endTick
 
 	return false;
 }
-
-void EnvironmentManager::AddParkingSpotsForPods(int numberOfPods, Pod* nullPod)
-{
-	// TODO: hardcoded podparking. Should be changed.
-	podParking[std::pair<int,int>(1,4)] = NULL;
-	podParking[std::pair<int,int>(1,5)] = nullPod;
-	podParking[std::pair<int,int>(1,6)] = nullPod;
-	podParking[std::pair<int,int>(1,7)] = nullPod;
-	podParking[std::pair<int,int>(2,4)] = nullPod;
-	podParking[std::pair<int,int>(2,5)] = nullPod;
-	podParking[std::pair<int,int>(2,6)] = nullPod;
-	podParking[std::pair<int,int>(2,7)] = NULL;
-
-}
     
 bool EnvironmentManager::ParkPod(Pod* pod)
 {

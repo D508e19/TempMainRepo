@@ -16,10 +16,7 @@ void PodManager::SetupPodManager(Warehouse* _wh, int numOfPods)
         CreatePod();
     }
 
-    wh->em->AddParkingSpotsForPods(podCount, nullPodPnt);
-
     GeneratePodLayout(wh->em->warehouseLength, wh->em->warehouseHeight);
-    //GeneratePodLayout(30, 18);
 }
 
 void PodManager::Tick()
