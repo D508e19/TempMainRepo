@@ -5,6 +5,8 @@
 
 //#include "src/headers/EnvironmentManager.h"
 
+#include <map>
+
 EnvironmentManager::EnvironmentManager(){}
 EnvironmentManager::~EnvironmentManager(){}
 
@@ -57,17 +59,23 @@ void EnvironmentManager::Tick()
 		currentTimeslots.push_back(nextTimeslot);
 	}
 
-	//TODO: delete. for testing
-	if (!podParking.empty())
+	// DEBUGGING for pod parkings
+	/*
+	std::map<std::pair<int,int>, Pod*>::iterator it;
+
+	argos::LOG << "Start" << std::endl;
+	int i = 0;
+	for ( it = podParking.begin(); it != podParking.end(); it++ )
 	{
-		if(podParking[std::pair<int,int>(1,5)]){
-			argos::LOG << "Pod for 1,4 is not null " << std::endl;
-		}
-		else
-		{
-			argos::LOG << "Pod for 1,4 is null " << std::endl;;
-		}
+		argos::LOG << i++ << " " << it->first.first << " " << it->first.second << std::endl;
+		//argos::LOG << "Test" << std::endl;
+		//std::cout << it->first  // string (key)
+		//		<< ':'
+		//		<< it->second   // string's value 
+		//		<< std::endl ;
 	}
+	argos::LOG << "Done" << std::endl;
+	*/
 }
 
 bool EnvironmentManager::IsValidCoordinate(Coordinate cand)

@@ -10,7 +10,7 @@ private:
     const int layout_hallway_size = 1; //1
     const int layout_edge_size = 1; //1
     const int layout_podcluster_height = 2; //2
-    const int layout_podcluster_width = 4; //4
+    const int layout_podcluster_width = 2; //4
 
     void GeneratePodLayout(int warehouse_widthInTiles, int warehouse_heightInTiles);
 
