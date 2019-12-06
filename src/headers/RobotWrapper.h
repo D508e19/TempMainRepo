@@ -12,9 +12,7 @@ private:
 
     direction lastFacing;
     Coordinate lastCoordinate;
-
-    bool waitinForOrder = true;
-    Order* currentOrder;
+ 
     bool isCarrying = false;
 
 public:
@@ -23,6 +21,9 @@ public:
     ~RobotWrapper();
 
     void Tick();
+
+    bool waitingForOrder = true;
+    Order* currentOrder;
 
     void TranslatePathToInstructions(Path p);
     void AddInstructionToQueue(instruction ins, int tiles);
