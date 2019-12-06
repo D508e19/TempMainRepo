@@ -31,6 +31,7 @@ void OrderManager::CreateOrder()
 {
 	//argos::LOG << "create order with id: " << orderCount << std::endl;
     Order* newOrder = new Order(orderCount, -1);
+	newOrder->wareID = newOrder->orderID; //TODO Temporary
 	orders.insert(std::pair<int, Order*> (orderCount, newOrder));
 	wh->pm.ordersToBeProcessed.push(newOrder);
 	ordersOngoing.push(newOrder);

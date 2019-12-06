@@ -2,6 +2,8 @@
 #define ENVIRONMENT_MANAGER_CPP
 
 
+#include <map>
+
 EnvironmentManager::EnvironmentManager(){}
 EnvironmentManager::~EnvironmentManager(){}
 
@@ -49,17 +51,23 @@ void EnvironmentManager::Tick()
 	//ReserveCell(Coordinate(1,1), 4, 25);
 	//ReserveCell(Coordinate(1,1), 144, 50);
 
-	//TODO: delete. for testing
-	/*if (!podParking.empty())
+	// DEBUGGING for pod parkings
+	/*
+	std::map<std::pair<int,int>, Pod*>::iterator it;
+
+	argos::LOG << "Start" << std::endl;
+	int i = 0;
+	for ( it = podParking.begin(); it != podParking.end(); it++ )
 	{
-		if(podParking[std::pair<int,int>(1,5)]){
-			argos::LOG << "Pod for 1,4 is not null " << std::endl;
-		}
-		else
-		{
-			argos::LOG << "Pod for 1,4 is null " << std::endl;;
-		}
-	}*/
+		argos::LOG << i++ << " " << it->first.first << " " << it->first.second << std::endl;
+		//argos::LOG << "Test" << std::endl;
+		//std::cout << it->first  // string (key)
+		//		<< ':'
+		//		<< it->second   // string's value 
+		//		<< std::endl ;
+	}
+	argos::LOG << "Done" << std::endl;
+	*/
 }
 
 void EnvironmentManager::UpdateTimeslots(int tickCounter)
@@ -224,24 +232,23 @@ bool EnvironmentManager::ReserveCell(Coordinate cell, int startTick, int endTick
 	return true;
 }
 
-void EnvironmentManager::AddParkingSpotsForPods(int numberOfPods, Pod* nullPod)
+void EnvironmentManager::PlacePod(Pod* pod, Coordinate cord)
 {
-	// TODO: hardcoded podparking. Should be changed.
-	podParking[std::pair<int,int>(1,4)] = NULL;
-	podParking[std::pair<int,int>(1,5)] = nullPod;
-	podParking[std::pair<int,int>(1,6)] = nullPod;
-	podParking[std::pair<int,int>(1,7)] = nullPod;
-	podParking[std::pair<int,int>(2,4)] = nullPod;
-	podParking[std::pair<int,int>(2,5)] = nullPod;
-	podParking[std::pair<int,int>(2,6)] = nullPod;
-	podParking[std::pair<int,int>(2,7)] = nullPod;
-
+	podParking[std::pair<int, int>(cord.x, cord.y)] = pod;
 }
-    
-bool EnvironmentManager::ParkPod(Pod* pod)
+
+std::pair<int, int> EnvironmentManager::FindPodLocation(Pod* pod)
 {
-	//TODO
-	return false;
+	std::map<std::pair<int,int>, Pod*>::iterator it;
+	for ( it = podParking.begin(); it != podParking.end(); it++ )
+	{
+		//argos::LOG << "Pod search: looking for: " << pod->getId() << " checking: " << it->second->getId() << std::endl;
+
+		if(it->second == pod)
+			return it->first;
+	}
+
+	return std::pair<int, int>(-1, -1);
 }
 
 #endif
