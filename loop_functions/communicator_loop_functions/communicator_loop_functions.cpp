@@ -22,11 +22,6 @@ void CommunicatorLoopFunctions::PreStep()
    wh.Tick(); 
 }
 
-void CommunicatorLoopFunctions::PostStep()
-{
-   wh.PostTick();
-}
-
 void CommunicatorLoopFunctions::printControllers(){
    
    std::map<int, Basicbot*>::iterator it;

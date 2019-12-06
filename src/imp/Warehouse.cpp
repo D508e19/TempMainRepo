@@ -12,12 +12,7 @@ void Warehouse::Tick()
     om.Tick();
     rm.Tick();
     pm.Tick();  
-}
-
-void Warehouse::PostTick()
-{
-    rm.PostTick();
-}
+};
 
 void Warehouse::SetupWarehouse(std::map<int, Basicbot*> botControllers)
 {

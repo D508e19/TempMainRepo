@@ -20,7 +20,6 @@ public:
 
     void SetupWarehouse(std::map<int, Basicbot*> botControllers);
     void Tick();    
-    void PostTick();
 
     void CollectData(); 
 };

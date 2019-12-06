@@ -30,14 +30,6 @@ void RobotManager::Tick()
     }
 }
 
-void RobotManager::PostTick()
-{
-    for (int i = 0; i < robotCount; i++)
-    {
-        Wrappers[i].PostTick();
-    }
-}
-
 RobotWrapper RobotManager::CreateRobotWrapper(Basicbot* b)
 {
     RobotWrapper rw(b);
