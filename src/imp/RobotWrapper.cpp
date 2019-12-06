@@ -25,6 +25,9 @@ void RobotWrapper::Tick()
                 //cheat - These are to control which coords the bots gets
                 currentOrder->podLocation = cube(rand()%10,rand()%10);
                 currentOrder->pickStationLocation = cube(rand()%10,rand()%10);
+
+                currentOrder->podLocation = cube(2,3);
+                currentOrder->pickStationLocation = cube(4,2);
                 ///////
 
                 // Find path from bots last location to pod location

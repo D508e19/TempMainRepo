@@ -18,10 +18,13 @@ Basicbot::Basicbot() :
    m_cGoStraightAngleRange(-ToRadians(m_cAlpha),
    ToRadians(m_cAlpha)),
 
-   m_turningSpeed(5.49778714378213f),
-   m_ticksToTurn(20),
-   m_ticksToMoveOneCell(20),
+   m_turningSpeed(5.49778714378213f), //TODO calculate instead 
+   movingSpeed(10.0f), //TODO calculate instead 
 
+   ticksToTurn(20), //TODO calculate instead 
+   ticksToMoveOneCell(20), //TODO calculate instead 
+
+   // data collection
    ticksIdle(0),
    ticksMoveforward(0),
    ticksTurnleft(0),
@@ -77,6 +80,7 @@ void Basicbot::Init(TConfigurationNode &t_node)
 
    ReadCellQR();
    currentInstruction = idle;
+   LogReadablePosition();
 }
 
 void Basicbot::ControlStep()
@@ -108,8 +112,7 @@ void Basicbot::ControlStep()
          BotWait();
          break;
       default:
-      argos::LOGERR << "bot: " << robotID << " default in ControlStep switch. Should never reach." << std::endl;
-      argos::LOGERR << "currentInstruction: " << currentInstruction << std::endl;
+      argos::LOGERR << "bot: " << robotID << " default in ControlStep switch. currentInstruction: " << currentInstruction << std::endl;
          break;
    }
 }
@@ -118,16 +121,16 @@ void Basicbot::MoveForward()
 {
    if (!isBusy){
       isBusy = true;
-      counter = m_ticksToMoveOneCell * cellsToMove;
+      counter = ticksToMoveOneCell * cellsToMove;
    }
    
    if (counter > 0)
    {
-      m_pcWheels->SetLinearVelocity(10.0f, 10.0f);
+      m_pcWheels->SetLinearVelocity(movingSpeed, movingSpeed);
       ticksMoveforward++;
       counter--;
    }
-   if (counter == 0)
+   else
    {
       ReadCellQR();
       argos::LOG << "Arrived at: " << lastReadCellQR.x << " , " << lastReadCellQR.y << std::endl;
@@ -140,7 +143,7 @@ void Basicbot::TurnRight()
 {
    if (!isBusy){
       isBusy = true;
-      counter = m_ticksToTurn;
+      counter = ticksToTurn;
    }
    if (counter > 0)
    {
@@ -148,7 +151,7 @@ void Basicbot::TurnRight()
       ticksTurnright++;
       counter--;
    }
-   if (counter == 0)
+   else
    {
       if(facing == north){facing=east;}
       else if(facing == south){facing=west;}
@@ -162,7 +165,7 @@ void Basicbot::TurnLeft()
 {
    if (!isBusy){
       isBusy = true;
-      counter = m_ticksToTurn;
+      counter = ticksToTurn;
    }
    if (counter > 0)
    {
@@ -170,7 +173,7 @@ void Basicbot::TurnLeft()
       ticksTurnleft++;
       counter--;
    }
-   if (counter == 0)
+   else
    {
       if(facing == north){facing=west;}
       else if(facing == south){facing=east;}
@@ -184,7 +187,7 @@ void Basicbot::Turn180()
 {
    if (!isBusy){
       isBusy = true;
-      counter = m_ticksToTurn * 2;
+      counter = ticksToTurn * 2;
    }
    if (counter > 0)
    {
@@ -192,7 +195,7 @@ void Basicbot::Turn180()
       ticksTurn180++;
       counter--;
    }
-   if (counter == 0)
+   else
    {
       if(facing == north){facing=south;}
       else if(facing == south){facing=north;}
@@ -214,7 +217,7 @@ void Basicbot::PickUpPod()
       ticksPickuppod++;
       counter--;
    }
-   if (counter == 0)
+   else
    {
       ResetBot();
    }
@@ -232,7 +235,7 @@ void Basicbot::PutDownPod()
       ticksPutdownpod++;
       counter--;
    }
-   if (counter == 0)
+   else
    {
       ResetBot();
    }
@@ -249,12 +252,13 @@ void Basicbot::BotWait()
    {
       ticksWait++;
       counter--;
+      if (counter == 0)
+      {
+         argos::LOG << "waited: " << ticksToWait << " ticks." << std::endl;
+         ResetBot();
+      }
    }
-   if (counter == 0)
-   {
-      argos::LOG << "waited: " << ticksToWait << std::endl;
-      ResetBot();
-   }
+
 }
 
 void Basicbot::ResetBot()
@@ -284,7 +288,7 @@ void Basicbot::LogReadablePosition(){
    double y = temp.GetY();
 
    std::stringstream stream;
-   stream << std::fixed << std::setprecision(2) << x << ", " << y;
+   stream << std::fixed << std::setprecision(5) << x << ", " << y;
    std::string s = stream.str();
    
    argos::LOG << "Position: " << s << std::endl;
