@@ -20,7 +20,7 @@ public:
 
     Warehouse *wh;
 
-    void SetupPodManager(Warehouse * _wh, int numOfPods);
+    void SetupPodManager(Warehouse * _wh);
     void Tick();
 
     std::map<int, Pod*> pods; // TODO: laves om til vector?

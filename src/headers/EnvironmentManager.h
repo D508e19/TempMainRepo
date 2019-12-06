@@ -41,6 +41,8 @@ public:
     int warehouseHeight; //y = warehouseHeight -1
 
     void PlacePod(Pod* pod, Coordinate cord);
+
+    std::pair<int, int> FindPodLocation(Pod* pod);
 };
 
 

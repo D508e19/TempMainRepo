@@ -4,17 +4,12 @@
 PodManager::PodManager(){}
 PodManager::~PodManager(){}
 
-void PodManager::SetupPodManager(Warehouse* _wh, int numOfPods)
+void PodManager::SetupPodManager(Warehouse* _wh)
 {
     wh = _wh;
     podCount = 0;
 
     nullPodPnt = new Pod(-1); // todo. maybe just use NULL instead??
-
-    for (int i=0; i<numOfPods; i++)
-    {
-        CreatePod();
-    }
 
     GeneratePodLayout(wh->em->warehouseLength, wh->em->warehouseHeight);
 }
@@ -26,8 +21,21 @@ void PodManager::Tick()
 		Order* nextOrder = ordersToBeProcessed.front();
    
         // add pod id - fakeish for now 
-        nextOrder->podID = nextOrder->orderID;
+        nextOrder->podID = (nextOrder->orderID) % podCount;
+        //Find location of pod
+        std::pair<int, int> podLocation = wh->em->FindPodLocation(pods[nextOrder->podID]);
     
+        //Did it find a pod location?
+        if(podLocation.first != -1 && podLocation.second != -1) //Yes
+        {
+            argos::LOG << "FOUND THE REQUESTED POD!!" << " Pod id: " << nextOrder->podID << std::endl;
+            nextOrder->podLocation = podLocation;
+        }
+        else //No
+        {
+            argos::LOGERR << "FAILED FINDING THE REQUESTED POD!!" << " Pod id: " << nextOrder->podID << std::endl;
+        }
+        
         // send the order onwards to the Robot Manager
     	wh->rm.ordersToBeProcessed.push(nextOrder);
 		ordersToBeProcessed.pop();

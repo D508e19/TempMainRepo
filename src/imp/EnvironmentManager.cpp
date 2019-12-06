@@ -125,4 +125,18 @@ void EnvironmentManager::PlacePod(Pod* pod, Coordinate cord)
 	podParking[std::pair<int, int>(cord.x, cord.y)] = pod;
 }
 
+std::pair<int, int> EnvironmentManager::FindPodLocation(Pod* pod)
+{
+	std::map<std::pair<int,int>, Pod*>::iterator it;
+	for ( it = podParking.begin(); it != podParking.end(); it++ )
+	{
+		argos::LOG << "Pod search: looking for: " << pod->getId() << " checking: " << it->second->getId() << std::endl;
+
+		if(it->second == pod)
+			return it->first;
+	}
+
+	return std::pair<int, int>(-1, -1); //TODO
+}
+
 #endif
