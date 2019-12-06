@@ -13,11 +13,12 @@ Basicbot::Basicbot() :
    m_pcGroundSensor(NULL),
    m_pcProximity(NULL),
    m_cAlpha(10.0f),
-   m_fDelta(0.5f), // default: 0.5
+   m_fDelta(0.5f), 
    m_fWheelVelocity(2.5f),
    m_cGoStraightAngleRange(-ToRadians(m_cAlpha),
    ToRadians(m_cAlpha)),
 
+   ////
    m_turningSpeed(5.49778714378213f), //TODO calculate instead 
    movingSpeed(10.0f), //TODO calculate instead 
 
@@ -266,6 +267,7 @@ void Basicbot::ResetBot()
    m_pcWheels->SetLinearVelocity(0, 0);
    cellsToMove = 1;
    ticksToWait = 1;
+   counter = -1;
    currentInstruction = idle;
    isBusy = false;
 

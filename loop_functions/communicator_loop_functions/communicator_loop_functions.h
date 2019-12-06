@@ -24,6 +24,8 @@ public:
 
    virtual void PreStep();
 
+   virtual void PostStep();
+
    virtual void Destroy();
 
 private:

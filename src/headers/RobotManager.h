@@ -19,6 +19,7 @@ public:
 
     void SetupRobotManager(Warehouse* _wh, std::map<int, Basicbot*> botControllers);
     void Tick();
+    void PostTick();
 };
 
 

@@ -21,6 +21,7 @@ public:
     ~RobotWrapper();
 
     void Tick();
+    void PostTick();
 
     bool waitingForOrder = true;
     Order* currentOrder;

@@ -68,6 +68,15 @@ void RobotWrapper::Tick()
     }
 }
 
+void RobotWrapper::PostTick()
+{
+    if(m_bot->isBusy && m_bot->counter==0)
+    {
+        argos::LOG << "rw. posttick" << std::endl;
+        m_bot->ResetBot();
+    }
+}
+
 void RobotWrapper::TranslatePathToInstructions(Path p)
 {
     int counter = p.waypoints.size();
