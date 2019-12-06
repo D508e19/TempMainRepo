@@ -8,6 +8,7 @@ void PodManager::SetupPodManager(Warehouse* _wh)
 {
     wh = _wh;
     podCount = 0;
+    pickingStationLocation = std::pair<int, int>(0,5);
 
     nullPodPnt = new Pod(-1); // todo. maybe just use NULL instead??
 
@@ -15,7 +16,9 @@ void PodManager::SetupPodManager(Warehouse* _wh)
 }
 
 void PodManager::Tick()
-{  
+{
+    std::queue<Order*> failedOrders;
+
     while (!ordersToBeProcessed.empty())
 	{
 		Order* nextOrder = ordersToBeProcessed.front();
@@ -24,22 +27,36 @@ void PodManager::Tick()
         nextOrder->podID = (nextOrder->orderID) % podCount;
         //Find location of pod
         std::pair<int, int> podLocation = wh->em->FindPodLocation(pods[nextOrder->podID]);
-    
+
+        //Add picking station location
+        nextOrder->pickStationLocation = pickingStationLocation; //TEMP
+
         //Did it find a pod location?
         if(podLocation.first != -1 && podLocation.second != -1) //Yes
         {
             //argos::LOG << "FOUND THE REQUESTED POD!!" << " Pod id: " << nextOrder->podID << std::endl;
             nextOrder->podLocation = podLocation;
+
+            // send the order onwards to the Robot Manager
+    	    wh->rm.ordersToBeProcessed.push(nextOrder);
         }
         else //No
         {
             argos::LOGERR << "FAILED FINDING THE REQUESTED POD!!" << " Pod id: " << nextOrder->podID << std::endl;
+
+            // Add order to the failed queue
+            failedOrders.push(nextOrder);
         }
         
-        // send the order onwards to the Robot Manager
-    	wh->rm.ordersToBeProcessed.push(nextOrder);
 		ordersToBeProcessed.pop();
 	}
+
+    // Add the failed orders back into the main queue
+    while(!failedOrders.empty())
+    {
+        ordersToBeProcessed.push(failedOrders.front());
+        failedOrders.pop();
+    }
 }
 
 void PodManager::CreatePod()

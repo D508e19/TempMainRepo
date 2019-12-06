@@ -12,6 +12,8 @@ private:
     const int layout_podcluster_height = 2; //2
     const int layout_podcluster_width = 2; //4
 
+    std::pair<int, int> pickingStationLocation;
+
     void GeneratePodLayout(int warehouse_widthInTiles, int warehouse_heightInTiles);
 
 public:
