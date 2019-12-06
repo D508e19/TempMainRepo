@@ -35,8 +35,6 @@ public:
 
     bool ReserveCell(Coordinate cell, int startTick, int endTick);
 
-    bool ParkPod(Pod* pod);
-
     bool IsValidCoordinate(Coordinate cand);
     bool IsReserved(Coordinate cell, int tick);
     bool IsReserved(Coordinate cell, int startTick, int endTick);

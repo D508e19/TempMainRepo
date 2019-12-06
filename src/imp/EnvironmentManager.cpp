@@ -236,29 +236,6 @@ bool EnvironmentManager::ReserveCell(Coordinate cell, int startTick, int endTick
 
 	return true;
 }
-<<<<<<< HEAD
-=======
-
-void EnvironmentManager::AddParkingSpotsForPods(int numberOfPods, Pod* nullPod)
-{
-	// TODO: hardcoded podparking. Should be changed.
-	podParking[std::pair<int,int>(1,4)] = NULL;
-	podParking[std::pair<int,int>(1,5)] = nullPod;
-	podParking[std::pair<int,int>(1,6)] = nullPod;
-	podParking[std::pair<int,int>(1,7)] = nullPod;
-	podParking[std::pair<int,int>(2,4)] = nullPod;
-	podParking[std::pair<int,int>(2,5)] = nullPod;
-	podParking[std::pair<int,int>(2,6)] = nullPod;
-	podParking[std::pair<int,int>(2,7)] = nullPod;
-
-}
->>>>>>> 3af41b63115d4f9047a8cb231cd675eeca674317
-    
-bool EnvironmentManager::ParkPod(Pod* pod)
-{
-	//TODO
-	return false;
-}
 
 void EnvironmentManager::PlacePod(Pod* pod, Coordinate cord)
 {
@@ -270,13 +247,13 @@ std::pair<int, int> EnvironmentManager::FindPodLocation(Pod* pod)
 	std::map<std::pair<int,int>, Pod*>::iterator it;
 	for ( it = podParking.begin(); it != podParking.end(); it++ )
 	{
-		argos::LOG << "Pod search: looking for: " << pod->getId() << " checking: " << it->second->getId() << std::endl;
+		//argos::LOG << "Pod search: looking for: " << pod->getId() << " checking: " << it->second->getId() << std::endl;
 
 		if(it->second == pod)
 			return it->first;
 	}
 
-	return std::pair<int, int>(-1, -1); //TODO
+	return std::pair<int, int>(-1, -1);
 }
 
 #endif

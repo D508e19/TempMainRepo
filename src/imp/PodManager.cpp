@@ -28,7 +28,7 @@ void PodManager::Tick()
         //Did it find a pod location?
         if(podLocation.first != -1 && podLocation.second != -1) //Yes
         {
-            argos::LOG << "FOUND THE REQUESTED POD!!" << " Pod id: " << nextOrder->podID << std::endl;
+            //argos::LOG << "FOUND THE REQUESTED POD!!" << " Pod id: " << nextOrder->podID << std::endl;
             nextOrder->podLocation = podLocation;
         }
         else //No
