@@ -48,9 +48,9 @@ public:
    virtual void Destroy() {}
 
    int robotID;
-   direction facing;
-   Coordinate lastReadCellQR = Coordinate(0,0);
-   int lastReadPodQR;
+   direction facing = north;
+   Coordinate lastReadCellQR;// = Coordinate(0,0);
+   int lastReadPodQR = -1;
 
    bool isBusy = false;
    instruction currentInstruction = idle;
@@ -61,7 +61,7 @@ public:
    void Turn180();
    void PickUpPod();
    void PutDownPod();
-   void Wait();
+   void BotWait();
 
    int counter = 0;
    int cellsToMove = 1;
@@ -74,6 +74,10 @@ public:
 
    void LogReadablePosition();
    void ReadCellQR();
+
+   Real m_turningSpeed;
+   int m_ticksToTurn;
+   int m_ticksToMoveOneCell;
 
    // for data collection
    int ticksIdle = 0;
@@ -118,9 +122,7 @@ private:
     * It is set to [-alpha,alpha]. */
    CRange<CRadians> m_cGoStraightAngleRange;
 
-   Real m_turningSpeed;
-   int m_ticksToTurn;
-   int m_ticksToMoveOneCell;
+
 
    CVector2 GetPosition2D();
 };

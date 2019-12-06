@@ -8,38 +8,34 @@
 OrderManager::OrderManager(){}
 OrderManager::~OrderManager(){}
 
-void OrderManager::Tick()
-{
-	int tempSize = ordersToBeProcessed.size();
-    for (int i = 0; i < tempSize; i++)
-    {
-		int nextId = ordersToBeProcessed.front();
-        argos::LOG << "process order id: " << orders[nextId].getOrderID() << std::endl;
-
-		// can først virke når vi afskiller h og cpp filer
-		//wh->AddOrderToProcessQueue(&orders[i]);
-
-		ordersToBeProcessed.pop();
-    }
-}
-
 void OrderManager::SetupOrderManager(Warehouse* _wh)
 {
 	wh = _wh;
 	orderCount = 0;
-	argos::LOG << orderCount << std::endl;
+
+	// /* TODO delete 
 	for (int i = 0; i < 10; i++)
 	{
 		CreateOrder();
 	}
+	// */
+}
+
+void OrderManager::Tick()
+{
+	// new orders to be created?
+	// old orders to be closed? need a ordersToBeProcessed queue?
 }
 
 void OrderManager::CreateOrder()
 {
-    Order newOrder(orderCount, -1);
-	ordersToBeProcessed.push(newOrder.getOrderID());
-	orders.insert(std::pair<int, Order> (orderCount, newOrder));
-	argos::LOG << "created order: " << newOrder.getOrderID() << std::endl;
+	//argos::LOG << "create order with id: " << orderCount << std::endl;
+    Order* newOrder = new Order(orderCount, -1);
+	newOrder->wareID = newOrder->orderID; //TODO Temporary
+	orders.insert(std::pair<int, Order*> (orderCount, newOrder));
+	wh->pm.ordersToBeProcessed.push(newOrder);
+	ordersOngoing.push(newOrder);
+	
 	orderCount++;
 }
 

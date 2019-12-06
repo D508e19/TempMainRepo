@@ -8,8 +8,8 @@ RobotWrapper::~RobotWrapper(){};
 
 RobotWrapper::RobotWrapper(Basicbot *bot):m_bot(bot)
 {
-    lastFacing = m_bot->facing;
-    lastCoordinate = m_bot->lastReadCellQR;
+    lastFacing = m_bot->facing; // check if working. seems like not.
+    lastCoordinate = m_bot->lastReadCellQR; // check if working. seems like not.
 
     /* TODO: Delete
     for (int i = 0; i < 5; i++)
@@ -27,7 +27,8 @@ void RobotWrapper::Tick()
             //argos::LOG << "InstructionQueue empty. Generate new random path." << std::endl;
             // Add random path
             // TODO: Delete 
-            TranslatePathToInstructions(pf.FindPath(lastCoordinate, Coordinate(rand()%5,rand()%5)));
+            Path p = pf.FindPath(lastCoordinate, Coordinate(rand()%10,rand()%10), lastFacing, isCarrying);
+            TranslatePathToInstructions(p);
         }
         SendNextInstruction();
     }
@@ -42,7 +43,7 @@ void RobotWrapper::TranslatePathToInstructions(Path p)
     {
         // wait instruction is added TODO comment more
         if(p.waypoints.front().x == -1){
-            AddInstructionToQueue(wait, p.waypoints.front().y);
+            AddInstructionToQueue(_wait, p.waypoints.front().y);
             continue;
         }
 
@@ -110,7 +111,6 @@ direction RobotWrapper::GetFaceTowardsInstruction(Coordinate coordToFace, Coordi
     }
 
     return nextFacing;
-
 }
 
 void RobotWrapper::SendNextInstruction()
@@ -141,10 +141,10 @@ void RobotWrapper::SendNextInstruction()
         case putdownpod:
             m_bot->currentInstruction = putdownpod;
             break;
-        case wait:
+        case _wait:
             m_bot->ticksToWait = instructionsValuesQueue.front();
             instructionsValuesQueue.pop();
-            m_bot->currentInstruction = wait;
+            m_bot->currentInstruction = _wait;
         
         default:
             break;
@@ -161,7 +161,7 @@ void RobotWrapper::AddInstructionToQueue(instruction ins, int tiles = 1)
     {
         instructionsValuesQueue.push(tiles);
     }
-    if(ins == wait)
+    if(ins == _wait)
     {
         instructionsValuesQueue.push(tiles);
     }

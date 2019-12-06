@@ -47,7 +47,7 @@
 			<body position="0,0,0" orientation="0,0,0" />
 			<controller config="bc" />
 		</foot-bot>
-		
+
 
 		
 	</arena>
@@ -63,7 +63,11 @@
 	</media>
 
 	<visualization>
-		<qt-opengl />
+    <qt-opengl>
+      <camera>
+        <placement idx="0" position="0,0,7" look_at="0,0,0" up="1.0, 0.0, 0.0" lens_focal_length="23" />
+      </camera>
+    </qt-opengl>
 	</visualization>
 	<!-- <loop_functions library="/path/to/libmy_loop_functions.so" label="my_loop_functions" /> -->
 </argos-configuration>

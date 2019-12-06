@@ -4,20 +4,20 @@
 class Order
 {
 private:
-	int orderID;
-	int podID;
-	int timestamp_born;
-	int timestamp_assigned;
-	int timestamp_completed;
-	bool underWay;
-	
+
 public:
-	Order();
 	Order(int orderID, int timestampBorn);
 	~Order();
 
-    int getPodID(){ return Order::podID; }
-    int getOrderID(){ return Order::orderID; }
+	int orderID = -1;
+	int wareID = -1;
+	int podID = -1;
+	std::pair<int, int> podLocation = std::pair<int, int>(-1, -1);
+	int timestamp_born = -1;
+	int timestamp_assigned = -1;
+	int timestamp_completed = -1;
+	// bool underWay;
+
 };
 
 

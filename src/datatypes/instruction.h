@@ -10,7 +10,7 @@ enum instruction{
     pickuppod, 
     putdownpod,
     ignore,
-    wait
+    _wait
     };
 
 #endif

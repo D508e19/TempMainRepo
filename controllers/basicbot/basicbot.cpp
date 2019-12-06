@@ -103,8 +103,8 @@ void Basicbot::ControlStep()
       case putdownpod:
          //PutDownPOd();
          break;   
-      case wait:
-         Wait();
+      case _wait:
+         BotWait();
       default:
          break;
    }
@@ -126,7 +126,7 @@ void Basicbot::MoveForward()
    else
    {
       ReadCellQR();
-      //argos::LOG << "Arrived at: " << lastReadCellQR.x << " , " << lastReadCellQR.y << std::endl;
+      argos::LOG << "Arrived at: " << lastReadCellQR.x << " , " << lastReadCellQR.y << std::endl;
       ResetBot();
    }
 }
@@ -233,7 +233,7 @@ void Basicbot::PutDownPod()
    }
 }
 
-void Basicbot::Wait()
+void Basicbot::BotWait()
 {
    if (!isBusy){
       isBusy = true;
@@ -263,6 +263,7 @@ void Basicbot::ResetBot()
 }
 
 void Basicbot::ReadCellQR(){
+   //argos::LOG << "read QR" << std::endl;
    CVector2 temp = GetPosition2D();
    double x = temp.GetX() * 5;
    double y = temp.GetY() * 5;

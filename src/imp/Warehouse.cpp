@@ -8,6 +8,7 @@ Warehouse::~Warehouse(){};
 
 void Warehouse::Tick()
 {
+    em->Tick();
     om.Tick();
     rm.Tick();
     pm.Tick();  
@@ -17,9 +18,12 @@ void Warehouse::SetupWarehouse(std::map<int, Basicbot*> botControllers)
 {
     bots = botControllers;
     srand (time(NULL));	// seed for rng
-    // andet setup ?
+
+    em = new EnvironmentManager();
+    em->SetupEnvirionmentManager();
+
     om.SetupOrderManager(this); 
-    pm.SetupPodManager(this, 100);
+    pm.SetupPodManager(this);
     rm.SetupRobotManager(this, botControllers);
 }
 
@@ -27,11 +31,5 @@ void Warehouse::CollectData()
 {
     dc.CollectData(bots);
 }
-
-void Warehouse::AddOrderToProcessQueue(Order* order)
-{
-    argos::LOG << order->getOrderID() << std::endl;
-    orderQueue.push(order);
-};
 
 #endif
