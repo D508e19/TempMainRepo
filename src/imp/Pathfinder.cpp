@@ -7,10 +7,10 @@ Pathfinder::Pathfinder()
 }
 Pathfinder::~Pathfinder(){}
 
-Path Pathfinder::FindPath(Coordinate start, Coordinate end, direction currentDirection)
+Path Pathfinder::FindPath(Coordinate start, Coordinate end, direction currentDirection, bool isCarrying)
 {
     Path p; 
-    //argos::LOG << "Find path from: " << start.x << "," << start.y << ". to: " << end.x << "," << end.y << std::endl;
+    argos::LOG << "Find path from: " << start.x << "," << start.y << ". to: " << end.x << "," << end.y << std::endl;
 
     switch (selectedAlgorithm)
     {
@@ -19,7 +19,7 @@ Path Pathfinder::FindPath(Coordinate start, Coordinate end, direction currentDir
             break;
 
         case 1:
-            p = GetAstarPath(start, end, currentDirection);
+            p = GetAstarPath(start, end, currentDirection, isCarrying);
             break;
         
         default:
@@ -29,6 +29,7 @@ Path Pathfinder::FindPath(Coordinate start, Coordinate end, direction currentDir
     if (p.waypoints.empty())
     {
         argos::LOG << "The path returned is empty." << std::endl;
+        pathReturnedEmpty++;
     }
 
     return p;
@@ -44,12 +45,11 @@ Path Pathfinder::GetStupidPath(Coordinate start, Coordinate end)
     return newPath;
 }
 
-Path Pathfinder::GetAstarPath(Coordinate start, Coordinate goal, direction _direction) 
+Path Pathfinder::GetAstarPath(Coordinate start, Coordinate goal, direction _direction, bool isCarrying) 
 {
     Node* startNode = new Node(start, _direction); // TODO: remove from heap when path is done
     currentNode = startNode;
     int i = 0;
-    //argos::LOG << currentNode->nodeDirection << std::endl; //TODO: for testing
 
     for (int i = 0; i < 100; i++)
     {

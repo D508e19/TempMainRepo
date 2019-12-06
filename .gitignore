@@ -3,3 +3,4 @@ profile.txt
 .vscode/*
 experiments/*
 output.txt
+CMakeLists.txt

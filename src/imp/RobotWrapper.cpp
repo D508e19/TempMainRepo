@@ -24,12 +24,11 @@ void RobotWrapper::Tick()
     {    
         if(instructionQueue.empty())
         {
-            argos::LOG << lastFacing << std::endl;
-
             //argos::LOG << "InstructionQueue empty. Generate new random path." << std::endl;
             // Add random path
             // TODO: Delete 
-            TranslatePathToInstructions(pf.FindPath(lastCoordinate, Coordinate(rand()%5,rand()%5), lastFacing));
+            Path p = pf.FindPath(lastCoordinate, Coordinate(rand()%10,rand()%10), lastFacing, isCarrying);
+            TranslatePathToInstructions(p);
         }
         SendNextInstruction();
     }

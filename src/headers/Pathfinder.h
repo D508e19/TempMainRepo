@@ -8,6 +8,8 @@ class Pathfinder
 private:
     int selectedAlgorithm;
 
+    int pathReturnedEmpty = 0;
+
     Node* currentNode;
     Path pathList;
     
@@ -18,10 +20,11 @@ public:
     Pathfinder();
     ~Pathfinder();
    
-    Path FindPath(Coordinate start, Coordinate end, direction last);
+    Path FindPath(Coordinate start, Coordinate end, direction last, bool isCarrying);
 
     Path GetStupidPath(Coordinate start, Coordinate end);
-    Path GetAstarPath(Coordinate start, Coordinate end, direction last);
+    Path GetAstarPath(Coordinate start, Coordinate end, direction last, bool isCarrying);
+
 
 };
 
