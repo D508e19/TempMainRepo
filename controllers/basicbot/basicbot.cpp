@@ -80,7 +80,6 @@ void Basicbot::Init(TConfigurationNode &t_node)
 
    ReadCellQR();
    currentInstruction = idle;
-   LogReadablePosition();
 }
 
 void Basicbot::ControlStep()
@@ -134,7 +133,7 @@ void Basicbot::MoveForward()
    {
       ReadCellQR();
       argos::LOG << "Arrived at: " << lastReadCellQR.x << " , " << lastReadCellQR.y << std::endl;
-      LogReadablePosition();
+      //LogReadablePosition();
       ResetBot();
    }
 }
@@ -258,7 +257,6 @@ void Basicbot::BotWait()
          ResetBot();
       }
    }
-
 }
 
 void Basicbot::ResetBot()

@@ -23,11 +23,11 @@ void RobotWrapper::Tick()
                 //it means that it has received a new order
 
                 //cheat - These are to control which coords the bots gets
-                currentOrder->podLocation = cube(rand()%10,rand()%10);
+                currentOrder->podLocation = cube(rand()%25,rand()%25);
                 currentOrder->pickStationLocation = cube(rand()%10,rand()%10);
 
-                currentOrder->podLocation = cube(2,3);
-                currentOrder->pickStationLocation = cube(4,2);
+                //currentOrder->podLocation = cube(2,3);
+                //currentOrder->pickStationLocation = cube(4,2);
                 ///////
 
                 // Find path from bots last location to pod location
@@ -37,7 +37,7 @@ void RobotWrapper::Tick()
 
                 // arrive at pod placement
                 // TODO: check if pod is actually here
-                AddInstructionToQueue(pickuppod, 1);
+                ////AddInstructionToQueue(pickuppod, 1);
                 // TODO: isCarrying. Who changes this value? 
 
                 // Find path to picking station
@@ -46,15 +46,15 @@ void RobotWrapper::Tick()
                 TranslatePathToInstructions(pathToPickstation);
 
                 // Arrive at picking station. Waiting for 5 seconds. TODO: ticksToPicks should be moved out to a variable.
-                AddInstructionToQueue(_wait, 50);
+                //AddInstructionToQueue(_wait, 50);
 
 
                 // pathfind back to pod original position. Changed later to find avalibale spot
                 Path pathToPodSpot = pf.FindPath(lastCoordinate, podCoord, lastFacing, isCarrying);
-                TranslatePathToInstructions(pathToPod);
+                TranslatePathToInstructions(pathToPodSpot);
 
                 // put down pod
-                AddInstructionToQueue(putdownpod, 1);
+                ////AddInstructionToQueue(putdownpod, 1);
                 // TODO: isCarrying. Who changes this value?
 
                 //TODO: move out of the way. Maybe a go-home function if idle for too long.
@@ -70,7 +70,18 @@ void RobotWrapper::Tick()
 
 void RobotWrapper::TranslatePathToInstructions(Path p)
 {
+    Path copy = p;
+    for (int i = 0; i < p.waypoints.size(); i++)
+    {
+        copy.waypoints.front().PrintCoordinate();
+        copy.waypoints.pop();
+    }
+
     int counter = p.waypoints.size();
+    if(counter==0){
+        argos::LOG<<"can't translate empty path." << std::endl;
+        return;}
+
     int diff = 0;
 
     for (int i = 0; i < counter; i++)
@@ -131,23 +142,6 @@ void RobotWrapper::TranslatePathToInstructions(Path p)
     }
 }
 
-direction RobotWrapper::GetFaceTowardsInstruction(Coordinate coordToFace, Coordinate lastCoordinate, direction _lastFacing)
-{
-    direction nextFacing = _lastFacing;
-
-    int xdiff = lastCoordinate.x-coordToFace.x;
-    int ydiff = lastCoordinate.y-coordToFace.y;
-
-    if(xdiff != 0){
-        nextFacing = (xdiff < 0) ? north : south;
-    }
-    else if (ydiff != 0){
-        nextFacing = (ydiff < 0) ?  east : west; 
-    }
-
-    return nextFacing;
-}
-
 void RobotWrapper::SendNextInstruction()
 {
     if(!instructionQueue.empty()){
@@ -185,6 +179,23 @@ void RobotWrapper::SendNextInstruction()
             break;
         }
     }
+}
+
+direction RobotWrapper::GetFaceTowardsInstruction(Coordinate coordToFace, Coordinate lastCoordinate, direction _lastFacing)
+{
+    direction nextFacing = _lastFacing;
+
+    int xdiff = lastCoordinate.x-coordToFace.x;
+    int ydiff = lastCoordinate.y-coordToFace.y;
+
+    if(xdiff != 0){
+        nextFacing = (xdiff < 0) ? north : south;
+    }
+    else if (ydiff != 0){
+        nextFacing = (ydiff < 0) ?  east : west; 
+    }
+
+    return nextFacing;
 }
 
 void RobotWrapper::AddInstructionToQueue(instruction ins, int tiles = 1)
