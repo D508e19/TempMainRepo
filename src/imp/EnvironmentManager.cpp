@@ -1,9 +1,6 @@
 #ifndef ENVIRONMENT_MANAGER_CPP
 #define ENVIRONMENT_MANAGER_CPP
 
-//#include <tuple>
-
-//#include "src/headers/EnvironmentManager.h"
 
 #include <map>
 
@@ -153,7 +150,6 @@ bool EnvironmentManager::IsReserved(Coordinate cell, int startTick, int endTick)
 	return ans;
 }
 
-
 bool EnvironmentManager::ReserveCell(Coordinate cell, int startTick, int endTick)
 {
 	if(!IsValidCoordinate(cell))
@@ -174,9 +170,8 @@ bool EnvironmentManager::ReserveCell(Coordinate cell, int startTick, int endTick
 		return false;
 	}
 
-	//TODO: test too far into the future
+	//TODO: test too far into the future - endTick not in any timeslot 
 
-	//TODO: move into function FindTimeslot(int tick)
 	//find timeslot for startTick	
 	int startTimeslot; 
 	for (int i = currentTimeslots[0]; i < timeslotsIntoTheFuture; i++)

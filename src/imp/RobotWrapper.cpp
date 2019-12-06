@@ -8,14 +8,8 @@ RobotWrapper::~RobotWrapper(){};
 
 RobotWrapper::RobotWrapper(Basicbot *bot):m_bot(bot)
 {
-    lastFacing = m_bot->facing; // check if working. seems like not.
-    lastCoordinate = m_bot->lastReadCellQR; // check if working. seems like not.
-
-    /* TODO: Delete
-    for (int i = 0; i < 5; i++)
-    {
-        TranslatePathToInstructions(pf.GetStupidPath(lastCoordinate, Coordinate(rand()%5,rand()%5)));
-    }*/
+    lastFacing = m_bot->facing; // TODO: check if working. seems like not.
+    lastCoordinate = m_bot->lastReadCellQR; // TODO: check if working. seems like not.
 }
 
 void RobotWrapper::Tick()
@@ -24,12 +18,18 @@ void RobotWrapper::Tick()
     {    
         if(instructionQueue.empty())
         {
+            // if waiting for order skip
+
+            // if not waiting for order
+            // find path to orders pod coordinate
+
             //argos::LOG << "InstructionQueue empty. Generate new random path." << std::endl;
             // Add random path
             // TODO: Delete 
             Path p = pf.FindPath(lastCoordinate, Coordinate(rand()%10,rand()%10), lastFacing, isCarrying);
+            
             TranslatePathToInstructions(p);
-        }
+        } 
         SendNextInstruction();
     }
 }
