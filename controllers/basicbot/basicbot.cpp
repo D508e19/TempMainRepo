@@ -76,6 +76,7 @@ void Basicbot::Init(TConfigurationNode &t_node)
    GetNodeAttributeOrDefault(t_node, "velocity", m_fWheelVelocity, m_fWheelVelocity);
 
    ReadCellQR();
+   currentInstruction = idle;
 }
 
 void Basicbot::ControlStep()
@@ -98,14 +99,17 @@ void Basicbot::ControlStep()
          Turn180();
          break;
       case pickuppod:
-         //PickupPod();
+         PickUpPod();
          break;
       case putdownpod:
-         //PutDownPOd();
+         PutDownPod();
          break;   
       case _wait:
          BotWait();
+         break;
       default:
+      argos::LOGERR << "bot: " << robotID << " default in ControlStep switch. Should never reach." << std::endl;
+      argos::LOGERR << "currentInstruction: " << currentInstruction << std::endl;
          break;
    }
 }
@@ -123,10 +127,11 @@ void Basicbot::MoveForward()
       ticksMoveforward++;
       counter--;
    }
-   else
+   if (counter == 0)
    {
       ReadCellQR();
       argos::LOG << "Arrived at: " << lastReadCellQR.x << " , " << lastReadCellQR.y << std::endl;
+      LogReadablePosition();
       ResetBot();
    }
 }
@@ -143,7 +148,7 @@ void Basicbot::TurnRight()
       ticksTurnright++;
       counter--;
    }
-   else
+   if (counter == 0)
    {
       if(facing == north){facing=east;}
       else if(facing == south){facing=west;}
@@ -165,7 +170,7 @@ void Basicbot::TurnLeft()
       ticksTurnleft++;
       counter--;
    }
-   else
+   if (counter == 0)
    {
       if(facing == north){facing=west;}
       else if(facing == south){facing=east;}
@@ -187,7 +192,7 @@ void Basicbot::Turn180()
       ticksTurn180++;
       counter--;
    }
-   else
+   if (counter == 0)
    {
       if(facing == north){facing=south;}
       else if(facing == south){facing=north;}
@@ -209,7 +214,7 @@ void Basicbot::PickUpPod()
       ticksPickuppod++;
       counter--;
    }
-   else
+   if (counter == 0)
    {
       ResetBot();
    }
@@ -227,7 +232,7 @@ void Basicbot::PutDownPod()
       ticksPutdownpod++;
       counter--;
    }
-   else
+   if (counter == 0)
    {
       ResetBot();
    }
@@ -245,7 +250,7 @@ void Basicbot::BotWait()
       ticksWait++;
       counter--;
    }
-   else
+   if (counter == 0)
    {
       argos::LOG << "waited: " << ticksToWait << std::endl;
       ResetBot();
@@ -263,6 +268,7 @@ void Basicbot::ResetBot()
 }
 
 void Basicbot::ReadCellQR(){
+   // TODO: BUGBUGBUG
    //argos::LOG << "read QR" << std::endl;
    CVector2 temp = GetPosition2D();
    double x = temp.GetX() * 5;
@@ -289,7 +295,6 @@ CVector2 Basicbot::GetPosition2D(){
     const CCI_PositioningSensor::SReading &tPosReads = m_pcPosSens->GetReading();
     return CVector2(tPosReads.Position.GetX(), tPosReads.Position.GetY());
 }
-
 
 /*
  * This statement notifies ARGoS of the existence of the controller.

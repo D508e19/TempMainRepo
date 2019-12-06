@@ -18,19 +18,50 @@ void RobotWrapper::Tick()
     {    
         if(instructionQueue.empty())
         {
-            // if waiting for order skip
+            if(!waitingForOrder){
+                // If bot is idle, the instructionQueue is empty and bot isn't waitingForOrder 
+                //it means that it has received a new order
 
-            // if not waiting for order
-            // find path to orders pod coordinate
+                //cheat - These are to control which coords the bots gets
+                currentOrder->podLocation = cube(rand()%10,rand()%10);
+                currentOrder->pickStationLocation = cube(rand()%10,rand()%10);
+                ///////
 
-            //argos::LOG << "InstructionQueue empty. Generate new random path." << std::endl;
-            // Add random path
-            // TODO: Delete 
-            Path p = pf.FindPath(lastCoordinate, Coordinate(rand()%10,rand()%10), lastFacing, isCarrying);
-            
-            TranslatePathToInstructions(p);
+                // Find path from bots last location to pod location
+                Coordinate podCoord = Coordinate(currentOrder->podLocation.first,currentOrder->podLocation.second);
+                Path pathToPod = pf.FindPath(lastCoordinate, podCoord, lastFacing, isCarrying);
+                TranslatePathToInstructions(pathToPod);
+
+                // arrive at pod placement
+                // TODO: check if pod is actually here
+                AddInstructionToQueue(pickuppod, 1);
+                // TODO: isCarrying. Who changes this value? 
+
+                // Find path to picking station
+                Coordinate pickCoord = Coordinate(currentOrder->pickStationLocation.first,currentOrder->pickStationLocation.second);
+                Path pathToPickstation = pf.FindPath(lastCoordinate, pickCoord, lastFacing, isCarrying);
+                TranslatePathToInstructions(pathToPickstation);
+
+                // Arrive at picking station. Waiting for 5 seconds. TODO: ticksToPicks should be moved out to a variable.
+                AddInstructionToQueue(_wait, 50);
+
+
+                // pathfind back to pod original position. Changed later to find avalibale spot
+                Path pathToPodSpot = pf.FindPath(lastCoordinate, podCoord, lastFacing, isCarrying);
+                TranslatePathToInstructions(pathToPod);
+
+                // put down pod
+                AddInstructionToQueue(putdownpod, 1);
+                // TODO: isCarrying. Who changes this value?
+
+                //TODO: move out of the way. Maybe a go-home function if idle for too long.
+            }
+            else 
+            {
+                waitingForOrder = true;
+            }
         } 
-        SendNextInstruction();
+        SendNextInstruction(); // TODO: refactor to over new-order-received, since it is the most common endpoint.
     }
 }
 
@@ -82,13 +113,14 @@ void RobotWrapper::TranslatePathToInstructions(Path p)
 
         AddInstructionToQueue(n, 1);
 
+        // how many cell to move forward
         // Todo: change to ternary?
         if(lastCoordinate.x != p.waypoints.front().x){
             diff = abs(lastCoordinate.x - p.waypoints.front().x);}
         else{
             diff = abs(lastCoordinate.y - p.waypoints.front().y);
         }
-        //argos::LOG << "moving: "<< diff << std::endl;
+
         AddInstructionToQueue(moveforward, diff);
        
         lastCoordinate = p.waypoints.front();
