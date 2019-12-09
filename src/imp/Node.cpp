@@ -230,7 +230,11 @@ Node* Node::LeastCost() // TODO: change name to describe functionality
 {
     if(children.empty())
     {
-        return this;
+        if(deleteNode){
+            return parent;
+        }else{
+            return this;
+        }
     }
     else
     {
@@ -238,6 +242,7 @@ Node* Node::LeastCost() // TODO: change name to describe functionality
 
         for(Node& n : children) 
         {
+
             if ((*nodeWithLowestChild).lowestCost > n.lowestCost)
             {
                 nodeWithLowestChild= (&n);

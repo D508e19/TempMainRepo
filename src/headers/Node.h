@@ -19,6 +19,7 @@ public:
 
 
 
+    bool deleteNode = false;
     Node* parent;
     int lowestCost;
     int parentWeight;

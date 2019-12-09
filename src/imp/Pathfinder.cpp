@@ -79,21 +79,27 @@ Path Pathfinder::GetAstarPath(Coordinate start, Coordinate goal, direction _dire
         //Calculate neighbors of the node, should always be true, since currentNode is always a leaf
         if (currentNode->children.empty())
         {
-            currentNode->CalculateNeighbour(straightTime, turnTime, waitTime, environmentManager);
-            
-            for (Node node : currentNode->children)
-            {
-                node.gScore = currentNode->gScore + node.parentWeight;
-                node.fScore = node.gScore + node.CalculateHeuristic(goal, turnTime);
-                if(flag)
+            if(currentNode->CalculateNeighbour(straightTime, turnTime, waitTime, environmentManager)){
+                for (Node node : currentNode->children)
                 {
-                    currentNode->lowestCost = node.fScore;
-                    flag = false;
+                    if(!node.deleteNode){
+                        node.gScore = currentNode->gScore + node.parentWeight;
+                        node.fScore = node.gScore + node.CalculateHeuristic(goal, turnTime);
+                        if(flag)
+                        {
+                            currentNode->lowestCost = node.fScore;
+                            flag = false;
+                        }
+                        else if(node.fScore < currentNode->lowestCost)
+                        {
+                            currentNode->lowestCost = node.fScore;
+                        }
+                    }
                 }
-                else if(node.fScore < currentNode->lowestCost)
-                {
-                    currentNode->lowestCost = node.fScore;
-                }
+            }
+            else{
+                currentNode->deleteNode = true;
+                currentNode->fScore = 100000000;
             }
         }
     }
@@ -125,10 +131,6 @@ simplePath Pathfinder::ConstructPath(Node node, simplePath path)
         return path;
     }
     else {
-        /*environmentManager->ReserveCell(node.coordinate,
-                environmentManager->tickCounter+(node.parent->gScore*10),
-                environmentManager->tickCounter+(node.gScore*10)+1);
-                */
         path.emplace_back(node.coordinate, node.parent->coordinate);
 
         return ConstructPath((*node.parent), path);
