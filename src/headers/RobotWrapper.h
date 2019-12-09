@@ -8,7 +8,8 @@ private:
     std::queue<int> instructionsValuesQueue;
 
     Basicbot* m_bot;
-    Pathfinder pf = Pathfinder();
+    Pathfinder* pfp; 
+    //Pathfinder pf = Pathfinder();
 
     direction lastFacing; // The direction of bot after last instruction.
     Coordinate lastCoordinate; // The coordination bot will be at after last instruction in queue.
@@ -17,7 +18,7 @@ private:
 
 public:
     RobotWrapper();
-    RobotWrapper(Basicbot *bot); 
+    RobotWrapper(Basicbot *bot, Pathfinder *pf); 
     ~RobotWrapper();
 
     void Tick();

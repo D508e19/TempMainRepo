@@ -6,7 +6,7 @@
 RobotWrapper::RobotWrapper(){};
 RobotWrapper::~RobotWrapper(){};
 
-RobotWrapper::RobotWrapper(Basicbot *bot):m_bot(bot)
+RobotWrapper::RobotWrapper(Basicbot *bot, Pathfinder *pf):m_bot(bot), pfp(pf)
 {
     lastFacing = m_bot->facing; // TODO: check if working. seems like not.
     lastCoordinate = m_bot->lastReadCellQR; // TODO: check if working. seems like not.
@@ -32,7 +32,7 @@ void RobotWrapper::Tick()
 
                 // Find path from bots last location to pod location
                 Coordinate podCoord = Coordinate(currentOrder->podLocation.first,currentOrder->podLocation.second);
-                Path pathToPod = pf.FindPath(lastCoordinate, podCoord, lastFacing, isCarrying);
+                Path pathToPod = pfp->FindPath(lastCoordinate, podCoord, lastFacing, isCarrying);
                 TranslatePathToInstructions(pathToPod);
 
                 // arrive at pod placement
@@ -42,7 +42,7 @@ void RobotWrapper::Tick()
 
                 // Find path to picking station
                 Coordinate pickCoord = Coordinate(currentOrder->pickStationLocation.first,currentOrder->pickStationLocation.second);
-                Path pathToPickstation = pf.FindPath(lastCoordinate, pickCoord, lastFacing, isCarrying);
+                Path pathToPickstation = pfp->FindPath(lastCoordinate, pickCoord, lastFacing, isCarrying);
                 TranslatePathToInstructions(pathToPickstation);
 
                 // Arrive at picking station. Waiting for 5 seconds. TODO: ticksToPicks should be moved out to a variable.
@@ -50,7 +50,7 @@ void RobotWrapper::Tick()
 
 
                 // pathfind back to pod original position. Changed later to find avalibale spot
-                Path pathToPodSpot = pf.FindPath(lastCoordinate, podCoord, lastFacing, isCarrying);
+                Path pathToPodSpot = pfp->FindPath(lastCoordinate, podCoord, lastFacing, isCarrying);
                 TranslatePathToInstructions(pathToPodSpot);
 
                 // put down pod
