@@ -26,7 +26,7 @@ void Warehouse::SetupWarehouse(std::map<int, Basicbot*> botControllers)
 
     om.SetupOrderManager(this); 
     pm.SetupPodManager(this, numberOfPods);
-    rm.SetupRobotManager(this, botControllers);
+    rm.SetupRobotManager(this, botControllers, em);
 }
 
 void Warehouse::CollectData()

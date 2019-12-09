@@ -6,10 +6,11 @@
 RobotWrapper::RobotWrapper(){};
 RobotWrapper::~RobotWrapper(){};
 
-RobotWrapper::RobotWrapper(Basicbot *bot):m_bot(bot)
+RobotWrapper::RobotWrapper(Basicbot *bot, EnvironmentManager* _environmentManager):m_bot(bot)
 {
     lastFacing = m_bot->facing; // check if working. seems like not.
     lastCoordinate = m_bot->lastReadCellQR; // check if working. seems like not.
+    environmentManager = _environmentManager;
 
     /* TODO: Delete
     for (int i = 0; i < 5; i++)
@@ -27,7 +28,7 @@ void RobotWrapper::Tick()
             //argos::LOG << "InstructionQueue empty. Generate new random path." << std::endl;
             // Add random path
             // TODO: Delete 
-            Path p = pf.FindPath(lastCoordinate, Coordinate(rand()%10,rand()%10), lastFacing, isCarrying);
+            Path p = pf.FindPath(lastCoordinate, Coordinate(rand()%10,rand()%10), lastFacing, isCarrying, environmentManager);
             TranslatePathToInstructions(p);
         }
         SendNextInstruction();

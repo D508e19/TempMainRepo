@@ -1,13 +1,14 @@
 #ifndef PATHFINDER_CPP
 #define PATHFINDER_CPP
 
+
 Pathfinder::Pathfinder()
 {
     selectedAlgorithm = 1;
 }
 Pathfinder::~Pathfinder(){}
 
-Path Pathfinder::FindPath(Coordinate start, Coordinate end, direction currentDirection, bool isCarrying)
+Path Pathfinder::FindPath(Coordinate start, Coordinate end, direction currentDirection, bool isCarrying, EnvironmentManager* _environmentM)
 {
     Path p; 
     argos::LOG << "Find path from: " << start.x << "," << start.y << ". to: " << end.x << "," << end.y << std::endl;
@@ -19,7 +20,7 @@ Path Pathfinder::FindPath(Coordinate start, Coordinate end, direction currentDir
             break;
 
         case 1:
-            p = GetAstarPath(start, end, currentDirection, isCarrying);
+            p = GetAstarPath(start, end, currentDirection, isCarrying, _environmentM);
             break;
         
         default:
@@ -45,17 +46,30 @@ Path Pathfinder::GetStupidPath(Coordinate start, Coordinate end)
     return newPath;
 }
 
-Path Pathfinder::GetAstarPath(Coordinate start, Coordinate goal, direction _direction, bool isCarrying) 
+Path Pathfinder::GetAstarPath(Coordinate start, Coordinate goal, direction _direction, bool isCarrying, EnvironmentManager* _environmentManager, int straightTime, int turnTime, int waitTime)
 {
+    environmentManager = _environmentManager;
     Node* startNode = new Node(start, _direction); // TODO: remove from heap when path is done
     currentNode = startNode;
     int i = 0;
 
-    for (int i = 0; i < 100; i++)
+    for (int i = 0; i < 500; i++)
     {
         //Find the leaf with the lowest cost
         currentNode = startNode->LeastCost();
-        bool flag = true; // flag for hvad??
+
+        //Flag to ensure that a nodes children compare to the first child
+        bool flag = true;
+
+        argos::LOG<< currentNode->coordinate.x << currentNode->coordinate.y << std::endl;
+
+        argos::LOG<< currentNode->children.size() << std::endl;
+
+        if(currentNode->start){
+            argos::LOG<< "FACK" << std::endl;
+
+        }
+
 
         //Check if the node is goal node
         if ((currentNode->coordinate.x == goal.x) && (currentNode->coordinate.y == goal.y))
@@ -66,12 +80,12 @@ Path Pathfinder::GetAstarPath(Coordinate start, Coordinate goal, direction _dire
         //Calculate neighbors of the node, should always be true, since currentNode is always a leaf
         if (currentNode->children.empty())
         {
-            currentNode->CalculateNeighbour();
+            currentNode->CalculateNeighbour(straightTime, turnTime, waitTime, environmentManager);
             
             for (Node node : currentNode->children)
             {
                 node.gScore = currentNode->gScore + node.parentWeight;
-                node.fScore = node.gScore + node.CalculateHeuristic(goal);
+                node.fScore = node.gScore + node.CalculateHeuristic(goal, turnTime);
                 if(flag)
                 {
                     currentNode->lowestCost = node.fScore;
@@ -83,7 +97,9 @@ Path Pathfinder::GetAstarPath(Coordinate start, Coordinate goal, direction _dire
                 }
             }
         }
-    } 
+    }
+    argos::LOGERR << "Path not found within a reasonable time" << std::endl;
+
     return pathList;
 }
 
@@ -104,12 +120,16 @@ Path Pathfinder::ReversePath(Node node, Path path)
     return right;
 }
 
-simplePath Pathfinder::ConstructPath(Node node, simplePath path) 
+simplePath Pathfinder::ConstructPath(Node node, simplePath path)
 {
     if(node.start){
         return path;
     }
     else {
+        /*environmentManager->ReserveCell(node.coordinate,
+                environmentManager->tickCounter+(node.parent->gScore*10),
+                environmentManager->tickCounter+(node.gScore*10)+1);
+                */
         path.emplace_back(node.coordinate, node.parent->coordinate);
 
         return ConstructPath((*node.parent), path);

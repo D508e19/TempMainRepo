@@ -1,7 +1,7 @@
-Bot: 0 - Ticks idle: 0
-Bot: 0 - Ticks moveforward: 0
-Bot: 0 - Ticks turnleft: 0
-Bot: 0 - Ticks turnright: 0
+Bot: 0 - Ticks idle: 16
+Bot: 0 - Ticks moveforward: 200
+Bot: 0 - Ticks turnleft: 20
+Bot: 0 - Ticks turnright: 20
 Bot: 0 - Ticks turn180: 0
 Bot: 0 - Ticks pickuppod: 0
 Bot: 0 - Ticks putdownpod: 0

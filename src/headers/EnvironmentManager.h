@@ -19,7 +19,6 @@ private:
     int numberOfTicksPerTimeslot;
     int timeslotsIntoTheFuture;
 
-    int tickCounter;
 
     std::map<cube, bool> floorMap;
     //std::map <int, std::vector <reservation>> reservationsTable;
@@ -48,6 +47,7 @@ public:
     std::map <std::pair<int,int>, Pod*> podParking;
     std::vector <Coordinate> pickingStations;
 
+    int tickCounter;
 
 };
 

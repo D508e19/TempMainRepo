@@ -16,10 +16,11 @@ private:
     bool waitinForOrder = true;
     Order* currentOrder;
     bool isCarrying = false;
+    EnvironmentManager* environmentManager;
 
 public:
     RobotWrapper();
-    RobotWrapper(Basicbot *bot); 
+    RobotWrapper(Basicbot *bot, EnvironmentManager* _environmentManager);
     ~RobotWrapper();
 
     void Tick();

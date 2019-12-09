@@ -4,8 +4,9 @@
 RobotManager::RobotManager(){};
 RobotManager::~RobotManager(){};
 
-void RobotManager::SetupRobotManager(Warehouse* _wh, std::map<int, Basicbot*> botControllers)
+void RobotManager::SetupRobotManager(Warehouse* _wh, std::map<int, Basicbot*> botControllers, EnvironmentManager* _environmentManager)
 {
+    environmentManager = _environmentManager;
     wh = _wh;
 
     for (int i=0; i<botControllers.size(); i++)
@@ -39,7 +40,7 @@ void RobotManager::Tick()
 
 RobotWrapper RobotManager::CreateRobotWrapper(Basicbot* b)
 {
-    RobotWrapper rw(b);
+    RobotWrapper rw(b, environmentManager);
     robotCount++;
     return rw;
 }

@@ -96,7 +96,7 @@ bool EnvironmentManager::IsReserved(Coordinate cell, int tick)
 		}
 	}
 	bool ans = (reservationsTable[timeslot][std::pair<int,int>(cell.x,cell.y)]);
-	argos::LOG << cell.x << "," << cell.y << "IsReserved: "<< ans << std::endl;
+	//argos::LOG << cell.x << "," << cell.y << "IsReserved: "<< ans << std::endl;
 	return ans;
 }
 
@@ -113,7 +113,7 @@ bool EnvironmentManager::IsReserved(Coordinate cell, int startTick, int endTick)
 			break;
 		}
 	}
-	argos::LOG << "startTick:" << startTick << " . Is in timeslot: "<< startTimeslot << std::endl;
+	//argos::LOG << "startTick:" << startTick << " . Is in timeslot: "<< startTimeslot << std::endl;
 	
     //find timeslot for endTick	
 	int endTimeslot; 
@@ -124,7 +124,7 @@ bool EnvironmentManager::IsReserved(Coordinate cell, int startTick, int endTick)
 			break;
 		}
 	}
-	argos::LOG << "endTick:" << endTick << " . Is in timeslot: "<< endTimeslot << std::endl; 
+	//argos::LOG << "endTick:" << endTick << " . Is in timeslot: "<< endTimeslot << std::endl;
 
 	//put start, end and all inbetween in a queue
 	int nextTimeslotToCheck = startTimeslot;
@@ -218,7 +218,7 @@ bool EnvironmentManager::ReserveCell(Coordinate cell, int startTick, int endTick
 	{
 		if (reservationsTable[timeslotsToReserve.front()][std::pair<int,int>(cell.x,cell.y)])
 		{
-			argos::LOG << "ERROR: Timeslot already reserved. This should be checked before calling ReserveCell" << std::endl;
+			argos::LOGERR << "ERROR: Timeslot already reserved. This should be checked before calling ReserveCell" << std::endl;
 			return false;
 		}
 		reservationsTable[timeslotsToReserve.front()][std::pair<int,int>(cell.x,cell.y)] = true;
