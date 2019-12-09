@@ -58,7 +58,7 @@ void EnvironmentManager::Tick()
 	{
 		argos::LOG << i++ << " " << it->first.first << " " << it->first.second << std::endl;
 		//argos::LOG << "Test" << std::endl;
-		//std::cout << it->first  // string (key)
+		//argos::LOG << it->first  // string (key)
 		//		<< ':'
 		//		<< it->second   // string's value 
 		//		<< std::endl ;
