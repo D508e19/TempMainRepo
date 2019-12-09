@@ -8,22 +8,23 @@ private:
     std::queue<int> instructionsValuesQueue;
 
     Basicbot* m_bot;
-    Pathfinder pf = Pathfinder();
+    Pathfinder* pfp;
+    //Pathfinder pf = Pathfinder();
 
-    direction lastFacing;
-    Coordinate lastCoordinate;
+    direction lastFacing; // The direction of bot after last instruction.
+    Coordinate lastCoordinate; // The coordination bot will be at after last instruction in queue.
 
-    bool waitinForOrder = true;
-    Order* currentOrder;
     bool isCarrying = false;
-    EnvironmentManager* environmentManager;
 
 public:
     RobotWrapper();
-    RobotWrapper(Basicbot *bot, EnvironmentManager* _environmentManager);
+    RobotWrapper(Basicbot *bot, Pathfinder *pf);
     ~RobotWrapper();
 
     void Tick();
+
+    bool waitingForOrder = true;
+    Order* currentOrder;
 
     void TranslatePathToInstructions(Path p);
     void AddInstructionToQueue(instruction ins, int tiles);

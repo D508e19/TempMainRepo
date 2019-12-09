@@ -4,7 +4,7 @@
 
 Pathfinder::Pathfinder()
 {
-    selectedAlgorithm = 1;
+    selectedAlgorithm = 0;
 }
 Pathfinder::~Pathfinder(){}
 

@@ -17,6 +17,7 @@ public:
     PodManager pm;
     RobotManager rm;
     DataCollector dc;
+    Pathfinder* pf; 
 
     void SetupWarehouse(std::map<int, Basicbot*> botControllers);
     void Tick();    

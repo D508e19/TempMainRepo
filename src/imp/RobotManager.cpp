@@ -17,30 +17,23 @@ void RobotManager::SetupRobotManager(Warehouse* _wh, std::map<int, Basicbot*> bo
 }
 
 void RobotManager::Tick()
-{   
-    while (!ordersToBeProcessed.empty())
-	{
-		Order* nextOrder = ordersToBeProcessed.front();
-        // TODO:
-        // pick robot
-        // get path
-        // send path to wrapper
-        // ???
-        // profit
-
-		wh->om.ordersOngoing.push(nextOrder);
-		ordersToBeProcessed.pop();
-	}
-
+{
     for (int i = 0; i < robotCount; i++)
     {
+        if(Wrappers[i].waitingForOrder && !ordersToBeProcessed.empty())
+        {
+            Wrappers[i].currentOrder = ordersToBeProcessed.front();
+            ordersToBeProcessed.pop();
+            Wrappers[i].waitingForOrder = false;
+        }
+
         Wrappers[i].Tick();
     }
 }
 
 RobotWrapper RobotManager::CreateRobotWrapper(Basicbot* b)
 {
-    RobotWrapper rw(b, environmentManager);
+    RobotWrapper rw(b, wh->pf, environmentManager);
     robotCount++;
     return rw;
 }

@@ -1,9 +1,8 @@
 #ifndef ENVIRONMENT_MANAGER_CPP
 #define ENVIRONMENT_MANAGER_CPP
 
-//#include <tuple>
 
-//#include "src/headers/EnvironmentManager.h"
+#include <map>
 
 EnvironmentManager::EnvironmentManager(){}
 EnvironmentManager::~EnvironmentManager(){}
@@ -47,27 +46,32 @@ void EnvironmentManager::Tick()
 	// Checking if first timeslot is in the past
 	UpdateTimeslots(tickCounter);
 
-	//IsReserved(Coordinate(1,1), 45);
-	//ReserveCell(Coordinate(1,1), 44, 205);
-	//ReserveCell(Coordinate(1,1), 4, 25);
-	//ReserveCell(Coordinate(1,1), 144, 50);
+	// DEBUGGING for pod parkings
+	/*
+	std::map<std::pair<int,int>, Pod*>::iterator it;
 
-	//TODO: delete. for testing
-	/*if (!podParking.empty())
+	argos::LOG << "Start" << std::endl;
+	int i = 0;
+	for ( it = podParking.begin(); it != podParking.end(); it++ )
 	{
-		if(podParking[std::pair<int,int>(1,5)]){
-			argos::LOG << "Pod for 1,4 is not null " << std::endl;
-		}
-		else
-		{
-			argos::LOG << "Pod for 1,4 is null " << std::endl;;
-		}
-	}*/
+		argos::LOG << i++ << " " << it->first.first << " " << it->first.second << std::endl;
+		//argos::LOG << "Test" << std::endl;
+		//std::cout << it->first  // string (key)
+		//		<< ':'
+		//		<< it->second   // string's value
+		//		<< std::endl ;
+	}
+	argos::LOG << "Done" << std::endl;
+	*/
 }
 
 void EnvironmentManager::UpdateTimeslots(int tickCounter)
 {
-	if (tickCounter >= currentTimeslots[1]) 
+	//argos::LOG << "TickCounter: " << tickCounter << std::endl;
+	//argos::LOG << "current timeslot: " << currentTimeslots.front() << std::endl;
+
+
+	if (tickCounter >= currentTimeslots[1])
 	{
 		int nextTimeslot = currentTimeslots.back() + numberOfTicksPerTimeslot;
 		
@@ -113,7 +117,7 @@ bool EnvironmentManager::IsReserved(Coordinate cell, int startTick, int endTick)
 			break;
 		}
 	}
-	//argos::LOG << "startTick:" << startTick << " . Is in timeslot: "<< startTimeslot << std::endl;
+	argos::LOG << "startTick:" << startTick << "  is in timeslot: "<< startTimeslot << std::endl;
 	
     //find timeslot for endTick	
 	int endTimeslot; 
@@ -124,7 +128,7 @@ bool EnvironmentManager::IsReserved(Coordinate cell, int startTick, int endTick)
 			break;
 		}
 	}
-	//argos::LOG << "endTick:" << endTick << " . Is in timeslot: "<< endTimeslot << std::endl;
+	argos::LOG << "endTick:" << endTick << " is in timeslot: "<< endTimeslot << std::endl;
 
 	//put start, end and all inbetween in a queue
 	int nextTimeslotToCheck = startTimeslot;
@@ -145,30 +149,28 @@ bool EnvironmentManager::IsReserved(Coordinate cell, int startTick, int endTick)
 	return ans;
 }
 
-
 bool EnvironmentManager::ReserveCell(Coordinate cell, int startTick, int endTick)
 {
 	if(!IsValidCoordinate(cell))
 	{
-		argos::LOG << "ERROR: Cell: " << cell.x << "," << cell.y << " is not in warehouse."<< std::endl;
+		argos::LOGERR << "ERROR: Cell: " << cell.x << "," << cell.y << " is not in warehouse."<< std::endl;
 		return false;
 	}
 
 	if(startTick > endTick)
 	{
-		argos::LOG << "ERROR: Endtick: "<< endTick <<" is before startTick: " << startTick  << std::endl; 
+		argos::LOGERR << "ERROR: Endtick: "<< endTick <<" is before startTick: " << startTick  << std::endl;
 		return false;
 	}
 
 	if(startTick < currentTimeslots.front())
 	{
-		argos::LOG << "ERROR: startTick: " << startTick  <<" is in the past." << std::endl; 
+		argos::LOGERR << "ERROR: startTick: " << startTick  <<" is in the past." << std::endl;
 		return false;
 	}
 
-	//TODO: test too far into the future
+	//TODO: test too far into the future - endTick not in any timeslot
 
-	//TODO: move into function FindTimeslot(int tick)
 	//find timeslot for startTick	
 	int startTimeslot; 
 	for (int i = currentTimeslots[0]; i < timeslotsIntoTheFuture; i++)
@@ -229,24 +231,23 @@ bool EnvironmentManager::ReserveCell(Coordinate cell, int startTick, int endTick
 	return true;
 }
 
-void EnvironmentManager::AddParkingSpotsForPods(int numberOfPods, Pod* nullPod)
+void EnvironmentManager::PlacePod(Pod* pod, Coordinate cord)
 {
-	// TODO: hardcoded podparking. Should be changed.
-	podParking[std::pair<int,int>(1,4)] = NULL;
-	podParking[std::pair<int,int>(1,5)] = nullPod;
-	podParking[std::pair<int,int>(1,6)] = nullPod;
-	podParking[std::pair<int,int>(1,7)] = nullPod;
-	podParking[std::pair<int,int>(2,4)] = nullPod;
-	podParking[std::pair<int,int>(2,5)] = nullPod;
-	podParking[std::pair<int,int>(2,6)] = nullPod;
-	podParking[std::pair<int,int>(2,7)] = nullPod;
-
+	podParking[std::pair<int, int>(cord.x, cord.y)] = pod;
 }
-    
-bool EnvironmentManager::ParkPod(Pod* pod)
+
+std::pair<int, int> EnvironmentManager::FindPodLocation(Pod* pod)
 {
-	//TODO
-	return false;
+	std::map<std::pair<int,int>, Pod*>::iterator it;
+	for ( it = podParking.begin(); it != podParking.end(); it++ )
+	{
+		//argos::LOG << "Pod search: looking for: " << pod->getId() << " checking: " << it->second->getId() << std::endl;
+
+		if(it->second == pod)
+			return it->first;
+	}
+
+	return std::pair<int, int>(-1, -1);
 }
 
 #endif

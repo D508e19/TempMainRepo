@@ -13,12 +13,10 @@ typedef std::pair<int,int> cube;
 class EnvironmentManager
 {
 private:
-    int warehouseLength; //x = warehouseLength -1
-    int warehouseHeight; //y = warehouseHeight -1
-    
     int numberOfTicksPerTimeslot;
     int timeslotsIntoTheFuture;
 
+    int tickCounter;
 
     std::map<cube, bool> floorMap;
     //std::map <int, std::vector <reservation>> reservationsTable;
@@ -37,9 +35,6 @@ public:
 
     bool ReserveCell(Coordinate cell, int startTick, int endTick);
 
-    void AddParkingSpotsForPods(int numberOfPods, Pod* nullPod);
-    bool ParkPod(Pod* pod);
-
     bool IsValidCoordinate(Coordinate cand);
     bool IsReserved(Coordinate cell, int tick);
     bool IsReserved(Coordinate cell, int startTick, int endTick);
@@ -47,8 +42,12 @@ public:
     std::map <std::pair<int,int>, Pod*> podParking;
     std::vector <Coordinate> pickingStations;
 
-    int tickCounter;
+    int warehouseLength; //x = warehouseLength -1
+    int warehouseHeight; //y = warehouseHeight -1
 
+    void PlacePod(Pod* pod, Coordinate cord);
+
+    std::pair<int, int> FindPodLocation(Pod* pod);
 };
 
 

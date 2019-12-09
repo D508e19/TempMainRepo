@@ -19,14 +19,14 @@ void Warehouse::SetupWarehouse(std::map<int, Basicbot*> botControllers)
     bots = botControllers;
     srand (time(NULL));	// seed for rng
 
-    int numberOfPods = 7; 
+    pf = new Pathfinder();
 
     em = new EnvironmentManager();
     em->SetupEnvirionmentManager();
 
     om.SetupOrderManager(this); 
-    pm.SetupPodManager(this, numberOfPods);
-    rm.SetupRobotManager(this, botControllers, em);
+    pm.SetupPodManager(this);
+    rm.SetupRobotManager(this, botControllers);
 }
 
 void Warehouse::CollectData()
