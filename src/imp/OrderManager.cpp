@@ -14,7 +14,7 @@ void OrderManager::SetupOrderManager(Warehouse* _wh)
 	orderCount = 0;
 
 	// /* TODO delete 
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 100; i++)
 	{
 		CreateOrder();
 	}

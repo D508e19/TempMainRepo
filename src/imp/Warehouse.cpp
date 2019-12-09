@@ -22,6 +22,8 @@ void Warehouse::SetupWarehouse(std::map<int, Basicbot*> botControllers)
     em = new EnvironmentManager();
     em->SetupEnvirionmentManager();
 
+    pf = new Pathfinder(em);
+
     om.SetupOrderManager(this); 
     pm.SetupPodManager(this);
     rm.SetupRobotManager(this, botControllers);

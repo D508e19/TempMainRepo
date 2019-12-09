@@ -32,7 +32,7 @@ void RobotManager::Tick()
 
 RobotWrapper RobotManager::CreateRobotWrapper(Basicbot* b)
 {
-    RobotWrapper rw(b);
+    RobotWrapper rw(b, wh->pf);
     robotCount++;
     return rw;
 }
