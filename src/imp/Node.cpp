@@ -115,10 +115,9 @@ bool Node::CalculateNeighbour(int straightTime, int turnTime, int waitTime, Envi
     {
         case north :
             if(!(*environmentManager).IsReserved(Coordinate(coordinate.x, coordinate.y+1), gScore, gScore+straightTime)) {
-
                 children.emplace_back(Node(Coordinate(coordinate.x, coordinate.y + 1), north, this, straightTime));
             }
-            else if(!(*environmentManager).IsReserved(Coordinate(coordinate.x, coordinate.y), gScore, gScore+waitTime)){
+            else if(!(*environmentManager).IsReserved(Coordinate(coordinate.x, coordinate.y), gScore, gScore+waitTime)) {
                 children.emplace_back(Coordinate(coordinate.x, coordinate.y), north, this, waitTime);
             }
             else{
@@ -140,8 +139,13 @@ bool Node::CalculateNeighbour(int straightTime, int turnTime, int waitTime, Envi
         case south :
             if(!(*environmentManager).IsReserved(coordinate, gScore, gScore+turnTime)) {
 
-
                 children.emplace_back(Node(coordinate, north, this, turnTime));
+            }
+            else if (!(*environmentManager).IsReserved(Coordinate(coordinate.x, coordinate.y), gScore, gScore+waitTime)){
+                children.emplace_back(Coordinate(coordinate.x, coordinate.y), north, this, waitTime);
+            }
+            else {
+                return false;
             }
             if(!(*environmentManager).IsReserved(Coordinate(coordinate.x, coordinate.y-1), gScore, gScore+straightTime)) {
 
@@ -163,8 +167,13 @@ bool Node::CalculateNeighbour(int straightTime, int turnTime, int waitTime, Envi
         case east :
             if(!(*environmentManager).IsReserved(coordinate, gScore, gScore+turnTime)) {
 
-
                 children.emplace_back(Node(coordinate, north, this, turnTime));
+            }
+            else if (!(*environmentManager).IsReserved(Coordinate(coordinate.x, coordinate.y), gScore, gScore+waitTime)){
+                children.emplace_back(Coordinate(coordinate.x, coordinate.y), north, this, waitTime);
+            }
+            else {
+                return false;
             }
             if(!(*environmentManager).IsReserved(coordinate, gScore, gScore+turnTime)) {
 
@@ -185,8 +194,13 @@ bool Node::CalculateNeighbour(int straightTime, int turnTime, int waitTime, Envi
         case west :
             if(!(*environmentManager).IsReserved(coordinate, gScore, gScore+turnTime)) {
 
-
                 children.emplace_back(Node(coordinate, north, this, turnTime));
+            }
+            else if (!(*environmentManager).IsReserved(Coordinate(coordinate.x, coordinate.y), gScore, gScore+waitTime)){
+                children.emplace_back(Coordinate(coordinate.x, coordinate.y), north, this, waitTime);
+            }
+            else {
+                return false;
             }
             if(!(*environmentManager).IsReserved(coordinate, gScore, gScore+turnTime)) {
 
@@ -244,7 +258,7 @@ int Node::UpdateLeastCost(){
             int temp = n.UpdateLeastCost();
 
             if(temp < ChildWithLowestFScore){
-                ChildWithLowestFScore;
+                ChildWithLowestFScore = temp;
             }
         }
         return ChildWithLowestFScore;

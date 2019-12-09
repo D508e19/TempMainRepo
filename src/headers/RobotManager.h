@@ -17,7 +17,7 @@ public:
     
     std::queue<Order*> ordersToBeProcessed;
 
-    void SetupRobotManager(Warehouse* _wh, std::map<int, Basicbot*> botControllers, EnvironmentManager* _environmentManager);
+    void SetupRobotManager(Warehouse* _wh, std::map<int, Basicbot*> botControllers);
     void Tick();
 };
 

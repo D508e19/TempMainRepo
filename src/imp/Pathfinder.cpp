@@ -19,7 +19,7 @@ Path Pathfinder::FindPath(Coordinate start, Coordinate end, direction currentDir
             break;
 
         case 1:
-            p = GetAstarPath(start, end, currentDirection, isCarrying, _environmentM);
+            p = GetAstarPath(start, end, currentDirection, isCarrying, em);
             break;
         
         default:
