@@ -20,7 +20,7 @@ void Warehouse::SetupWarehouse(std::map<int, Basicbot*> botControllers)
     srand (time(NULL));	// seed for rng
 
     em = new EnvironmentManager();
-    em->SetupEnvirionmentManager();
+    em->SetupEnvirionmentManager(this);
 
     pf = new Pathfinder(em);
 
