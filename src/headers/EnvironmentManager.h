@@ -48,6 +48,8 @@ public:
     void PlacePod(Pod* pod, Coordinate cord);
 
     std::pair<int, int> FindPodLocation(Pod* pod);
+
+    int GetPodID(std::pair<int, int> coordinate);
 };
 
 

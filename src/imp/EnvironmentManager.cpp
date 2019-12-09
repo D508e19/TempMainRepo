@@ -256,4 +256,20 @@ std::pair<int, int> EnvironmentManager::FindPodLocation(Pod* pod)
 	return std::pair<int, int>(-1, -1);
 }
 
+int EnvironmentManager::GetPodID(std::pair<int, int> coordinate)
+{
+
+	std::map<std::pair<int,int>, Pod*>::iterator it;
+	for(it = podParking.begin(); it != podParking.end(); it++)
+	{
+		if(it->first.first == coordinate.first &&
+			it->first.second == coordinate.second)
+		{
+			return it->second->getId();
+		}
+	}
+
+	return -1;
+}
+
 #endif
