@@ -1,14 +1,13 @@
 #ifndef PATHFINDER_CPP
 #define PATHFINDER_CPP
 
-
-Pathfinder::Pathfinder()
+Pathfinder::Pathfinder(EnvironmentManager* _em):em(_em)
 {
     selectedAlgorithm = 0;
 }
 Pathfinder::~Pathfinder(){}
 
-Path Pathfinder::FindPath(Coordinate start, Coordinate end, direction currentDirection, bool isCarrying, EnvironmentManager* _environmentM)
+Path Pathfinder::FindPath(Coordinate start, Coordinate end, direction currentDirection, bool isCarrying)
 {
     Path p; 
     argos::LOG << "Find path from: " << start.x << "," << start.y << ". to: " << end.x << "," << end.y << std::endl;
