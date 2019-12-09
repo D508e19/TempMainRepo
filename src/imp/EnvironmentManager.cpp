@@ -10,8 +10,10 @@
 EnvironmentManager::EnvironmentManager(){}
 EnvironmentManager::~EnvironmentManager(){}
 
-void EnvironmentManager::SetupEnvirionmentManager()
+void EnvironmentManager::SetupEnvirionmentManager(Warehouse * _wh)
 {
+	wh = _wh;
+
     warehouseHeight = 10;
     warehouseLength = 10;
 
@@ -270,6 +272,31 @@ int EnvironmentManager::GetPodID(std::pair<int, int> coordinate)
 	}
 
 	return -1;
+}
+
+bool EnvironmentManager::PickUpPod(int podID, std::pair<int,int> coordinate)
+{
+	//Is the requested pod on the giving location?
+	int actualID = GetPodID(coordinate);
+	if(actualID != podID)
+		return false;
+
+	podParking.erase(coordinate);
+	
+	return true;
+}
+
+bool EnvironmentManager::PutDownPod(int podID, std::pair<int,int> coordinate)
+{
+	//Is the giving coordinate occupied?
+	int currentID = GetPodID(coordinate);
+	if(currentID != -1)
+		return false;
+
+	Pod* podPtr = wh->pm.GetPodPtr(podID);
+	PlacePod(podPtr, Coordinate(coordinate.first, coordinate.second));
+
+	return true;
 }
 
 #endif

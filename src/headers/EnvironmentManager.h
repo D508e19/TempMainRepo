@@ -23,12 +23,14 @@ private:
     std::map <int, std::map <cube, bool>> reservationsTable;
 
     std::vector <int> currentTimeslots;
+
+    Warehouse *wh;
     
 public:
     EnvironmentManager();
     ~EnvironmentManager();
 
-    void SetupEnvirionmentManager();
+    void SetupEnvirionmentManager(Warehouse * _wh);
     void Tick();
 
     void UpdateTimeslots(int tickCounter);
@@ -50,6 +52,9 @@ public:
     std::pair<int, int> FindPodLocation(Pod* pod);
 
     int GetPodID(std::pair<int, int> coordinate);
+
+    bool PickUpPod(int podID, std::pair<int,int> coordinate);
+    bool PutDownPod(int podID, std::pair<int,int> coordinate);
 };
 
 
