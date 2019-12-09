@@ -1,7 +1,7 @@
 #ifndef PATHFINDER_CPP
 #define PATHFINDER_CPP
 
-Pathfinder::Pathfinder()
+Pathfinder::Pathfinder(EnvironmentManager* _em):em(_em)
 {
     selectedAlgorithm = 0;
 }

@@ -8,6 +8,8 @@ class Pathfinder
 private:
     int selectedAlgorithm;
 
+    EnvironmentManager* em;
+
     int pathReturnedEmpty = 0;
 
     Node* currentNode;
@@ -17,7 +19,7 @@ private:
     simplePath ConstructPath(Node, simplePath);
         
 public:
-    Pathfinder();
+    Pathfinder(EnvironmentManager* _em);
     ~Pathfinder();
    
     Path FindPath(Coordinate start, Coordinate end, direction last, bool isCarrying);
