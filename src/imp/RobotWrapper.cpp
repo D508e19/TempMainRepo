@@ -19,51 +19,55 @@ void RobotWrapper::Tick()
         if(instructionQueue.empty())
         {
             if(!waitingForOrder){
-                // If bot is idle, the instructionQueue is empty and bot isn't waitingForOrder
+                int tempTC = pfp->em->tickCounter; // TODO: set to LastTick. If LastTick is in the past set to current tick
+
+                // If bot is idle, the instructionQueue is empty and bot isn't waitingForOrder 
                 //it means that it has received a new order
 
                 //cheat - These are to control which coords the bots gets
                 currentOrder->podLocation = cube(rand()%25,rand()%25);
                 currentOrder->pickStationLocation = cube(rand()%10,rand()%10);
-
-                //currentOrder->podLocation = cube(2,3);
-                //currentOrder->pickStationLocation = cube(4,2);
                 ///////
 
                 // Find path from bots last location to pod location
                 Coordinate podCoord = Coordinate(currentOrder->podLocation.first,currentOrder->podLocation.second);
-                Path pathToPod = pfp->FindPath(lastCoordinate, podCoord, lastFacing, isCarrying);
+                Path pathToPod = pfp->FindPath(tempTC, lastCoordinate, podCoord, lastFacing, false);
                 TranslatePathToInstructions(pathToPod);
+                tempTC += 20; // TODO: //timeToComplete pathToPod
 
                 // arrive at pod placement
                 // TODO: check if pod is actually here
-                ////AddInstructionToQueue(pickuppod, 1);
-                // TODO: isCarrying. Who changes this value?
+                AddInstructionToQueue(pickuppod, 1);
+                tempTC += 20; //timeToComplete pickUpPod
 
                 // Find path to picking station
                 Coordinate pickCoord = Coordinate(currentOrder->pickStationLocation.first,currentOrder->pickStationLocation.second);
-                Path pathToPickstation = pfp->FindPath(lastCoordinate, pickCoord, lastFacing, isCarrying);
+                Path pathToPickstation = pfp->FindPath(tempTC, lastCoordinate, pickCoord, lastFacing, true);
                 TranslatePathToInstructions(pathToPickstation);
+                tempTC += 20;// timeToComplete pathToPickingStation
 
                 // Arrive at picking station. Waiting for 5 seconds. TODO: ticksToPicks should be moved out to a variable.
-                //AddInstructionToQueue(_wait, 50);
-
+                AddInstructionToQueue(_wait, 20);
+                tempTC += 20; //timeToComplete waitingToBePicked
 
                 // pathfind back to pod original position. Changed later to find avalibale spot
-                Path pathToPodSpot = pfp->FindPath(lastCoordinate, podCoord, lastFacing, isCarrying);
+                Path pathToPodSpot = pfp->FindPath(tempTC, lastCoordinate, podCoord, lastFacing, true);
                 TranslatePathToInstructions(pathToPodSpot);
+                tempTC += 20;//timeToComplete pathToPodSpot
 
                 // put down pod
-                ////AddInstructionToQueue(putdownpod, 1);
-                // TODO: isCarrying. Who changes this value?
+                AddInstructionToQueue(putdownpod, 1);
+                tempTC +=20;// timeToComplete putDownPod
 
                 //TODO: move out of the way. Maybe a go-home function if idle for too long.
+
+                //lastTick = tempTC
             }
-            else
+            else 
             {
                 waitingForOrder = true;
             }
-        }
+        } 
         SendNextInstruction(); // TODO: refactor to over new-order-received, since it is the most common endpoint.
     }
 }
@@ -192,7 +196,7 @@ direction RobotWrapper::GetFaceTowardsInstruction(Coordinate coordToFace, Coordi
         nextFacing = (xdiff < 0) ? north : south;
     }
     else if (ydiff != 0){
-        nextFacing = (ydiff < 0) ?  east : west;
+        nextFacing = (ydiff < 0) ?  east : west; 
     }
 
     return nextFacing;

@@ -27,7 +27,7 @@ void CommunicatorLoopFunctions::printControllers(){
    std::map<int, Basicbot*>::iterator it;
    for(it = botControllers.begin(); it != botControllers.end(); it++){
       int robotID = it->first;
-      std::cout << "Robot ID: " << robotID << std::endl;
+      argos::LOG << "Robot ID: " << robotID << std::endl;
    }
 }
 

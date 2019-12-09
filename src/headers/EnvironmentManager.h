@@ -16,19 +16,20 @@ private:
     int numberOfTicksPerTimeslot;
     int timeslotsIntoTheFuture;
 
-    int tickCounter;
 
     std::map<cube, bool> floorMap;
     //std::map <int, std::vector <reservation>> reservationsTable;
     std::map <int, std::map <cube, bool>> reservationsTable;
 
     std::vector <int> currentTimeslots;
+
+    Warehouse *wh;
     
 public:
     EnvironmentManager();
     ~EnvironmentManager();
 
-    void SetupEnvirionmentManager();
+    void SetupEnvirionmentManager(Warehouse * _wh);
     void Tick();
 
     void UpdateTimeslots(int tickCounter);
@@ -39,6 +40,9 @@ public:
     bool IsReserved(Coordinate cell, int tick);
     bool IsReserved(Coordinate cell, int startTick, int endTick);
 
+    
+    int tickCounter;
+
     std::map <std::pair<int,int>, Pod*> podParking;
     std::vector <Coordinate> pickingStations;
 
@@ -48,6 +52,11 @@ public:
     void PlacePod(Pod* pod, Coordinate cord);
 
     std::pair<int, int> FindPodLocation(Pod* pod);
+
+    int GetPodID(std::pair<int, int> coordinate);
+
+    bool PickUpPod(int podID, std::pair<int,int> coordinate);
+    bool PutDownPod(int podID, std::pair<int,int> coordinate);
 };
 
 

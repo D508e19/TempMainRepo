@@ -128,4 +128,9 @@ void PodManager::GeneratePodLayout(int warehouse_widthInTiles, int warehouse_hei
     }
 }
 
+Pod* PodManager::GetPodPtr(int podID)
+{
+    return pods[podID];
+}
+
 #endif

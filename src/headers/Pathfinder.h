@@ -10,15 +10,22 @@ private:
 
     EnvironmentManager* em;
 
+    bool ReserveTimeslotsForPath(int startTick, Path path);
+
+
     int pathReturnedEmpty = 0;
 
     Node* currentNode;
     Path pathList;
-    
+    EnvironmentManager* environmentManager;
+
+
     Path ReversePath(Node node, Path path);
     simplePath ConstructPath(Node, simplePath);
-    EnvironmentManager* environmentManager;
-        
+
+    // data collection
+    int pathReturnedEmpty = 0;
+
 public:
     Pathfinder(EnvironmentManager* _em);
     ~Pathfinder();

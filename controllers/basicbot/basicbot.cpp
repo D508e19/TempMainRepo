@@ -133,7 +133,6 @@ void Basicbot::MoveForward()
    {
       ReadCellQR();
       argos::LOG << "Arrived at: " << lastReadCellQR.x << " , " << lastReadCellQR.y << std::endl;
-      //LogReadablePosition();
       ResetBot();
    }
 }

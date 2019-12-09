@@ -32,7 +32,7 @@ public:
     int podCount;
 
     void CreatePod();
-
+    Pod* GetPodPtr(int podID);
 };
 
 
