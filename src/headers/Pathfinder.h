@@ -8,6 +8,8 @@ class Pathfinder
 private:
     int selectedAlgorithm;
 
+
+
     int pathReturnedEmpty = 0;
 
     Node* currentNode;
@@ -17,10 +19,12 @@ private:
     simplePath ConstructPath(Node, simplePath);
         
 public:
-    Pathfinder();
+    Pathfinder(EnvironmentManager* _em);
     ~Pathfinder();
    
-    Path FindPath(Coordinate start, Coordinate end, direction last, bool isCarrying);
+    EnvironmentManager* em;
+
+    Path FindPath(int startTick, Coordinate start, Coordinate end, direction last, bool isCarrying);
 
     Path GetStupidPath(Coordinate start, Coordinate end);
     Path GetAstarPath(Coordinate start, Coordinate end, direction last, bool isCarrying);
