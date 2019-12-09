@@ -16,7 +16,6 @@ private:
     int numberOfTicksPerTimeslot;
     int timeslotsIntoTheFuture;
 
-    int tickCounter;
 
     std::map<cube, bool> floorMap;
     //std::map <int, std::vector <reservation>> reservationsTable;
@@ -38,6 +37,9 @@ public:
     bool IsValidCoordinate(Coordinate cand);
     bool IsReserved(Coordinate cell, int tick);
     bool IsReserved(Coordinate cell, int startTick, int endTick);
+
+    
+    int tickCounter;
 
     std::map <std::pair<int,int>, Pod*> podParking;
     std::vector <Coordinate> pickingStations;

@@ -7,7 +7,7 @@ Pathfinder::Pathfinder(EnvironmentManager* _em):em(_em)
 }
 Pathfinder::~Pathfinder(){}
 
-Path Pathfinder::FindPath(Coordinate start, Coordinate end, direction currentDirection, bool isCarrying)
+Path Pathfinder::FindPath(int startTick, Coordinate start, Coordinate end, direction currentDirection, bool isCarrying)
 {
     Path p; 
     argos::LOG << "Find path from: " << start.x << "," << start.y << ". to: " << end.x << "," << end.y << std::endl;
