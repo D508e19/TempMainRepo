@@ -25,6 +25,13 @@ void OrderManager::Tick()
 {
 	// new orders to be created?
 	// old orders to be closed? need a ordersToBeProcessed queue?
+
+	while(!ordersToBeProcessed.empty())
+	{
+		Order* nextOrder = ordersToBeProcessed.front();
+		wh->pm.ordersToBeProcessed.push(nextOrder);
+		ordersToBeProcessed.pop();
+	}
 }
 
 void OrderManager::CreateOrder()
@@ -33,7 +40,7 @@ void OrderManager::CreateOrder()
     Order* newOrder = new Order(orderCount, -1);
 	newOrder->wareID = newOrder->orderID; //TODO Temporary
 	orders.insert(std::pair<int, Order*> (orderCount, newOrder));
-	wh->pm.ordersToBeProcessed.push(newOrder);
+	ordersToBeProcessed.push(newOrder);
 	ordersOngoing.push(newOrder);
 	
 	orderCount++;
