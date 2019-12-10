@@ -6,11 +6,12 @@
 class Warehouse
 {
 private:
-    std::map<int, Basicbot*> bots;
    
 public:
     Warehouse();
     ~Warehouse();
+
+    std::map<int, Basicbot*> bots;
 
     EnvironmentManager* em;
     OrderManager om;

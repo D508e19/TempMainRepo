@@ -10,25 +10,52 @@
 DataCollector::DataCollector(){}
 DataCollector::~DataCollector(){}
 
-void DataCollector::CollectData(std::map<int, Basicbot*> botControllers)
+void DataCollector::CollectData(Warehouse* wh)
 {
-        // create output-file
+    // create output-file
     output.open ("output.txt");
 
-    // foreach bot in bots
+    // Define sepeartor for data
+    char seperator{44};
 
-    for (int i=0; i<botControllers.size(); i++)
+    // Collect all general data
+    output << wh->em->warehouseLength << seperator;
+    output << wh->em->warehouseHeight << seperator;
+    int circumference = 2 * (wh->em->warehouseLength + wh->em->warehouseHeight); // Omkreds
+    output << circumference << seperator;
+    output << wh->bots.size() << seperator;
+    output << wh->pm.pods.size() << seperator;
+    output << wh->om.orders.size() << seperator;
+    
+    // Iterate through all orders and count all completed and not completed orders
+    int completed = 0, notCompleted = 0;
+    for (int i=0;i<wh->om.orders.size(); i++)
     {
-        Basicbot* b = botControllers[i];
-        output << "Bot: " << i << " - Ticks idle: "<< b->ticksIdle << std::endl;
-        output << "Bot: " << i << " - Ticks moveforward: "<< b->ticksMoveforward << std::endl;
-        output << "Bot: " << i << " - Ticks turnleft: "<< b->ticksTurnleft<< std::endl;
-        output << "Bot: " << i << " - Ticks turnright: "<< b->ticksTurnright << std::endl;
-        output << "Bot: " << i << " - Ticks turn180: "<< b->ticksTurn180 << std::endl;
-        output << "Bot: " << i << " - Ticks pickuppod: "<< b->ticksPickuppod << std::endl;
-        output << "Bot: " << i << " - Ticks putdownpod: "<< b->ticksPutdownpod << std::endl;
-        output << "Bot: " << i << " - Ticks ignore: "<< b->ticksIgnore << std::endl;
-        output << "Bot: " << i << " - Ticks wait: "<< b->ticksWait << std::endl;
+        if (wh->om.orders[i]->timestamp_completed != -1)
+        {
+            completed++;
+        } else {
+            notCompleted++;
+        }
+    }
+    output << completed << seperator;
+    output << notCompleted << seperator;
+    output << std::endl;
+
+    // Collect and write all data for each bot
+    for (int i=0; i<wh->bots.size(); i++)
+    {
+        Basicbot* b = wh->bots[i];
+        output << i << seperator;
+        output << b->ticksIdle << seperator;
+        output << b->ticksMoveforward << seperator;
+        output << b->ticksTurnleft << seperator;
+        output << b->ticksTurnright << seperator;
+        output << b->ticksTurn180 << seperator;
+        output << b->ticksPickuppod << seperator;
+        output << b->ticksPutdownpod << seperator;
+        output << b->ticksIgnore<< seperator;
+        output << b->ticksWait;
         output << std::endl;
     }
 

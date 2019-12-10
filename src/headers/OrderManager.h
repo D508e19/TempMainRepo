@@ -10,13 +10,13 @@ class OrderManager
 {
 private:
 	int orderCount;
-    std::map<int, Order*> orders; //alle ordre
 	Warehouse *wh;
 
 public:
 	OrderManager();
 	~OrderManager();
 
+    std::map<int, Order*> orders; //alle ordre
 	std::queue<Order*> ordersToBeProcessed;
 	std::queue<Order*> ordersOngoing;
 
