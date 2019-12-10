@@ -24,7 +24,7 @@ void OrderManager::Tick()
 {
 	while(orderToBeReleased.size() > 0 && orderToBeReleased.begin()->first <= wh->em->tickCounter)
 	{
-		argos::LOG << "Releasing order that has tick: " << orderToBeReleased.begin()->first << std::endl;
+		//argos::LOG << "Releasing order that has tick: " << orderToBeReleased.begin()->first << std::endl;
 		Order* nextOrder = orderToBeReleased.begin()->second;
 		wh->pm.ordersToBeProcessed.push(nextOrder);
 		orderToBeReleased.erase(orderToBeReleased.begin()->first);
