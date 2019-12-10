@@ -6,20 +6,20 @@
 class Warehouse
 {
 private:
-    std::map<int, Basicbot*> bots;
-
-    bool distributed = false;
+    std::map<int, Basicbot *> bots;
 
 public:
     Warehouse();
     ~Warehouse();
 
+    EnvironmentManager *em;
     OrderManager om;
     PodManager pm;
     RobotManager rm;
     DataCollector dc;
+    Pathfinder *pf;
 
-    void SetupWarehouse(std::map<int, Basicbot*> botControllers);
+    void SetupWarehouse(std::map<int, Basicbot *> botControllers);
     void Tick();
 
     void CollectData();

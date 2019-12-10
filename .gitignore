@@ -2,3 +2,4 @@ build/*
 profile.txt
 .vscode/*
 output.txt
+CMakeLists.txt

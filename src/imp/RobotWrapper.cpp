@@ -6,16 +6,10 @@
 RobotWrapper::RobotWrapper(){};
 RobotWrapper::~RobotWrapper(){};
 
-RobotWrapper::RobotWrapper(Basicbot *bot) : m_bot(bot)
+RobotWrapper::RobotWrapper(Basicbot *bot, Pathfinder *pf) : m_bot(bot), pfp(pf)
 {
-    lastFacing = m_bot->facing;
-    lastCoordinate = m_bot->lastReadCellQR;
-
-    /* TODO: Delete
-    for (int i = 0; i < 5; i++)
-    {
-        TranslatePathToInstructions(pf.GetStupidPath(lastCoordinate, Coordinate(rand()%5,rand()%5)));
-    }*/
+    lastFacing = m_bot->facing;             // TODO: check if working. seems like not.
+    lastCoordinate = m_bot->lastReadCellQR; // TODO: check if working. seems like not.
 }
 
 void RobotWrapper::Tick()
@@ -24,18 +18,77 @@ void RobotWrapper::Tick()
     {
         if (instructionQueue.empty())
         {
-            //argos::LOG << "InstructionQueue empty. Generate new random path." << std::endl;
-            // Add random path
-            // TODO: Delete
-            TranslatePathToInstructions(pf.GetStupidPath(lastCoordinate, Coordinate(rand() % 5, rand() % 5)));
+            if (!waitingForOrder)
+            {
+                int tempTC = pfp->em->tickCounter; // TODO: set to LastTick. If LastTick is in the past set to current tick
+
+                // If bot is idle, the instructionQueue is empty and bot isn't waitingForOrder
+                //it means that it has received a new order
+
+                //cheat - These are to control which coords the bots gets
+                currentOrder->podLocation = cube(rand() % 25, rand() % 25);
+                currentOrder->pickStationLocation = cube(rand() % 10, rand() % 10);
+                ///////
+
+                // Find path from bots last location to pod location
+                Coordinate podCoord = Coordinate(currentOrder->podLocation.first, currentOrder->podLocation.second);
+                Path pathToPod = pfp->FindPath(tempTC, lastCoordinate, podCoord, lastFacing, false);
+                TranslatePathToInstructions(pathToPod);
+                tempTC += 20; // TODO: //timeToComplete pathToPod
+
+                // arrive at pod placement
+                // TODO: check if pod is actually here
+                AddInstructionToQueue(pickuppod, 1);
+                tempTC += 20; //timeToComplete pickUpPod
+
+                // Find path to picking station
+                Coordinate pickCoord = Coordinate(currentOrder->pickStationLocation.first, currentOrder->pickStationLocation.second);
+                Path pathToPickstation = pfp->FindPath(tempTC, lastCoordinate, pickCoord, lastFacing, true);
+                TranslatePathToInstructions(pathToPickstation);
+                tempTC += 20; // timeToComplete pathToPickingStation
+
+                // Arrive at picking station. Waiting for 5 seconds. TODO: ticksToPicks should be moved out to a variable.
+                AddInstructionToQueue(_wait, 20);
+                tempTC += 20; //timeToComplete waitingToBePicked
+
+                // pathfind back to pod original position. Changed later to find avalibale spot
+                Path pathToPodSpot = pfp->FindPath(tempTC, lastCoordinate, podCoord, lastFacing, true);
+                TranslatePathToInstructions(pathToPodSpot);
+                tempTC += 20; //timeToComplete pathToPodSpot
+
+                // put down pod
+                AddInstructionToQueue(putdownpod, 1);
+                tempTC += 20; // timeToComplete putDownPod
+
+                //TODO: move out of the way. Maybe a go-home function if idle for too long.
+
+                //lastTick = tempTC
+            }
+            else
+            {
+                waitingForOrder = true;
+            }
         }
-        SendNextInstruction();
+        SendNextInstruction(); // TODO: refactor to over new-order-received, since it is the most common endpoint.
     }
 }
 
 void RobotWrapper::TranslatePathToInstructions(Path p)
 {
+    Path copy = p;
+    for (int i = 0; i < p.waypoints.size(); i++)
+    {
+        copy.waypoints.front().PrintCoordinate();
+        copy.waypoints.pop();
+    }
+
     int counter = p.waypoints.size();
+    if (counter == 0)
+    {
+        //argos::LOG << "can't translate empty path." << std::endl;
+        return;
+    }
+
     int diff = 0;
 
     for (int i = 0; i < counter; i++)
@@ -130,6 +183,7 @@ void RobotWrapper::TranslatePathToInstructions(Path p)
 
         AddInstructionToQueue(n, 1);
 
+        // how many cell to move forward
         // Todo: change to ternary?
         if (lastCoordinate.x != p.waypoints.front().x)
         {
@@ -139,31 +193,12 @@ void RobotWrapper::TranslatePathToInstructions(Path p)
         {
             diff = abs(lastCoordinate.y - p.waypoints.front().y);
         }
-        //argos::LOG << "moving: "<< diff << std::endl;
+
         AddInstructionToQueue(moveforward, diff);
 
         lastCoordinate = p.waypoints.front();
         p.waypoints.pop();
     }
-}
-
-direction RobotWrapper::GetFaceTowardsInstruction(Coordinate coordToFace, Coordinate lastCoordinate, direction _lastFacing)
-{
-    direction nextFacing = _lastFacing;
-
-    int xdiff = lastCoordinate.x - coordToFace.x;
-    int ydiff = lastCoordinate.y - coordToFace.y;
-
-    if (xdiff != 0)
-    {
-        nextFacing = (xdiff < 0) ? north : south;
-    }
-    else if (ydiff != 0)
-    {
-        nextFacing = (ydiff < 0) ? east : west;
-    }
-
-    return nextFacing;
 }
 
 void RobotWrapper::SendNextInstruction()
@@ -204,6 +239,25 @@ void RobotWrapper::SendNextInstruction()
             break;
         }
     }
+}
+
+direction RobotWrapper::GetFaceTowardsInstruction(Coordinate coordToFace, Coordinate lastCoordinate, direction _lastFacing)
+{
+    direction nextFacing = _lastFacing;
+
+    int xdiff = lastCoordinate.x - coordToFace.x;
+    int ydiff = lastCoordinate.y - coordToFace.y;
+
+    if (xdiff != 0)
+    {
+        nextFacing = (xdiff < 0) ? north : south;
+    }
+    else if (ydiff != 0)
+    {
+        nextFacing = (ydiff < 0) ? east : west;
+    }
+
+    return nextFacing;
 }
 
 void RobotWrapper::AddInstructionToQueue(instruction ins, int tiles = 1)

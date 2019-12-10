@@ -5,25 +5,34 @@
 class PodManager
 {
 private:
-    std::map<int, Pod> m_Pods; // TODO: laves om til vector?
-    int m_podCount;
 
-    Warehouse *wh;
+    const int layout_startzone_width = 4; //4
+    const int layout_hallway_size = 1; //1
+    const int layout_edge_size = 1; //1
+    const int layout_podcluster_height = 2; //2
+    const int layout_podcluster_width = 2; //4
 
-    Pod CreatePod(int);
-    bool DeletePod();
+    std::pair<int, int> pickingStationLocation;
+
+    void GeneratePodLayout(int warehouse_widthInTiles, int warehouse_heightInTiles);
 
 public:
     PodManager();
     ~PodManager();
 
-    void SetupPodManager(Warehouse * _wh, int numOfPods);
+    Warehouse *wh;
+
+    void SetupPodManager(Warehouse * _wh);
     void Tick();
 
+    std::map<int, Pod*> pods; // TODO: laves om til vector?
     std::queue<Order*> ordersToBeProcessed;
+    Pod* nullPodPnt;
 
-    Pod GetPod(int podId);
-    int GetPodCount();
+    int podCount;
+
+    void CreatePod();
+    Pod* GetPodPtr(int podID);
 };
 
 

@@ -16,7 +16,7 @@ set(This Unit_Tests)
 # use globbing to find files automatically.
 
 #test files here
-
+include_directories(${CMAKE_SOURCE_DIR} ${ARGOS_INCLUDE_DIRS} ${LUA_INCLUDE_DIR})
 file(GLOB_RECURSE sources_test unit_tests/*.cpp)
 
 add_executable(${This} ${sources_test})

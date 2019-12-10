@@ -4,6 +4,7 @@
 // forward declarations
 class Pod;
 class Coordinate;
+class Node;
 class Order;
 class Path;
 class DataCollector;
@@ -12,6 +13,7 @@ class RobotWrapper;
 class OrderManager;
 class PodManager;
 class RobotManager;
+class EnvironmentManager;
 class Warehouse;
 
 // datatypes
@@ -21,6 +23,7 @@ class Warehouse;
 // headers
 #include "headers/Pod.h"
 #include "headers/Coordinate.h"
+#include "headers/Node.h"
 #include "headers/Order.h"
 #include "headers/Path.h"
 #include "headers/DataCollector.h"
@@ -29,11 +32,13 @@ class Warehouse;
 #include "headers/OrderManager.h"
 #include "headers/PodManager.h"
 #include "headers/RobotManager.h"
+#include "headers/EnvironmentManager.h"
 #include "headers/Warehouse.h"
 
 // implementation
 #include "imp/Pod.cpp"
 #include "imp/Coordinate.cpp"
+#include "imp/Node.cpp"
 #include "imp/Order.cpp"
 #include "imp/Path.cpp"
 #include "imp/DataCollector.cpp"
@@ -42,6 +47,8 @@ class Warehouse;
 #include "imp/OrderManager.cpp"
 #include "imp/PodManager.cpp"
 #include "imp/RobotManager.cpp"
+#include "imp/EnvironmentManager.cpp"
 #include "imp/Warehouse.cpp"
+
 
 #endif

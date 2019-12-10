@@ -48,34 +48,41 @@ public:
    virtual void Destroy() {}
 
    int robotID;
-   direction facing;
-   Coordinate lastReadCellQR = Coordinate(0,0);
-   int lastReadPodQR;
+   direction facing = north;
+   Coordinate lastReadCellQR;
+   int lastReadPodQR = -1;
 
    bool isBusy = false;
    instruction currentInstruction = idle;
 
+   // Instruction-functions
    void MoveForward();
    void TurnLeft();
    void TurnRight();
    void Turn180();
    void PickUpPod();
    void PutDownPod();
-   void Wait();
+   void BotWait();
 
    int counter = 0;
-   int cellsToMove = 1;
+   int cellsToMove = 1; 
    int ticksToWait = 1;
-
    int ticksToPickUpPod = 20;
    int ticksToPutDownPod = 20;
+   int ticksToTurn;
+   int ticksToMoveOneCell;
+
 
    void ResetBot();
 
    void LogReadablePosition();
    void ReadCellQR();
 
-   // for data collection
+   Real m_turningSpeed;
+   Real movingSpeed;
+
+
+   // data collection
    int ticksIdle = 0;
    int ticksMoveforward = 0;
    int ticksTurnleft = 0; 
@@ -117,10 +124,6 @@ private:
    /* Angle tolerance range to go straight.
     * It is set to [-alpha,alpha]. */
    CRange<CRadians> m_cGoStraightAngleRange;
-
-   Real m_turningSpeed;
-   int m_ticksToTurn;
-   int m_ticksToMoveOneCell;
 
    CVector2 GetPosition2D();
 };

@@ -1,53 +1,136 @@
 #ifndef PODMANAGER_CPP
 #define PODMANAGER_CPP
 
-PodManager::PodManager(){}
-PodManager::~PodManager(){}
+PodManager::PodManager() {}
+PodManager::~PodManager() {}
 
-void PodManager::SetupPodManager(Warehouse* _wh, int numOfPods)
+void PodManager::SetupPodManager(Warehouse *_wh)
 {
     wh = _wh;
-    m_podCount = 0;
+    podCount = 0;
+    pickingStationLocation = std::pair<int, int>(0, 5);
 
-    for (int i=0; i<numOfPods; i++)
-    {
-        m_Pods.insert(
-            std::pair<int, Pod>
-                (m_podCount, CreatePod(m_podCount)));
-        m_podCount++;
-    };
+    nullPodPnt = new Pod(-1); // todo. maybe just use NULL instead??
+
+    GeneratePodLayout(wh->em->warehouseLength, wh->em->warehouseHeight);
 }
 
 void PodManager::Tick()
 {
+    std::queue<Order *> failedOrders;
+
     while (!ordersToBeProcessed.empty())
-	{
-		Order* nextOrder = ordersToBeProcessed.front();
-        //argos::LOG << "pm. read order id: " << ordersToBeProcessed.front()->orderID << std::endl;
-        nextOrder->orderID += 100;
-        // add pod id
-		wh->rm.ordersToBeProcessed.push(nextOrder);
-		ordersToBeProcessed.pop();
-	}
-};
+    {
+        Order *nextOrder = ordersToBeProcessed.front();
 
+        // add pod id - fakeish for now
+        nextOrder->podID = (nextOrder->orderID) % podCount;
+        //Find location of pod
+        std::pair<int, int> podLocation = wh->em->FindPodLocation(pods[nextOrder->podID]);
 
+        //Add picking station location
+        nextOrder->pickStationLocation = pickingStationLocation; //TEMP
 
-Pod PodManager::CreatePod(int nextIndex)
-{
-    Pod newPod = Pod(nextIndex);
-    return newPod;
+        //Did it find a pod location?
+        if (podLocation.first != -1 && podLocation.second != -1) //Yes
+        {
+            //argos::LOG << "FOUND THE REQUESTED POD!!" << " Pod id: " << nextOrder->podID << std::endl;
+            nextOrder->podLocation = podLocation;
+
+            // send the order onwards to the Robot Manager
+            wh->rm.ordersToBeProcessed.push(nextOrder);
+        }
+        else //No
+        {
+            //argos::LOGERR << "FAILED FINDING THE REQUESTED POD!!" << " Pod id: " << nextOrder->podID << std::endl;
+
+            // Add order to the failed queue
+            failedOrders.push(nextOrder);
+        }
+
+        ordersToBeProcessed.pop();
+    }
+
+    // Add the failed orders back into the main queue
+    while (!failedOrders.empty())
+    {
+        ordersToBeProcessed.push(failedOrders.front());
+        failedOrders.pop();
+    }
 }
 
-Pod PodManager::GetPod(int podId)
+void PodManager::CreatePod()
 {
-    return m_Pods[podId];
+    Pod *newPod = new Pod(podCount);
+    pods.insert(std::pair<int, Pod *>(podCount, newPod));
+    podCount++;
 }
 
-int PodManager::GetPodCount()
+void PodManager::GeneratePodLayout(int warehouse_widthInTiles, int warehouse_heightInTiles)
 {
-    return m_podCount;
+    //TODO DEBUG: initialize array
+    char tiles[warehouse_widthInTiles][warehouse_heightInTiles];
+    for (int y = 0; y < warehouse_heightInTiles; y++)
+    {
+        for (int x = 0; x < warehouse_widthInTiles; x++)
+        {
+            tiles[x][y] = 'E';
+        }
+    }
+
+    int currentX = layout_startzone_width;
+    int currentY = layout_edge_size;
+
+    int final_possible_pod_x = warehouse_widthInTiles - 1 - layout_edge_size;
+    int final_possible_pod_y = warehouse_heightInTiles - 1 - layout_edge_size;
+
+    //argos::LOG << "Final X: " << final_possible_pod_x << std::endl;
+    //argos::LOG << "Final Y: " << final_possible_pod_y << std::endl;
+
+    //while(currentX < warehouse_widthInTiles && currentY < warehouse_widthInTiles)
+    //This while loop will ship the outside of the pod placement zone
+    while (currentX <= final_possible_pod_x && currentY <= final_possible_pod_y)
+    {
+        bool pod_horizontal_check = ((currentX - layout_startzone_width) % (layout_podcluster_width + layout_hallway_size)) < layout_podcluster_width;
+        bool pod_vertical_check = ((currentY - layout_edge_size) % (layout_podcluster_height + layout_hallway_size)) < layout_podcluster_height;
+
+        if (pod_horizontal_check && pod_vertical_check)
+        {
+            tiles[currentX][currentY] = 'P';
+
+            CreatePod();
+            wh->em->PlacePod(pods[podCount - 1], Coordinate(currentX, currentY));
+        }
+        else
+        {
+            tiles[currentX][currentY] = 'H';
+        }
+
+        //Incrementation
+        currentX++;
+
+        if (currentX > final_possible_pod_x)
+        {
+            currentX = layout_startzone_width;
+            currentY++;
+        }
+    }
+
+    //TODO DEBUG: print visual warehouse
+    for (int y = 0; y < warehouse_heightInTiles; y++)
+    {
+        for (int x = 0; x < warehouse_widthInTiles; x++)
+        {
+            //argos::LOG << tiles[x][y];
+        }
+
+        //argos::LOG << std::endl;
+    }
 }
 
+Pod *PodManager::GetPodPtr(int podID)
+{
+    return pods[podID];
+}
 
 #endif

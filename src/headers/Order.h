@@ -10,11 +10,14 @@ public:
 	~Order();
 
 	int orderID = -1;
-	int podID;
-	int timestamp_born;
-	int timestamp_assigned;
-	int timestamp_completed;
-	bool underWay;
+	int wareID = -1;
+	int podID = -1;
+	std::pair<int, int> podLocation = std::pair<int, int>(-1, -1);
+	std::pair<int, int> pickStationLocation = std::pair<int, int>(-1, -1);
+	int timestamp_born = -1;
+	int timestamp_assigned = -1;
+	int timestamp_completed = -1;
+	// bool underWay;
 
 };
 

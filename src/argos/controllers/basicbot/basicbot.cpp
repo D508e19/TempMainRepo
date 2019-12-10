@@ -18,10 +18,13 @@ Basicbot::Basicbot() :
    m_cGoStraightAngleRange(-ToRadians(m_cAlpha),
    ToRadians(m_cAlpha)),
 
-   m_turningSpeed(5.49778714378213f),
-   m_ticksToTurn(20),
-   m_ticksToMoveOneCell(20),
+   m_turningSpeed(5.49778714378213f), //TODO calculate instead
+   movingSpeed(10.0f), //TODO calculate instead
 
+   ticksToTurn(20), //TODO calculate instead
+   ticksToMoveOneCell(20), //TODO calculate instead
+
+   // data collection
    ticksIdle(0),
    ticksMoveforward(0),
    ticksTurnleft(0),
@@ -76,6 +79,7 @@ void Basicbot::Init(TConfigurationNode &t_node)
    GetNodeAttributeOrDefault(t_node, "velocity", m_fWheelVelocity, m_fWheelVelocity);
 
    ReadCellQR();
+   currentInstruction = idle;
 }
 
 void Basicbot::ControlStep()
@@ -98,14 +102,16 @@ void Basicbot::ControlStep()
          Turn180();
          break;
       case pickuppod:
-         //PickupPod();
+         PickUpPod();
          break;
       case putdownpod:
-         //PutDownPOd();
+         PutDownPod();
          break;
       case _wait:
-         Wait();
+         BotWait();
+         break;
       default:
+      argos::LOGERR << "bot: " << robotID << " default in ControlStep switch. currentInstruction: " << currentInstruction << std::endl;
          break;
    }
 }
@@ -114,19 +120,19 @@ void Basicbot::MoveForward()
 {
    if (!isBusy){
       isBusy = true;
-      counter = m_ticksToMoveOneCell * cellsToMove;
+      counter = ticksToMoveOneCell * cellsToMove;
    }
 
    if (counter > 0)
    {
-      m_pcWheels->SetLinearVelocity(10.0f, 10.0f);
+      m_pcWheels->SetLinearVelocity(movingSpeed, movingSpeed);
       ticksMoveforward++;
       counter--;
    }
    else
    {
       ReadCellQR();
-      //argos::LOG << "Arrived at: " << lastReadCellQR.x << " , " << lastReadCellQR.y << std::endl;
+      argos::LOG << "Arrived at: " << lastReadCellQR.x << " , " << lastReadCellQR.y << std::endl;
       ResetBot();
    }
 }
@@ -135,7 +141,7 @@ void Basicbot::TurnRight()
 {
    if (!isBusy){
       isBusy = true;
-      counter = m_ticksToTurn;
+      counter = ticksToTurn;
    }
    if (counter > 0)
    {
@@ -157,7 +163,7 @@ void Basicbot::TurnLeft()
 {
    if (!isBusy){
       isBusy = true;
-      counter = m_ticksToTurn;
+      counter = ticksToTurn;
    }
    if (counter > 0)
    {
@@ -179,7 +185,7 @@ void Basicbot::Turn180()
 {
    if (!isBusy){
       isBusy = true;
-      counter = m_ticksToTurn * 2;
+      counter = ticksToTurn * 2;
    }
    if (counter > 0)
    {
@@ -233,7 +239,7 @@ void Basicbot::PutDownPod()
    }
 }
 
-void Basicbot::Wait()
+void Basicbot::BotWait()
 {
    if (!isBusy){
       isBusy = true;
@@ -244,11 +250,11 @@ void Basicbot::Wait()
    {
       ticksWait++;
       counter--;
-   }
-   else
-   {
-      argos::LOG << "waited: " << ticksToWait << std::endl;
-      ResetBot();
+      if (counter == 0)
+      {
+         argos::LOG << "waited: " << ticksToWait << " ticks." << std::endl;
+         ResetBot();
+      }
    }
 }
 
@@ -263,6 +269,8 @@ void Basicbot::ResetBot()
 }
 
 void Basicbot::ReadCellQR(){
+   // TODO: BUGBUGBUG
+   //argos::LOG << "read QR" << std::endl;
    CVector2 temp = GetPosition2D();
    double x = temp.GetX() * 5;
    double y = temp.GetY() * 5;
@@ -277,7 +285,7 @@ void Basicbot::LogReadablePosition(){
    double y = temp.GetY();
 
    std::stringstream stream;
-   stream << std::fixed << std::setprecision(2) << x << ", " << y;
+   stream << std::fixed << std::setprecision(5) << x << ", " << y;
    std::string s = stream.str();
 
    argos::LOG << "Position: " << s << std::endl;
@@ -288,7 +296,6 @@ CVector2 Basicbot::GetPosition2D(){
     const CCI_PositioningSensor::SReading &tPosReads = m_pcPosSens->GetReading();
     return CVector2(tPosReads.Position.GetX(), tPosReads.Position.GetY());
 }
-
 
 /*
  * This statement notifies ARGoS of the existence of the controller.

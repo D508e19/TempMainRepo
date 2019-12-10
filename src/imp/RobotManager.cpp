@@ -13,31 +13,28 @@ void RobotManager::SetupRobotManager(Warehouse *_wh, std::map<int, Basicbot *> b
         RobotWrapper rw = CreateRobotWrapper(botControllers[i]);
         Wrappers.insert(std::pair<int, RobotWrapper>(i, rw));
     }
-};
+}
 
 void RobotManager::Tick()
 {
-
-    while (!ordersToBeProcessed.empty())
-	{
-		Order* nextOrder = ordersToBeProcessed.front();
-        //argos::LOG << "rm. OrderID: "<< nextOrder->orderID << std::endl;
-		wh->om.ordersOngoing.push(nextOrder);
-		ordersToBeProcessed.pop();
-	}
-
-
     for (int i = 0; i < robotCount; i++)
     {
+        if(Wrappers[i].waitingForOrder && !ordersToBeProcessed.empty())
+        {
+            Wrappers[i].currentOrder = ordersToBeProcessed.front();
+            ordersToBeProcessed.pop();
+            Wrappers[i].waitingForOrder = false;
+        }
+
         Wrappers[i].Tick();
     }
-};
+}
 
 RobotWrapper RobotManager::CreateRobotWrapper(Basicbot *b)
 {
-    RobotWrapper rw(b);
+    RobotWrapper rw(b, wh->pf);
     robotCount++;
     return rw;
-};
+}
 
 #endif
