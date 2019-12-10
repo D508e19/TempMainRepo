@@ -8,32 +8,28 @@ class Pathfinder
 private:
     int selectedAlgorithm;
 
-    EnvironmentManager* em;
-
     bool ReserveTimeslotsForPath(int startTick, Path path);
 
 
-    int pathReturnedEmpty = 0;
-
-    Node* currentNode;
-    Path pathList;
     EnvironmentManager* environmentManager;
 
 
-    Path ReversePath(Node node, Path path);
+    Path ReversePath(Node node);
     simplePath ConstructPath(Node, simplePath);
 
     // data collection
     int pathReturnedEmpty = 0;
 
 public:
+    EnvironmentManager* em;
+
     Pathfinder(EnvironmentManager* _em);
     ~Pathfinder();
    
-    Path FindPath(Coordinate start, Coordinate end, direction last, bool isCarrying);
+    Path FindPath(int startTick, Coordinate start, Coordinate end, direction last, bool isCarrying);
 
     Path GetStupidPath(Coordinate start, Coordinate end);
-    Path GetAstarPath(Coordinate start, Coordinate end, direction last, bool isCarrying, EnvironmentManager* _environmentManager, int straightTime = 2, int turnTime = 2, int waitTime = 1);
+    Path GetAstarPath(int startTick, Coordinate start, Coordinate end, direction last, bool isCarrying, EnvironmentManager* _environmentManager, int straightTime = 2, int turnTime = 2, int waitTime = 1);
 };
 
 

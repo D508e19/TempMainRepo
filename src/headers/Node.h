@@ -9,16 +9,19 @@ public:
     Node();
     Node(Coordinate, direction);
     Node(Coordinate, direction, Node*, int);
+    Node(Coordinate, direction, Node*, int, bool);
 
     Node* LeastCost();
-    bool CalculateNeighbour(int straightTime, int turnTime, int waitTime, EnvironmentManager* environmentManager);
+    bool CalculateNeighbour(int startTick, int straightTime, int turnTime, int waitTime, EnvironmentManager* environmentManager);
     int CalculateHeuristic(Coordinate goal, int turnTime);
     static int CostToRoot(Node n);
     std::list<Node> ReturnPath(Node n, std::list<Node> path);
     int UpdateLeastCost();
+    Node* calculateWaitTime();
 
 
 
+    bool isWait = false;
     bool deleteNode = false;
     Node* parent;
     int lowestCost;

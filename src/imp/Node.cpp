@@ -1,6 +1,8 @@
 #ifndef CUSTOM_NODE_CPP
 #define CUSTOM_NODE_CPP
 
+#include <src/headers/Node.h>
+
 Node::Node(){}
 
 Node::Node(Coordinate c, direction d) 
@@ -23,6 +25,17 @@ Node::Node(Coordinate c, direction d, Node* p, int weight)
     start = false;
     parent = p;
     parentWeight = weight;
+}
+Node::Node(Coordinate c, direction d, Node* p, int weight, bool _wait)
+{
+    coordinate = c;
+    nodeDirection = d;
+    fScore = 1000000000;
+    gScore = 1000000000;
+    start = false;
+    parent = p;
+    parentWeight = weight;
+    isWait = _wait;
 }
 
 int Node::CostToRoot(Node node) //TODO: name change?
@@ -70,7 +83,7 @@ int Node::CalculateHeuristic(Coordinate goal, int turnTime)
     if(nodeDirection == north){
         if(gx != nx){ 
             h+= turnTime;
-            if(gy < ny){ h+=turnTime*3; }
+            if(gy < ny){ h+=turnTime*2; }
             else {h+=turnTime;}
         }
         else if(gy < ny){ h+=2*turnTime; }
@@ -79,7 +92,7 @@ int Node::CalculateHeuristic(Coordinate goal, int turnTime)
     else if(nodeDirection == south){
         if(gx != nx){
             h+= turnTime;
-            if(gy > ny){ h += turnTime*3; }
+            if(gy > ny){ h += turnTime*2; }
             else {h+=turnTime;}
         }
         else if(gy > ny){ h+=2*turnTime; }
@@ -88,7 +101,7 @@ int Node::CalculateHeuristic(Coordinate goal, int turnTime)
     else if(nodeDirection == east){
         if(gy != ny){
             h+= turnTime;
-            if(gx < nx){ h += turnTime*3; }
+            if(gx < nx){ h += turnTime*2; }
             else {h+=turnTime;}
         }
         else if(gx < nx){ h+=2*turnTime; }
@@ -96,7 +109,7 @@ int Node::CalculateHeuristic(Coordinate goal, int turnTime)
     else if(nodeDirection == west){
         if(gy != ny){
             h+= turnTime;
-            if(gx > nx){ h += turnTime*3; }
+            if(gx > nx){ h += turnTime*2; }
             else {h+=turnTime;}
         }
         else if(gx > nx){ h += 2*turnTime; }
@@ -108,115 +121,103 @@ int Node::CalculateHeuristic(Coordinate goal, int turnTime)
     return h;
 }
 
-bool Node::CalculateNeighbour(int straightTime, int turnTime, int waitTime, EnvironmentManager* environmentManager)
+bool Node::CalculateNeighbour(int startTick, int straightTime, int turnTime, int waitTime, EnvironmentManager* environmentManager)
 {
-
     switch (nodeDirection)
     {
         case north :
-            if(!(*environmentManager).IsReserved(Coordinate(coordinate.x, coordinate.y+1), gScore, gScore+straightTime)) {
+            //if(!(*environmentManager).IsReserved(Coordinate(coordinate.x, coordinate.y+1), startTick + (gScore*10), startTick + ((gScore+straightTime)*10))) {
                 children.emplace_back(Node(Coordinate(coordinate.x, coordinate.y + 1), north, this, straightTime));
-            }
-            else if(!(*environmentManager).IsReserved(Coordinate(coordinate.x, coordinate.y), gScore, gScore+waitTime)) {
-                children.emplace_back(Coordinate(coordinate.x, coordinate.y), north, this, waitTime);
-            }
-            else{
-                return false;
-            }
-            if(!(*environmentManager).IsReserved(coordinate, gScore, gScore+turnTime)) {
+//            }
+//            else if(!(*environmentManager).IsReserved(Coordinate(coordinate.x, coordinate.y), startTick + (gScore*10), startTick + ((gScore+waitTime)*10))) {
+//                children.emplace_back(Coordinate(coordinate.x, coordinate.y), north, this, waitTime, true);
+//            }
+//            else{
+//                return false;
+//            }
+            if(!(*environmentManager).IsReserved(coordinate, startTick + (gScore*10), startTick + ((gScore+turnTime)*10))) {
 
                 children.emplace_back(Node(coordinate, south, this, turnTime));
             }
-            if(!(*environmentManager).IsReserved(coordinate, gScore, gScore+turnTime)) {
+            if(!(*environmentManager).IsReserved(coordinate, startTick + (gScore*10), startTick + ((gScore+turnTime)*10))) {
 
                 children.emplace_back(Node(coordinate, east, this, turnTime));
             }
-            if(!(*environmentManager).IsReserved(coordinate, gScore, gScore+turnTime)) {
+            if(!(*environmentManager).IsReserved(coordinate, startTick + (gScore*10), startTick + ((gScore+turnTime)*10))) {
 
                 children.emplace_back(Node(coordinate, west, this, turnTime));
             }
             return true;
         case south :
-            if(!(*environmentManager).IsReserved(coordinate, gScore, gScore+turnTime)) {
+            if(!(*environmentManager).IsReserved(coordinate, startTick + (gScore*10), startTick + ((gScore+turnTime)*10))) {
 
                 children.emplace_back(Node(coordinate, north, this, turnTime));
             }
-            else if (!(*environmentManager).IsReserved(Coordinate(coordinate.x, coordinate.y), gScore, gScore+waitTime)){
-                children.emplace_back(Coordinate(coordinate.x, coordinate.y), north, this, waitTime);
-            }
-            else {
-                return false;
-            }
-            if(!(*environmentManager).IsReserved(Coordinate(coordinate.x, coordinate.y-1), gScore, gScore+straightTime)) {
-
+            if(!(*environmentManager).IsReserved(Coordinate(coordinate.x, coordinate.y-1), startTick + (gScore*10), startTick + ((gScore+straightTime)*10))) {
                 if(!coordinate.y-1 < 0) {
                     children.emplace_back(Node(Coordinate(coordinate.x, coordinate.y - 1), south, this, straightTime));
                 }
             }
-            if(!(*environmentManager).IsReserved(coordinate, gScore, gScore+turnTime)) {
-
-
+            else if (!(*environmentManager).IsReserved(Coordinate(coordinate.x, coordinate.y), startTick + (gScore*10), startTick + ((gScore+waitTime)*10))){
+                children.emplace_back(Coordinate(coordinate.x, coordinate.y), south, this, waitTime, true);
+            }
+            else {
+                return false;
+            }
+            if(!(*environmentManager).IsReserved(coordinate, startTick + (gScore*10), startTick + ((gScore+turnTime)*10))) {
                 children.emplace_back(Node(coordinate, east, this, turnTime));
             }
-            if(!(*environmentManager).IsReserved(coordinate, gScore, gScore+turnTime)) {
-
-
+            if(!(*environmentManager).IsReserved(coordinate, startTick + (gScore*10), startTick + ((gScore+turnTime)*10))) {
                 children.emplace_back(Node(coordinate, west, this, turnTime));
             }
             return true;
         case east :
-            if(!(*environmentManager).IsReserved(coordinate, gScore, gScore+turnTime)) {
-
+            if(!(*environmentManager).IsReserved(coordinate, startTick + (gScore*10), startTick + ((gScore+turnTime)*10))) {
                 children.emplace_back(Node(coordinate, north, this, turnTime));
             }
-            else if (!(*environmentManager).IsReserved(Coordinate(coordinate.x, coordinate.y), gScore, gScore+waitTime)){
-                children.emplace_back(Coordinate(coordinate.x, coordinate.y), north, this, waitTime);
+            if(!(*environmentManager).IsReserved(coordinate, startTick + (gScore*10), startTick + ((gScore+turnTime)*10))) {
+                children.emplace_back(Node(coordinate, south, this, turnTime));
+            }
+            if(!(*environmentManager).IsReserved(Coordinate(coordinate.x + 1, coordinate.y), startTick + (gScore*10), startTick + ((gScore+straightTime)*10))) {
+                children.emplace_back(Node(Coordinate(coordinate.x + 1, coordinate.y), east, this, straightTime));
+            }
+            else if (!(*environmentManager).IsReserved(Coordinate(coordinate.x, coordinate.y), startTick + (gScore*10), startTick + ((gScore+waitTime)*10))){
+                children.emplace_back(Coordinate(coordinate.x, coordinate.y), east, this, waitTime, true);
             }
             else {
                 return false;
             }
-            if(!(*environmentManager).IsReserved(coordinate, gScore, gScore+turnTime)) {
-
-
-                children.emplace_back(Node(coordinate, south, this, turnTime));
-            }
-            if(!(*environmentManager).IsReserved(Coordinate(coordinate.x + 1, coordinate.y), gScore, gScore+straightTime)) {
-
-
-                children.emplace_back(Node(Coordinate(coordinate.x + 1, coordinate.y), east, this, straightTime));
-            }
-            if(!(*environmentManager).IsReserved(coordinate, gScore, gScore+turnTime)) {
-
-
+            if(!(*environmentManager).IsReserved(coordinate, startTick + (gScore*10), startTick + ((gScore+turnTime)*10))) {
                 children.emplace_back(Node(coordinate, west, this, turnTime));
             }
             return true;
         case west :
-            if(!(*environmentManager).IsReserved(coordinate, gScore, gScore+turnTime)) {
-
+            if(!(*environmentManager).IsReserved(coordinate, startTick + (gScore*10), startTick + ((gScore+turnTime)*10))) {
+                //Add North
                 children.emplace_back(Node(coordinate, north, this, turnTime));
             }
-            else if (!(*environmentManager).IsReserved(Coordinate(coordinate.x, coordinate.y), gScore, gScore+waitTime)){
-                children.emplace_back(Coordinate(coordinate.x, coordinate.y), north, this, waitTime);
-            }
-            else {
-                return false;
-            }
-            if(!(*environmentManager).IsReserved(coordinate, gScore, gScore+turnTime)) {
-
-
+            if(!(*environmentManager).IsReserved(coordinate, startTick + (gScore*10), startTick + ((gScore+turnTime)*10))) {
+                //Add South
                 children.emplace_back(Node(coordinate, south, this, turnTime));
             }
-            if(!(*environmentManager).IsReserved(coordinate, gScore, gScore+turnTime)) {
-
-
+            if(!(*environmentManager).IsReserved(coordinate, startTick + (gScore*10), startTick + ((gScore+turnTime)*10))) {
+                //Add East
                 children.emplace_back(Node(coordinate, east, this, turnTime));
             }
-            if(!(*environmentManager).IsReserved(Coordinate(coordinate.x - 1, coordinate.y), gScore, gScore+straightTime)) {
-
-                if(coordinate.x - 1 < 0) {
+            if(!(*environmentManager).IsReserved(Coordinate(coordinate.x - 1, coordinate.y), startTick + (gScore*10), startTick + ((gScore+straightTime)*10))) {
+                //Check that coordinate is not out of bounds
+                if(coordinate.x - 1 > 0) {
+                    //Add West
                     children.emplace_back(Node(Coordinate(coordinate.x - 1, coordinate.y), west, this, straightTime));
                 }
+            }
+            //If the coordinate is reserved, add wait
+            else if (!(*environmentManager).IsReserved(Coordinate(coordinate.x, coordinate.y), startTick + (gScore*10), startTick + ((gScore+waitTime)*10))){
+                children.emplace_back(Coordinate(coordinate.x, coordinate.y), west, this, waitTime, true);
+            }
+            //If the current coordinate can't be waited on, delete node
+            else {
+                return false;
             }
             return true;
         default:
@@ -230,6 +231,8 @@ Node* Node::LeastCost() // TODO: change name to describe functionality
 {
     if(children.empty())
     {
+        return this;
+
         if(deleteNode){
             return parent;
         }else{
@@ -267,6 +270,14 @@ int Node::UpdateLeastCost(){
             }
         }
         return ChildWithLowestFScore;
+    }
+}
+
+Node *Node::calculateWaitTime() {
+    if(parent->isWait){
+        return parent->calculateWaitTime();
+    }else {
+        return this;
     }
 }
 
