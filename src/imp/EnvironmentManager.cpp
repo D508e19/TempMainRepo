@@ -108,6 +108,7 @@ bool EnvironmentManager::IsReserved(Coordinate cell, int tick)
 
 bool EnvironmentManager::IsReserved(Coordinate cell, int startTick, int endTick)
 {
+    return false;
 	// get all timeslots between startTick and endTick
 	// call IsReserved for all
 

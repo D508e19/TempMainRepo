@@ -19,6 +19,13 @@ public:
     int UpdateLeastCost();
     Node* calculateWaitTime();
 
+    bool addNeighborsNorth(int startTick, int straightTime, int turnTime, int waitTime, EnvironmentManager* environmentManager);
+    bool addNeighborsSouth(int startTick, int straightTime, int turnTime, int waitTime, EnvironmentManager* environmentManager);
+    bool addNeighborsEast(int startTick, int straightTime, int turnTime, int waitTime, EnvironmentManager* environmentManager);
+    bool addNeighborsWest(int startTick, int straightTime, int turnTime, int waitTime, EnvironmentManager* environmentManager);
+
+
+
 
 
     bool isWait = false;
