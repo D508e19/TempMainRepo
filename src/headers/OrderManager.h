@@ -10,15 +10,15 @@ class OrderManager
 {
 private:
 	int orderCount;
-    std::map<int, Order*> orders; //alle ordre
+    std::map<int, Order*> orders; //all orders
+	std::map<int, Order*> orderToBeReleased; //Orders generated, but not passed on.
 	Warehouse *wh;
 
 public:
 	OrderManager();
 	~OrderManager();
 
-	std::queue<Order*> ordersToBeProcessed;
-	std::queue<Order*> ordersOngoing;
+	std::queue<Order*> ordersOngoing; //Order passed on, but not yet completed?
 
 	void SetupOrderManager(Warehouse *_wh);
 	void Tick();
