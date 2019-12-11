@@ -17,6 +17,7 @@ public:
     std::pair<int,int> pickCoordinate;
 
     void Tick();
+    void AddTask(Order* order);
 };
 
 #endif

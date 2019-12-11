@@ -18,7 +18,10 @@ void PickStation::Tick()
     argos::LOG << "Pick station Tick: " << id << std::endl;
 }
 
-
+void PickStation::AddTask(Order* order)
+{
+    tasks.push_front(order);
+}
 
 
 #endif

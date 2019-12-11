@@ -99,6 +99,7 @@ void PodManager::GeneratePodLayout(int warehouse_widthInTiles, int warehouse_hei
 
             CreatePod();
             wh->em->PlacePod( pods[podCount-1], Coordinate(currentX, currentY));
+            pods[podCount-1]->location = std::pair<int,int>(currentX, currentY);
         }
         else
         {
