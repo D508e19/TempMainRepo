@@ -8,7 +8,6 @@ void PodManager::SetupPodManager(Warehouse* _wh)
 {
     wh = _wh;
     podCount = 0;
-    pickingStationLocation = std::pair<int, int>(0,5);
 
     nullPodPnt = new Pod(-1); // todo. maybe just use NULL instead??
 
@@ -29,7 +28,7 @@ void PodManager::Tick()
         std::pair<int, int> podLocation = wh->em->FindPodLocation(pods[nextOrder->podID]);
 
         //Add picking station location
-        nextOrder->pickStationLocation = pickingStationLocation; //TEMP
+        nextOrder->pickStation = wh->psm->GetPickStationForOrder();
 
         //Did it find a pod location?
         if(podLocation.first != -1 && podLocation.second != -1) //Yes

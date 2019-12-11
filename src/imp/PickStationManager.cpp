@@ -44,4 +44,10 @@ void PickStationManager::GeneratePickStations(int startzone_width, int arena_hei
     }
 }
 
+PickStation* PickStationManager::GetPickStationForOrder()
+{   
+    //TODO Could be replaced with logic to return the stations with the least amount of orders
+    return stations[floor(rand() % stations.size())]; 
+}
+
 #endif

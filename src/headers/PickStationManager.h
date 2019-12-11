@@ -23,6 +23,8 @@ public:
     void Tick();
 
     void AddPickingStation(int id, std::pair<int,int> coordinate);
+
+    PickStation* GetPickStationForOrder();
 };
 
 #endif

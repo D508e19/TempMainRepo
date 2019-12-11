@@ -6,8 +6,6 @@ class PodManager
 {
 private:
 
-    std::pair<int, int> pickingStationLocation;
-
     void GeneratePodLayout(int warehouse_widthInTiles, int warehouse_heightInTiles);
 
 public:

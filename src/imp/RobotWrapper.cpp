@@ -26,7 +26,7 @@ void RobotWrapper::Tick()
 
                 //cheat - These are to control which coords the bots gets
                 currentOrder->podLocation = cube(rand()%25,rand()%25);
-                currentOrder->pickStationLocation = cube(rand()%10,rand()%10);
+                currentOrder->pickStation->pickCoordinate = cube(rand()%10,rand()%10);
                 ///////
 
                 // Find path from bots last location to pod location
@@ -41,7 +41,7 @@ void RobotWrapper::Tick()
                 tempTC += 20; //timeToComplete pickUpPod
 
                 // Find path to picking station
-                Coordinate pickCoord = Coordinate(currentOrder->pickStationLocation.first,currentOrder->pickStationLocation.second);
+                Coordinate pickCoord = Coordinate(currentOrder->pickStation->pickCoordinate.first,currentOrder->pickStation->pickCoordinate.second);
                 Path pathToPickstation = pfp->FindPath(tempTC, lastCoordinate, pickCoord, lastFacing, true);
                 TranslatePathToInstructions(pathToPickstation);
                 tempTC += 20;// timeToComplete pathToPickingStation
