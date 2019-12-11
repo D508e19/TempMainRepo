@@ -101,7 +101,7 @@ bool EnvironmentManager::IsReserved(Coordinate cell, int tick)
 		}
 	}
 	bool ans = (reservationsTable[timeslot][std::pair<int,int>(cell.x,cell.y)]);
-	argos::LOG << cell.x << "," << cell.y << "IsReserved: "<< ans << std::endl;
+	argos::LOG << "In timeslot: "<< timeslot << ". Cell: " <<  cell.x << "," << cell.y << " is reserved: "<< ans << std::endl;
 	return ans;
 }
 
@@ -181,7 +181,7 @@ bool EnvironmentManager::ReserveCell(Coordinate cell, int startTick, int endTick
 			break;
 		}
 	}
-	argos::LOG << "startTick:" << startTick << " . Is in timeslot: "<< startTimeslot << std::endl;
+	argos::LOG << "startTick:" << startTick << " is in timeslot: "<< startTimeslot << std::endl;
 	
     //find timeslot for endTick	
 	int endTimeslot; 
@@ -192,7 +192,7 @@ bool EnvironmentManager::ReserveCell(Coordinate cell, int startTick, int endTick
 			break;
 		}
 	}
-	argos::LOG << "endTick:" << endTick << " . Is in timeslot: "<< endTimeslot << std::endl; 
+	argos::LOG << "endTick:" << endTick << " is in timeslot: "<< endTimeslot << std::endl; 
 
 	//put start, end and all inbetween in a queue
 	int nextTimeslotToReserve = startTimeslot;
@@ -225,7 +225,7 @@ bool EnvironmentManager::ReserveCell(Coordinate cell, int startTick, int endTick
 			return false;
 		}
 		reservationsTable[timeslotsToReserve.front()][std::pair<int,int>(cell.x,cell.y)] = true;
-		argos::LOG << "Qube: "<< cell.x << ","<<cell.y<< " in timeslot:" <<timeslotsToReserve.front() <<  " is reserved" << std::endl;
+		argos::LOG << "Cell: "<< cell.x << ","<<cell.y<< " in timeslot:" <<timeslotsToReserve.front() <<  " is reserved" << std::endl;
 		timeslotsToReserve.pop();
 	}
 

@@ -13,9 +13,6 @@ typedef std::pair<int,int> cube;
 class EnvironmentManager
 {
 private:
-
-
-
     std::map<cube, bool> floorMap;
     //std::map <int, std::vector <reservation>> reservationsTable;
     std::map <int, std::map <cube, bool>> reservationsTable;

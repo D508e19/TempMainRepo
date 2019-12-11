@@ -227,7 +227,7 @@ int Pathfinder::ReserveTimeslotsForPath(int startTick, direction startDirection,
     
     for(auto t : timeSlotToReserve)
     {
-       argos::LOG << "RESERVE Timeslot: " << t.first << ". x: "<< t.second.first << " . y: " << t.second.second << std::endl;
+       argos::LOG << "Reserve tick: " << t.first << ". x: "<< t.second.first << " . y: " << t.second.second << std::endl;
        em->ReserveCell(Coordinate(t.second.first, t.second.second), t.first, t.first);
     }
     
