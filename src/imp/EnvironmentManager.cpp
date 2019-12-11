@@ -72,7 +72,6 @@ void EnvironmentManager::UpdateTimeslots(int tickCounter)
 	//argos::LOG << "TickCounter: " << tickCounter << std::endl;
 	//argos::LOG << "current timeslot: " << currentTimeslots.front() << std::endl;
 
-
 	if (tickCounter >= currentTimeslots[1]) 
 	{
 		int nextTimeslot = currentTimeslots.back() + numberOfTicksPerTimeslot;
@@ -291,6 +290,23 @@ bool EnvironmentManager::PutDownPod(int podID, std::pair<int,int> coordinate)
 	PlacePod(podPtr, Coordinate(coordinate.first, coordinate.second));
 
 	return true;
+}
+
+int EnvironmentManager::GetTimeslot(int tick)
+{
+	// TODO: delete comment.
+	argos::LOG << "Finding timeslot for tick: " << tick << std::endl;
+	int result = -1;
+
+	for (int i = currentTimeslots[0]; i < timeslotsIntoTheFuture; i++)
+	{
+		if (tick < currentTimeslots[i+1]){
+			result = currentTimeslots[i];
+			break;
+		}
+	}
+
+	return result;
 }
 
 #endif

@@ -25,8 +25,9 @@ void RobotWrapper::Tick()
                 //it means that it has received a new order
 
                 //cheat - These are to control which coords the bots gets
-                currentOrder->podLocation = cube(rand()%25,rand()%25);
-                currentOrder->pickStationLocation = cube(rand()%10,rand()%10);
+                currentOrder->podLocation = cube(rand()%4,rand()%4);
+                currentOrder->podLocation = cube(3,3);
+                currentOrder->pickStationLocation = cube(rand()%4,rand()%4);
                 ///////
 
                 // Find path from bots last location to pod location
@@ -40,6 +41,7 @@ void RobotWrapper::Tick()
                 AddInstructionToQueue(pickuppod, 1);
                 tempTC += 20; //timeToComplete pickUpPod
 
+                /*
                 // Find path to picking station
                 Coordinate pickCoord = Coordinate(currentOrder->pickStationLocation.first,currentOrder->pickStationLocation.second);
                 Path pathToPickstation = pfp->FindPath(tempTC, lastCoordinate, pickCoord, lastFacing, true);
@@ -50,6 +52,7 @@ void RobotWrapper::Tick()
                 AddInstructionToQueue(_wait, 20);
                 tempTC += 20; //timeToComplete waitingToBePicked
 
+                /*
                 // pathfind back to pod original position. Changed later to find avalibale spot
                 Path pathToPodSpot = pfp->FindPath(tempTC, lastCoordinate, podCoord, lastFacing, true);
                 TranslatePathToInstructions(pathToPodSpot);
@@ -60,7 +63,7 @@ void RobotWrapper::Tick()
                 tempTC +=20;// timeToComplete putDownPod
 
                 //TODO: move out of the way. Maybe a go-home function if idle for too long.
-
+                */
                 //lastTick = tempTC
             }
             else 

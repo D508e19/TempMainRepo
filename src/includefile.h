@@ -1,6 +1,8 @@
 #ifndef includefile
 #define includefile
 
+#include <set>
+
 // forward declarations
 class Pod;
 class Coordinate;
