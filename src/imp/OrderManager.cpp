@@ -22,12 +22,12 @@ void OrderManager::SetupOrderManager(Warehouse* _wh)
 
 void OrderManager::Tick()
 {
-	while(orderToBeReleased.size() > 0 && orderToBeReleased.begin()->first <= wh->em->tickCounter)
+	while(orderToBeReleased.size() > 0 && orderToBeReleased.front().first <= wh->em->tickCounter)
 	{
-		//argos::LOG << "Releasing order that has tick: " << orderToBeReleased.begin()->first << std::endl;
-		Order* nextOrder = orderToBeReleased.begin()->second;
+		//argos::LOG << "Releasing order that has tick: " << orderToBeReleased.front().first << std::endl;
+		Order* nextOrder = orderToBeReleased.front().second;
 		wh->pm.ordersToBeProcessed.push(nextOrder);
-		orderToBeReleased.erase(orderToBeReleased.begin()->first);
+		orderToBeReleased.pop();
 	}
 }
 
@@ -37,7 +37,7 @@ void OrderManager::CreateOrder()
 	newOrder->wareID = newOrder->orderID; //TODO Temporary
 	orders.insert(std::pair<int, Order*> (orderCount, newOrder)); //All orders queue
 	ordersOngoing.push(newOrder); //Non-completed orders
-	orderToBeReleased.insert(std::pair<int, Order*> (orderCount, newOrder)); //To be released
+	orderToBeReleased.push(std::pair<int, Order*> (orderCount, newOrder)); //To be released
 	orderCount++;
 }
 

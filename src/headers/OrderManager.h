@@ -11,7 +11,7 @@ class OrderManager
 private:
 	int orderCount;
     std::map<int, Order*> orders; //all orders
-	std::map<int, Order*> orderToBeReleased; //Orders generated, but not passed on.
+	std::queue<std::pair<int, Order*>> orderToBeReleased; //Orders generated, but not passed on.
 	Warehouse *wh;
 
 public:
