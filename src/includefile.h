@@ -15,6 +15,8 @@ class PodManager;
 class RobotManager;
 class EnvironmentManager;
 class Warehouse;
+class PickStation;
+class PickStationManager;
 
 // datatypes
 #include "datatypes/instruction.h"
@@ -34,6 +36,8 @@ class Warehouse;
 #include "headers/RobotManager.h"
 #include "headers/EnvironmentManager.h"
 #include "headers/Warehouse.h"
+#include "headers/PickStation.h"
+#include "headers/PickStationManager.h"
 
 // implementation
 #include "imp/Pod.cpp"
@@ -49,6 +53,7 @@ class Warehouse;
 #include "imp/RobotManager.cpp"
 #include "imp/EnvironmentManager.cpp"
 #include "imp/Warehouse.cpp"
-
+#include "imp/PickStation.cpp"
+#include "imp/PickStationManager.cpp"
 
 #endif

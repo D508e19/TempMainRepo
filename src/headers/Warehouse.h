@@ -7,6 +7,8 @@ class Warehouse
 {
 private:
     std::map<int, Basicbot*> bots;
+
+    const int numberOfPickingStations = 2;
    
 public:
     Warehouse();
@@ -14,6 +16,7 @@ public:
 
     EnvironmentManager* em;
     OrderManager om;
+    PickStationManager* psm;
     PodManager pm;
     RobotManager rm;
     DataCollector dc;
