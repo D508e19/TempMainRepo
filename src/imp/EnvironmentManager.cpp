@@ -108,7 +108,6 @@ bool EnvironmentManager::IsReserved(Coordinate cell, int tick)
 
 bool EnvironmentManager::IsReserved(Coordinate cell, int startTick, int endTick)
 {
-    return false;
 	// get all timeslots between startTick and endTick
 	// call IsReserved for all
 
@@ -117,21 +116,22 @@ bool EnvironmentManager::IsReserved(Coordinate cell, int startTick, int endTick)
 	{
 		if (startTick < currentTimeslots[i+1]){
 			startTimeslot = currentTimeslots[i];
-			break;
+            argos::LOG << "startTick:" << startTick << "  is in timeslot: "<< startTimeslot << std::endl;
+            break;
 		}
 	}
-	argos::LOG << "startTick:" << startTick << "  is in timeslot: "<< startTimeslot << std::endl;
-	
+
     //find timeslot for endTick	
 	int endTimeslot; 
 	for (int i = currentTimeslots[0]; i < timeslotsIntoTheFuture; i++)
 	{
 		if (endTick < currentTimeslots[i+1]){
 			endTimeslot = currentTimeslots[i];
-			break;
+            argos::LOG << "endTick:" << endTick << " is in timeslot: "<< endTimeslot << std::endl;
+            break;
 		}
 	}
-	argos::LOG << "endTick:" << endTick << " is in timeslot: "<< endTimeslot << std::endl;
+
 
 	//put start, end and all inbetween in a queue
 	int nextTimeslotToCheck = startTimeslot;

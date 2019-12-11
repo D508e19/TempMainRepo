@@ -31,6 +31,7 @@ void RobotWrapper::Tick()
 
                 // Find path from bots last location to pod location
                 Coordinate podCoord = Coordinate(currentOrder->podLocation.first,currentOrder->podLocation.second);
+
                 Path pathToPod = pfp->FindPath(tempTC, lastCoordinate, podCoord, lastFacing, false);
                 TranslatePathToInstructions(pathToPod);
                 tempTC += 20; // TODO: //timeToComplete pathToPod

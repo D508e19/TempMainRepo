@@ -45,8 +45,9 @@ Path Pathfinder::GetStupidPath(Coordinate start, Coordinate end)
     return newPath;
 }
 
-Path Pathfinder::GetAstarPath(int startTick, Coordinate start, Coordinate goal, direction _direction, bool isCarrying, EnvironmentManager* _environmentManager, int straightTime, int turnTime, int waitTime)
+Path Pathfinder::GetAstarPath(int _startTick, Coordinate start, Coordinate goal, direction _direction, bool isCarrying, EnvironmentManager* _environmentManager, int straightTime, int turnTime, int waitTime)
 {
+    int startTick = _startTick;
     Node* currentNode;
     environmentManager = _environmentManager;
     Node* startNode = new Node(start, _direction); // TODO: remove from heap when path is done
