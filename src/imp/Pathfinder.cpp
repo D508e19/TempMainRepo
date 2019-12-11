@@ -26,19 +26,20 @@ Path Pathfinder::FindPath(int startTick, Coordinate start, Coordinate end, direc
             break;
     }
     
-
+    int nextTick = startTick;
     // reserve timeslots;
     if (!p.waypoints.empty())
     {
+        nextTick = ReserveTimeslotsForPath(nextTick, lastDirection, start, p);
         // this assumes that selected algorithm has checked for bookings
-        ReserveTimeslotsForPath(startTick, lastDirection, start, p);
+        
     }
     else
     {
         argos::LOGERR << "The path returned is empty." << std::endl;
         pathReturnedEmpty++;
     }
-
+    if(nextTick != startTick){p.arriveAtTick=nextTick;}
     return p;
 }
 
@@ -46,19 +47,20 @@ int Pathfinder::ReserveTimeslotsForPath(int startTick, direction startDirection,
 {
     // ignore timeslot startTick in startCoord since it should already be reserved
 
-    bool isSuccessfull = false;
-
-    typedef std::pair<Coordinate, std::pair<int,int>> cTS;
+    typedef std::pair<Coordinate, int> cTS;
     typedef std::pair<int,int> tt;
 
-    std::queue <std::pair<Coordinate, std::pair<int,int>>> timeSlotToReserveDubs;
-
-    Coordinate l = startCoord;
-    Coordinate n;
     int TC = startTick;
-    direction ld = startDirection;
-    direction nd;
 
+    std::queue <std::pair<Coordinate, int>> timeSlotToReserveDubs;
+
+    Coordinate l = startCoord; //lastCoord
+    Coordinate n;               //nextCoord
+
+    direction ld = startDirection;  //lastDirection
+    direction nd;   //nextDirection
+
+    // for finding whither going on x or y -axis
     int xdiff = 0;
     int ydiff = 0;
 
@@ -76,33 +78,38 @@ int Pathfinder::ReserveTimeslotsForPath(int startTick, direction startDirection,
         else // need to turn. 
         {
             int d = (nd + ld)%4;
-            if (d==2)
+            if (d==2) //180 turn
             {
-                //180 turn
                 argos::LOG << "Turn 180. Plus ticks: " << ticksToTurn180degrees << std::endl;
-                argos::LOG << "Coord to reserve: ";
-                l.PrintCoordinate();
-                argos::LOG << " in tick: " << TC << " to tick: "<< TC+ticksToTurn180degrees <<std::endl;
+                argos::LOG << "Coord to reserve: "; l.PrintCoordinate(); argos::LOG << " in tick: " << TC << std::endl;
+                argos::LOG << "Coord to reserve: "; l.PrintCoordinate(); argos::LOG << " in tick: " << TC+ticksToTurn90degrees << std::endl;
+                argos::LOG << "Coord to reserve: "; l.PrintCoordinate(); argos::LOG << " in tick: " << TC+ticksToTurn180degrees << std::endl;
 
-                timeSlotToReserveDubs.push(cTS(l, tt(TC,TC+ticksToTurn180degrees)));
+                timeSlotToReserveDubs.push(cTS(l, TC));
+                timeSlotToReserveDubs.push(cTS(l, TC+ticksToTurn90degrees));
+                timeSlotToReserveDubs.push(cTS(l, TC+ticksToTurn180degrees));
                 TC += ticksToTurn180degrees;
             }
-            else
+            else //90 turn
             {
-                //90 turn
                 argos::LOG << "Turn 90. Plus ticks: " << ticksToTurn90degrees << std::endl;
+                argos::LOG << "Coord to reserve: "; l.PrintCoordinate(); argos::LOG << " in tick: " << TC << std::endl;
+                argos::LOG << "Coord to reserve: "; l.PrintCoordinate(); argos::LOG << " in tick: " << TC+ticksToTurn90degrees << std::endl;
 
-                argos::LOG << "Coord to reserve: ";
-                l.PrintCoordinate();
-                argos::LOG << " in tick: " << TC << " to tick: "<< TC+ticksToTurn90degrees <<std::endl;
-
-                timeSlotToReserveDubs.push(cTS(l, tt(TC,TC+ticksToTurn90degrees)));
+                timeSlotToReserveDubs.push(cTS(l, TC));
+                timeSlotToReserveDubs.push(cTS(l, TC+ticksToTurn90degrees));
                 TC += ticksToTurn90degrees;
             }         
         }
 
         // check if x or y
         xdiff = l.x-n.x;
+        ydiff = l.y-n.y;
+        
+        if(xdiff == 0 && ydiff == 0) // going nowhere
+        {
+            argos::LOGERR << "Error in PF::ReserveTimeSlotsForPath. Both xdiff and ydiff are zero." << std::endl;
+        }
 
         if(xdiff!=0) // travelling on x-axis
         {
@@ -116,15 +123,11 @@ int Pathfinder::ReserveTimeslotsForPath(int startTick, direction startDirection,
                     n = Coordinate(l.x+1, l.y);
                     TC += ticksToMoveOneCell;
 
-                    argos::LOG << "Coord to reserve: ";
-                    l.PrintCoordinate();
-                    argos::LOG << " in tick: " << TC<< std::endl;
-                    argos::LOG << "Coord to reserve: ";
-                    n.PrintCoordinate();
-                    argos::LOG << " in tick: " << TC<< std::endl;
+                    argos::LOG << "Coord to reserve: "; l.PrintCoordinate(); argos::LOG << " in tick: " << TC<< std::endl;
+                    argos::LOG << "Coord to reserve: "; n.PrintCoordinate(); argos::LOG << " in tick: " << TC<< std::endl;
 
-                    timeSlotToReserveDubs.push(cTS(l, tt(TC,TC)));
-                    timeSlotToReserveDubs.push(cTS(n, tt(TC,TC)));
+                    timeSlotToReserveDubs.push(cTS(l, TC));
+                    timeSlotToReserveDubs.push(cTS(n, TC));
                     l = Coordinate(n.x, n.y);
                     xdiff++;
                 }
@@ -137,28 +140,20 @@ int Pathfinder::ReserveTimeslotsForPath(int startTick, direction startDirection,
                     n = Coordinate(l.x-1, l.y);
                     TC += ticksToMoveOneCell;
 
-                    argos::LOG << "Coord to reserve: ";
-                    l.PrintCoordinate();
-                    argos::LOG << " in tick: " << TC<< std::endl;
-                    argos::LOG << "Coord to reserve: ";
-                    n.PrintCoordinate();
-                    argos::LOG << " in tick: " << TC<< std::endl;
+                    argos::LOG << "Coord to reserve: "; l.PrintCoordinate(); argos::LOG << " in tick: " << TC<< std::endl;
+                    argos::LOG << "Coord to reserve: "; n.PrintCoordinate(); argos::LOG << " in tick: " << TC<< std::endl;
 
-                    timeSlotToReserveDubs.push(cTS(l, tt(TC,TC)));
-                    timeSlotToReserveDubs.push(cTS(n, tt(TC,TC)));
+                    timeSlotToReserveDubs.push(cTS(l, TC));
+                    timeSlotToReserveDubs.push(cTS(n, TC));
                     l = Coordinate(n.x, n.y);
                     xdiff--;
                 }
             }
-            //l = n;
-            //l.x = savex;
-            argos::LOG << "last x: " << l.x << std::endl;
-            argos::LOG << "next x: " << n.x << std::endl;
+
             path.waypoints.pop();
             continue;
         }
 
-        ydiff = l.y-n.y;
 
         if(ydiff!=0) // traveling on y-axis
         {
@@ -170,15 +165,11 @@ int Pathfinder::ReserveTimeslotsForPath(int startTick, direction startDirection,
                     n = Coordinate(l.x, l.y+1);
                     TC += ticksToMoveOneCell;
 
-                    argos::LOG << "Coord to reserve: ";
-                    l.PrintCoordinate();
-                    argos::LOG << " in tick: " << TC<< std::endl;
-                    argos::LOG << "Coord to reserve: ";
-                    n.PrintCoordinate();
-                    argos::LOG << " in tick: " << TC<< std::endl;
+                    argos::LOG << "Coord to reserve: "; l.PrintCoordinate(); argos::LOG << " in tick: " << TC<< std::endl;
+                    argos::LOG << "Coord to reserve: "; n.PrintCoordinate(); argos::LOG << " in tick: " << TC<< std::endl;
 
-                    timeSlotToReserveDubs.push(cTS(l, tt(TC,TC)));
-                    timeSlotToReserveDubs.push(cTS(n, tt(TC,TC)));
+                    timeSlotToReserveDubs.push(cTS(l, TC));
+                    timeSlotToReserveDubs.push(cTS(n, TC));
                     l = Coordinate(n.x, n.y);
                     ydiff++;
                 }
@@ -191,76 +182,56 @@ int Pathfinder::ReserveTimeslotsForPath(int startTick, direction startDirection,
                     n = Coordinate(l.x, l.y-1);
                     TC += ticksToMoveOneCell;
 
-                    argos::LOG << "Coord to reserve: ";
-                    l.PrintCoordinate();
-                    argos::LOG << " in tick: " << TC<< std::endl;
-                    argos::LOG << "Coord to reserve: ";
-                    n.PrintCoordinate();
-                    argos::LOG << " in tick: " << TC<< std::endl;
+                    argos::LOG << "Coord to reserve: "; l.PrintCoordinate(); argos::LOG << " in tick: " << TC<< std::endl;
+                    argos::LOG << "Coord to reserve: "; n.PrintCoordinate(); argos::LOG << " in tick: " << TC<< std::endl;
 
-                    timeSlotToReserveDubs.push(cTS(l, tt(TC,TC)));
-                    timeSlotToReserveDubs.push(cTS(n, tt(TC,TC)));
+                    timeSlotToReserveDubs.push(cTS(l, TC));
+                    timeSlotToReserveDubs.push(cTS(n, TC));
                     l = Coordinate(n.x, n.y);
                     ydiff++;
                 }
             }
         }
-        else{
-            argos::LOGERR << "Error in PF::ReserveTimeSlotsForPath." << std::endl;
-        }
-        l = n;
+
+        l = n; // set last coord.
         path.waypoints.pop();
     }
     
     //remove dubs before reserving
-    std::set <std::pair<int, std::pair<int,int>>> timeSlotToReserve;
+    std::set <std::pair <int, tt>> timeSlotToReserve; 
 
-    std::pair<Coordinate, std::pair<int,int>> nextValue;
+    cTS nextValue;
     Coordinate nextCoord;
-    int firstTick;
-    int secondTick;
-
+    int nextTick;
 
     while(!timeSlotToReserveDubs.empty())
     {
         nextValue = timeSlotToReserveDubs.front();
         nextCoord = nextValue.first;
-        firstTick = nextValue.second.first;
-        secondTick = nextValue.second.second;
+        nextTick = nextValue.second;
         
-        while (firstTick<secondTick)
+        // check if timereservation is in timeToReserve
+        if(timeSlotToReserve.find(std::pair <int, tt>(nextTick, tt(nextCoord.x, nextCoord.y))) == timeSlotToReserve.end()) 
         {
-            if(timeSlotToReserve.find(std::pair<int, tt>(firstTick, tt(nextCoord.x,nextCoord.y))) == timeSlotToReserve.end())
-            {
-                //dublicate. TODO: refactor 
-                argos::LOG << "dublicate" << std::endl;
-            }
-            else{
-                timeSlotToReserve.insert(std::pair<int, tt>(firstTick, tt(nextCoord.x,nextCoord.y)));
-            }
-            firstTick += 20; //em->numberOfTicksPerTimeslot; TODO
+            argos::LOG << "In tick:" << nextTick << ". Reserve: "; nextCoord.PrintCoordinate();  argos::LOG << std::endl;
+            timeSlotToReserve.insert(std::pair<int, tt>(nextTick, tt(nextCoord.x, nextCoord.y)));
         }
-
+        else
+        {
+            argos::LOG << "DUB. In tick:" << nextTick << ". Reserve: " <<nextCoord.x<<","<<nextCoord.y << std::endl;
+        }
+       
         timeSlotToReserveDubs.pop();
     }
     
+    
     for(auto t : timeSlotToReserve)
     {
-        argos::LOG << "Timeslot to reserve: " << t.first << ". x: "<< t.second.first << " . y: " << t.second.second << std::endl;
+       argos::LOG << "RESERVE Timeslot: " << t.first << ". x: "<< t.second.first << " . y: " << t.second.second << std::endl;
+       em->ReserveCell(Coordinate(t.second.first, t.second.second), t.first, t.first);
     }
+    
 
-
-    ///////////////////
-
-
-    // Reserve timeslots
-    /* TODO uncomment
-    while(!timeSlotToReserve.empty())
-    {
-        std::pair<Coordinate, std::pair<int,int>> n = timeSlotToReserve.front();
-        isSuccessfull = em->ReserveCell(n.first, n.second.first, n.second.second);
-        timeSlotToReserve.pop();
-    }*/
 
     return TC;
 }

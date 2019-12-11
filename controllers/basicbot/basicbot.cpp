@@ -252,7 +252,7 @@ void Basicbot::BotWait()
       counter--;
       if (counter == 0)
       {
-         argos::LOG << "waited: " << ticksToWait << " ticks." << std::endl;
+         argos::LOG << "Waited: " << ticksToWait << " ticks." << std::endl;
          ResetBot();
       }
    }
