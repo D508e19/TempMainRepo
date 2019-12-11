@@ -37,7 +37,7 @@ void OrderManager::CreateOrder()
 	newOrder->wareID = newOrder->orderID; //TODO Temporary
 	orders.insert(std::pair<int, Order*> (orderCount, newOrder)); //All orders queue
 	ordersOngoing.push(newOrder); //Non-completed orders
-	orderToBeReleased.push(std::pair<int, Order*> (orderCount, newOrder)); //To be released
+	orderToBeReleased.push(std::pair<int, Order*> (orderCount * 10, newOrder)); //To be released
 	orderCount++;
 }
 
