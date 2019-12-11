@@ -23,7 +23,7 @@ void PickStationManager::Tick()
 
 void PickStationManager::AddPickingStation(int id, std::pair<int,int> coordinate)
 {
-    PickStation* newStation = new PickStation(id, coordinate);
+    PickStation* newStation = new PickStation(id, coordinate, wh);
     stations[id] = newStation;
 }
 
@@ -39,7 +39,7 @@ void PickStationManager::GeneratePickStations(int startzone_width, int arena_hei
     for(int i = 0; i < numberOfPickingStations; i++)
     {
         int y = height / 2;
-        PickStation* newStation = new PickStation(i, std::pair<int,int>(0, y));
+        PickStation* newStation = new PickStation(i, std::pair<int,int>(0, y), wh);
         stations[i] = newStation;
     }
 }
