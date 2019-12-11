@@ -29,7 +29,7 @@ public:
     Path FindPath(int startTick, Coordinate start, Coordinate end, direction last, bool isCarrying);
 
     Path GetStupidPath(Coordinate start, Coordinate end);
-    Path GetAstarPath(int startTick, Coordinate start, Coordinate end, direction last, bool isCarrying, EnvironmentManager* _environmentManager, int straightTime = 2, int turnTime = 2, int waitTime = 1);
+    Path GetAstarPath(int startTick, Coordinate start, Coordinate end, direction last, bool isCarrying, EnvironmentManager* _environmentManager, int straightTime = 20, int turnTime = 20, int waitTime = 5);
 };
 
 

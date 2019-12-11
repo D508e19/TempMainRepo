@@ -48,13 +48,13 @@ Path Pathfinder::GetStupidPath(Coordinate start, Coordinate end)
 Path Pathfinder::GetAstarPath(int _startTick, Coordinate start, Coordinate goal, direction _direction, bool isCarrying, EnvironmentManager* _environmentManager, int straightTime, int turnTime, int waitTime)
 {
     int startTick = _startTick;
+    Node* startNode = new Node(start, _direction); // TODO: remove from heap when path is done
     Node* currentNode;
     environmentManager = _environmentManager;
-    Node* startNode = new Node(start, _direction); // TODO: remove from heap when path is done
-    currentNode = startNode;
+
     int i = 0;
 
-    for (int i = 0; i < 500; i++)
+    for (int i = 0; i < 250; i++)
     {
         //Find the leaf with the lowest cost
         currentNode = startNode->LeastCost();
@@ -62,9 +62,10 @@ Path Pathfinder::GetAstarPath(int _startTick, Coordinate start, Coordinate goal,
         //Flag to ensure that a nodes children compare to the first child
         bool flag = true;
 
-        /*
+
         argos::LOG<< currentNode->coordinate.x << currentNode->coordinate.y << std::endl;
 
+        /*
 
         if(!currentNode->start){
             argos::LOG<< "My children: " <<currentNode->children.size() << std::endl;
@@ -77,6 +78,7 @@ Path Pathfinder::GetAstarPath(int _startTick, Coordinate start, Coordinate goal,
         //Check if the node is goal node
         if ((currentNode->coordinate.x == goal.x) && (currentNode->coordinate.y == goal.y))
         {
+            argos::LOGERR << "PATH FOUND";
                return ReversePath((*currentNode));
         }
 
@@ -84,12 +86,12 @@ Path Pathfinder::GetAstarPath(int _startTick, Coordinate start, Coordinate goal,
         if (currentNode->children.empty())
         {
             if(currentNode->CalculateNeighbour(startTick, straightTime, turnTime, waitTime, environmentManager)){
-                for (Node node : currentNode->children)
+                for (Node& node : currentNode->children)
                 {
                     if(!node.deleteNode){
 
                         node.gScore = currentNode->gScore + node.parentWeight;
-                        node.fScore = node.gScore + node.CalculateHeuristic(goal, turnTime);
+                        node.fScore = node.gScore + node.CalculateHeuristic(goal, turnTime, straightTime);
 
                         if(flag)
                         {

@@ -11,8 +11,8 @@ void EnvironmentManager::SetupEnvirionmentManager(Warehouse * _wh)
 {
 	wh = _wh;
 
-    warehouseHeight = 10;
-    warehouseLength = 10;
+    warehouseHeight = 25;
+    warehouseLength = 25;
 
 	numberOfTicksPerTimeslot = 20;
 	timeslotsIntoTheFuture = 30;
@@ -102,36 +102,52 @@ bool EnvironmentManager::IsReserved(Coordinate cell, int tick)
 		}
 	}
 	bool ans = (reservationsTable[timeslot][std::pair<int,int>(cell.x,cell.y)]);
-	//argos::LOG << cell.x << "," << cell.y << "IsReserved: "<< ans << std::endl;
+	argos::LOG << cell.x << "," << cell.y << "IsReserved: "<< ans << std::endl;
 	return ans;
 }
 
-bool EnvironmentManager::IsReserved(Coordinate cell, int startTick, int endTick)
+bool EnvironmentManager::IsReserved(Coordinate cell, int _startTick, int _endTick)
 {
 	// get all timeslots between startTick and endTick
 	// call IsReserved for all
 
-	int startTimeslot; 
+
+	int startTick = _startTick;
+	int endTick = _endTick;
+
+
+	int startTimeslot;
+    int endTimeslot;
+
+    argos::LOG << "startTick:" << startTick << "-- endTick: " << endTick << std::endl;
+
+    bool flag = false;
+    bool flag1 = false;
+
 	for (int i = currentTimeslots[0]; i < timeslotsIntoTheFuture; i++)
 	{
 		if (startTick < currentTimeslots[i+1]){
 			startTimeslot = currentTimeslots[i];
-            argos::LOG << "startTick:" << startTick << "  is in timeslot: "<< startTimeslot << std::endl;
-            break;
+            //argos::LOG << "startTick:" << startTick << "  is in timeslot: "<< startTimeslot << std::endl;
+
+            //find timeslot for endTick
+            for (int i = currentTimeslots[0]; i < timeslotsIntoTheFuture; i++)
+            {
+                if (endTick < currentTimeslots[i+1]){
+                    endTimeslot = currentTimeslots[i];
+                    //argos::LOG << "endTick:" << endTick << " is in timeslot: "<< endTimeslot << std::endl;
+                    flag = true;
+                    break;
+                }
+            }
+        flag1 = true;
+        break;
 		}
 	}
 
-    //find timeslot for endTick	
-	int endTimeslot; 
-	for (int i = currentTimeslots[0]; i < timeslotsIntoTheFuture; i++)
-	{
-		if (endTick < currentTimeslots[i+1]){
-			endTimeslot = currentTimeslots[i];
-            argos::LOG << "endTick:" << endTick << " is in timeslot: "<< endTimeslot << std::endl;
-            break;
-		}
+	if(!flag & !flag1){
+	    return true;
 	}
-
 
 	//put start, end and all inbetween in a queue
 	int nextTimeslotToCheck = startTimeslot;

@@ -13,7 +13,7 @@ public:
 
     Node* LeastCost();
     bool CalculateNeighbour(int startTick, int straightTime, int turnTime, int waitTime, EnvironmentManager* environmentManager);
-    int CalculateHeuristic(Coordinate goal, int turnTime);
+    int CalculateHeuristic(Coordinate goal, int turnTime, int straightTime);
     static int CostToRoot(Node n);
     std::list<Node> ReturnPath(Node n, std::list<Node> path);
     int UpdateLeastCost();
