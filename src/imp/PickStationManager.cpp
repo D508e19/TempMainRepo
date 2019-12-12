@@ -45,7 +45,8 @@ void PickStationManager::GeneratePickStations(int startzone_width, int arena_hei
 
 void PickStationManager::AddPickingStation(int id, std::pair<int,int> coordinate)
 {
-    PickStation* newStation = new PickStation(id, coordinate, wh);
+    PickStation* newStation = new PickStation();
+    newStation->SetupPickStation(id, coordinate, wh);
     stations[id] = newStation;
 }
 

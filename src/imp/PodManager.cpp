@@ -49,8 +49,7 @@ void PodManager::AddInformationToOrder(Order* order)
 
         // send the order onwards to the Robot Manager
         wh->rm.ordersToBeProcessed.push(order);
-        //nextOrder->pickStation->tasks.push(nextOrder);
-        order->pickStation->tasks.push_back(order);
+        order->pickStation->activeOrders.push_back(order);
     }
     else //No
     {
