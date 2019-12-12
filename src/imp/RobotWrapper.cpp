@@ -45,10 +45,8 @@ void RobotWrapper::ProcessNewOrder()
     Coordinate coordPick = Coordinate(currentOrder->pickStation->pickCoordinate.first, currentOrder->pickStation->pickCoordinate.second);
     Coordinate coordPodParkingSpot = Coordinate(currentOrder->podPtr->location.first, currentOrder->podPtr->location.second);
 
-    argos::LOG << "RW order ID: " << currentOrder->orderID << " Pick ID: " << currentOrder->pickStation->id;
-    argos::LOG << " RW: PickSt coord: ";
-    coordPick.PrintCoordinate();
-    argos::LOG << std::endl;
+    //argos::LOG << "RW order ID: " << currentOrder->orderID << " Pick ID: " << currentOrder->pickStation->id;
+    //argos::LOG << " RW: PickSt coord: "; coordPick.PrintCoordinate(); argos::LOG << std::endl;
 
     Path pathToPickingStation;
     Path pathToPod;

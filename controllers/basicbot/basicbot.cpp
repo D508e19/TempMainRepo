@@ -89,7 +89,6 @@ void Basicbot::ControlStep()
    switch (currentInstruction)
    {
       case idle:
-         argos::LOG << "Bip bop i am Idle." << std::endl;
          ticksIdle++;
          break;
       case moveforward:

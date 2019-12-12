@@ -15,7 +15,7 @@ void EnvironmentManager::SetupEnvirionmentManager(Warehouse * _wh)
     warehouseLength = 10;
 
 	numberOfTicksPerTimeslot = 20;
-	timeslotsIntoTheFuture = 30;
+	timeslotsIntoTheFuture = 100;
 
 	tickCounter = 0;
 	
@@ -69,11 +69,13 @@ void EnvironmentManager::Tick()
 
 void EnvironmentManager::UpdateTimeslots(int tickCounter)
 {
-	//argos::LOG << "TickCounter: " << tickCounter << std::endl;
-	//argos::LOG << "current timeslot: " << currentTimeslots.front() << std::endl;
 
 	if (tickCounter >= currentTimeslots[1]) 
 	{
+		//argos::LOG << "Timeslots: " << currentTimeslots.size() << std::endl;
+		//argos::LOG << "current timeslot: " << currentTimeslots.front() << std::endl;
+		//argos::LOG << "last timeslot: " << currentTimeslots.back() << std::endl;
+
 		int nextTimeslot = currentTimeslots.back() + numberOfTicksPerTimeslot;
 		
 		// Update Reservations Table
@@ -82,6 +84,9 @@ void EnvironmentManager::UpdateTimeslots(int tickCounter)
 
 		currentTimeslots.erase(currentTimeslots.begin());
 		currentTimeslots.push_back(nextTimeslot);
+
+		//argos::LOG << "current timeslot: " << currentTimeslots.front() << std::endl;
+		//argos::LOG << "last timeslot: " << currentTimeslots.back() << std::endl;
 	}
 }
 
@@ -225,7 +230,9 @@ bool EnvironmentManager::ReserveCell(Coordinate cell, int startTick, int endTick
 	{
 		if (reservationsTable[timeslotsToReserve.front()][std::pair<int,int>(cell.x,cell.y)])
 		{
-			argos::LOG << "ERROR: Timeslot already reserved. This should be checked before calling ReserveCell" << std::endl;
+			argos::LOG << "ERROR: Coord: "; cell.PrintCoordinate(); 
+			argos::LOG << " is already reserved in timeslot: " << timeslotsToReserve.front() << std::endl;
+			//This should be checked before calling ReserveCell" << std::endl;
 			return false;
 		}
 		reservationsTable[timeslotsToReserve.front()][std::pair<int,int>(cell.x,cell.y)] = true;

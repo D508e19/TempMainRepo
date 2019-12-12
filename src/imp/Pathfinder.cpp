@@ -10,14 +10,14 @@ Pathfinder::~Pathfinder(){}
 Path Pathfinder::FindPath(int startTick, Coordinate start, Coordinate end, direction lastDirection, bool isCarrying)
 {
     Path p;
-    p.arriveAtTick = startTick;
-    // = Path();
-    /*
+    p = Path();
+    p.arriveAtTick = startTick; // to make sure returned path has an arriveAtTick value.
+    
     if((start.x == end.x) && (start.y == end.y))
     {
         argos::LOG << "Start is end." << std::endl;
         return p;
-    }*/
+    }
      
     argos::LOG << "Find path from: " << start.x << "," << start.y << ". to: " << end.x << "," << end.y << std::endl;
 
@@ -34,31 +34,32 @@ Path Pathfinder::FindPath(int startTick, Coordinate start, Coordinate end, direc
         default:
             break;
     }
+        
+    int arriveAtTick = startTick;
     
-    
-    int nextTick = startTick;
-    /*
     // reserve timeslots;
     if (!p.waypoints.empty())
-    {
-        nextTick = ReserveTimeslotsForPath(nextTick, lastDirection, start, p);
+    {    
+        arriveAtTick = ReserveTimeslotsForPath(startTick, lastDirection, start, p);
+        argos::LOG << "Arrive at tick: " << arriveAtTick << std::endl;
         // this assumes that selected algorithm has checked for bookings
-        
     }
     else
     {
         argos::LOGERR << "The path returned is empty." << std::endl;
         pathReturnedEmpty++;
     }
-    if(nextTick != startTick){p.arriveAtTick=nextTick;}
-    */
-   
+    if(arriveAtTick != startTick){p.arriveAtTick=arriveAtTick;}
+       
     return p;
 }
 
 int Pathfinder::ReserveTimeslotsForPath(int startTick, direction startDirection, Coordinate startCoord, Path path)
 {
+    argos::LOG << "ReserveTimeslotsForPath called." << std::endl;
+
     // ignore timeslot startTick in startCoord since it should already be reserved
+    if(startTick<em->tickCounter){startTick=em->tickCounter+1;} // not good enough
 
     typedef std::pair<Coordinate, int> cTS;
     typedef std::pair<int,int> tt;
@@ -77,10 +78,13 @@ int Pathfinder::ReserveTimeslotsForPath(int startTick, direction startDirection,
     int xdiff = 0;
     int ydiff = 0;
 
+    
     // Generate list of timeslots to be reserved
     while(!path.waypoints.empty())
     {
         n = path.waypoints.front();
+
+        
         
         // check if need to turn
         nd = RobotWrapper::GetFaceTowardsInstruction(n, l, ld);
@@ -115,14 +119,19 @@ int Pathfinder::ReserveTimeslotsForPath(int startTick, direction startDirection,
             }         
         }
 
+
         // check if x or y
         xdiff = l.x-n.x;
         ydiff = l.y-n.y;
+
+        
         
         if(xdiff == 0 && ydiff == 0) // going nowhere
         {
             argos::LOGERR << "Error in PF::ReserveTimeSlotsForPath. Both xdiff and ydiff are zero." << std::endl;
         }
+
+        
 
         if(xdiff!=0) // travelling on x-axis
         {
@@ -167,7 +176,6 @@ int Pathfinder::ReserveTimeslotsForPath(int startTick, direction startDirection,
             continue;
         }
 
-
         if(ydiff!=0) // traveling on y-axis
         {
             if(ydiff<0) // traveling in positive direction
@@ -201,12 +209,13 @@ int Pathfinder::ReserveTimeslotsForPath(int startTick, direction startDirection,
                     timeSlotToReserveDubs.push(cTS(l, TC));
                     timeSlotToReserveDubs.push(cTS(n, TC));
                     l = Coordinate(n.x, n.y);
-                    ydiff++;
+                    ydiff--;
                 }
             }
         }
 
         l = n; // set last coord.
+
         path.waypoints.pop();
     }
     
@@ -237,15 +246,12 @@ int Pathfinder::ReserveTimeslotsForPath(int startTick, direction startDirection,
         timeSlotToReserveDubs.pop();
     }
     
-    
     for(auto t : timeSlotToReserve)
     {
        argos::LOG << "Reserve tick: " << t.first << ". x: "<< t.second.first << " . y: " << t.second.second << std::endl;
        em->ReserveCell(Coordinate(t.second.first, t.second.second), t.first, t.first);
     }
     
-
-
     return TC;
 }
 
