@@ -35,12 +35,11 @@ void PickStationManager::GeneratePickStations(int startzone_width, int arena_hei
     if(arena_height <= numberOfPickingStations)
         return;
     
-    int height = arena_height / numberOfPickingStations;
+    int slot_height = arena_height / numberOfPickingStations;
     for(int i = 0; i < numberOfPickingStations; i++)
     {
-        int y = height / 2;
-        PickStation* newStation = new PickStation(i, std::pair<int,int>(0, y), wh);
-        stations[i] = newStation;
+        int y = slot_height * i + (slot_height / 2);
+        AddPickingStation(i, std::pair<int,int>(0, y));
     }
 }
 

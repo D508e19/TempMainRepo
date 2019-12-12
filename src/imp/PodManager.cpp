@@ -30,6 +30,7 @@ void PodManager::Tick()
 
         //Add picking station location
         nextOrder->pickStation = wh->psm->GetPickStationForOrder();
+        //argos::LOG << "PodMan: Gave this pickSta: " << nextOrder->pickStation->id << std::endl;
 
         //Did it find a pod location?
         if(podLocation.first != -1 && podLocation.second != -1) //Yes

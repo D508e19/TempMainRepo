@@ -8,13 +8,14 @@
 class PickStation
 {
 private:
-    int id;
+    
     Warehouse* wh;  
     
 public:
     PickStation(int _id, std::pair<int,int> _pickCoordinate, Warehouse* _wh);
     ~PickStation();
 
+    int id;
     std::pair<int,int> pickCoordinate;
     std::deque<Order*> tasks;
 
