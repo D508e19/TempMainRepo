@@ -1,9 +1,9 @@
 #ifndef CUSTOM_NODE_CPP
 #define CUSTOM_NODE_CPP
 
-Node::Node(){}
+Node::Node() {}
 
-Node::Node(Coordinate c, direction d) 
+Node::Node(Coordinate c, direction d)
 {
     coordinate = c;
     nodeDirection = d;
@@ -14,7 +14,7 @@ Node::Node(Coordinate c, direction d)
     parentWeight = 0;
 }
 
-Node::Node(Coordinate c, direction d, Node* p, int weight)
+Node::Node(Coordinate c, direction d, Node *p, int weight)
 {
     coordinate = c;
     nodeDirection = d;
@@ -59,47 +59,80 @@ int Node::CalculateHeuristic(Coordinate goal)
     int ny = coordinate.y;
     int h = 0;
 
-    int deltaX = abs(nx-gx);;
-    int deltaY = abs(ny-gy);
+    int deltaX = abs(nx - gx);
+    ;
+    int deltaY = abs(ny - gy);
 
-    if(gx == nx && gy == ny)
+    if (gx == nx && gy == ny)
     {
         return h;
     }
 
-    if(nodeDirection == north){
-        if(gx != nx){ 
-            h+= 3;
-            if(gy < ny){ h+=3; }
+    if (nodeDirection == north)
+    {
+        if (gx != nx)
+        {
+            h += 3;
+            if (gy < ny)
+            {
+                h += 3;
+            }
         }
-        else if(gy < ny){ h+=6; }
+        else if (gy < ny)
+        {
+            h += 6;
+        }
     }
 
-    else if(nodeDirection == south){
-        if(gx != nx){
-            h+= 3;
-            if(gy > ny){ h += 3; }
+    else if (nodeDirection == south)
+    {
+        if (gx != nx)
+        {
+            h += 3;
+            if (gy > ny)
+            {
+                h += 3;
+            }
         }
-        else if(gy > ny){ h+=6; }
+        else if (gy > ny)
+        {
+            h += 6;
+        }
     }
 
-    else if(nodeDirection == east){
-        if(gy != ny){
-            h+= 3;
-            if(gx < nx){ h += 3; }
+    else if (nodeDirection == east)
+    {
+        if (gy != ny)
+        {
+            h += 3;
+            if (gx < nx)
+            {
+                h += 3;
+            }
         }
-        else if(gx < nx){ h+=6; }
+        else if (gx < nx)
+        {
+            h += 6;
+        }
     }
-    else if(nodeDirection == west){
-        if(gy != ny){
-            h+= 3;
-            if(gx > nx){ h += 3; }
+    else if (nodeDirection == west)
+    {
+        if (gy != ny)
+        {
+            h += 3;
+            if (gx > nx)
+            {
+                h += 3;
+            }
         }
-        else if(gx > nx){ h += 6; }
+        else if (gx > nx)
+        {
+            h += 6;
+        }
     }
 
-    h+= deltaX;
-    h+= deltaY;
+    h += deltaX;
+    h += deltaY;
 
     return h;
 }
@@ -109,51 +142,51 @@ void Node::CalculateNeighbour()
 
     switch (nodeDirection)
     {
-        case north :
-            children.emplace_back(Node(Coordinate(coordinate.x, coordinate.y + 1), north, this, 1));
-            children.emplace_back(Node(coordinate, south, this, 3));
-            children.emplace_back(Node(coordinate, east, this, 3));
-            children.emplace_back(Node(coordinate, west, this, 3));
-            break;
-        case south :
-            children.emplace_back(Node(coordinate, north, this, 3));
-            children.emplace_back(Node(Coordinate(coordinate.x, coordinate.y - 1), south, this, 1));
-            children.emplace_back(Node(coordinate, east, this, 3));
-            children.emplace_back(Node(coordinate, west, this, 3));
-            break;
-        case east :
-            children.emplace_back(Node(coordinate, north, this, 3));
-            children.emplace_back(Node(coordinate, south, this, 3));
-            children.emplace_back(Node(Coordinate(coordinate.x + 1, coordinate.y), east, this, 1));
-            children.emplace_back(Node(coordinate, west, this, 3));
-            break;
-        case west :
-            children.emplace_back(Node(coordinate, north, this, 3));
-            children.emplace_back(Node(coordinate, south, this, 3));
-            children.emplace_back(Node(coordinate, east, this, 3));
-            children.emplace_back(Node(Coordinate(coordinate.x - 1, coordinate.y), west, this, 1));
-            break;
-        default:
-            argos::LOG << "default. You shouldn't be here." << std::endl;
-            break;
+    case north:
+        children.emplace_back(Node(Coordinate(coordinate.x, coordinate.y + 1), north, this, 1));
+        children.emplace_back(Node(coordinate, south, this, 3));
+        children.emplace_back(Node(coordinate, east, this, 3));
+        children.emplace_back(Node(coordinate, west, this, 3));
+        break;
+    case south:
+        children.emplace_back(Node(coordinate, north, this, 3));
+        children.emplace_back(Node(Coordinate(coordinate.x, coordinate.y - 1), south, this, 1));
+        children.emplace_back(Node(coordinate, east, this, 3));
+        children.emplace_back(Node(coordinate, west, this, 3));
+        break;
+    case east:
+        children.emplace_back(Node(coordinate, north, this, 3));
+        children.emplace_back(Node(coordinate, south, this, 3));
+        children.emplace_back(Node(Coordinate(coordinate.x + 1, coordinate.y), east, this, 1));
+        children.emplace_back(Node(coordinate, west, this, 3));
+        break;
+    case west:
+        children.emplace_back(Node(coordinate, north, this, 3));
+        children.emplace_back(Node(coordinate, south, this, 3));
+        children.emplace_back(Node(coordinate, east, this, 3));
+        children.emplace_back(Node(Coordinate(coordinate.x - 1, coordinate.y), west, this, 1));
+        break;
+    default:
+        //argos::LOG << "default. You shouldn't be here." << std::endl;
+        break;
     }
 }
 
-Node* Node::LeastCost() // TODO: change name to describe functionality
+Node *Node::LeastCost() // TODO: change name to describe functionality
 {
-    if(children.empty())
+    if (children.empty())
     {
         return this;
     }
     else
     {
-        Node* nodeWithLowestChild = (&children.front());
+        Node *nodeWithLowestChild = (&children.front());
 
-        for(Node& n : children) 
+        for (Node &n : children)
         {
             if ((*nodeWithLowestChild).lowestCost > n.lowestCost)
             {
-                nodeWithLowestChild= (&n);
+                nodeWithLowestChild = (&n);
             }
         }
         return (*nodeWithLowestChild).LeastCost();

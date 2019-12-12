@@ -2,12 +2,12 @@
 #define INSTRUCTION_H
 
 enum instruction{
-    idle, 
-    moveforward, 
-    turnleft, 
-    turnright, 
-    turn180, 
-    pickuppod, 
+    idle,
+    moveforward,
+    turnleft,
+    turnright,
+    turn180,
+    pickuppod,
     putdownpod,
     ignore,
     _wait

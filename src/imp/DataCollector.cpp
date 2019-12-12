@@ -5,7 +5,7 @@
 #include <fstream>
 #include <string>
 
-#include "controllers/basicbot/basicbot.h"
+#include "src/argos/controllers/basicbot/basicbot.h"
 
 DataCollector::DataCollector(){}
 DataCollector::~DataCollector(){}
@@ -38,7 +38,7 @@ void DataCollector::CollectData(std::map<int, Basicbot*> botControllers)
 
 void DataCollector::WriteLineToFile(std::string x)
 {
-    
+
 }
 
 #endif

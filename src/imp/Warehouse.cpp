@@ -1,7 +1,7 @@
 #ifndef WAREHOUSE_CPP
 #define WAREHOUSE_CPP
 
-#include "controllers/basicbot/basicbot.h"
+#include "src/argos/controllers/basicbot/basicbot.h"
 
 Warehouse::Warehouse(){};
 Warehouse::~Warehouse(){};
@@ -12,7 +12,7 @@ void Warehouse::Tick()
     om.Tick();
     psm->Tick();
     rm.Tick();
-    pm.Tick();  
+    pm.Tick();
 };
 
 void Warehouse::SetupWarehouse(std::map<int, Basicbot*> botControllers)

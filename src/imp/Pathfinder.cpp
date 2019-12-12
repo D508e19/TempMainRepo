@@ -9,8 +9,8 @@ Pathfinder::~Pathfinder(){}
 
 Path Pathfinder::FindPath(int startTick, Coordinate start, Coordinate end, direction currentDirection, bool isCarrying)
 {
-    Path p; 
-    argos::LOG << "Find path from: " << start.x << "," << start.y << ". to: " << end.x << "," << end.y << std::endl;
+    Path p;
+    //argos::LOG << "Find path from: " << start.x << "," << start.y << ". to: " << end.x << "," << end.y << std::endl;
 
     switch (selectedAlgorithm)
     {
@@ -21,14 +21,14 @@ Path Pathfinder::FindPath(int startTick, Coordinate start, Coordinate end, direc
         case 1:
             p = GetAstarPath(start, end, currentDirection, isCarrying);
             break;
-        
+
         default:
             break;
     }
-    
+
     if (p.waypoints.empty())
     {
-        argos::LOG << "The path returned is empty." << std::endl;
+        //argos::LOG << "The path returned is empty." << std::endl;
         pathReturnedEmpty++;
     }
 
@@ -45,7 +45,7 @@ Path Pathfinder::GetStupidPath(Coordinate start, Coordinate end)
     return newPath;
 }
 
-Path Pathfinder::GetAstarPath(Coordinate start, Coordinate goal, direction _direction, bool isCarrying) 
+Path Pathfinder::GetAstarPath(Coordinate start, Coordinate goal, direction _direction, bool isCarrying)
 {
     Node* startNode = new Node(start, _direction); // TODO: remove from heap when path is done
     currentNode = startNode;
@@ -67,7 +67,7 @@ Path Pathfinder::GetAstarPath(Coordinate start, Coordinate goal, direction _dire
         if (currentNode->children.empty())
         {
             currentNode->CalculateNeighbour();
-            
+
             for (Node node : currentNode->children)
             {
                 node.gScore = currentNode->gScore + node.parentWeight;
@@ -83,7 +83,7 @@ Path Pathfinder::GetAstarPath(Coordinate start, Coordinate goal, direction _dire
                 }
             }
         }
-    } 
+    }
     return pathList;
 }
 
@@ -104,7 +104,7 @@ Path Pathfinder::ReversePath(Node node, Path path)
     return right;
 }
 
-simplePath Pathfinder::ConstructPath(Node node, simplePath path) 
+simplePath Pathfinder::ConstructPath(Node node, simplePath path)
 {
     if(node.start){
         return path;

@@ -18,7 +18,7 @@ void EnvironmentManager::SetupEnvirionmentManager(Warehouse * _wh)
 	timeslotsIntoTheFuture = 30;
 
 	tickCounter = 0;
-	
+
 	// first floormap
 	for (int h = 0; h < warehouseHeight; h++)
 	{
@@ -32,7 +32,7 @@ void EnvironmentManager::SetupEnvirionmentManager(Warehouse * _wh)
 	// TODO
 
 	// empty reservationsTable
-	int timeslot = 0; 
+	int timeslot = 0;
 	for (int i = 0; i < timeslotsIntoTheFuture; i++)
 	{
 		reservationsTable[timeslot] = floorMap;
@@ -60,7 +60,7 @@ void EnvironmentManager::Tick()
 		//argos::LOG << "Test" << std::endl;
 		//std::cout << it->first  // string (key)
 		//		<< ':'
-		//		<< it->second   // string's value 
+		//		<< it->second   // string's value
 		//		<< std::endl ;
 	}
 	argos::LOG << "Done" << std::endl;
@@ -73,10 +73,10 @@ void EnvironmentManager::UpdateTimeslots(int tickCounter)
 	//argos::LOG << "current timeslot: " << currentTimeslots.front() << std::endl;
 
 
-	if (tickCounter >= currentTimeslots[1]) 
+	if (tickCounter >= currentTimeslots[1])
 	{
 		int nextTimeslot = currentTimeslots.back() + numberOfTicksPerTimeslot;
-		
+
 		// Update Reservations Table
 		reservationsTable.erase(currentTimeslots.front());
 		reservationsTable[nextTimeslot] = floorMap;
@@ -102,7 +102,7 @@ bool EnvironmentManager::IsReserved(Coordinate cell, int tick)
 		}
 	}
 	bool ans = (reservationsTable[timeslot][std::pair<int,int>(cell.x,cell.y)]);
-	argos::LOG << cell.x << "," << cell.y << "IsReserved: "<< ans << std::endl;
+	//argos::LOG << cell.x << "," << cell.y << "IsReserved: "<< ans << std::endl;
 	return ans;
 }
 
@@ -111,7 +111,7 @@ bool EnvironmentManager::IsReserved(Coordinate cell, int startTick, int endTick)
 	// get all timeslots between startTick and endTick
 	// call IsReserved for all
 
-	int startTimeslot; 
+	int startTimeslot;
 	for (int i = currentTimeslots[0]; i < timeslotsIntoTheFuture; i++)
 	{
 		if (startTick < currentTimeslots[i+1]){
@@ -119,10 +119,10 @@ bool EnvironmentManager::IsReserved(Coordinate cell, int startTick, int endTick)
 			break;
 		}
 	}
-	argos::LOG << "startTick:" << startTick << "  is in timeslot: "<< startTimeslot << std::endl;
-	
-    //find timeslot for endTick	
-	int endTimeslot; 
+	//argos::LOG << "startTick:" << startTick << "  is in timeslot: "<< startTimeslot << std::endl;
+
+    //find timeslot for endTick
+	int endTimeslot;
 	for (int i = currentTimeslots[0]; i < timeslotsIntoTheFuture; i++)
 	{
 		if (endTick < currentTimeslots[i+1]){
@@ -130,7 +130,7 @@ bool EnvironmentManager::IsReserved(Coordinate cell, int startTick, int endTick)
 			break;
 		}
 	}
-	argos::LOG << "endTick:" << endTick << " is in timeslot: "<< endTimeslot << std::endl; 
+	//argos::LOG << "endTick:" << endTick << " is in timeslot: "<< endTimeslot << std::endl;
 
 	//put start, end and all inbetween in a queue
 	int nextTimeslotToCheck = startTimeslot;
@@ -155,26 +155,26 @@ bool EnvironmentManager::ReserveCell(Coordinate cell, int startTick, int endTick
 {
 	if(!IsValidCoordinate(cell))
 	{
-		argos::LOGERR << "ERROR: Cell: " << cell.x << "," << cell.y << " is not in warehouse."<< std::endl;
+		//argos::LOGERR << "ERROR: Cell: " << cell.x << "," << cell.y << " is not in warehouse."<< std::endl;
 		return false;
 	}
 
 	if(startTick > endTick)
 	{
-		argos::LOGERR << "ERROR: Endtick: "<< endTick <<" is before startTick: " << startTick  << std::endl; 
+		//argos::LOGERR << "ERROR: Endtick: "<< endTick <<" is before startTick: " << startTick  << std::endl;
 		return false;
 	}
 
 	if(startTick < currentTimeslots.front())
 	{
-		argos::LOGERR << "ERROR: startTick: " << startTick  <<" is in the past." << std::endl; 
+		//argos::LOGERR << "ERROR: startTick: " << startTick  <<" is in the past." << std::endl;
 		return false;
 	}
 
-	//TODO: test too far into the future - endTick not in any timeslot 
+	//TODO: test too far into the future - endTick not in any timeslot
 
-	//find timeslot for startTick	
-	int startTimeslot; 
+	//find timeslot for startTick
+	int startTimeslot;
 	for (int i = currentTimeslots[0]; i < timeslotsIntoTheFuture; i++)
 	{
 		if (startTick < currentTimeslots[i+1]){
@@ -182,10 +182,10 @@ bool EnvironmentManager::ReserveCell(Coordinate cell, int startTick, int endTick
 			break;
 		}
 	}
-	argos::LOG << "startTick:" << startTick << " . Is in timeslot: "<< startTimeslot << std::endl;
-	
-    //find timeslot for endTick	
-	int endTimeslot; 
+	//argos::LOG << "startTick:" << startTick << " . Is in timeslot: "<< startTimeslot << std::endl;
+
+    //find timeslot for endTick
+	int endTimeslot;
 	for (int i = currentTimeslots[0]; i < timeslotsIntoTheFuture; i++)
 	{
 		if (endTick < currentTimeslots[i+1]){
@@ -193,7 +193,7 @@ bool EnvironmentManager::ReserveCell(Coordinate cell, int startTick, int endTick
 			break;
 		}
 	}
-	argos::LOG << "endTick:" << endTick << " . Is in timeslot: "<< endTimeslot << std::endl; 
+	//argos::LOG << "endTick:" << endTick << " . Is in timeslot: "<< endTimeslot << std::endl;
 
 	//put start, end and all inbetween in a queue
 	int nextTimeslotToReserve = startTimeslot;
@@ -204,7 +204,7 @@ bool EnvironmentManager::ReserveCell(Coordinate cell, int startTick, int endTick
 		timeslotsToReserve.push(nextTimeslotToReserve);
 		nextTimeslotToReserve += numberOfTicksPerTimeslot;
 	}
-	
+
 	/* TODO:: delete
 	std::queue<int> testQueue = timeslotsToReserve;
 	argos::LOG << "Reserve timeslots: " ;
@@ -222,11 +222,11 @@ bool EnvironmentManager::ReserveCell(Coordinate cell, int startTick, int endTick
 	{
 		if (reservationsTable[timeslotsToReserve.front()][std::pair<int,int>(cell.x,cell.y)])
 		{
-			argos::LOG << "ERROR: Timeslot already reserved. This should be checked before calling ReserveCell" << std::endl;
+			//argos::LOG << "ERROR: Timeslot already reserved. This should be checked before calling ReserveCell" << std::endl;
 			return false;
 		}
 		reservationsTable[timeslotsToReserve.front()][std::pair<int,int>(cell.x,cell.y)] = true;
-		argos::LOG << "Qube: "<< cell.x << ","<<cell.y<< " in timeslot:" <<timeslotsToReserve.front() <<  " is reserved" << std::endl;
+		//argos::LOG << "Qube: "<< cell.x << ","<<cell.y<< " in timeslot:" <<timeslotsToReserve.front() <<  " is reserved" << std::endl;
 		timeslotsToReserve.pop();
 	}
 
@@ -276,7 +276,7 @@ bool EnvironmentManager::PickUpPod(int podID, std::pair<int,int> coordinate)
 		return false;
 
 	podParking.erase(coordinate);
-	
+
 	return true;
 }
 
