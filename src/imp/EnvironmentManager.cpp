@@ -173,7 +173,8 @@ bool EnvironmentManager::ReserveCell(Coordinate cell, int startTick, int endTick
 	//TODO: test too far into the future - endTick not in any timeslot 
 
 	//find timeslot for startTick	
-	int startTimeslot; 
+	int startTimeslot = GetTimeslot(startTick);
+	/* 
 	for (int i = currentTimeslots[0]; i < timeslotsIntoTheFuture; i++)
 	{
 		if (startTick < currentTimeslots[i+1]){
@@ -182,9 +183,11 @@ bool EnvironmentManager::ReserveCell(Coordinate cell, int startTick, int endTick
 		}
 	}
 	argos::LOG << "startTick:" << startTick << " is in timeslot: "<< startTimeslot << std::endl;
-	
+	*/
+
     //find timeslot for endTick	
-	int endTimeslot; 
+	int endTimeslot = GetTimeslot(endTick); 
+	/*
 	for (int i = currentTimeslots[0]; i < timeslotsIntoTheFuture; i++)
 	{
 		if (endTick < currentTimeslots[i+1]){
@@ -193,6 +196,7 @@ bool EnvironmentManager::ReserveCell(Coordinate cell, int startTick, int endTick
 		}
 	}
 	argos::LOG << "endTick:" << endTick << " is in timeslot: "<< endTimeslot << std::endl; 
+	*/
 
 	//put start, end and all inbetween in a queue
 	int nextTimeslotToReserve = startTimeslot;
@@ -295,7 +299,7 @@ bool EnvironmentManager::PutDownPod(int podID, std::pair<int,int> coordinate)
 int EnvironmentManager::GetTimeslot(int tick)
 {
 	// TODO: delete comment.
-	argos::LOG << "Finding timeslot for tick: " << tick << std::endl;
+	//argos::LOG << "Finding timeslot for tick: " << tick << std::endl;
 	int result = -1;
 
 	for (int i = currentTimeslots[0]; i < timeslotsIntoTheFuture; i++)

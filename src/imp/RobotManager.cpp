@@ -23,7 +23,7 @@ void RobotManager::Tick()
         {
             Wrappers[i].currentOrder = ordersToBeProcessed.front();
             ordersToBeProcessed.pop();
-            Wrappers[i].waitingForOrder = false;
+            Wrappers[i].ProcessNewOrder();
         }
 
         Wrappers[i].Tick();

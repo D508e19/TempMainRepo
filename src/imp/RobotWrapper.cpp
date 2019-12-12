@@ -6,10 +6,11 @@
 RobotWrapper::RobotWrapper(){};
 RobotWrapper::~RobotWrapper(){};
 
-RobotWrapper::RobotWrapper(Basicbot *bot, Pathfinder *pf):m_bot(bot), pfp(pf)
+RobotWrapper::RobotWrapper(Basicbot *bot, Pathfinder *pf):m_bot(bot), pfp(pf), waitingForOrder(true)
 {
     lastFacing = m_bot->facing; // TODO: check if working. seems like not.
     lastCoordinate = m_bot->lastReadCellQR; // TODO: check if working. seems like not.
+    waitingForOrder=true;
 }
 
 void RobotWrapper::Tick()
@@ -18,65 +19,66 @@ void RobotWrapper::Tick()
     {    
         if(instructionQueue.empty())
         {
-            if(!waitingForOrder){
-                // If bot is idle, the instructionQueue is empty and bot isn't waitingForOrder 
-                //it means that it has received a new order
-
-                int TC = pfp->em->tickCounter; // TODO: set to LastTick. If LastTick is in the past set to current tick
-
-               //cheat - These are to control which coords the bots gets
-                //currentOrder->podLocation = cube(rand()%4,rand()%4);
-                currentOrder->podLocation = cube(3,3);
-                currentOrder->pickStationLocation = cube(5,5);
-                ///////
-
-                Coordinate coordPod = Coordinate(currentOrder->podLocation.first,currentOrder->podLocation.second);
-                Coordinate coordPick = Coordinate(currentOrder->pickStationLocation.first, currentOrder->pickStationLocation.second);;
-                //Coordinate coordPodParkingSpot = Coordinate(currentOrder->podLocation.first,currentOrder->podLocation.second);
-                Coordinate coordPodParkingSpot = Coordinate(4, 6);
-                Path pathToPickingStation;
-                Path pathToPod;
-                Path pathToPodParkingSpot;
-
-                // Find path from bots last location to pod location
-                pathToPod = pfp->FindPath(TC, lastCoordinate, coordPod, lastFacing, false);
-                TC = pathToPod.arriveAtTick;
-                TranslatePathToInstructions(pathToPod);
-                
-                // arrive at pod placement
-                // TODO: check if pod is actually here
-                AddInstructionToQueue(pickuppod, 1);
-                TC += 20; //timeToComplete pickUpPod
-
-                // Find path to picking station
-                pathToPickingStation = pfp->FindPath(TC, coordPod, coordPick, lastFacing, true);
-                TC = pathToPickingStation.arriveAtTick;
-                TranslatePathToInstructions(pathToPickingStation);
-
-                // Arrive at picking station. Waiting for x seconds. TODO: ticksToPicks should be moved out to a variable.
-                AddInstructionToQueue(_wait, 20);
-                TC += 20; //timeToComplete waitingToBePicked
-
-                // pathfind back to pod original position. Changed later to find available spot
-                pathToPodParkingSpot = pfp->FindPath(TC, coordPick, coordPodParkingSpot, lastFacing, true);
-                TranslatePathToInstructions(pathToPodParkingSpot);
-                TC = pathToPodParkingSpot.arriveAtTick;
-
-                // put down pod
-                AddInstructionToQueue(putdownpod, 1);
-                TC +=20;// timeToComplete putDownPod
-
-                //TODO: move out of the way. Maybe a go-home function if idle for too long.
-                
-                //lastTick = TC
-            }
-            else 
-            {
-                waitingForOrder = true;
-            }
+            waitingForOrder = true;
         } 
         SendNextInstruction(); // TODO: refactor to over new-order-received, since it is the most common endpoint.
     }
+}
+
+void RobotWrapper::ProcessNewOrder()
+{
+    argos::LOG << "waiting for order:"<< std::endl;
+
+    waitingForOrder = false;
+
+    int TC = pfp->em->tickCounter; // TODO: set to LastTick. If LastTick is in the past set to current tick
+
+    //cheat - These are to control which coords the bots gets
+    //currentOrder->podLocation = cube(rand()%4,rand()%4);
+    currentOrder->podLocation = cube(3,3);
+    currentOrder->pickStationLocation = cube(5,5);
+    ///////
+
+    Coordinate coordPod = Coordinate(currentOrder->podLocation.first,currentOrder->podLocation.second);
+    Coordinate coordPick = Coordinate(currentOrder->pickStationLocation.first, currentOrder->pickStationLocation.second);;
+    //Coordinate coordPodParkingSpot = Coordinate(currentOrder->podLocation.first,currentOrder->podLocation.second);
+    Coordinate coordPodParkingSpot = Coordinate(5, 5);
+    Path pathToPickingStation;
+    Path pathToPod;
+    Path pathToPodParkingSpot;
+
+    // Find path from bots last location to pod location
+    pathToPod = pfp->FindPath(TC, lastCoordinate, coordPod, lastFacing, false);
+    TC = pathToPod.arriveAtTick;
+    TranslatePathToInstructions(pathToPod);
+    
+    // arrive at pod placement
+    // TODO: check if pod is actually here
+    AddInstructionToQueue(pickuppod, 1);
+    TC += 20; //timeToComplete pickUpPod
+
+    // Find path to picking station
+    pathToPickingStation = pfp->FindPath(TC, coordPod, coordPick, lastFacing, true);
+    TC = pathToPickingStation.arriveAtTick;
+    TranslatePathToInstructions(pathToPickingStation);
+
+    // Arrive at picking station. Waiting for x seconds. TODO: ticksToPicks should be moved out to a variable.
+    AddInstructionToQueue(_wait, 20);
+    TC += 20; //timeToComplete waitingToBePicked
+
+    // pathfind back to pod original position. Changed later to find available spot
+    pathToPodParkingSpot = pfp->FindPath(TC, coordPick, coordPodParkingSpot, lastFacing, true);
+    TranslatePathToInstructions(pathToPodParkingSpot);
+    TC = pathToPodParkingSpot.arriveAtTick;
+
+    // put down pod
+    AddInstructionToQueue(putdownpod, 1);
+    TC +=20;// timeToComplete putDownPod
+
+    //TODO: move out of the way. Maybe a go-home function if idle for too long.
+    
+    //lastTick = TC  
+    waitingForOrder = false;
 }
 
 void RobotWrapper::TranslatePathToInstructions(Path p)
