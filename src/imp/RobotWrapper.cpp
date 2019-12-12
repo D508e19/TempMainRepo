@@ -16,7 +16,11 @@ RobotWrapper::RobotWrapper(Basicbot *bot, Pathfinder *pf):m_bot(bot), pfp(pf), w
 void RobotWrapper::Tick()
 {
     if (m_bot->currentInstruction == idle)
-    {    
+    {   
+        //Update location of pod while carrying
+        if(m_bot->isCarrying){
+            currentOrder->podPtr->location = std::pair<int,int>(m_bot->lastReadCellQR.x, m_bot->lastReadCellQR.y);
+        }
         if(instructionQueue.empty())
         {
             waitingForOrder = true;
@@ -41,9 +45,9 @@ void RobotWrapper::ProcessNewOrder()
     //currentOrder->podLocation = cube(rand()%4,rand()%4);
     ///////
 
-    Coordinate coordPod = Coordinate(currentOrder->podLocation.first,currentOrder->podLocation.second);
+    Coordinate coordPod = Coordinate(currentOrder->podPtr->location.first, currentOrder->podPtr->location.second);
     Coordinate coordPick = Coordinate(currentOrder->pickStation->pickCoordinate.first, currentOrder->pickStation->pickCoordinate.second);;
-    Coordinate coordPodParkingSpot = Coordinate(currentOrder->podLocation.first,currentOrder->podLocation.second);
+    Coordinate coordPodParkingSpot = Coordinate(currentOrder->podPtr->location.first, currentOrder->podPtr->location.second);
     //Coordinate coordPodParkingSpot = Coordinate(5, 5);
     Path pathToPickingStation;
     Path pathToPod;
@@ -200,9 +204,6 @@ void RobotWrapper::SendNextInstruction()
 
 direction RobotWrapper::GetFaceTowardsInstruction(Coordinate coordToFace, Coordinate lastCoordinate, direction _lastFacing)
 {
-    argos::LOG << "GetFaceTowardsInstruction. Last coord: "; lastCoordinate.PrintCoordinate(); argos::LOG << std::endl;
-    argos::LOG << "GetFaceTowardsInstruction. Face coord: "; coordToFace.PrintCoordinate(); argos::LOG << std::endl;
-    argos::LOG << "Now facing: " << _lastFacing << std::endl;
 
 
     direction nextFacing = _lastFacing; // return original facing if xdiff and ydiff are zero.

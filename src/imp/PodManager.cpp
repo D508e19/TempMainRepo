@@ -23,9 +23,10 @@ void PodManager::Tick()
 		Order* nextOrder = ordersToBeProcessed.front();
    
         // add pod id - fakeish for now 
-        nextOrder->podID = (nextOrder->orderID) % podCount;
+        int podID = (nextOrder->orderID) % podCount;
+        nextOrder->podPtr = GetPodPtr(podID);
         //Find location of pod
-        std::pair<int, int> podLocation = wh->em->FindPodLocation(pods[nextOrder->podID]);
+        std::pair<int, int> podLocation = wh->em->FindPodLocation(pods[nextOrder->podPtr->getId()]);
 
         //Add picking station location
         nextOrder->pickStation = wh->psm->GetPickStationForOrder();
@@ -34,14 +35,16 @@ void PodManager::Tick()
         if(podLocation.first != -1 && podLocation.second != -1) //Yes
         {
             //argos::LOG << "FOUND THE REQUESTED POD!!" << " Pod id: " << nextOrder->podID << std::endl;
-            nextOrder->podLocation = podLocation;
+            nextOrder->podPtr->location = podLocation;
 
             // send the order onwards to the Robot Manager
     	    wh->rm.ordersToBeProcessed.push(nextOrder);
+            //nextOrder->pickStation->tasks.push(nextOrder);
+            nextOrder->pickStation->tasks.push_back(nextOrder);
         }
         else //No
         {
-            argos::LOGERR << "FAILED FINDING THE REQUESTED POD!!" << " Pod id: " << nextOrder->podID << std::endl;
+            argos::LOGERR << "FAILED FINDING THE REQUESTED POD!!" << " Pod id: " << nextOrder->podPtr->getId() << std::endl;
 
             // Add order to the failed queue
             failedOrders.push(nextOrder);

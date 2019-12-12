@@ -10,7 +10,7 @@ class OrderManager
 {
 private:
 	int orderCount;
-    std::map<int, Order*> orders; //all orders
+    
 	std::queue<std::pair<int, Order*>> orderToBeReleased; //Orders generated, but not passed on.
 	Warehouse *wh;
 
@@ -18,7 +18,7 @@ public:
 	OrderManager();
 	~OrderManager();
 
-	std::queue<Order*> ordersOngoing; //Order passed on, but not yet completed?
+	std::map<int, Order*> orders; //all orders
 
 	void SetupOrderManager(Warehouse *_wh);
 	void Tick();
