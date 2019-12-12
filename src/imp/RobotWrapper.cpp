@@ -25,8 +25,8 @@ void RobotWrapper::Tick()
                 //it means that it has received a new order
 
                 //cheat - These are to control which coords the bots gets
-                currentOrder->podLocation = cube(rand()%25,rand()%25);
-                currentOrder->pickStation->pickCoordinate = cube(rand()%10,rand()%10);
+                //currentOrder->podLocation = cube(rand()%25,rand()%25);
+                //currentOrder->pickStation->pickCoordinate = cube(rand()%10,rand()%10);
                 ///////
 
                 // Find path from bots last location to pod location
@@ -65,6 +65,7 @@ void RobotWrapper::Tick()
             }
             else 
             {
+                argos::LOG << "RobotWrapper: end if: waitingForOrder: set to true" << std::endl;
                 waitingForOrder = true;
             }
         } 
