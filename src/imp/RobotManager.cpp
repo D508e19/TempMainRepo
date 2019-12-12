@@ -21,12 +21,14 @@ void RobotManager::Tick()
     { 
         if(Wrappers[i].waitingForOrder && !ordersToBeProcessed.empty())
         {
+            argos::LOG << "RM. Orders left: " << ordersToBeProcessed.size() << std::endl;
             Wrappers[i].currentOrder = ordersToBeProcessed.front();
             ordersToBeProcessed.pop();
             Wrappers[i].ProcessNewOrder();
         }
-
+        else{
         Wrappers[i].Tick();
+        }
     }
 }
 

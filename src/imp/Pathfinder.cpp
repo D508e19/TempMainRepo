@@ -9,7 +9,9 @@ Pathfinder::~Pathfinder(){}
 
 Path Pathfinder::FindPath(int startTick, Coordinate start, Coordinate end, direction lastDirection, bool isCarrying)
 {
-    Path p;// = Path();
+    Path p;
+    p.arriveAtTick = startTick;
+    // = Path();
     /*
     if((start.x == end.x) && (start.y == end.y))
     {
@@ -33,7 +35,9 @@ Path Pathfinder::FindPath(int startTick, Coordinate start, Coordinate end, direc
             break;
     }
     
+    
     int nextTick = startTick;
+    /*
     // reserve timeslots;
     if (!p.waypoints.empty())
     {
@@ -47,6 +51,8 @@ Path Pathfinder::FindPath(int startTick, Coordinate start, Coordinate end, direc
         pathReturnedEmpty++;
     }
     if(nextTick != startTick){p.arriveAtTick=nextTick;}
+    */
+   
     return p;
 }
 

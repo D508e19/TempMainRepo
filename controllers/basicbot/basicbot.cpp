@@ -78,6 +78,8 @@ void Basicbot::Init(TConfigurationNode &t_node)
    GetNodeAttributeOrDefault(t_node, "delta", m_fDelta, m_fDelta);
    GetNodeAttributeOrDefault(t_node, "velocity", m_fWheelVelocity, m_fWheelVelocity);
 
+
+   // TODO: check if these does anything. 
    ReadCellQR();
    currentInstruction = idle;
 }
