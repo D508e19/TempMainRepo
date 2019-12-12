@@ -16,7 +16,12 @@ RobotWrapper::RobotWrapper(Basicbot *bot, Pathfinder *pf):m_bot(bot), pfp(pf), w
 void RobotWrapper::Tick()
 {
     if (m_bot->currentInstruction == idle)
-    {
+    {   
+        //Update location of pod while carrying
+        if(m_bot->isCarrying){
+            currentOrder->podPtr->location = std::pair<int,int>(m_bot->lastReadCellQR.x, m_bot->lastReadCellQR.y);
+        }
+
         if(instructionQueue.empty())
         {
             waitingForOrder = true;
@@ -36,9 +41,14 @@ void RobotWrapper::ProcessNewOrder()
 
     int TC = pfp->em->tickCounter; // TODO: set to LastTick. If LastTick is in the past set to current tick
 
-    Coordinate coordPod = Coordinate(currentOrder->podLocation.first, currentOrder->podLocation.second);
-    Coordinate coordPick = Coordinate(currentOrder->pickStationLocation.first, currentOrder->pickStationLocation.second);
-    Coordinate coordPodParkingSpot = Coordinate(currentOrder->podLocation.first, currentOrder->podLocation.second);
+    Coordinate coordPod = Coordinate(currentOrder->podPtr->location.first, currentOrder->podPtr->location.second);
+    Coordinate coordPick = Coordinate(currentOrder->pickStation->pickCoordinate.first, currentOrder->pickStation->pickCoordinate.second);
+    Coordinate coordPodParkingSpot = Coordinate(currentOrder->podPtr->location.first, currentOrder->podPtr->location.second);
+
+    argos::LOG << "RW order ID: " << currentOrder->orderID << " Pick ID: " << currentOrder->pickStation->id;
+    argos::LOG << " RW: PickSt coord: ";
+    coordPick.PrintCoordinate();
+    argos::LOG << std::endl;
 
     Path pathToPickingStation;
     Path pathToPod;

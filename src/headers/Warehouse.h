@@ -8,7 +8,7 @@ class Warehouse
 private:
     std::map<int, Basicbot*> bots;
 
-    const int numberOfPickingStations = 1;
+    const int numberOfPickingStations = 3;
    
 public:
     Warehouse();
