@@ -12,6 +12,7 @@ public:
     ~Pod();
 
     int getId();
+    std::pair<int,int> location;
 };
 
 

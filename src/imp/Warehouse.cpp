@@ -10,6 +10,7 @@ void Warehouse::Tick()
 {
     em->Tick();
     om.Tick();
+    psm->Tick();
     pm.Tick();  
     rm.Tick();
 };
@@ -24,7 +25,9 @@ void Warehouse::SetupWarehouse(std::map<int, Basicbot*> botControllers)
 
     pf = new Pathfinder(em);
 
-    om.SetupOrderManager(this); 
+    om.SetupOrderManager(this);
+    psm = new PickStationManager();
+    psm->SetupPickStationManager(this, numberOfPickingStations);
     pm.SetupPodManager(this);
     rm.SetupRobotManager(this, botControllers);
 }
