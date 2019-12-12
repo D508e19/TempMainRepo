@@ -220,6 +220,7 @@ void Basicbot::PickUpPod()
    }
    else
    {
+      isCarrying = true;
       ResetBot();
    }
 }
@@ -238,6 +239,7 @@ void Basicbot::PutDownPod()
    }
    else
    {
+      isCarrying = false;
       ResetBot();
    }
 }

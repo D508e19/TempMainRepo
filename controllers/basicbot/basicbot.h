@@ -53,6 +53,7 @@ public:
    int lastReadPodQR = -1;
 
    bool isBusy = false;
+   bool isCarrying = false;
    instruction currentInstruction = idle;
 
    // Instruction-functions
