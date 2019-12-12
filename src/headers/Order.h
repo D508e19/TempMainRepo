@@ -17,7 +17,6 @@ public:
 	int timestamp_born = -1;
 	int timestamp_assigned = -1;
 	int timestamp_completed = -1;
-	// bool underWay;
 
 };
 

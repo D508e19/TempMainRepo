@@ -11,8 +11,8 @@ void Warehouse::Tick()
     em->Tick();
     om.Tick();
     psm->Tick();
-    rm.Tick();
     pm.Tick();  
+    rm.Tick();
 };
 
 void Warehouse::SetupWarehouse(std::map<int, Basicbot*> botControllers)
