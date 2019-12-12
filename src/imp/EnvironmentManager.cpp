@@ -15,7 +15,7 @@ void EnvironmentManager::SetupEnvirionmentManager(Warehouse * _wh)
     warehouseLength = 25;
 
 	numberOfTicksPerTimeslot = 20;
-	timeslotsIntoTheFuture = 30;
+	timeslotsIntoTheFuture = 1000;
 
 	tickCounter = 0;
 	
@@ -88,6 +88,7 @@ void EnvironmentManager::UpdateTimeslots(int tickCounter)
 
 bool EnvironmentManager::IsValidCoordinate(Coordinate cand)
 {
+    return true;
 	return ((cand.x >= 0 && cand.x < warehouseLength) && (cand.y >= 0 && cand.y < warehouseHeight));
 }
 
@@ -102,7 +103,7 @@ bool EnvironmentManager::IsReserved(Coordinate cell, int tick)
 		}
 	}
 	bool ans = (reservationsTable[timeslot][std::pair<int,int>(cell.x,cell.y)]);
-	argos::LOG << cell.x << "," << cell.y << "IsReserved: "<< ans << std::endl;
+	//argos::LOG << cell.x << "," << cell.y << "IsReserved: "<< ans << std::endl;
 	return ans;
 }
 
@@ -111,7 +112,7 @@ bool EnvironmentManager::IsReserved(Coordinate cell, int _startTick, int _endTic
 	// get all timeslots between startTick and endTick
 	// call IsReserved for all
 
-
+	return false;
 	int startTick = _startTick;
 	int endTick = _endTick;
 
@@ -199,7 +200,7 @@ bool EnvironmentManager::ReserveCell(Coordinate cell, int startTick, int endTick
 			break;
 		}
 	}
-	argos::LOG << "startTick:" << startTick << " . Is in timeslot: "<< startTimeslot << std::endl;
+	//argos::LOG << "startTick:" << startTick << " . Is in timeslot: "<< startTimeslot << std::endl;
 	
     //find timeslot for endTick	
 	int endTimeslot; 
@@ -210,7 +211,7 @@ bool EnvironmentManager::ReserveCell(Coordinate cell, int startTick, int endTick
 			break;
 		}
 	}
-	argos::LOG << "endTick:" << endTick << " . Is in timeslot: "<< endTimeslot << std::endl; 
+	//argos::LOG << "endTick:" << endTick << " . Is in timeslot: "<< endTimeslot << std::endl;
 
 	//put start, end and all inbetween in a queue
 	int nextTimeslotToReserve = startTimeslot;

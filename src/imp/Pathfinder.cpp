@@ -10,7 +10,7 @@ Pathfinder::~Pathfinder(){}
 Path Pathfinder::FindPath(int startTick, Coordinate start, Coordinate end, direction currentDirection, bool isCarrying)
 {
     Path p; 
-    argos::LOG << "Find path from: " << start.x << "," << start.y << ". to: " << end.x << "," << end.y << std::endl;
+    //argos::LOG << "Find path from: " << start.x << "," << start.y << ". to: " << end.x << "," << end.y << std::endl;
 
     switch (selectedAlgorithm)
     {
@@ -52,8 +52,6 @@ Path Pathfinder::GetAstarPath(int _startTick, Coordinate start, Coordinate goal,
     Node* currentNode;
     environmentManager = _environmentManager;
 
-    int i = 0;
-
     for (int i = 0; i < 250; i++)
     {
         //Find the leaf with the lowest cost
@@ -62,23 +60,11 @@ Path Pathfinder::GetAstarPath(int _startTick, Coordinate start, Coordinate goal,
         //Flag to ensure that a nodes children compare to the first child
         bool flag = true;
 
-
-        argos::LOG<< currentNode->coordinate.x << currentNode->coordinate.y << std::endl;
-
-        /*
-
-        if(!currentNode->start){
-            argos::LOG<< "My children: " <<currentNode->children.size() << std::endl;
-
-            argos::LOG<< "Parent children: "<<currentNode->parent->children.size() << std::endl;
-
-        }*/
-
+        //argos::LOG<< currentNode->coordinate.x << "," << currentNode->coordinate.y << std::endl;
 
         //Check if the node is goal node
         if ((currentNode->coordinate.x == goal.x) && (currentNode->coordinate.y == goal.y))
         {
-            argos::LOGERR << "PATH FOUND";
                return ReversePath((*currentNode));
         }
 

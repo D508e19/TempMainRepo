@@ -132,7 +132,7 @@ void Basicbot::MoveForward()
    else
    {
       ReadCellQR();
-      argos::LOG << "Arrived at: " << lastReadCellQR.x << " , " << lastReadCellQR.y << std::endl;
+      //argos::LOG << "Arrived at: " << lastReadCellQR.x << " , " << lastReadCellQR.y << std::endl;
       ResetBot();
    }
 }
@@ -252,7 +252,7 @@ void Basicbot::BotWait()
       counter--;
       if (counter == 0)
       {
-         argos::LOG << "waited: " << ticksToWait << " ticks." << std::endl;
+         //argos::LOG << "waited: " << ticksToWait << " ticks." << std::endl;
          ResetBot();
       }
    }
@@ -288,7 +288,7 @@ void Basicbot::LogReadablePosition(){
    stream << std::fixed << std::setprecision(5) << x << ", " << y;
    std::string s = stream.str();
    
-   argos::LOG << "Position: " << s << std::endl;
+   //argos::LOG << "Position: " << s << std::endl;
 };
 
 /* Returns the bots current postion as a 2D vector. */

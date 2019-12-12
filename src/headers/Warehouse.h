@@ -1,13 +1,15 @@
 #ifndef WAREHOUSE_H
 #define WAREHOUSE_H
 
+#include <mutex>
 #include "controllers/basicbot/basicbot.h"
 
 class Warehouse
 {
 private:
     std::map<int, Basicbot*> bots;
-   
+    std::mutex mtx;
+
 public:
     Warehouse();
     ~Warehouse();

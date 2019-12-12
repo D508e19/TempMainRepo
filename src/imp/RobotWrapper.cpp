@@ -32,7 +32,7 @@ void RobotWrapper::Tick()
                 // Find path from bots last location to pod location
                 Coordinate podCoord = Coordinate(currentOrder->podLocation.first,currentOrder->podLocation.second);
 
-                Path pathToPod = pfp->FindPath(tempTC, lastCoordinate, podCoord, lastFacing, false);
+                Path pathToPod = pfp->FindPath(tempTC, Coordinate(0,0), Coordinate(20,20), lastFacing, false);
                 TranslatePathToInstructions(pathToPod);
                 tempTC += 20; // TODO: //timeToComplete pathToPod
 
@@ -43,10 +43,10 @@ void RobotWrapper::Tick()
 
                 // Find path to picking station
                 Coordinate pickCoord = Coordinate(currentOrder->pickStationLocation.first,currentOrder->pickStationLocation.second);
-                Path pathToPickstation = pfp->FindPath(tempTC, lastCoordinate, pickCoord, lastFacing, true);
+                Path pathToPickstation = pfp->FindPath(tempTC, Coordinate(20,20), Coordinate(0,0), lastFacing, true);
                 TranslatePathToInstructions(pathToPickstation);
                 tempTC += 20;// timeToComplete pathToPickingStation
-
+/*
                 // Arrive at picking station. Waiting for 5 seconds. TODO: ticksToPicks should be moved out to a variable.
                 AddInstructionToQueue(_wait, 20);
                 tempTC += 20; //timeToComplete waitingToBePicked
@@ -56,6 +56,7 @@ void RobotWrapper::Tick()
                 TranslatePathToInstructions(pathToPodSpot);
                 tempTC += 20;//timeToComplete pathToPodSpot
 
+ */
                 // put down pod
                 AddInstructionToQueue(putdownpod, 1);
                 tempTC +=20;// timeToComplete putDownPod

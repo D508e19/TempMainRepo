@@ -1,6 +1,7 @@
 #ifndef WAREHOUSE_CPP
 #define WAREHOUSE_CPP
 
+#include <mutex>
 #include "controllers/basicbot/basicbot.h"
 
 Warehouse::Warehouse(){};
@@ -24,7 +25,7 @@ void Warehouse::SetupWarehouse(std::map<int, Basicbot*> botControllers)
 
     pf = new Pathfinder(em);
 
-    om.SetupOrderManager(this); 
+    om.SetupOrderManager(this);
     pm.SetupPodManager(this);
     rm.SetupRobotManager(this, botControllers);
 }
