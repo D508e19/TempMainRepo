@@ -24,11 +24,11 @@ Path Pathfinder::FindPath(int startTick, Coordinate start, Coordinate end, direc
     switch (selectedAlgorithm)
     {
         case 0:
-            p = GetStupidPath(start, end);
+            p = GetStupidPath(start, end); // TODO: add startTick
             break;
 
         case 1:
-            p = GetAstarPath(start, end, lastDirection, isCarrying);
+            p = GetAstarPath(start, end, lastDirection, isCarrying); // TODO: add startTick
             break;
         
         default:
