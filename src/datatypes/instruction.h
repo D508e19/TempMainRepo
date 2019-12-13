@@ -1,7 +1,8 @@
 #ifndef INSTRUCTION_H
 #define INSTRUCTION_H
 
-enum instruction{
+enum instruction
+{
     idle,
     moveforward,
     turnleft,
@@ -11,6 +12,6 @@ enum instruction{
     putdownpod,
     ignore,
     _wait
-    };
+};
 
 #endif

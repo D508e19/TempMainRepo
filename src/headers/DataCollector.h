@@ -16,9 +16,8 @@ public:
     DataCollector();
     ~DataCollector();
 
-    void CollectData(std::map<int, Basicbot*> botControllers);
+    void CollectData(Warehouse *wh);
     void WriteLineToFile(std::string x);
 };
-
 
 #endif

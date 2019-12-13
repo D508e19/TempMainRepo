@@ -53,6 +53,7 @@ public:
    int lastReadPodQR = -1;
 
    bool isBusy = false;
+   bool isCarrying = false;
    instruction currentInstruction = idle;
 
    // Instruction-functions
@@ -72,7 +73,6 @@ public:
    int ticksToTurn;
    int ticksToMoveOneCell;
 
-
    void ResetBot();
 
    void LogReadablePosition();
@@ -80,7 +80,6 @@ public:
 
    Real m_turningSpeed;
    Real movingSpeed;
-
 
    // data collection
    int ticksIdle = 0;

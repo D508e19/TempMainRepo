@@ -9,7 +9,6 @@ private:
 
     Basicbot* m_bot;
     Pathfinder* pfp; 
-    //Pathfinder pf = Pathfinder();
 
     direction lastFacing; // The direction of bot after last instruction.
     Coordinate lastCoordinate; // The coordination bot will be at after last instruction in queue.
@@ -23,14 +22,15 @@ public:
 
     void Tick();
 
-    bool waitingForOrder = true;
+    bool waitingForOrder;
     Order* currentOrder;
 
+    void ProcessNewOrder();
     void TranslatePathToInstructions(Path p);
     void AddInstructionToQueue(instruction ins, int tiles);
     void SendNextInstruction();
 
-    direction GetFaceTowardsInstruction(Coordinate wantsToFace, Coordinate current, direction lastFacing);
+    static direction GetFaceTowardsInstruction(Coordinate wantsToFace, Coordinate current, direction lastFacing);
 };
 
 

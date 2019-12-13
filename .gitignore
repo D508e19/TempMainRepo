@@ -1,5 +1,9 @@
 build/*
 profile.txt
 .vscode/*
+experiments/*
 output.txt
 CMakeLists.txt
+data-general.txt
+data-robots.txt
+.vc/*

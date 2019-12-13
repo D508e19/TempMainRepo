@@ -7,7 +7,7 @@ Coordinate::~Coordinate() {}
 
 void Coordinate::PrintCoordinate()
 {
-    std::cout << "(" << x << ", " << y << ")" << std::endl;
+    argos::LOG << "(" << x << ", " << y << ")"; // << std::endl;     TODO: maybe revert removed endline
 }
 
 #endif
