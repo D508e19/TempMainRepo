@@ -14,9 +14,7 @@ class EnvironmentManager
 {
 private:
     std::map<cube, bool> floorMap;
-    //std::map <int, std::vector <reservation>> reservationsTable;
     std::map <int, std::map <cube, bool>> reservationsTable;
-
     std::vector <int> currentTimeslots;
 
     Warehouse *wh;
@@ -45,8 +43,8 @@ public:
     std::map <std::pair<int,int>, Pod*> podParking;
     std::vector <Coordinate> pickingStations;
 
-    int warehouseLength; //x = warehouseLength -1
-    int warehouseHeight; //y = warehouseHeight -1
+    int warehouseLength;
+    int warehouseHeight;
 
     void PlacePod(Pod* pod, Coordinate cord);
 
@@ -57,8 +55,6 @@ public:
     bool PickUpPod(int podID, std::pair<int,int> coordinate);
     bool PutDownPod(int podID, std::pair<int,int> coordinate);
 };
-
-
 
 
 #endif

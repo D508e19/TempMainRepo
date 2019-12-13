@@ -25,7 +25,7 @@ Node::Node(Coordinate c, direction d, Node* p, int weight)
     parentWeight = weight;
 }
 
-int Node::CostToRoot(Node node) //TODO: name change?
+int Node::CostToRoot(Node node)
 {
     if (node.start)
     {
@@ -37,7 +37,7 @@ int Node::CostToRoot(Node node) //TODO: name change?
     }
 }
 
-std::list<Node> Node::ReturnPath(Node node, std::list<Node> path) //TODO: name change
+std::list<Node> Node::ReturnPath(Node node, std::list<Node> path)
 {
     if (node.start)
     {
@@ -106,7 +106,6 @@ int Node::CalculateHeuristic(Coordinate goal)
 
 void Node::CalculateNeighbour()
 {
-
     switch (nodeDirection)
     {
         case north :
@@ -134,7 +133,7 @@ void Node::CalculateNeighbour()
             children.emplace_back(Node(Coordinate(coordinate.x - 1, coordinate.y), west, this, 1));
             break;
         default:
-            argos::LOG << "default. You shouldn't be here." << std::endl;
+            argos::LOGERR << "CalculateNeighbour nodeDirection switch -> default. You shouldn't be here." << std::endl;
             break;
     }
 }

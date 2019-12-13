@@ -11,13 +11,11 @@ void Path::AddWayPoint(Coordinate newCord, Coordinate lastCoord)
     int xLast = lastCoord.x;
     int yLast = lastCoord.y;
 
+    // check if dublicate
     if(xLast == newCord.x && yLast == newCord.y)
-        {
-            //argos::LOG << "dublicate waypoint. " << newCord.x << " " << newCord.y << " .Ignored" << std::endl;
-            return;
-        }
-
-    //argos::LOG << "Adding waypoint:" << newCord.x << " " << newCord.y << std::endl;
+    {
+        return;
+    }
     waypoints.push(newCord);   
 }
 

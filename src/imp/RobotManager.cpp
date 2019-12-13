@@ -21,8 +21,6 @@ void RobotManager::Tick()
     { 
         if(Wrappers[i].waitingForOrder && !ordersToBeProcessed.empty())
         {
-            argos::LOG << "RobotManager: dispatching order: " << ordersToBeProcessed.front()->orderID << std::endl;
-            argos::LOG << "RM. Orders left: " << ordersToBeProcessed.size() << std::endl;
             Wrappers[i].currentOrder = ordersToBeProcessed.front();
             ordersToBeProcessed.pop();
             Wrappers[i].ProcessNewOrder();
@@ -39,5 +37,6 @@ RobotWrapper RobotManager::CreateRobotWrapper(Basicbot* b)
     robotCount++;
     return rw;
 }
+
 
 #endif

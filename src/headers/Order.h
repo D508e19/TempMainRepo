@@ -18,4 +18,5 @@ public:
 	int timestamp_completed = -1;
 };
 
+
 #endif

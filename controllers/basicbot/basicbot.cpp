@@ -13,16 +13,16 @@ Basicbot::Basicbot() :
    m_pcGroundSensor(NULL),
    m_pcProximity(NULL),
    m_cAlpha(10.0f),
-   m_fDelta(0.5f), // default: 0.5
+   m_fDelta(0.5f),
    m_fWheelVelocity(2.5f),
    m_cGoStraightAngleRange(-ToRadians(m_cAlpha),
    ToRadians(m_cAlpha)),
 
-   m_turningSpeed(5.49778714378213f), //TODO calculate instead 
-   movingSpeed(10.0f), //TODO calculate instead 
+   m_turningSpeed(5.49778714378213f),
+   movingSpeed(10.0f), 
 
-   ticksToTurn(20), //TODO calculate instead 
-   ticksToMoveOneCell(20), //TODO calculate instead 
+   ticksToTurn(20),
+   ticksToMoveOneCell(20),
 
    // data collection
    ticksIdle(0),
@@ -78,8 +78,7 @@ void Basicbot::Init(TConfigurationNode &t_node)
    GetNodeAttributeOrDefault(t_node, "delta", m_fDelta, m_fDelta);
    GetNodeAttributeOrDefault(t_node, "velocity", m_fWheelVelocity, m_fWheelVelocity);
 
-
-   // TODO: check if these does anything. 
+   //
    ReadCellQR();
    currentInstruction = idle;
 }
@@ -89,7 +88,6 @@ void Basicbot::ControlStep()
    switch (currentInstruction)
    {
       case idle:
-         argos::LOG << "Bip bop i am Idle." << std::endl;
          ticksIdle++;
          break;
       case moveforward:
@@ -114,7 +112,7 @@ void Basicbot::ControlStep()
          BotWait();
          break;
       default:
-      argos::LOGERR << "bot: " << robotID << " default in ControlStep switch. currentInstruction: " << currentInstruction << std::endl;
+      argos::LOGERR << "Bot: " << robotID << " default in ControlStep switch. currentInstruction: " << currentInstruction << std::endl;
          break;
    }
 }
@@ -134,8 +132,6 @@ void Basicbot::MoveForward()
    }
    else
    {
-      ReadCellQR();
-      argos::LOG << "Arrived at: " << lastReadCellQR.x << " , " << lastReadCellQR.y << std::endl;
       ResetBot();
    }
 }
@@ -257,7 +253,6 @@ void Basicbot::BotWait()
       counter--;
       if (counter == 0)
       {
-         argos::LOG << "Waited: " << ticksToWait << " ticks." << std::endl;
          ResetBot();
       }
    }
@@ -274,8 +269,6 @@ void Basicbot::ResetBot()
 }
 
 void Basicbot::ReadCellQR(){
-   // TODO: BUGBUGBUG
-   //argos::LOG << "read QR" << std::endl;
    CVector2 temp = GetPosition2D();
    double x = temp.GetX() * 5;
    double y = temp.GetY() * 5;

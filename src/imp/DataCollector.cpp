@@ -16,7 +16,6 @@ void DataCollector::CollectData(std::map<int, Basicbot*> botControllers)
     output.open ("output.txt");
 
     // foreach bot in bots
-
     for (int i=0; i<botControllers.size(); i++)
     {
         Basicbot* b = botControllers[i];

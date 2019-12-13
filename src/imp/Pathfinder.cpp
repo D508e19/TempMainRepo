@@ -11,30 +11,20 @@ Path Pathfinder::FindPath(int startTick, Coordinate start, Coordinate end, direc
 {
     Path p;
     p.arriveAtTick = startTick;
-    // = Path();
-    /*
-    if((start.x == end.x) && (start.y == end.y))
-    {
-        argos::LOG << "Start is end." << std::endl;
-        return p;
-    }*/
      
-    argos::LOG << "Find path from: " << start.x << "," << start.y << ". to: " << end.x << "," << end.y << std::endl;
-
     switch (selectedAlgorithm)
     {
         case 0:
-            p = GetStupidPath(start, end); // TODO: add startTick
+            p = GetStupidPath(start, end);
             break;
 
         case 1:
-            p = GetAstarPath(start, end, lastDirection, isCarrying); // TODO: add startTick
+            p = GetAstarPath(start, end, lastDirection, isCarrying); 
             break;
         
         default:
             break;
     }
-    
     
     int nextTick = startTick;
     /*
@@ -67,13 +57,12 @@ int Pathfinder::ReserveTimeslotsForPath(int startTick, direction startDirection,
 
     std::queue <std::pair<Coordinate, int>> timeSlotToReserveDubs;
 
-    Coordinate l = startCoord; //lastCoord
-    Coordinate n;               //nextCoord
+    Coordinate l = startCoord;
+    Coordinate n;
 
-    direction ld = startDirection;  //lastDirection
-    direction nd;   //nextDirection
+    direction ld = startDirection;
+    direction nd;
 
-    // for finding whither going on x or y -axis
     int xdiff = 0;
     int ydiff = 0;
 
@@ -84,20 +73,12 @@ int Pathfinder::ReserveTimeslotsForPath(int startTick, direction startDirection,
         
         // check if need to turn
         nd = RobotWrapper::GetFaceTowardsInstruction(n, l, ld);
-        if (nd == ld) // doesn't need to turn.
-        {
-            argos::LOG << "Doesn't need to turn." << std::endl;
-        }
+        if (nd == ld){} // doesn't need to turn.
         else // need to turn. 
         {
             int d = (nd + ld)%4;
             if (d==2) //180 turn
             {
-                argos::LOG << "Turn 180. Plus ticks: " << ticksToTurn180degrees << std::endl;
-                argos::LOG << "Coord to reserve: "; l.PrintCoordinate(); argos::LOG << " in tick: " << TC << std::endl;
-                argos::LOG << "Coord to reserve: "; l.PrintCoordinate(); argos::LOG << " in tick: " << TC+ticksToTurn90degrees << std::endl;
-                argos::LOG << "Coord to reserve: "; l.PrintCoordinate(); argos::LOG << " in tick: " << TC+ticksToTurn180degrees << std::endl;
-
                 timeSlotToReserveDubs.push(cTS(l, TC));
                 timeSlotToReserveDubs.push(cTS(l, TC+ticksToTurn90degrees));
                 timeSlotToReserveDubs.push(cTS(l, TC+ticksToTurn180degrees));
@@ -105,10 +86,6 @@ int Pathfinder::ReserveTimeslotsForPath(int startTick, direction startDirection,
             }
             else //90 turn
             {
-                argos::LOG << "Turn 90. Plus ticks: " << ticksToTurn90degrees << std::endl;
-                argos::LOG << "Coord to reserve: "; l.PrintCoordinate(); argos::LOG << " in tick: " << TC << std::endl;
-                argos::LOG << "Coord to reserve: "; l.PrintCoordinate(); argos::LOG << " in tick: " << TC+ticksToTurn90degrees << std::endl;
-
                 timeSlotToReserveDubs.push(cTS(l, TC));
                 timeSlotToReserveDubs.push(cTS(l, TC+ticksToTurn90degrees));
                 TC += ticksToTurn90degrees;
@@ -132,12 +109,8 @@ int Pathfinder::ReserveTimeslotsForPath(int startTick, direction startDirection,
             {
                 while(xdiff!=0) //xdiff is negative
                 {
-                    //argos::LOG << "xdiff in loop --> : " << xdiff << std::endl;
                     n = Coordinate(l.x+1, l.y);
                     TC += ticksToMoveOneCell;
-
-                    //argos::LOG << "Coord to reserve: "; l.PrintCoordinate(); argos::LOG << " in tick: " << TC<< std::endl;
-                    //argos::LOG << "Coord to reserve: "; n.PrintCoordinate(); argos::LOG << " in tick: " << TC<< std::endl;
 
                     timeSlotToReserveDubs.push(cTS(l, TC));
                     timeSlotToReserveDubs.push(cTS(n, TC));
@@ -149,12 +122,8 @@ int Pathfinder::ReserveTimeslotsForPath(int startTick, direction startDirection,
             {
                 while(xdiff!=0) // xdiff is positive
                 {
-                    //argos::LOG << "xdiff in loop <-- : " << xdiff << std::endl;
                     n = Coordinate(l.x-1, l.y);
                     TC += ticksToMoveOneCell;
-
-                    //argos::LOG << "Coord to reserve: "; l.PrintCoordinate(); argos::LOG << " in tick: " << TC<< std::endl;
-                    //argos::LOG << "Coord to reserve: "; n.PrintCoordinate(); argos::LOG << " in tick: " << TC<< std::endl;
 
                     timeSlotToReserveDubs.push(cTS(l, TC));
                     timeSlotToReserveDubs.push(cTS(n, TC));
@@ -167,19 +136,14 @@ int Pathfinder::ReserveTimeslotsForPath(int startTick, direction startDirection,
             continue;
         }
 
-
         if(ydiff!=0) // traveling on y-axis
         {
             if(ydiff<0) // traveling in positive direction
             {
                 while(ydiff!=0)
                 {
-                    //argos::LOG << "ydiff: --> " << ydiff << std::endl;
                     n = Coordinate(l.x, l.y+1);
                     TC += ticksToMoveOneCell;
-
-                    //argos::LOG << "Coord to reserve: "; l.PrintCoordinate(); argos::LOG << " in tick: " << TC<< std::endl;
-                    //argos::LOG << "Coord to reserve: "; n.PrintCoordinate(); argos::LOG << " in tick: " << TC<< std::endl;
 
                     timeSlotToReserveDubs.push(cTS(l, TC));
                     timeSlotToReserveDubs.push(cTS(n, TC));
@@ -191,12 +155,8 @@ int Pathfinder::ReserveTimeslotsForPath(int startTick, direction startDirection,
             {
                 while(ydiff!=0)
                 {
-                    //argos::LOG << "ydiff: " << ydiff << std::endl;
                     n = Coordinate(l.x, l.y-1);
                     TC += ticksToMoveOneCell;
-
-                    //argos::LOG << "Coord to reserve: "; l.PrintCoordinate(); argos::LOG << " in tick: " << TC<< std::endl;
-                    //argos::LOG << "Coord to reserve: "; n.PrintCoordinate(); argos::LOG << " in tick: " << TC<< std::endl;
 
                     timeSlotToReserveDubs.push(cTS(l, TC));
                     timeSlotToReserveDubs.push(cTS(n, TC));
@@ -226,7 +186,6 @@ int Pathfinder::ReserveTimeslotsForPath(int startTick, direction startDirection,
         // check if timereservation is in timeToReserve
         if(timeSlotToReserve.find(std::pair <int, tt>(nextTick, tt(nextCoord.x, nextCoord.y))) == timeSlotToReserve.end()) 
         {
-            //argos::LOG << "In tick:" << nextTick << ". Reserve: "; nextCoord.PrintCoordinate();  argos::LOG << std::endl;
             timeSlotToReserve.insert(std::pair<int, tt>(nextTick, tt(nextCoord.x, nextCoord.y)));
         }
         else
@@ -240,12 +199,9 @@ int Pathfinder::ReserveTimeslotsForPath(int startTick, direction startDirection,
     
     for(auto t : timeSlotToReserve)
     {
-       argos::LOG << "Reserve tick: " << t.first << ". x: "<< t.second.first << " . y: " << t.second.second << std::endl;
        em->ReserveCell(Coordinate(t.second.first, t.second.second), t.first, t.first);
     }
-    
-
-
+ 
     return TC;
 }
 
@@ -261,7 +217,7 @@ Path Pathfinder::GetStupidPath(Coordinate start, Coordinate end)
 
 Path Pathfinder::GetAstarPath(Coordinate start, Coordinate goal, direction _direction, bool isCarrying) 
 {
-    Node* startNode = new Node(start, _direction); // TODO: remove from heap when path is done
+    Node* startNode = new Node(start, _direction);
     currentNode = startNode;
     int i = 0;
 
@@ -269,7 +225,7 @@ Path Pathfinder::GetAstarPath(Coordinate start, Coordinate goal, direction _dire
     {
         //Find the leaf with the lowest cost
         currentNode = startNode->LeastCost();
-        bool flag = true; // flag for hvad??
+        bool flag = true;
 
         //Check if the node is goal node
         if ((currentNode->coordinate.x == goal.x) && (currentNode->coordinate.y == goal.y))
