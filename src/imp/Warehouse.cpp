@@ -34,7 +34,7 @@ void Warehouse::SetupWarehouse(std::map<int, Basicbot*> botControllers)
 
 void Warehouse::CollectData()
 {
-    dc.CollectData(bots);
+    dc.CollectData(this);
 }
 
 #endif
