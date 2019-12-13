@@ -40,20 +40,5 @@ class PickStationManager;
 #include "headers/PickStationManager.h"
 
 // implementation
-#include "imp/Pod.cpp"
-#include "imp/Coordinate.cpp"
-#include "imp/Node.cpp"
-#include "imp/Order.cpp"
-#include "imp/Path.cpp"
-#include "imp/DataCollector.cpp"
-#include "imp/Pathfinder.cpp"
-#include "imp/RobotWrapper.cpp"
-#include "imp/OrderManager.cpp"
-#include "imp/PodManager.cpp"
-#include "imp/RobotManager.cpp"
-#include "imp/EnvironmentManager.cpp"
-#include "imp/Warehouse.cpp"
-#include "imp/PickStation.cpp"
-#include "imp/PickStationManager.cpp"
 
 #endif
