@@ -4,3 +4,6 @@ profile.txt
 experiments/*
 output.txt
 CMakeLists.txt
+.vs/*
+data-general.txt
+data-robots.txt

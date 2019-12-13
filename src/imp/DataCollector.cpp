@@ -12,12 +12,11 @@ DataCollector::~DataCollector(){}
 
 void DataCollector::CollectData(Warehouse* wh)
 {
-    // create output-file
-    output.open ("output.txt");
-
     // Define sepeartor for data
     char seperator{44};
 
+    // create output file for general data
+    output.open ("data-general.txt");
     // Collect all general data
     output << wh->em->warehouseLength << seperator;
     output << wh->em->warehouseHeight << seperator;
@@ -42,6 +41,11 @@ void DataCollector::CollectData(Warehouse* wh)
     output << notCompleted << seperator;
     output << std::endl;
 
+    // close output-file
+    output.close();
+
+    // create output file for robots data
+    output.open ("data-robots.txt");
     // Collect and write all data for each bot
     for (int i=0; i<wh->bots.size(); i++)
     {
