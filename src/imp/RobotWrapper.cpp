@@ -15,6 +15,11 @@ RobotWrapper::RobotWrapper(Basicbot *bot, Pathfinder *pf):m_bot(bot), pfp(pf), w
 
 void RobotWrapper::Tick()
 {
+    if(m_bot->counter==0)
+    {
+        m_bot->ResetBot();
+    } 
+
     if (m_bot->currentInstruction == idle)
     {   
         //Update location of pod while carrying
@@ -54,7 +59,9 @@ void RobotWrapper::ProcessNewOrder()
 
     // Find path from bots last location to pod location
     pathToPod = pfp->FindPath(TC, lastCoordinate, coordPod, lastFacing, false);
+
     TC = pathToPod.arriveAtTick;
+    argos::LOG << "TC: " << TC << std::endl;
     TranslatePathToInstructions(pathToPod);
     
     // arrive at pod placement
@@ -65,6 +72,7 @@ void RobotWrapper::ProcessNewOrder()
     // Find path to picking station
     pathToPickingStation = pfp->FindPath(TC, coordPod, coordPick, lastFacing, true);
     TC = pathToPickingStation.arriveAtTick;
+    argos::LOG << "TC: " << TC << std::endl;
     TranslatePathToInstructions(pathToPickingStation);
    
      // Arrive at picking station. Waiting for x seconds. TODO: ticksToPicks should be moved out to a variable.

@@ -230,8 +230,8 @@ bool EnvironmentManager::ReserveCell(Coordinate cell, int startTick, int endTick
 	{
 		if (reservationsTable[timeslotsToReserve.front()][std::pair<int,int>(cell.x,cell.y)])
 		{
-			argos::LOG << "ERROR: Coord: "; cell.PrintCoordinate(); 
-			argos::LOG << " is already reserved in timeslot: " << timeslotsToReserve.front() << std::endl;
+			argos::LOGERR << "ERROR: Coord: "; cell.PrintCoordinate(); 
+			argos::LOGERR << " is already reserved in timeslot: " << timeslotsToReserve.front() << std::endl;
 			//This should be checked before calling ReserveCell" << std::endl;
 			return false;
 		}
@@ -307,14 +307,30 @@ int EnvironmentManager::GetTimeslot(int tick)
 {
 	// TODO: delete comment.
 	//argos::LOG << "Finding timeslot for tick: " << tick << std::endl;
-	int result = -1;
+	int result = -19;
 
-	for (int i = currentTimeslots[0]; i < timeslotsIntoTheFuture; i++)
+/*
+	argos::LOG << "GetTimeSlot is called with: " << tick << std::endl;
+	argos::LOG << "Current timeslot: " <<currentTimeslots[0] << std::endl;;
+	argos::LOG << "ast timeslot: " << currentTimeslots.back() << std::endl;
+	*/
+
+	//for (int i = currentTimeslots[0]; i < timeslotsIntoTheFuture; i++)
+	for (int i = 0; i < timeslotsIntoTheFuture; i++)
 	{
-		if (tick < currentTimeslots[i+1]){
+		//argos::LOG << "it timeslot: "<< currentTimeslots[i] << std::endl;
+
+		if ((tick >= (currentTimeslots[i])) && (tick < currentTimeslots[i+1]))
+		{
+			argos::LOG << "Tick: " << tick<< " is in timeslot: " << currentTimeslots[i] << std::endl;
 			result = currentTimeslots[i];
 			break;
 		}
+		else
+		{
+			//argos::LOG << "Tick: " << tick<< " is not in timeslot: " << currentTimeslots[i];
+		}
+		
 	}
 
 	return result;
