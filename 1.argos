@@ -2,7 +2,7 @@
 <argos-configuration>
 	<framework>
 	<system threads="0" method="balance_quantity" />
-	<experiment length="500000"
+	<experiment length="5000"
 				ticks_per_second="10"
 				random_seed="1" />
 	<profiling 	file="profile.txt"
@@ -49,7 +49,11 @@
 	</media>
 
 	<visualization>
-
+    <qt-opengl>
+      <camera>
+		<placement idx="0" position="2,2,6" look_at="2,2,5" up="0, 1, 1" lens_focal_length="23" />
+      </camera>
+    </qt-opengl>
 	</visualization>
 	<!-- <loop_functions library="/path/to/libmy_loop_functions.so" label="my_loop_functions" /> -->
 </argos-configuration>

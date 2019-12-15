@@ -21,7 +21,10 @@ Path Pathfinder::FindPath(int startTick, Coordinate start, Coordinate end, direc
         case 1:
             p = GetAstarPath(startTick, start, end, currentDirection, isCarrying, em);
             break;
-        
+
+        case 2:
+            argos::LOG << currentDirection << std::endl;
+            p = GetSemiStupidPath(start, end, currentDirection, startTick, em);
         default:
             break;
     }
@@ -40,6 +43,62 @@ Path Pathfinder::GetStupidPath(Coordinate start, Coordinate end)
     Path newPath;
 
     newPath.AddWayPoint(Coordinate(end.x, start.y), start);
+    newPath.AddWayPoint(Coordinate(end.x, end.y), Coordinate(end.x, start.y));
+
+    return newPath;
+}
+
+Path Pathfinder::GetSemiStupidPath(Coordinate start, Coordinate end, direction dir, int startTick, EnvironmentManager* _em, int straightTime, int turnTime, int waitTime)
+{
+    Path newPath;
+    switch (dir)
+    {
+        case north :
+            argos::LOG << "north" << std::endl;
+
+            if(start.y < end.y){
+                newPath.AddWayPoint(Coordinate(start.x, end.y), start);
+            }
+            else {
+                newPath.AddWayPoint(Coordinate(end.x, start.y), start);
+            }
+            break;
+        case south :
+            argos::LOG << "south" << std::endl;
+
+            if(start.y < end.y){
+                newPath.AddWayPoint(Coordinate(end.x, start.y), start);
+            }
+            else {
+                newPath.AddWayPoint(Coordinate(start.x, end.y), start);
+            }
+            break;
+        case east :
+            argos::LOG << "east" << std::endl;
+
+            if(start.x < end.x){
+                newPath.AddWayPoint(Coordinate(end.x, start.y), start);
+            }
+            else {
+                newPath.AddWayPoint(Coordinate(start.x, end.y), start);
+            }
+            break;
+        case west :
+            argos::LOG << "west" << std::endl;
+
+            if(start.x < end.x){
+                newPath.AddWayPoint(Coordinate(start.x, end.y), start);
+            }
+            else {
+                newPath.AddWayPoint(Coordinate(end.x, start.y), start);
+            }
+            break;
+        default:
+            argos::LOGERR << "default. You shouldn't be here." << std::endl;
+            break;
+
+    }
+    newPath = AddWaits(newPath, start, startTick, _em, straightTime, turnTime, waitTime);
     newPath.AddWayPoint(Coordinate(end.x, end.y), Coordinate(end.x, start.y));
 
     return newPath;
@@ -78,6 +137,7 @@ Path Pathfinder::GetAstarPath(int _startTick, Coordinate start, Coordinate goal,
 
                         node.gScore = currentNode->gScore + node.parentWeight;
                         node.fScore = node.gScore + node.CalculateHeuristic(goal, turnTime, straightTime);
+                        node.lowestCost = node.fScore;
 
                         if(flag)
                         {
@@ -139,6 +199,147 @@ simplePath Pathfinder::ConstructPath(Node node, simplePath path)
 
         //}
     }
+}
+
+Path Pathfinder::AddWaits(Path p, Coordinate start, int startTick, EnvironmentManager* em, int straightTime, int turnTime, int waitTime) {
+
+    Coordinate first = p.waypoints.front();
+    Coordinate second = p.waypoints.back();
+    int currentTime = startTick;
+
+    if(start.x == first.x){
+        if(start.y < first.y){
+            AddWaitsNorth(p, start, first, startTick, em, straightTime, turnTime, waitTime);
+        }else{
+            AddWaitsSouth(p, start, first, startTick, em, straightTime, turnTime, waitTime);
+        }
+
+        if(start.x < second.x){
+            AddWaitsEast(p, first, second, startTick, em, straightTime, turnTime, waitTime);
+        }else{
+            AddWaitsWest(p, first, second, startTick, em, straightTime, turnTime, waitTime);
+        }
+
+    }else{
+        if(start.x < first.x){
+            AddWaitsEast(p, start, first, startTick, em, straightTime, turnTime, waitTime);
+        }else{
+            AddWaitsWest(p, start, first, startTick, em, straightTime, turnTime, waitTime);
+        }
+
+        if(start.y < second.y){
+            AddWaitsNorth(p, first, second, startTick, em, straightTime, turnTime, waitTime);
+        }else{
+            AddWaitsSouth(p, first, second, startTick, em, straightTime, turnTime, waitTime);
+        }
+    }
+
+    return Path();
+}
+
+std::pair<Path, int>
+Pathfinder::AddWaitsNorth(Path p, Coordinate start, Coordinate _end, int startTick, EnvironmentManager* _em, int straightTime,
+                          int turnTime, int waitTime) {
+
+    Coordinate end = _end;
+    int currentTime = startTick;
+    bool flag = false;
+    int _wait = 0;
+
+    for(int i = start.y+1; i<= end.y; i++){
+        while(_em->IsReserved(Coordinate(start.x, i), currentTime, startTick+straightTime)){
+            flag = true;
+            _wait += waitTime;
+            currentTime+=waitTime;
+        }
+        if(flag){
+            p.AddWayPoint(Coordinate(-1, _wait), Coordinate(start.x, i-1));
+            flag = false;
+            _wait = 0;
+        }
+        currentTime += straightTime;
+    }
+    currentTime += turnTime;
+
+    return std::pair<Path, int>(p, currentTime);
+}
+
+std::pair<Path, int>
+Pathfinder::AddWaitsSouth(Path p, Coordinate start, Coordinate _end, int startTick, EnvironmentManager* _em, int straightTime,
+                          int turnTime, int waitTime) {
+
+    Coordinate end = _end;
+    int currentTime = startTick;
+    bool flag = false;
+    int _wait = 0;
+
+    for(int i = start.y-1; i>= end.y; i--){
+        while(_em->IsReserved(Coordinate(start.x, i), currentTime, startTick+straightTime)){
+            flag = true;
+            _wait += waitTime;
+            currentTime+=waitTime;
+        }
+        if(flag){
+            p.AddWayPoint(Coordinate(-1, _wait), Coordinate(start.x, i+1));
+            flag = false;
+        }
+        currentTime += straightTime;
+    }
+    currentTime += turnTime;
+
+    return std::pair<Path, int>(p, currentTime);
+}
+
+std::pair<Path, int>
+Pathfinder::AddWaitsEast(Path p, Coordinate start, Coordinate _end, int startTick, EnvironmentManager* _em, int straightTime,
+                         int turnTime, int waitTime) {
+
+    Coordinate end = _end;
+    int currentTime = startTick;
+    bool flag = false;
+    int _wait = 0;
+
+    for(int i = start.x + 1; i<= end.x; i++){
+        while(_em->IsReserved(Coordinate(i, start.y), currentTime, startTick+straightTime)){
+            flag = true;
+            _wait += waitTime;
+            currentTime+=waitTime;
+        }
+        if(flag){
+            p.AddWayPoint(Coordinate(-1, _wait), Coordinate(i-1, start.y));
+            flag = false;
+        }
+        currentTime += straightTime;
+    }
+    currentTime += turnTime;
+
+    return std::pair<Path, int>(p, currentTime);
+}
+
+std::pair<Path, int>
+Pathfinder::AddWaitsWest(Path p, Coordinate start, Coordinate _end, int startTick, EnvironmentManager* _em, int straightTime,
+                         int turnTime, int waitTime) {
+
+    Coordinate end = _end;
+    int currentTime = startTick;
+    bool flag = false;
+    int _wait = 0;
+
+    for(int i = start.x - 1; i>= end.x; i--){
+        while(_em->IsReserved(Coordinate(i, start.y), currentTime, startTick+straightTime)){
+            flag = true;
+            _wait += waitTime;
+            currentTime+=waitTime;
+        }
+        if(flag){
+            p.AddWayPoint(Coordinate(-1, _wait), Coordinate(i+1, start.y));
+            flag = false;
+        }
+        currentTime += straightTime;
+    }
+    currentTime += turnTime;
+
+    return std::pair<Path, int>(p, currentTime);
 }
 
 

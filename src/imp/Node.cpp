@@ -200,12 +200,12 @@ bool Node::addNeighborsNorth(int startTick, int straightTime, int turnTime, int 
     environmentManager->IsValidCoordinate(Coordinate(coordinate.x, coordinate.y+1))) {
         children.emplace_back(Node(Coordinate(coordinate.x, coordinate.y + 1), north, this, straightTime));
     }
-//    else if(!environmentManager->IsReserved(Coordinate(coordinate.x, coordinate.y), startTick + gScore, startTick + ((gScore+waitTime)*10))) {
-//        children.emplace_back(Coordinate(coordinate.x, coordinate.y), north, this, waitTime, true);
-//    }
-//    else{
-//        return false;
-//    }
+    else if(!environmentManager->IsReserved(Coordinate(coordinate.x, coordinate.y), startTick + gScore, startTick + ((gScore+waitTime)*10))) {
+        children.emplace_back(Coordinate(coordinate.x, coordinate.y), north, this, waitTime, true);
+    }
+    else{
+        return false;
+    }
     if(!environmentManager->IsReserved(coordinate, startTick + gScore, startTick + gScore+turnTime)) {
 
         children.emplace_back(Node(coordinate, south, this, turnTime));
@@ -232,12 +232,12 @@ bool Node::addNeighborsSouth(int startTick, int straightTime, int turnTime, int 
             environmentManager->IsValidCoordinate(Coordinate(coordinate.x, coordinate.y-1)))) {
         children.emplace_back(Node(Coordinate(coordinate.x, coordinate.y - 1), south, this, straightTime));
     }
-//    else if (!environmentManager->IsReserved(Coordinate(coordinate.x, coordinate.y), startTick + gScore, startTick + ((gScore+waitTime)*10))){
-//        children.emplace_back(Coordinate(coordinate.x, coordinate.y), south, this, waitTime, true);
-//    }
-//    else {
-//        return false;
-//    }
+    else if (!environmentManager->IsReserved(Coordinate(coordinate.x, coordinate.y), startTick + gScore, startTick + ((gScore+waitTime)*10))){
+        children.emplace_back(Coordinate(coordinate.x, coordinate.y), south, this, waitTime, true);
+    }
+    else {
+        return false;
+    }
     if(!environmentManager->IsReserved(coordinate, startTick + gScore, startTick + gScore+turnTime)) {
         children.emplace_back(Node(coordinate, east, this, turnTime));
     }
@@ -261,12 +261,12 @@ bool Node::addNeighborsEast(int startTick, int straightTime, int turnTime, int w
 
         children.emplace_back(Node(Coordinate(coordinate.x + 1, coordinate.y), east, this, straightTime));
     }
-//    else if (!environmentManager->IsReserved(Coordinate(coordinate.x, coordinate.y), startTick + gScore, startTick + ((gScore+waitTime)*10))){
-//        children.emplace_back(Coordinate(coordinate.x, coordinate.y), east, this, waitTime, true);
-//    }
-//    else {
-//        return false;
-//    }
+    else if (!environmentManager->IsReserved(Coordinate(coordinate.x, coordinate.y), startTick + gScore, startTick + ((gScore+waitTime)*10))){
+        children.emplace_back(Coordinate(coordinate.x, coordinate.y), east, this, waitTime, true);
+    }
+    else {
+        return false;
+    }
     if(!environmentManager->IsReserved(coordinate, startTick + gScore, startTick + gScore+turnTime)) {
         children.emplace_back(Node(coordinate, west, this, turnTime));
     }
@@ -293,14 +293,14 @@ bool Node::addNeighborsWest(int startTick, int straightTime, int turnTime, int w
         //Add West
         children.emplace_back(Node(Coordinate(coordinate.x - 1, coordinate.y), west, this, straightTime));
     }
-//        //If the coordinate is reserved, add wait
-//    else if (!environmentManager->IsReserved(Coordinate(coordinate.x, coordinate.y), startTick + gScore, startTick + ((gScore+waitTime)*10))){
-//        children.emplace_back(Coordinate(coordinate.x, coordinate.y), west, this, waitTime, true);
-//    }
-//        //If the current coordinate can't be waited on, delete node
-//    else {
-//        return false;
-//    }
+        //If the coordinate is reserved, add wait
+    else if (!environmentManager->IsReserved(Coordinate(coordinate.x, coordinate.y), startTick + gScore, startTick + ((gScore+waitTime)*10))){
+        children.emplace_back(Coordinate(coordinate.x, coordinate.y), west, this, waitTime, true);
+    }
+        //If the current coordinate can't be waited on, delete node
+    else {
+        return false;
+    }
     return true;
 }
 
