@@ -179,29 +179,9 @@ bool EnvironmentManager::ReserveCell(Coordinate cell, int startTick, int endTick
 
 	//find timeslot for startTick	
 	int startTimeslot = GetTimeslot(startTick);
-	/* 
-	for (int i = currentTimeslots[0]; i < timeslotsIntoTheFuture; i++)
-	{
-		if (startTick < currentTimeslots[i+1]){
-			startTimeslot = currentTimeslots[i];
-			break;
-		}
-	}
-	argos::LOG << "startTick:" << startTick << " is in timeslot: "<< startTimeslot << std::endl;
-	*/
 
     //find timeslot for endTick	
 	int endTimeslot = GetTimeslot(endTick); 
-	/*
-	for (int i = currentTimeslots[0]; i < timeslotsIntoTheFuture; i++)
-	{
-		if (endTick < currentTimeslots[i+1]){
-			endTimeslot = currentTimeslots[i];
-			break;
-		}
-	}
-	argos::LOG << "endTick:" << endTick << " is in timeslot: "<< endTimeslot << std::endl; 
-	*/
 
 	//put start, end and all inbetween in a queue
 	int nextTimeslotToReserve = startTimeslot;
@@ -213,17 +193,6 @@ bool EnvironmentManager::ReserveCell(Coordinate cell, int startTick, int endTick
 		nextTimeslotToReserve += numberOfTicksPerTimeslot;
 	}
 	
-	/* TODO:: delete
-	std::queue<int> testQueue = timeslotsToReserve;
-	argos::LOG << "Reserve timeslots: " ;
-	while(!testQueue.empty())
-	{
-		argos::LOG << testQueue.front() << ", ";
-		testQueue.pop();
-	}
-	argos::LOG << std::endl; */
-
-
 	//todo check all cubes before reserve
 
 	while (!timeslotsToReserve.empty())
