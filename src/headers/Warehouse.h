@@ -6,8 +6,6 @@
 class Warehouse
 {
 private:
-    
-
     const int numberOfPickingStations = 3;
    
 public:

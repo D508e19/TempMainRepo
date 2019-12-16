@@ -25,7 +25,7 @@ Node::Node(Coordinate c, direction d, Node* p, int weight)
     parentWeight = weight;
 }
 
-int Node::CostToRoot(Node node) //TODO: name change?
+int Node::CostToRoot(Node node)
 {
     if (node.start)
     {
@@ -37,7 +37,7 @@ int Node::CostToRoot(Node node) //TODO: name change?
     }
 }
 
-std::list<Node> Node::ReturnPath(Node node, std::list<Node> path) //TODO: name change
+std::list<Node> Node::ReturnPath(Node node, std::list<Node> path)
 {
     if (node.start)
     {
@@ -134,12 +134,12 @@ void Node::CalculateNeighbour()
             children.emplace_back(Node(Coordinate(coordinate.x - 1, coordinate.y), west, this, 1));
             break;
         default:
-            argos::LOG << "default. You shouldn't be here." << std::endl;
+            argos::LOGERR << "CalculateNeighbour switch default. You shouldn't be here." << std::endl;
             break;
     }
 }
 
-Node* Node::LeastCost() // TODO: change name to describe functionality
+Node* Node::LeastCost()
 {
     if(children.empty())
     {
@@ -159,5 +159,6 @@ Node* Node::LeastCost() // TODO: change name to describe functionality
         return (*nodeWithLowestChild).LeastCost();
     }
 }
+
 
 #endif

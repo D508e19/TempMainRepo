@@ -41,4 +41,5 @@ RobotWrapper RobotManager::CreateRobotWrapper(Basicbot* b)
     return rw;
 }
 
+
 #endif
