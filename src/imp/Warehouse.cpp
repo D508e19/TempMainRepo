@@ -15,10 +15,10 @@ void Warehouse::Tick()
     pm.Tick();
 };
 
-void Warehouse::SetupWarehouse(std::map<int, Basicbot*> botControllers)
+void Warehouse::SetupWarehouse(std::map<int, Basicbot *> botControllers)
 {
     bots = botControllers;
-    srand (time(NULL));	// seed for rng
+    srand(time(NULL)); // seed for rng
 
     em = new EnvironmentManager();
     em->SetupEnvirionmentManager(this);

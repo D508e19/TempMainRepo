@@ -13,6 +13,8 @@ public:
 
     std::queue <Coordinate> waypoints;
 
+    int arriveAtTick =-1;
+
     void AddWayPoint(Coordinate newCoord, Coordinate lastCord);
     Coordinate GetNextWaypoint();   
 };

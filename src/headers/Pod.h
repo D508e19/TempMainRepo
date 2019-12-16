@@ -4,7 +4,7 @@
 class Pod
 {
 private:
-    const int m_id;
+    const int id;
 
 public:
     Pod();
@@ -14,8 +14,5 @@ public:
     int getId();
     std::pair<int,int> location;
 };
-
-
-
 
 #endif

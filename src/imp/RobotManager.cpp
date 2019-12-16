@@ -19,14 +19,16 @@ void RobotManager::Tick()
 {
     for (int i = 0; i < robotCount; i++)
     {
-        if(Wrappers[i].waitingForOrder && !ordersToBeProcessed.empty())
+        if (Wrappers[i].waitingForOrder && !ordersToBeProcessed.empty())
         {
             Wrappers[i].currentOrder = ordersToBeProcessed.front();
             ordersToBeProcessed.pop();
-            Wrappers[i].waitingForOrder = false;
+            Wrappers[i].ProcessNewOrder();
         }
-
-        Wrappers[i].Tick();
+        else
+        {
+            Wrappers[i].Tick();
+        }
     }
 }
 
