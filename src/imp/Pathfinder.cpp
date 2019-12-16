@@ -15,7 +15,7 @@ Path Pathfinder::FindPath(int startTick, Coordinate start, Coordinate end, direc
     
     if((start.x == end.x) && (start.y == end.y))
     {
-        argos::LOG << "Start is end." << std::endl;
+        argos::LOGERR << "You are already there." << std::endl;
         return p;
     }
      

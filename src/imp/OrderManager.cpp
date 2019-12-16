@@ -34,6 +34,7 @@ void OrderManager::Tick()
 void OrderManager::CreateOrder()
 {
     Order* newOrder = new Order(orderCount, -1);
+	newOrder->timestamp_born = wh->em->tickCounter;
 	newOrder->wareID = newOrder->orderID; //TODO Temporary
 	orders.insert(std::pair<int, Order*> (orderCount, newOrder)); //All orders queue
 	//ordersOngoing.push(newOrder); //Non-completed orders

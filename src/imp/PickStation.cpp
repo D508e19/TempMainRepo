@@ -23,8 +23,13 @@ void PickStation::Tick()
         //Is the pod of the order in the pick location? = Complete order
         if((order->podPtr->location.first == pickCoordinate.first) &&  (order->podPtr->location.second == pickCoordinate.second))
         {
-            //argos::LOG << "Order: " << order->orderID << " is complete." << std::endl;
+            argos::LOG << "Order: " << order->orderID << " is complete." << std::endl;
             order->timestamp_completed = wh->em->tickCounter;
+
+            argos::LOG << "Tick born: " << order->timestamp_born << std::endl;
+            argos::LOG << "Tick assigned: " << order->timestamp_assigned << std::endl;
+            argos::LOG << "Tick completed: " << order->timestamp_completed << std::endl;
+
             auto it = std::find_if(activeOrders.begin(), activeOrders.end(), [order](const Order* i) {return order == i;});
             activeOrders.erase(it);
         }
