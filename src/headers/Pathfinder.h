@@ -19,7 +19,6 @@ private:
     Path ReversePath(Node node);
     simplePath ConstructPath(Node, simplePath);
 
-    // TODO: temporary solution. should be collected from elsewhere.
     int ticksToMoveOneCell = 20;
     int ticksToTurn90degrees = 20;
     int ticksToTurn180degrees = 40;

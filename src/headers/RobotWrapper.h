@@ -9,7 +9,6 @@ private:
 
     Basicbot* m_bot;
     Pathfinder* pfp;
-    //Pathfinder pf = Pathfinder();
 
     direction lastFacing; // The direction of bot after last instruction.
     Coordinate lastCoordinate; // The coordination bot will be at after last instruction in queue.

@@ -68,9 +68,11 @@ void DataCollector::CollectData(Warehouse* wh)
     output.close();
 }
 
+/*
 void DataCollector::WriteLineToFile(std::string x)
 {
     
-}
+}*/
+
 
 #endif

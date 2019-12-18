@@ -13,16 +13,16 @@ Basicbot::Basicbot() :
    m_pcGroundSensor(NULL),
    m_pcProximity(NULL),
    m_cAlpha(10.0f),
-   m_fDelta(0.5f), // default: 0.5
+   m_fDelta(0.5f), 
    m_fWheelVelocity(2.5f),
    m_cGoStraightAngleRange(-ToRadians(m_cAlpha),
    ToRadians(m_cAlpha)),
 
-   m_turningSpeed(5.49778714378213f), //TODO calculate instead 
-   movingSpeed(10.0f), //TODO calculate instead 
+   m_turningSpeed(5.49778714378213f), 
+   movingSpeed(10.0f), 
 
-   ticksToTurn(20), //TODO calculate instead 
-   ticksToMoveOneCell(20), //TODO calculate instead 
+   ticksToTurn(20),
+   ticksToMoveOneCell(20),
 
    // data collection
    ticksIdle(0),
@@ -78,8 +78,6 @@ void Basicbot::Init(TConfigurationNode &t_node)
    GetNodeAttributeOrDefault(t_node, "delta", m_fDelta, m_fDelta);
    GetNodeAttributeOrDefault(t_node, "velocity", m_fWheelVelocity, m_fWheelVelocity);
 
-
-   // TODO: check if these does anything. 
    ReadCellQR();
    currentInstruction = idle;
 }
@@ -249,10 +247,7 @@ void Basicbot::BotWait()
 void Basicbot::ResetBot()
 {
    m_pcWheels->SetLinearVelocity(0, 0);
-
    ReadCellQR();
-   argos::LOG << "Last tick. arrived at: " << lastReadCellQR.x << " , " << lastReadCellQR.y << std::endl;
-
    cellsToMove = 1;
    ticksToWait = 1;
    currentInstruction = idle;

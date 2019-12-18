@@ -38,7 +38,7 @@ Node::Node(Coordinate c, direction d, Node* p, int weight, bool _wait)
     isWait = _wait;
 }
 
-int Node::CostToRoot(Node node) //TODO: name change?
+int Node::CostToRoot(Node node)
 {
     if (node.start)
     {
@@ -50,7 +50,7 @@ int Node::CostToRoot(Node node) //TODO: name change?
     }
 }
 
-std::list<Node> Node::ReturnPath(Node node, std::list<Node> path) //TODO: name change
+std::list<Node> Node::ReturnPath(Node node, std::list<Node> path)
 {
     if (node.start)
     {
@@ -135,13 +135,12 @@ bool Node::CalculateNeighbour(int startTick, int straightTime, int turnTime, int
             return addNeighborsWest(startTick, straightTime, turnTime, waitTime, environmentManager);
 
         default:
-            argos::LOGERR << "default. You shouldn't be here." << std::endl;
+            argos::LOGERR << "CalculateNeighbour switch default. You shouldn't be here." << std::endl;
             return false;
-
     }
 }
 
-Node* Node::LeastCost() // TODO: change name to describe functionality
+Node* Node::LeastCost()
 {
     if(children.empty())
     {

@@ -3,7 +3,7 @@
 
 Pod::Pod():
     id(-1)
-    {}         //todo cleanup/delete pods with index -1
+    {}
 
 Pod::Pod(int _id):
     id(_id)
