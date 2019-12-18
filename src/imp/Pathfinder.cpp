@@ -3,7 +3,7 @@
 
 Pathfinder::Pathfinder(EnvironmentManager* _em):em(_em)
 {
-    selectedAlgorithm = 0;
+    selectedAlgorithm = 1;
 }
 Pathfinder::~Pathfinder(){}
 
@@ -250,62 +250,6 @@ Path Pathfinder::GetStupidPath(Coordinate start, Coordinate end)
     Path newPath;
 
     newPath.AddWayPoint(Coordinate(end.x, start.y), start);
-    newPath.AddWayPoint(Coordinate(end.x, end.y), Coordinate(end.x, start.y));
-
-    return newPath;
-}
-
-Path Pathfinder::GetSemiStupidPath(Coordinate start, Coordinate end, direction dir, int startTick, EnvironmentManager* _em, int straightTime, int turnTime, int waitTime)
-{
-    Path newPath;
-    switch (dir)
-    {
-        case north :
-            argos::LOG << "north" << std::endl;
-
-            if(start.y < end.y){
-                newPath.AddWayPoint(Coordinate(start.x, end.y), start);
-            }
-            else {
-                newPath.AddWayPoint(Coordinate(end.x, start.y), start);
-            }
-            break;
-        case south :
-            argos::LOG << "south" << std::endl;
-
-            if(start.y < end.y){
-                newPath.AddWayPoint(Coordinate(end.x, start.y), start);
-            }
-            else {
-                newPath.AddWayPoint(Coordinate(start.x, end.y), start);
-            }
-            break;
-        case east :
-            argos::LOG << "east" << std::endl;
-
-            if(start.x < end.x){
-                newPath.AddWayPoint(Coordinate(end.x, start.y), start);
-            }
-            else {
-                newPath.AddWayPoint(Coordinate(start.x, end.y), start);
-            }
-            break;
-        case west :
-            argos::LOG << "west" << std::endl;
-
-            if(start.x < end.x){
-                newPath.AddWayPoint(Coordinate(start.x, end.y), start);
-            }
-            else {
-                newPath.AddWayPoint(Coordinate(end.x, start.y), start);
-            }
-            break;
-        default:
-            argos::LOGERR << "default. You shouldn't be here." << std::endl;
-            break;
-
-    }
-    newPath = AddWaits(newPath, start, startTick, _em, straightTime, turnTime, waitTime);
     newPath.AddWayPoint(Coordinate(end.x, end.y), Coordinate(end.x, start.y));
 
     return newPath;

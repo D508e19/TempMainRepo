@@ -6,10 +6,10 @@
 RobotWrapper::RobotWrapper(){};
 RobotWrapper::~RobotWrapper(){};
 
-RobotWrapper::RobotWrapper(Basicbot *bot, Pathfinder *pf):m_bot(bot), pfp(pf), waitingForOrder(true)
-{
+RobotWrapper::RobotWrapper(Basicbot *bot, Pathfinder *pf):m_bot(bot), pfp(pf), waitingForOrder(true) {
     lastFacing = m_bot->facing;
-    lastCoordinate = m_bot->lastReadCellQR; 
+    lastCoordinate = m_bot->lastReadCellQR;
+}
 
 void RobotWrapper::Tick()
 {
