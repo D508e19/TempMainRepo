@@ -3,7 +3,7 @@
 
 Pathfinder::Pathfinder(EnvironmentManager* _em):em(_em)
 {
-    selectedAlgorithm = 1;
+    selectedAlgorithm = 0;
 }
 Pathfinder::~Pathfinder(){}
 
