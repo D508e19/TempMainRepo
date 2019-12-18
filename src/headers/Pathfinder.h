@@ -10,7 +10,6 @@ private:
 
     int ReserveTimeslotsForPath(int startTick, direction startDirection, Coordinate startCoord, Path path);
     
-    Path GetStupidPath(Coordinate start, Coordinate end);
     Path GetAstarPath(Coordinate start, Coordinate end, direction last, bool isCarrying);
 
     Node* currentNode;
@@ -38,7 +37,6 @@ public:
     ~Pathfinder();
 
     Path FindPath(int startTick, Coordinate start, Coordinate end, direction last, bool isCarrying);
-
     Path GetStupidPath(Coordinate start, Coordinate end);
     Path GetSemiStupidPath(Coordinate start, Coordinate end, direction dir, int startTick, EnvironmentManager* em, int straightTime = 20, int turnTime = 20, int waitTime = 5);
 

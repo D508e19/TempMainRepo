@@ -3,7 +3,7 @@
 
 Pathfinder::Pathfinder(EnvironmentManager* _em):em(_em)
 {
-    selectedAlgorithm = 1;
+    selectedAlgorithm = 0;
 }
 Pathfinder::~Pathfinder(){}
 
@@ -24,7 +24,6 @@ Path Pathfinder::FindPath(int startTick, Coordinate start, Coordinate end, direc
             break;
 
         case 2:
-            argos::LOG << lastDirection << std::endl;
             p = GetSemiStupidPath(start, end, lastDirection, startTick, em);
         default:
             break;
@@ -316,6 +315,7 @@ Path Pathfinder::GetSemiStupidPath(Coordinate start, Coordinate end, direction d
 
 Path Pathfinder::GetAstarPath(int _startTick, Coordinate start, Coordinate goal, direction _direction, bool isCarrying, EnvironmentManager* _environmentManager, int straightTime, int turnTime, int waitTime)
 {
+    EnvironmentManager* environmentManager;
     int startTick = _startTick;
     Node* startNode = new Node(start, _direction); // TODO: remove from heap when path is done
     Node* currentNode;
