@@ -9,22 +9,23 @@
 class OrderManager
 {
 private:
+	const int numberOfOrdersToGenerate = 100;
+	const int tickSpaceBetweenOrders = 5;
+
+	std::queue<std::pair<int, Order*>> orderToBeReleased; //Orders generated, but not passed on.
 	int orderCount;
-    std::map<int, Order*> orders; //alle ordre
 	Warehouse *wh;
 
 public:
 	OrderManager();
 	~OrderManager();
 
-	std::queue<Order*> ordersToBeProcessed;
-	std::queue<Order*> ordersOngoing;
+	std::map<int, Order*> orders; //all orders
 
 	void SetupOrderManager(Warehouse *_wh);
 	void Tick();
 
 	void CreateOrder();
 };
-
 
 #endif

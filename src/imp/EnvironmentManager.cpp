@@ -11,11 +11,11 @@ void EnvironmentManager::SetupEnvirionmentManager(Warehouse * _wh)
 {
 	wh = _wh;
 
-    warehouseHeight = 25;
-    warehouseLength = 25;
+    warehouseHeight = 10;
+    warehouseLength = 10;
 
 	numberOfTicksPerTimeslot = 20;
-	timeslotsIntoTheFuture = 1000;
+	timeslotsIntoTheFuture = 100;
 
 	tickCounter = 0;
 	
@@ -60,7 +60,7 @@ void EnvironmentManager::Tick()
 		//argos::LOG << "Test" << std::endl;
 		//argos::LOG << it->first  // string (key)
 		//		<< ':'
-		//		<< it->second   // string's value
+		//		<< it->second   // string's value 
 		//		<< std::endl ;
 	}
 	argos::LOG << "Done" << std::endl;
@@ -69,12 +69,13 @@ void EnvironmentManager::Tick()
 
 void EnvironmentManager::UpdateTimeslots(int tickCounter)
 {
-	//argos::LOG << "TickCounter: " << tickCounter << std::endl;
-	//argos::LOG << "current timeslot: " << currentTimeslots.front() << std::endl;
 
-
-	if (tickCounter >= currentTimeslots[1])
+	if (tickCounter >= currentTimeslots[1]) 
 	{
+		//argos::LOG << "Timeslots: " << currentTimeslots.size() << std::endl;
+		//argos::LOG << "current timeslot: " << currentTimeslots.front() << std::endl;
+		//argos::LOG << "last timeslot: " << currentTimeslots.back() << std::endl;
+
 		int nextTimeslot = currentTimeslots.back() + numberOfTicksPerTimeslot;
 		
 		// Update Reservations Table
@@ -83,12 +84,14 @@ void EnvironmentManager::UpdateTimeslots(int tickCounter)
 
 		currentTimeslots.erase(currentTimeslots.begin());
 		currentTimeslots.push_back(nextTimeslot);
+
+		//argos::LOG << "current timeslot: " << currentTimeslots.front() << std::endl;
+		//argos::LOG << "last timeslot: " << currentTimeslots.back() << std::endl;
 	}
 }
 
 bool EnvironmentManager::IsValidCoordinate(Coordinate cand)
 {
-    return true;
 	return ((cand.x >= 0 && cand.x < warehouseLength) && (cand.y >= 0 && cand.y < warehouseHeight));
 }
 
@@ -103,53 +106,35 @@ bool EnvironmentManager::IsReserved(Coordinate cell, int tick)
 		}
 	}
 	bool ans = (reservationsTable[timeslot][std::pair<int,int>(cell.x,cell.y)]);
-	//argos::LOG << cell.x << "," << cell.y << "IsReserved: "<< ans << std::endl;
+	argos::LOG << "In timeslot: "<< timeslot << ". Cell: " <<  cell.x << "," << cell.y << " is reserved: "<< ans << std::endl;
 	return ans;
 }
 
-bool EnvironmentManager::IsReserved(Coordinate cell, int _startTick, int _endTick)
+bool EnvironmentManager::IsReserved(Coordinate cell, int startTick, int endTick)
 {
 	// get all timeslots between startTick and endTick
 	// call IsReserved for all
 
-
-
-	int startTick = _startTick;
-	int endTick = _endTick;
-
-
-	int startTimeslot;
-    int endTimeslot;
-
-    argos::LOG << "startTick:" << startTick << "-- endTick: " << endTick << std::endl;
-
-    bool flag = false;
-    bool flag1 = false;
-
+	int startTimeslot; 
 	for (int i = currentTimeslots[0]; i < timeslotsIntoTheFuture; i++)
 	{
 		if (startTick < currentTimeslots[i+1]){
 			startTimeslot = currentTimeslots[i];
-            //argos::LOG << "startTick:" << startTick << "  is in timeslot: "<< startTimeslot << std::endl;
-
-            //find timeslot for endTick
-            for (int i = currentTimeslots[0]; i < timeslotsIntoTheFuture; i++)
-            {
-                if (endTick < currentTimeslots[i+1]){
-                    endTimeslot = currentTimeslots[i];
-                    //argos::LOG << "endTick:" << endTick << " is in timeslot: "<< endTimeslot << std::endl;
-                    flag = true;
-                    break;
-                }
-            }
-        flag1 = true;
-        break;
+			break;
 		}
 	}
-
-	if(!flag & !flag1){
-	    return true;
+	argos::LOG << "startTick:" << startTick << "  is in timeslot: "<< startTimeslot << std::endl;
+	
+    //find timeslot for endTick	
+	int endTimeslot; 
+	for (int i = currentTimeslots[0]; i < timeslotsIntoTheFuture; i++)
+	{
+		if (endTick < currentTimeslots[i+1]){
+			endTimeslot = currentTimeslots[i];
+			break;
+		}
 	}
+	argos::LOG << "endTick:" << endTick << " is in timeslot: "<< endTimeslot << std::endl; 
 
 	//put start, end and all inbetween in a queue
 	int nextTimeslotToCheck = startTimeslot;
@@ -180,39 +165,23 @@ bool EnvironmentManager::ReserveCell(Coordinate cell, int startTick, int endTick
 
 	if(startTick > endTick)
 	{
-		argos::LOGERR << "ERROR: Endtick: "<< endTick <<" is before startTick: " << startTick  << std::endl;
+		argos::LOGERR << "ERROR: Endtick: "<< endTick <<" is before startTick: " << startTick  << std::endl; 
 		return false;
 	}
 
 	if(startTick < currentTimeslots.front())
 	{
-		argos::LOGERR << "ERROR: startTick: " << startTick  <<" is in the past." << std::endl;
+		argos::LOGERR << "ERROR: startTick: " << startTick  <<" is in the past." << std::endl; 
 		return false;
 	}
 
-	//TODO: test too far into the future - endTick not in any timeslot
+	//TODO: test too far into the future - endTick not in any timeslot 
 
 	//find timeslot for startTick	
-	int startTimeslot; 
-	for (int i = currentTimeslots[0]; i < timeslotsIntoTheFuture; i++)
-	{
-		if (startTick < currentTimeslots[i+1]){
-			startTimeslot = currentTimeslots[i];
-			break;
-		}
-	}
-	//argos::LOG << "startTick:" << startTick << " . Is in timeslot: "<< startTimeslot << std::endl;
-	
+	int startTimeslot = GetTimeslot(startTick);
+
     //find timeslot for endTick	
-	int endTimeslot; 
-	for (int i = currentTimeslots[0]; i < timeslotsIntoTheFuture; i++)
-	{
-		if (endTick < currentTimeslots[i+1]){
-			endTimeslot = currentTimeslots[i];
-			break;
-		}
-	}
-	//argos::LOG << "endTick:" << endTick << " . Is in timeslot: "<< endTimeslot << std::endl;
+	int endTimeslot = GetTimeslot(endTick); 
 
 	//put start, end and all inbetween in a queue
 	int nextTimeslotToReserve = startTimeslot;
@@ -224,28 +193,19 @@ bool EnvironmentManager::ReserveCell(Coordinate cell, int startTick, int endTick
 		nextTimeslotToReserve += numberOfTicksPerTimeslot;
 	}
 	
-	/* TODO:: delete
-	std::queue<int> testQueue = timeslotsToReserve;
-	argos::LOG << "Reserve timeslots: " ;
-	while(!testQueue.empty())
-	{
-		argos::LOG << testQueue.front() << ", ";
-		testQueue.pop();
-	}
-	argos::LOG << std::endl; */
-
-
 	//todo check all cubes before reserve
 
 	while (!timeslotsToReserve.empty())
 	{
 		if (reservationsTable[timeslotsToReserve.front()][std::pair<int,int>(cell.x,cell.y)])
 		{
-			argos::LOGERR << "ERROR: Timeslot already reserved. This should be checked before calling ReserveCell" << std::endl;
+			argos::LOGERR << "ERROR: Coord: "; cell.PrintCoordinate(); 
+			argos::LOGERR << " is already reserved in timeslot: " << timeslotsToReserve.front() << std::endl;
+			//This should be checked before calling ReserveCell" << std::endl;
 			return false;
 		}
 		reservationsTable[timeslotsToReserve.front()][std::pair<int,int>(cell.x,cell.y)] = true;
-		argos::LOG << "Qube: "<< cell.x << ","<<cell.y<< " in timeslot:" <<timeslotsToReserve.front() <<  " is reserved" << std::endl;
+		argos::LOG << "Cell: "<< cell.x << ","<<cell.y<< " in timeslot:" <<timeslotsToReserve.front() <<  " is reserved" << std::endl;
 		timeslotsToReserve.pop();
 	}
 
@@ -310,6 +270,39 @@ bool EnvironmentManager::PutDownPod(int podID, std::pair<int,int> coordinate)
 	PlacePod(podPtr, Coordinate(coordinate.first, coordinate.second));
 
 	return true;
+}
+
+int EnvironmentManager::GetTimeslot(int tick)
+{
+	// TODO: delete comment.
+	//argos::LOG << "Finding timeslot for tick: " << tick << std::endl;
+	int result = -19;
+
+/*
+	argos::LOG << "GetTimeSlot is called with: " << tick << std::endl;
+	argos::LOG << "Current timeslot: " <<currentTimeslots[0] << std::endl;;
+	argos::LOG << "ast timeslot: " << currentTimeslots.back() << std::endl;
+	*/
+
+	//for (int i = currentTimeslots[0]; i < timeslotsIntoTheFuture; i++)
+	for (int i = 0; i < timeslotsIntoTheFuture; i++)
+	{
+		//argos::LOG << "it timeslot: "<< currentTimeslots[i] << std::endl;
+
+		if ((tick >= (currentTimeslots[i])) && (tick < currentTimeslots[i+1]))
+		{
+			argos::LOG << "Tick: " << tick<< " is in timeslot: " << currentTimeslots[i] << std::endl;
+			result = currentTimeslots[i];
+			break;
+		}
+		else
+		{
+			//argos::LOG << "Tick: " << tick<< " is not in timeslot: " << currentTimeslots[i];
+		}
+		
+	}
+
+	return result;
 }
 
 #endif

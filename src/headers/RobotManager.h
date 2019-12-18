@@ -4,7 +4,7 @@
 class RobotManager
 {
 private:
-    std::map<int, RobotWrapper> Wrappers;
+    
     int robotCount = 0;
     EnvironmentManager* environmentManager;
     Warehouse* wh;
@@ -15,6 +15,7 @@ public:
 
     RobotWrapper CreateRobotWrapper(Basicbot*);
     
+    std::map<int, RobotWrapper> Wrappers;
     std::queue<Order*> ordersToBeProcessed;
 
     void SetupRobotManager(Warehouse* _wh, std::map<int, Basicbot*> botControllers);

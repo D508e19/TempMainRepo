@@ -7,16 +7,12 @@
 #include "src/headers/Coordinate.h"
 #include "src/headers/Pod.h"
 
-typedef std::tuple<int, int, bool> reservation;
+typedef std::tuple<Coordinate, int, int> reservation;
 typedef std::pair<int,int> cube;
 
 class EnvironmentManager
 {
 private:
-    int numberOfTicksPerTimeslot;
-    int timeslotsIntoTheFuture;
-
-
     std::map<cube, bool> floorMap;
     //std::map <int, std::vector <reservation>> reservationsTable;
     std::map <int, std::map <cube, bool>> reservationsTable;
@@ -29,6 +25,9 @@ public:
     EnvironmentManager();
     ~EnvironmentManager();
 
+    int numberOfTicksPerTimeslot;
+    int timeslotsIntoTheFuture;
+
     void SetupEnvirionmentManager(Warehouse * _wh);
     void Tick();
 
@@ -39,8 +38,8 @@ public:
     bool IsValidCoordinate(Coordinate cand);
     bool IsReserved(Coordinate cell, int tick);
     bool IsReserved(Coordinate cell, int startTick, int endTick);
+    int GetTimeslot(int tick);
 
-    
     int tickCounter;
 
     std::map <std::pair<int,int>, Pod*> podParking;
