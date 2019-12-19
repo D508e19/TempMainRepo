@@ -15,6 +15,9 @@ public:
     int y;
 
     void PrintCoordinate();
+
+    bool operator ==( const Coordinate& o ) { return o.x == x && o.y == y; }
+    Coordinate operator +( const Coordinate& o ) { return Coordinate( o.x + x, o.y + y ); }
 };
 
 

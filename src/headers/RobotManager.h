@@ -4,10 +4,9 @@
 class RobotManager
 {
 private:
-    
-    int robotCount = 0;
-
     Warehouse* wh;
+
+    int robotCount = 0;
 
 public:
     RobotManager();

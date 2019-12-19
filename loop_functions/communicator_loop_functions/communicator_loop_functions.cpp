@@ -15,6 +15,20 @@ void CommunicatorLoopFunctions::Init(TConfigurationNode& t_tree){
    CollectBotControllers();
 
    wh.SetupWarehouse(botControllers);
+
+   Coordinate x = Coordinate(1,2);
+   Coordinate y = Coordinate(1,3);
+   Coordinate z = Coordinate(1,2);
+
+   argos::LOG << "Is Coordinate: "; x.PrintCoordinate(); argos::LOG << " = "; y.PrintCoordinate();  argos::LOG << std::endl;
+   argos::LOG << (x==y) << std::endl;
+   argos::LOG << "Is Coordinate: "; x.PrintCoordinate(); argos::LOG << " = "; z.PrintCoordinate(); argos::LOG << std::endl;
+   argos::LOG << (x==z) << std::endl;
+
+   argos::LOG << "Coordinate: "; x.PrintCoordinate(); argos::LOG << " + "; z.PrintCoordinate(); argos::LOG << std::endl;
+   Coordinate ans = x + z;
+   argos::LOG << "Result: "; ans.PrintCoordinate(); argos::LOG << std::endl;
+
 }
 
 void CommunicatorLoopFunctions::PreStep()

@@ -15,13 +15,13 @@ public:
     PodManager();
     ~PodManager();
 
+    Warehouse *wh;
+
     const int layout_startzone_width = 4;
     const int layout_hallway_size = 1;
     const int layout_edge_size = 1;
     const int layout_podcluster_height = 2;
     const int layout_podcluster_width = 2;
-
-    Warehouse *wh;
 
     void SetupPodManager(Warehouse * _wh);
     void Tick();
